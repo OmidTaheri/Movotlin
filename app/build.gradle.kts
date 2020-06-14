@@ -4,10 +4,6 @@ import dependencies.Dependencies
 import dependencies.AnnotationProcessorsDependencies
 import dependencies.DebugDependencies
 import extentions.kapt
-
-        
-        
-
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     kotlin(BuildPlugins.KOTLIN_ANDROID)

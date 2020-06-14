@@ -63,4 +63,8 @@ object BuildDependenciesVersions {
         const val GRADLE_KOTLIN_PLUGIN = "1.3.72"
     }
 
+
+    object PluginsVersions {
+        const val KTLINT_PLUGIN = "9.2.1"
+    }
 }
