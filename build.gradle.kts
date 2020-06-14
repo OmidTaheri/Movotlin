@@ -2,6 +2,7 @@ import extentions.applyDefault
 
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version BuildDependenciesVersions.PluginsVersions.KTLINT_PLUGIN
+    id("io.gitlab.arturbosch.detekt") version BuildDependenciesVersions.PluginsVersions.DETEKT_PLUGIN
 }
 
 buildscript {
@@ -45,5 +46,25 @@ tasks.register("clean", Delete::class) {
 //    filter {
 //        exclude("**/generated/**")
 //        include("**/kotlin/**")
+//    }
+//}
+
+//detekt {
+//    failFast = true // fail build on any finding
+//    buildUponDefaultConfig = true // preconfigure defaults
+////    config = files("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+////    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+//
+//    reports {
+//        html.enabled = true // observe findings in your browser with structure and code snippets
+//        xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+//        txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+//    }
+//}
+//
+//tasks {
+//    withType<Detekt> {
+//        // Target version of the generated JVM bytecode. It is used for type resolution.
+//        this.jvmTarget = "1.8"
 //    }
 //}

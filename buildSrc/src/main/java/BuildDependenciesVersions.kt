@@ -66,5 +66,6 @@ object BuildDependenciesVersions {
 
     object PluginsVersions {
         const val KTLINT_PLUGIN = "9.2.1"
+        const val DETEKT_PLUGIN = "1.10.0-RC1"
     }
 }
