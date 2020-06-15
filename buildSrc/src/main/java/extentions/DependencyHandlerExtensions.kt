@@ -24,28 +24,34 @@ fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dep
     add("androidTestImplementation", dependencyNotation)
 
 fun DependencyHandler.addTestsDependencies() {
+
+
+
+    testImplementation(TestDependencies.MOCKK)
+    testImplementation(TestDependencies.CORE)
     testImplementation(TestDependencies.JUNIT)
     testImplementation(TestDependencies.MOCKITO)
-    testImplementation(TestDependencies.MOCKK)
-    testImplementation(TestDependencies.ASSERTJ)
-    testImplementation(TestDependencies.ROBOELECTRIC)
-    testImplementation(TestDependencies.ROOM)
-    testImplementation(TestDependencies.CORE)
-    testImplementation(TestDependencies.ARCH_CORE)
-    testImplementation(TestDependencies.RULES)
-    testImplementation(TestDependencies.RUNNER)
     testImplementation(TestDependencies.COROUTINES_TEST)
-    testImplementation(TestDependencies.FRAGMENT_TEST)
     testImplementation(TestDependencies.MOCK_WEB_SERVER)
+    testImplementation(TestDependencies.ROBOELECTRIC)
 
 
-    androidTestImplementation(TestDependencies.EXT)
-    androidTestImplementation(TestAndroidDependencies.PLAY_CORE)
-    androidTestImplementation(TestAndroidDependencies.LEAKCANARY)
-    androidTestImplementation(TestAndroidDependencies.MOCKITO)
-    androidTestImplementation(TestAndroidDependencies.ESPRESSO)
+    androidTestImplementation(TestDependencies.CORE)
+    androidTestImplementation(TestDependencies.EXT_JUNIT)
+    androidTestImplementation(TestDependencies.EXT_TRUTH)
+    androidTestImplementation(TestDependencies.TRUTH)
+    
+    androidTestImplementation(TestAndroidDependencies.MOCKK)
     androidTestImplementation(TestAndroidDependencies.RUNNER)
     androidTestImplementation(TestAndroidDependencies.RULES)
-    androidTestImplementation(TestAndroidDependencies.JUNIT)
-    androidTestImplementation(TestAndroidDependencies.FRAGMENT_TEST)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO_CORE)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO_CONTRIB)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO_ACCESSIBILITY)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO_CONCURRENT)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO_INTENTS)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO_RESOURCE)
+    androidTestImplementation(TestAndroidDependencies.HAMCREST)
+    androidTestImplementation(TestAndroidDependencies.UIAUTOMATOR)
+
+
 }

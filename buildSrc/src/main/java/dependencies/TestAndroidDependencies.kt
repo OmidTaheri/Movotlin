@@ -1,19 +1,41 @@
 package dependencies
+
 object TestAndroidDependencies {
 
-    const val LEAKCANARY =
-        "com.squareup.leakcanary:leakcanary-android-instrumentation:${BuildDependenciesVersions.DependenciesVersions.LEAKCANARY}"
-    const val MOCKITO =
-        "com.nhaarman.mockitokotlin2:mockito-kotlin:${BuildDependenciesVersions.TestDependenciesVersions.MOCKITO}"
-    const val ESPRESSO =
-        "androidx.test.espresso:espresso-core:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
-    const val RUNNER = "androidx.test:runner:${BuildDependenciesVersions.TestDependenciesVersions.TEST}"
-    const val RULES = "androidx.test:rules:${BuildDependenciesVersions.TestDependenciesVersions.TEST}"
-    const val JUNIT = "androidx.test.ext:junit:${BuildDependenciesVersions.TestDependenciesVersions.EXT}"
-    const val FRAGMENT_TEST =
-        "androidx.fragment:fragment-testing:${BuildDependenciesVersions.TestDependenciesVersions.FRAGMENT_TEST}"
-    const val PLAY_CORE =
-        "com.google.android.play:core:${BuildDependenciesVersions.DependenciesVersions.PLAY_CORE}"
 
+    const val ESPRESSO_CORE =
+        "androidx.test.espresso:espresso-core:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
+
+    const val ESPRESSO_CONTRIB =
+        "androidx.test.espresso:espresso-contrib:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
+
+    const val ESPRESSO_INTENTS =
+        "androidx.test.espresso:espresso-intents:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
+
+    const val ESPRESSO_ACCESSIBILITY =
+        "androidx.test.espresso:espresso-accessibility:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
+
+    const val ESPRESSO_CONCURRENT =
+        "androidx.test.espresso.idling:idling-concurrent:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
+
+    const val ESPRESSO_RESOURCE =
+        "androidx.test.espresso:espresso-idling-resource:${BuildDependenciesVersions.TestDependenciesVersions.ESPRESSO}"
+
+
+    const val HAMCREST =
+        "org.hamcrest:hamcrest-library:${BuildDependenciesVersions.TestDependenciesVersions.HAMCREST}"
+
+    const val UIAUTOMATOR =
+        "androidx.test.uiautomator:uiautomator:${BuildDependenciesVersions.TestDependenciesVersions.UIAUTOMATOR}"
+
+
+    const val RUNNER =
+        "androidx.test:runner:${BuildDependenciesVersions.TestDependenciesVersions.TEST}"
+    const val RULES =
+        "androidx.test:rules:${BuildDependenciesVersions.TestDependenciesVersions.TEST}"
+
+
+    const val MOCKK =
+        "io.mockk:mockk-android:${BuildDependenciesVersions.TestDependenciesVersions.MOCKK}"
 
 }

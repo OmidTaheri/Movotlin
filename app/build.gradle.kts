@@ -1,17 +1,16 @@
-import extentions.addTestsDependencies
-import dependencies.UiDependencies
-import dependencies.Dependencies
 import dependencies.AnnotationProcessorsDependencies
 import dependencies.DebugDependencies
+import dependencies.Dependencies
+import dependencies.UiDependencies
+import extentions.addTestsDependencies
 import extentions.kapt
+
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
-
-
 
 android {
     compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
@@ -31,23 +30,28 @@ android {
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"http://moviesapi.ir/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
 
-
         getByName(BuildTypes.DEBUG) {
             applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
             versionNameSuffix = BuildTypeDebug.versionNameSuffix
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
-            buildConfigField("String", "BASE_URL", "\"http://moviesapi.ir/\"")
+            buildConfigField("String", "BASE_URL", "\"hhttps://api.themoviedb.org/3/\"")
         }
-
     }
+
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+
 }
 
 dependencies {
@@ -58,10 +62,9 @@ dependencies {
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
 
-
     debugImplementation(DebugDependencies.LEAKCANARY)
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
 
-    addTestsDependencies()
+   addTestsDependencies()
 }
