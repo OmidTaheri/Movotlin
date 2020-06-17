@@ -50,7 +50,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    lintOptions {
+        setCheckDependencies(true)
+        setHtmlReport(true)
+        setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
+    }
 
 }
 
@@ -61,7 +65,7 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
-
+    implementation(project(mapOf("path" to ":Data")))
     debugImplementation(DebugDependencies.LEAKCANARY)
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
