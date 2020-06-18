@@ -1,15 +1,14 @@
-import dependencies.AnnotationProcessorsDependencies
-import dependencies.DebugDependencies
 import dependencies.Dependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
-import extentions.kapt
+import extentions.implementation
+
 
 plugins {
-    id(BuildPlugins.ANDROID_APPLICATION)
+    id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-    id(BuildPlugins.KOTLIN_KAPT)
+
 }
 
 android {
@@ -17,7 +16,6 @@ android {
     buildToolsVersion(BuildAndroidConfig.BUILD_TOOLS_VERSION)
 
     defaultConfig {
-        applicationId = BuildAndroidConfig.APPLICATION_ID
         minSdkVersion(BuildAndroidConfig.MIN_SDK_VERSION)
         targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
         versionCode = BuildAndroidConfig.VERSION_CODE
@@ -25,7 +23,10 @@ android {
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
+
+
     }
+
 
     buildTypes {
         getByName(BuildTypes.RELEASE) {
@@ -38,42 +39,29 @@ android {
         }
 
         getByName(BuildTypes.DEBUG) {
-            applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
-            versionNameSuffix = BuildTypeDebug.versionNameSuffix
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             buildConfigField("String", "BASE_URL", "\"hhttps://api.themoviedb.org/3/\"")
         }
     }
 
 
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    lintOptions {
-        setCheckDependencies(true)
-        setHtmlReport(true)
-        setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
-    }
+
 
 }
 
 dependencies {
-
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
-    implementation(UiDependencies.CONSTRAINT_LAYOUT)
-<<<<<<< HEAD
-    implementation(project(mapOf("path" to ":Data")))
-=======
-    implementation(project(mapOf("path" to ":Domain")))
 
->>>>>>> db514c9... add interactor/base package to domain module and convert domain.gradle to kotlin dsl
-    debugImplementation(DebugDependencies.LEAKCANARY)
+    implementation(Dependencies.RX_ANDROID)
+    implementation(Dependencies.RX_JAVA)
+    addTestsDependencies()
 
-    kapt(AnnotationProcessorsDependencies.DAGGER)
-
-   addTestsDependencies()
 }
