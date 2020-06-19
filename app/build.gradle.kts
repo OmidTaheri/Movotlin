@@ -66,9 +66,14 @@ dependencies {
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
 <<<<<<< HEAD
+<<<<<<< HEAD
     implementation(project(mapOf("path" to ":Data")))
 =======
     implementation(project(mapOf("path" to ":Domain")))
+=======
+
+    implementation(project(mapOf("path" to ":Data")))
+>>>>>>> b99cc7c... config local module
 
 >>>>>>> db514c9... add interactor/base package to domain module and convert domain.gradle to kotlin dsl
     debugImplementation(DebugDependencies.LEAKCANARY)

@@ -2,6 +2,8 @@ import dependencies.Dependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
+import dependencies.AnnotationProcessorsDependencies
+import dependencies.JetpackDependencies
 
 
 plugins {
@@ -60,6 +62,12 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(project(mapOf("path" to ":Data")))
+
+    implementation(AnnotationProcessorsDependencies.ROOM)
+    implementation(JetpackDependencies.ROOM)
+    implementation(JetpackDependencies.ROOM_KTX)
+    implementation(JetpackDependencies.ROOM_RX)
+
 
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)

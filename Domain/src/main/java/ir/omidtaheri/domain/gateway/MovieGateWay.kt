@@ -2,11 +2,11 @@ package ir.omidtaheri.domain.gateway
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import ir.omidtaheri.domain.entity.MovieEntity
+import ir.omidtaheri.domain.entity.MovieDomainEntity
 
 interface MovieGateWay {
-    fun FavoriteMovie(MovieId: Long): Completable
-    fun UnFavoriteMovie(MovieId: Long): Completable
-    fun GetMovies(): Single<List<MovieEntity>>
+    fun FavoriteMovie(Movie: MovieDomainEntity): Completable
+    fun UnFavoriteMovie(Movie: MovieDomainEntity): Completable
+    fun GetMovies(): Single<List<MovieDomainEntity>>
 
 }

@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 import ir.omidtaheri.data.entity.MovieDataEntity
 
 interface MovieLocalDataSourceInterface {
-    fun FavoriteMovie(MovieId: Long): Completable
-    fun UnFavoriteMovie(MovieId: Long): Completable
+    fun FavoriteMovie(Movie : MovieDataEntity): Completable
+    fun UnFavoriteMovie(Movie : MovieDataEntity): Completable
 
 }

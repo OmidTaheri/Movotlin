@@ -1,6 +1,6 @@
 package ir.omidtaheri.domain.entity
 
-enum class CategoryEntity {
+enum class CategoryDomainEntity {
     TOP_RATED,
     NOW_PLAYING,
     UPCOMING,

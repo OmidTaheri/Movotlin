@@ -1,5 +1,5 @@
 package ir.omidtaheri.remote.mapper
 
-interface ResponseDtoMapper<DTO, DataEntity> {
+interface ResponseToData_EntityMapper<DTO, DataEntity> {
     fun mapFromDTO(from: DTO): DataEntity
 }
