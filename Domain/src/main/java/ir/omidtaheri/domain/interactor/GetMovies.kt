@@ -5,12 +5,14 @@ import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.base.SingleUseCase
+import javax.inject.Inject
 
-class GetMovies(schedulers: Schedulers, val movieRepository: MovieGateWay) :
+class GetMovies  @Inject constructor(schedulers: Schedulers, val movieRepository: MovieGateWay) :
     SingleUseCase<Unit, List<MovieDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: Unit?): Single<List<MovieDomainEntity>> {
 
         return movieRepository.GetMovies()
     }
+
 }

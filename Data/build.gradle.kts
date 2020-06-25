@@ -63,6 +63,8 @@ dependencies {
 
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
+    implementation(Dependencies.JavaxInject)
+
     addTestsDependencies()
 
 }

@@ -5,8 +5,9 @@ import ir.omidtaheri.data.datasource.remote.MovieRemoteDataSourceInterface
 import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
 import ir.omidtaheri.remote.service.MovieApi
+import javax.inject.Inject
 
-class MovieRemoteDataSourceImp(
+class MovieRemoteDataSourceImp  @Inject constructor(
     val movieApi: MovieApi,
     val movieResponseDtoMapper: MovieResponseToDataEntityMapper
 ) :

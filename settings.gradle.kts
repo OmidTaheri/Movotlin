@@ -1,6 +1,6 @@
+include(":DaggerCore")
 include(":searchtv")
 include(":mainpagetv")
-include(":CoreDagger")
 include(":Logging")
 include(":ImageLoading")
 include(":Navigation")

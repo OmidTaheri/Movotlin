@@ -5,8 +5,9 @@ import ir.omidtaheri.data.datasource.remote.MovieReviewsRemoteDataSourceInterfac
 import ir.omidtaheri.data.mapper.ReviewEntityDomainDataMapper
 import ir.omidtaheri.domain.entity.ReviewDomainEntity
 import ir.omidtaheri.domain.gateway.MovieReviewsGateWay
+import javax.inject.Inject
 
-class MovieReviewsRepository(
+class MovieReviewsRepository  @Inject constructor(
     val movieReviewsRemoteDataSource: MovieReviewsRemoteDataSourceInterface,
     val reviewsEntityMapper: ReviewEntityDomainDataMapper
 

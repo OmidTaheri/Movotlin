@@ -72,13 +72,19 @@ dependencies {
     implementation(project(mapOf("path" to ":Domain")))
 =======
 
+<<<<<<< HEAD
     implementation(project(mapOf("path" to ":Data")))
 >>>>>>> b99cc7c... config local module
+=======
+    implementation(project(mapOf("path" to ":DaggerCore")))
+
+>>>>>>> ef04c8d... add DaggerCore module and add application class by dagger dependency
 
 >>>>>>> db514c9... add interactor/base package to domain module and convert domain.gradle to kotlin dsl
     debugImplementation(DebugDependencies.LEAKCANARY)
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
+    implementation(Dependencies.DAGGER)
 
    addTestsDependencies()
 }

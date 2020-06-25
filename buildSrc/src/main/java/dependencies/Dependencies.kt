@@ -48,4 +48,12 @@ object Dependencies {
         "androidx.annotation:annotation:${BuildDependenciesVersions.DependenciesVersions.ANOTATION}"
 
 
+    const val JavaxInject =
+        "javax.inject:javax.inject:${BuildDependenciesVersions.DependenciesVersions.JAVAX_INJECT}"
+
+    const val javaxAnnotation =
+        "javax.annotation:jsr250-api:${BuildDependenciesVersions.DependenciesVersions.JAVAX_ANNOTATION}"
+
+
+
 }

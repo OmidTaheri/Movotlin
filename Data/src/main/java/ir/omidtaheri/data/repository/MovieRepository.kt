@@ -8,8 +8,9 @@ import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.data.mapper.MovieEntityDomainDataMapper
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
+import javax.inject.Inject
 
-class MovieRepository(
+class MovieRepository  @Inject constructor(
     val movieRemoteDataSource: MovieRemoteDataSourceInterface,
     val movieLocalDataSource: MovieLocalDataSourceInterface,
     val movieEntityMapper: MovieEntityDomainDataMapper

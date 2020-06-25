@@ -6,8 +6,9 @@ import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.local.dao.MovieDao
 
 import ir.omidtaheri.local.mapper.MovieEntityDataLocalMapper
+import javax.inject.Inject
 
-class MovieLocalDataSourceImp(
+class MovieLocalDataSourceImp  @Inject constructor(
     val movieDao: MovieDao,
     val movieEntityDataLocalMapper: MovieEntityDataLocalMapper
 ) : MovieLocalDataSourceInterface {

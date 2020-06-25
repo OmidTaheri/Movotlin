@@ -6,8 +6,9 @@ import ir.omidtaheri.data.mapper.MovieDetailEntityDomainDataMapper
 import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 
 import ir.omidtaheri.domain.gateway.MovieDetailGateWay
+import javax.inject.Inject
 
-class MovieDetailRepository(
+class MovieDetailRepository  @Inject constructor(
     val movieDetailRemoteDataSource: MovieDetailRemoteDataSourceInterface,
     val movieDetailEntityMapper: MovieDetailEntityDomainDataMapper
 ) : MovieDetailGateWay {
@@ -17,4 +18,6 @@ class MovieDetailRepository(
             movieDetailEntityMapper.mapFromDataEntity(it)
         }
     }
+
+
 }

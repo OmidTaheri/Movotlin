@@ -6,8 +6,9 @@ import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.base.CompletableUseCase
 import ir.omidtaheri.domain.interactor.base.MissingUseCaseParamsException
 import ir.omidtaheri.domain.interactor.base.Schedulers
+import javax.inject.Inject
 
-class FavorieMovie(schedulers: Schedulers, val movieRepository: MovieGateWay) :
+class FavorieMovie @Inject constructor(schedulers: Schedulers, val movieRepository: MovieGateWay) :
     CompletableUseCase<MovieDomainEntity>(schedulers) {
 
 

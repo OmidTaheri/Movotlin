@@ -17,7 +17,8 @@ object BuildDependenciesVersions {
         const val DATABINDING = "3.1.4"
         const val AUTO_SERVICE = "1.0-rc4"
         const val ANOTATION = "1.1.0"
-
+        const val JAVAX_INJECT = "1"
+        const val JAVAX_ANNOTATION = "1.0"
     }
 
     object JetpackDependenciesVersions {
