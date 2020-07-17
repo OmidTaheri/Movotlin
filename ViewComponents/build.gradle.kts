@@ -56,6 +56,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
 
 }
 
@@ -66,17 +69,10 @@ dependencies {
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
-    implementation(Dependencies.JavaxInject)
 
-    implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
-    implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
-
+    implementation(UiDependencies.CONSTRAINT_LAYOUT)
     implementation(UiDependencies.RECYCLE_VIEW)
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
 
-    kapt(AnnotationProcessorsDependencies.DAGGER)
-    implementation(Dependencies.DAGGER)
 
     addTestsDependencies()
 

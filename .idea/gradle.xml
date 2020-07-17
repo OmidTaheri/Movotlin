@@ -11,17 +11,18 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AndroidBase" />
             <option value="$PROJECT_DIR$/DaggerCore" />
             <option value="$PROJECT_DIR$/Data" />
             <option value="$PROJECT_DIR$/Domain" />
             <option value="$PROJECT_DIR$/Favorite" />
-            <option value="$PROJECT_DIR$/ImageLoading" />
             <option value="$PROJECT_DIR$/Local" />
             <option value="$PROJECT_DIR$/Logging" />
             <option value="$PROJECT_DIR$/MainPage" />
-            <option value="$PROJECT_DIR$/Navigation" />
             <option value="$PROJECT_DIR$/Remote" />
             <option value="$PROJECT_DIR$/Search" />
+            <option value="$PROJECT_DIR$/UiBase" />
+            <option value="$PROJECT_DIR$/ViewComponents" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/mainpagetv" />
