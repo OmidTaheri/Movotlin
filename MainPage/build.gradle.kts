@@ -11,6 +11,7 @@ plugins {
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
+
 }
 
 android {
@@ -86,6 +87,9 @@ dependencies {
 
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
 
 
     kapt(AnnotationProcessorsDependencies.DAGGER)

@@ -2,8 +2,9 @@ package ir.omidtaheri.mainpage.mapper
 
 import ir.omidtaheri.domain.entity.GenreDomainEntity
 import ir.omidtaheri.mainpage.entity.GenreUiEntity
+import javax.inject.Inject
 
-class GenreEntityUiDomainMapper :Ui_Domain_Mapper<GenreUiEntity,GenreDomainEntity>{
+class GenreEntityUiDomainMapper @Inject constructor():Ui_Domain_Mapper<GenreUiEntity,GenreDomainEntity>{
     override fun mapFromUiEntity(from: GenreUiEntity): GenreDomainEntity {
         return GenreDomainEntity(from.id, from.name)
     }
