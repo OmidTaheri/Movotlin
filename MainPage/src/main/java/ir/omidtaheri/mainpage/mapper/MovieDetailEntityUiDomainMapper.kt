@@ -2,8 +2,9 @@ package ir.omidtaheri.mainpage.mapper
 
 import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import ir.omidtaheri.mainpage.entity.MovieDetailUiEntity
+import javax.inject.Inject
 
-class MovieDetailEntityUiDomainMapper :
+class MovieDetailEntityUiDomainMapper @Inject constructor():
     Ui_Domain_Mapper<MovieDetailUiEntity, MovieDetailDomainEntity> {
     override fun mapFromUiEntity(from: MovieDetailUiEntity): MovieDetailDomainEntity {
         return MovieDetailDomainEntity(
