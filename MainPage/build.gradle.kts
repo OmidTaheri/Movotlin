@@ -4,7 +4,7 @@ import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 import extentions.kapt
-
+import dependencies.JetpackDependencies
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -54,6 +54,10 @@ android {
     }
 
 
+    buildFeatures {
+        viewBinding = true
+    }
+
 }
 
 
@@ -62,8 +66,27 @@ dependencies {
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
+    implementation(Dependencies.JavaxInject)
 
     implementation(project(mapOf("path" to ":DaggerCore")))
+    implementation(project(mapOf("path" to ":AndroidBase")))
+    implementation(project(mapOf("path" to ":Domain")))
+    implementation(project(mapOf("path" to ":UiBase")))
+    implementation(project(mapOf("path" to ":ViewComponents")))
+
+
+    implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
+    implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
+
+
+    implementation(UiDependencies.CONSTRAINT_LAYOUT)
+    implementation(UiDependencies.RECYCLE_VIEW)
+    implementation(UiDependencies.MATERIAL)
+
+
+    implementation(Dependencies.RX_ANDROID)
+    implementation(Dependencies.RX_JAVA)
+
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
