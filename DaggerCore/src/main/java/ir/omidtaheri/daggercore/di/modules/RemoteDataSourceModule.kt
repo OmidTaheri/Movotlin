@@ -11,7 +11,7 @@ import ir.omidtaheri.remote.datasource.MovieRemoteDataSourceImp
 import ir.omidtaheri.remote.datasource.MovieReviewsRemoteDataSourceImp
 
 
-@Module(includes = [RemoteModule::class, Data_Dto_Mappers_Module::class])
+@Module(includes = [RemoteModule::class ])
 class RemoteDataSourceModule {
 
     @Provides

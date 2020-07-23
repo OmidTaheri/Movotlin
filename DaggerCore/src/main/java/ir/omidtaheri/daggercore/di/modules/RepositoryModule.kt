@@ -2,7 +2,6 @@ package ir.omidtaheri.movotlin.di.modules
 
 import dagger.Module
 import dagger.Provides
-import ir.omidtaheri.daggercore.di.modules.Domain_Data_Mapper_Module
 import ir.omidtaheri.data.repository.MovieDetailRepository
 import ir.omidtaheri.data.repository.MovieRepository
 import ir.omidtaheri.data.repository.MovieReviewsRepository
@@ -11,7 +10,7 @@ import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.gateway.MovieReviewsGateWay
 
 
-@Module(includes = [Domain_Data_Mapper_Module::class])
+@Module
 class RepositoryModule {
 
     @Provides
