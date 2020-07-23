@@ -1,0 +1,17 @@
+include(":ViewComponents")
+include(":UiBase")
+include(":AndroidBase")
+include(":DaggerCore")
+include(":searchtv")
+include(":mainpagetv")
+include(":Logging")
+include(":Remote")
+include(":Local")
+include(":Domain")
+include(":Data")
+include(":Favorite")
+include(":Search")
+include(":MainPage")
+include(":app")
+rootProject.name = "Movotlin"
+rootProject.buildFileName = "build.gradle.kts"

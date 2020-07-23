@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="timeout_error"> TimeOut</string>
+
+    <string name="IllegalAccessException"> Wrong Argument</string>
+
+    <string name="general_error"> Error </string>
+
+</resources>
