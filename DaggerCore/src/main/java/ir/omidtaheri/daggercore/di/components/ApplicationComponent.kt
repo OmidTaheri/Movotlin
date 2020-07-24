@@ -14,4 +14,5 @@ interface ApplicationComponent {
     fun inject(applicationClass: Application)
     fun schedulers(): ir.omidtaheri.domain.interactor.base.Schedulers
     fun MovieGateWayRepo(): MovieGateWay
+    fun application():Application
 }
