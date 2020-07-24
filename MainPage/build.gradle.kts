@@ -66,6 +66,8 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.FRAGMENT_KTX)
+    implementation(Dependencies.LIVEDATA_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(Dependencies.JavaxInject)
 
@@ -87,6 +89,7 @@ dependencies {
 
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
+    implementation(Dependencies.RX_Kotlin)
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.1.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0")
