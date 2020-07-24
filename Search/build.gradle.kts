@@ -4,12 +4,14 @@ import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 import extentions.kapt
+import dependencies.JetpackDependencies
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
+    id("kotlin-android")
 }
 
 android {
@@ -51,7 +53,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    buildFeatures {
+        viewBinding = true
+    }
 
 }
 
@@ -60,9 +64,35 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.FRAGMENT_KTX)
+    implementation(Dependencies.LIVEDATA_KTX)
     implementation(UiDependencies.APPCOMPAT)
+    implementation(Dependencies.JavaxInject)
 
     implementation(project(mapOf("path" to ":DaggerCore")))
+    implementation(project(mapOf("path" to ":AndroidBase")))
+    implementation(project(mapOf("path" to ":Domain")))
+    implementation(project(mapOf("path" to ":UiBase")))
+    implementation(project(mapOf("path" to ":ViewComponents")))
+
+
+    implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
+    implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
+
+
+    implementation(UiDependencies.CONSTRAINT_LAYOUT)
+    implementation(UiDependencies.RECYCLE_VIEW)
+    implementation(UiDependencies.MATERIAL)
+
+
+    implementation(Dependencies.RX_ANDROID)
+    implementation(Dependencies.RX_JAVA)
+    implementation(Dependencies.RX_Kotlin)
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+
+
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
