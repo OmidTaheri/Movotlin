@@ -5,6 +5,7 @@ object BuildDependenciesVersions {
 
         const val RETROFIT = "2.8.1"
         const val RXJAVA = "3.0.0"
+        const val RXKotlin = "3.0.0"
         const val RXANDROID = "3.0.0"
         const val GLIDE = "4.6.1"
         const val DAGGER = "2.25.3"
@@ -12,6 +13,7 @@ object BuildDependenciesVersions {
         const val COROUTINES = "1.3.3"
         const val CORE_KTX = "1.3.0"
         const val FRAGMENT_KTX = "1.2.0-alpha02"
+        const val LIVEDATA_KTX = "2.2.0"
         const val PLAY_CORE = "1.6.4"
         const val LEAKCANARY = "2.4"
         const val DATABINDING = "3.1.4"

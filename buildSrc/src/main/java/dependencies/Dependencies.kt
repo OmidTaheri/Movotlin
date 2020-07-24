@@ -20,6 +20,9 @@ object Dependencies {
     const val FRAGMENT_KTX =
         "androidx.fragment:fragment-ktx:${BuildDependenciesVersions.DependenciesVersions.FRAGMENT_KTX}"
 
+    const val LIVEDATA_KTX =
+        "androidx.lifecycle:lifecycle-livedata-ktx:${BuildDependenciesVersions.DependenciesVersions.LIVEDATA_KTX}"
+
 
     const val DAGGER =
         "com.google.dagger:dagger:${BuildDependenciesVersions.DependenciesVersions.DAGGER}"
@@ -43,6 +46,11 @@ object Dependencies {
 
     const val RX_JAVA =
         "io.reactivex.rxjava3:rxjava:${BuildDependenciesVersions.DependenciesVersions.RXJAVA}"
+
+
+    const val RX_Kotlin =
+        "io.reactivex.rxjava3:rxkotlin:${BuildDependenciesVersions.DependenciesVersions.RXKotlin}"
+
 
     const val Annotation =
         "androidx.annotation:annotation:${BuildDependenciesVersions.DependenciesVersions.ANOTATION}"
