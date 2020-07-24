@@ -1,23 +1,16 @@
-package ir.omidtaheri.mainpage.ui
+package ir.omidtaheri.mainpage.ui.MainFragment
 
-import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ir.omidtaheri.androidbase.BaseFragment
-import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
-import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.MainFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
-import ir.omidtaheri.mainpage.ui.viewmodel.MainViewModel
-import java.util.EnumSet.of
-import javax.inject.Inject
+import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
 
 class MainFragment : BaseFragment<List<MovieUiEntity>>() {
 

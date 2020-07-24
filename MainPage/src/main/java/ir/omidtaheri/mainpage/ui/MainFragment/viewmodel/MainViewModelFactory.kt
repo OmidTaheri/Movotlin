@@ -1,4 +1,4 @@
-package ir.omidtaheri.mainpage.ui.viewmodel
+package ir.omidtaheri.mainpage.ui.MainFragment.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

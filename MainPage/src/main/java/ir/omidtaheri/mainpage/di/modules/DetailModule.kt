@@ -3,14 +3,15 @@ package ir.omidtaheri.mainpage.di.modules
 import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
+import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModelFactory
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModelFactory
 
 
 @Module
-class MainModule {
+class DetailModule {
 
     @Provides
-    fun provideMainViewModel(viewmodel: MainViewModelFactory): ViewModelProvider.Factory {
+    fun provideDetailViewModel(viewmodel: DetailViewModelFactory): ViewModelProvider.Factory {
         return viewmodel
 
     }

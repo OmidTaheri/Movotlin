@@ -1,8 +1,6 @@
-package ir.omidtaheri.mainpage.ui.viewmodel
+package ir.omidtaheri.mainpage.ui.MainFragment.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -22,6 +20,7 @@ class MainViewModel(
 
 
     fun getMovieList() {
+
         _isLoading.value = true
         val disposable = GetMoviesUseCase.execute(Unit).subscribeBy { response ->
             when (response) {

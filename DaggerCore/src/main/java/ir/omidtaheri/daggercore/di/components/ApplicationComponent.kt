@@ -4,6 +4,7 @@ import android.app.Application
 import dagger.Component
 import ir.omidtaheri.daggercore.di.modules.LocalDataSourceModule
 import ir.omidtaheri.daggercore.di.modules.RemoteDataSourceModule
+import ir.omidtaheri.domain.gateway.MovieDetailGateWay
 import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.movotlin.di.modules.ApplicationModule
 import ir.omidtaheri.movotlin.di.modules.RepositoryModule
@@ -14,5 +15,6 @@ interface ApplicationComponent {
     fun inject(applicationClass: Application)
     fun schedulers(): ir.omidtaheri.domain.interactor.base.Schedulers
     fun MovieGateWayRepo(): MovieGateWay
+    fun MovieDetailGateWayRepo():MovieDetailGateWay
     fun application():Application
 }
