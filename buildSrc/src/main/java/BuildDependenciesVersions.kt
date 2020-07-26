@@ -39,6 +39,7 @@ object BuildDependenciesVersions {
         const val RECYCLE_VIEW = "1.2.0-alpha03"
         const val CONSTRAINT_LAYOUT = "2.0.0-beta7"
         const val CARDVIEW = "1.0.0"
+        const val VIEWPAGER2 = "1.0.0"
         const val VECTORE_DRAWABLE = "1.1.0"
         const val ANIMATED_VECTORE_DRAWABLE = "1.1.0"
     }

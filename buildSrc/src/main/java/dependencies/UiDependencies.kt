@@ -27,4 +27,8 @@ object UiDependencies {
         "com.github.bumptech.glide:glide:${BuildDependenciesVersions.DependenciesVersions.GLIDE}"
 
 
+    const val VIEWPAGER2 =
+        "androidx.viewpager2:viewpager2:${BuildDependenciesVersions.UiDependenciesVersions.VIEWPAGER2}"
+
+
 }

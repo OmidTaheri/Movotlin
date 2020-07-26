@@ -1,6 +1,7 @@
 import dependencies.AnnotationProcessorsDependencies
 import dependencies.DebugDependencies
 import dependencies.Dependencies
+import dependencies.JetpackDependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.kapt
@@ -75,6 +76,18 @@ dependencies {
     implementation(project(mapOf("path" to ":Data")))
 
     implementation(project(mapOf("path" to ":DaggerCore")))
+
+    implementation(project(mapOf("path" to ":MainPage")))
+    implementation(project(mapOf("path" to ":Search")))
+    implementation(project(mapOf("path" to ":Favorite")))
+
+
+
+    implementation( JetpackDependencies.NAVIGATION_FRAGMENT)
+    implementation( JetpackDependencies.NAVIGATION_UI)
+
+    implementation(UiDependencies.MATERIAL)
+    implementation(UiDependencies.VIEWPAGER2)
 
 
     debugImplementation(DebugDependencies.LEAKCANARY)
