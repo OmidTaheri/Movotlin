@@ -17,4 +17,10 @@
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="Favorite" />
 
+
+    <item
+        android:id="@+id/GenreFragment"
+        android:icon="@drawable/ic_baseline_category_24"
+        android:title="Genre" />
+
 </menu>

@@ -82,7 +82,7 @@ dependencies {
     implementation(project(mapOf("path" to ":MainPage")))
     implementation(project(mapOf("path" to ":Search")))
     implementation(project(mapOf("path" to ":Favorite")))
-
+    implementation(project(mapOf("path" to ":GenreList")))
 
 
     implementation( JetpackDependencies.NAVIGATION_FRAGMENT)

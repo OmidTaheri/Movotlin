@@ -1,3 +1,4 @@
+include(":GenreList")
 include(":ViewComponents")
 include(":UiBase")
 include(":AndroidBase")

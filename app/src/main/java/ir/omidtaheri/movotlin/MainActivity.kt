@@ -26,12 +26,13 @@ class MainActivity : AppCompatActivity(),
     private val fragments = listOf(
         BaseNavigationFragment.newInstance(R.layout.content_main_base, R.id.nav_host_main),
         BaseNavigationFragment.newInstance(R.layout.content_search_base, R.id.nav_host_search),
-        BaseNavigationFragment.newInstance(R.layout.content_favorite_base, R.id.nav_host_favorite)
+        BaseNavigationFragment.newInstance(R.layout.content_favorite_base, R.id.nav_host_favorite),
+        BaseNavigationFragment.newInstance(R.layout.content_genre_base, R.id.nav_host_genre)
     )
 
     // map of navigation_id to container index
     private val indexToPage =
-        mapOf(0 to R.id.MainFragment, 1 to R.id.SearchFragment, 2 to R.id.FavoriteFragment)
+        mapOf(0 to R.id.MainFragment, 1 to R.id.SearchFragment, 2 to R.id.FavoriteFragment,3 to R.id.GenreFragment)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

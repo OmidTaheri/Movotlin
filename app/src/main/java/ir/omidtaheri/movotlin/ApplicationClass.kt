@@ -21,7 +21,7 @@ class ApplicationClass : Application(), ApplicationComponentProvider {
             DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .localModule(LocalModule("Movotlin"))
-                .remoteModule(RemoteModule(BuildConfig.BASE_URL,"123456"))
+                .remoteModule(RemoteModule(BuildConfig.BASE_URL,BuildConfig.API_KEY))
                 .repositoryModule(RepositoryModule())
                 .build()
 
