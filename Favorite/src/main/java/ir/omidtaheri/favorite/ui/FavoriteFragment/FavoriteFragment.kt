@@ -9,10 +9,10 @@ import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
 import ir.omidtaheri.favorite.di.components.DaggerFavoriteComponent
-import ir.omidtaheri.favorite.entity.MovieUiEntity
+import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
 
-class FavoriteFragment : BaseFragment<List<MovieUiEntity>>() {
+class FavoriteFragment : BaseFragment<List<FavoritedMovieUiEntity>>() {
 
 
     private var _viewbinding: FavoriteFragmentBinding? = null

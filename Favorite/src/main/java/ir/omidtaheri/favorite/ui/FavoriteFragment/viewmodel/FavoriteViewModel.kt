@@ -1,34 +1,33 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.MovieDomainEntity
-import ir.omidtaheri.domain.interactor.GetMovies
-import ir.omidtaheri.favorite.entity.MovieUiEntity
-import ir.omidtaheri.favorite.mapper.MovieEntityUiDomainMapper
+import ir.omidtaheri.domain.interactor.GetFavoriedMovieList
+import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
+import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
 
-class FavoriteViewModel(val GetMoviesUseCase: GetMovies,
-                        val UiDomainMapper: MovieEntityUiDomainMapper,
-                        application: Application
+class FavoriteViewModel(
+    val getFavoriedMovieList: GetFavoriedMovieList,
+    val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
+    application: Application
 ) :
-    BaseViewModel<List<MovieUiEntity>>(application) {
+    BaseViewModel<List<FavoritedMovieUiEntity>>(application) {
 
 
-    fun getMovieList() {
-
+    fun getFavoritedMovieList() {
         _isLoading.value = true
-        val disposable = GetMoviesUseCase.execute(Unit).subscribeBy { response ->
+        val disposable = getFavoriedMovieList.execute(Unit).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
                     _isLoading.value = false
                     _DataLive.value = response.data?.map {
-                        UiDomainMapper.mapToUiEntity(it)
+                        favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
                     }
                 }
 
@@ -39,11 +38,11 @@ class FavoriteViewModel(val GetMoviesUseCase: GetMovies,
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState)
+                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState)
+                                HandleToastError(errorDataState as DataState.ERROR<Any>)
                             }
                         }
 
@@ -59,7 +58,7 @@ class FavoriteViewModel(val GetMoviesUseCase: GetMovies,
         addDisposable(disposable)
     }
 
-    private fun HandleSnackBarError(errorDataState: DataState.ERROR<List<MovieDomainEntity>>) {
+    private fun HandleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
@@ -76,7 +75,7 @@ class FavoriteViewModel(val GetMoviesUseCase: GetMovies,
         }
     }
 
-    private fun HandleToastError(errorDataState: DataState.ERROR<List<MovieDomainEntity>>) {
+    private fun HandleToastError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
