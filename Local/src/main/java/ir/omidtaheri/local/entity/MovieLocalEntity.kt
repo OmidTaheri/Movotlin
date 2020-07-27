@@ -5,10 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Movie")
 data class MovieLocalEntity(
-    val id: Long,
+    val backdrop_path: String?,
+    @PrimaryKey
+    val id: Int,
+    val poster_path: String?,
     val title: String,
-    val rating: Double,
-    val picture: String
+    val vote_average: Double
 )
 
 

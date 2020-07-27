@@ -1,17 +1,31 @@
 package ir.omidtaheri.local.mapper
 
+import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
 import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.local.entity.MovieLocalEntity
 import javax.inject.Inject
 
-class MovieEntityDataLocalMapper @Inject constructor() : Data_Local_EntityMapper<MovieDataEntity, MovieLocalEntity> {
+class MovieEntityDataLocalMapper @Inject constructor() :
+    Data_Local_EntityMapper<FavoritedMovieDataEntity, MovieLocalEntity> {
 
-    override fun mapFromDataEntity(from: MovieDataEntity): MovieLocalEntity {
-        return MovieLocalEntity(from.id, from.title, from.rating, from.posterPath)
+    override fun mapFromDataEntity(from: FavoritedMovieDataEntity): MovieLocalEntity {
+        return MovieLocalEntity(
+            from.backdrop_path,
+            from.id,
+            from.poster_path,
+            from.title,
+            from.vote_average
+        )
     }
 
-    override fun mapToDataEntity(from: MovieLocalEntity): MovieDataEntity {
-        return MovieDataEntity(from.id, from.title, from.rating, from.picture, false)
+    override fun mapToDataEntity(from: MovieLocalEntity): FavoritedMovieDataEntity {
+        return FavoritedMovieDataEntity(
+            from.backdrop_path,
+            from.id,
+            from.poster_path,
+            from.title,
+            from.vote_average
+        )
     }
 
 
