@@ -1,35 +1,34 @@
 package ir.omidtaheri.search.ui.SearchFragment.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.MovieDomainEntity
-import ir.omidtaheri.domain.interactor.GetMovies
-import ir.omidtaheri.search.entity.MovieUiEntity
-import ir.omidtaheri.search.mapper.MovieEntityUiDomainMapper
+import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
+import ir.omidtaheri.domain.interactor.SearchMoviesByQuery
+import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
+import ir.omidtaheri.search.entity.MultiMovieUiEntity
+import ir.omidtaheri.search.mapper.MultiMovieEntityUiDomainMapper
 
 class SearchViewModel(
-    val GetMoviesUseCase: GetMovies,
-    val UiDomainMapper: MovieEntityUiDomainMapper,
+    val searchMoviesByQuery: SearchMoviesByQuery,
+    val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
     application: Application
-) : BaseViewModel<List<MovieUiEntity>>(application) {
+) : BaseViewModel<MultiMovieUiEntity>(application) {
 
 
-    fun getMovieList() {
-
+    fun SearchMovieByQuery(query: String, page: Int) {
         _isLoading.value = true
-        val disposable = GetMoviesUseCase.execute(Unit).subscribeBy { response ->
+        val searchParams = SearchMovieByQueryParams(query, page)
+        val disposable = searchMoviesByQuery.execute(searchParams).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
                     _isLoading.value = false
-                    _DataLive.value = response.data?.map {
-                        UiDomainMapper.mapToUiEntity(it)
-                    }
+                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
 
@@ -39,11 +38,11 @@ class SearchViewModel(
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState)
+                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState)
+                                HandleToastError(errorDataState as DataState.ERROR<Any>)
                             }
                         }
 
@@ -59,7 +58,8 @@ class SearchViewModel(
         addDisposable(disposable)
     }
 
-    private fun HandleSnackBarError(errorDataState: DataState.ERROR<List<MovieDomainEntity>>) {
+
+    private fun HandleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
@@ -76,7 +76,7 @@ class SearchViewModel(
         }
     }
 
-    private fun HandleToastError(errorDataState: DataState.ERROR<List<MovieDomainEntity>>) {
+    private fun HandleToastError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {

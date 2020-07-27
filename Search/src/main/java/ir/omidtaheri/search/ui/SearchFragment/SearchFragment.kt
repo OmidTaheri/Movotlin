@@ -1,8 +1,5 @@
 package ir.omidtaheri.search.ui.SearchFragment
 
-import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +7,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
-import ir.omidtaheri.search.R
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
 import ir.omidtaheri.search.di.components.DaggerSearchComponent
-import ir.omidtaheri.search.entity.MovieUiEntity
+import ir.omidtaheri.search.entity.MultiMovieUiEntity
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
 
-class SearchFragment : BaseFragment<List<MovieUiEntity>>(){
+class SearchFragment : BaseFragment<MultiMovieUiEntity>(){
     private var _viewbinding: SearchFragmentBinding? = null
 
     private val viewbinding
