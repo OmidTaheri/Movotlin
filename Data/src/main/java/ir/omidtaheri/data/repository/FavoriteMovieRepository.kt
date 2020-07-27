@@ -1,36 +1,50 @@
 package ir.omidtaheri.data.repository
 
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import ir.omidtaheri.data.datasource.remote.MovieReviewsRemoteDataSourceInterface
-import ir.omidtaheri.data.mapper.ReviewEntityDomainDataMapper
+import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
+import ir.omidtaheri.data.mapper.FavoritedMovieEntityDomainDataMapper
+import ir.omidtaheri.data.mapper.MovieEntityDomainDataMapper
 import ir.omidtaheri.domain.datastate.*
-import ir.omidtaheri.domain.entity.ReviewDomainEntity
-import ir.omidtaheri.domain.gateway.MovieReviewsGateWay
+import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
+import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
+import ir.omidtaheri.domain.entity.MovieDomainEntity
+import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import javax.inject.Inject
 
-class MovieReviewsRepository @Inject constructor(
-    val movieReviewsRemoteDataSource: MovieReviewsRemoteDataSourceInterface,
-    val reviewsEntityMapper: ReviewEntityDomainDataMapper
+class FavoriteMovieRepository @Inject constructor(
+    val movieLocalDataSource: MovieLocalDataSourceInterface,
+    val favoritedMovieEntityDomainDataMapper: FavoritedMovieEntityDomainDataMapper
 
-) : MovieReviewsGateWay {
+) : FavoriteMovieGateWay {
 
-    override fun GetReviews(MovieId: Long): Single<DataState<List<ReviewDomainEntity>>> {
+    override fun FavoriteMovie(Movie: FavoritedMovieDomainEntity): Completable {
+        return movieLocalDataSource.FavoriteMovie(
+            favoritedMovieEntityDomainDataMapper.mapToDataEntity(
+                Movie
+            )
+        )
+    }
 
-        return movieReviewsRemoteDataSource.GetReviews(MovieId)
-            .map<DataState<List<ReviewDomainEntity>>> {
+    override fun UnFavoriteMovie(MovieId: Int): Completable {
+        return movieLocalDataSource.UnFavoriteMovie(MovieId)
+    }
 
-                val list = it.map {
-                    reviewsEntityMapper.mapFromDataEntity(it)
-                }
+    override fun getFavoritedMovieList(): Flowable<DataState<List<FavoritedMovieDomainEntity>>> {
+
+        return movieLocalDataSource.GetFavoritedMoviesList()
+            .map<DataState<List<FavoritedMovieDomainEntity>>> {
 
                 DataState.SUCCESS(
-                    list,
+                    it.map {
+                        favoritedMovieEntityDomainDataMapper.mapFromDataEntity(it)
+                    },
                     StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
                 )
 
-
-            }
-            .onErrorReturn {
+            }.onErrorReturn {
                 DataState.ERROR(
                     StateMessage(
                         MessageHolder.MESSAGE(it.message ?: "Error"),
@@ -39,7 +53,9 @@ class MovieReviewsRepository @Inject constructor(
                     )
                 )
             }
-
     }
 
+
 }
+
+

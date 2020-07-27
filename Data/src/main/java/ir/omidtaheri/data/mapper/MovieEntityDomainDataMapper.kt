@@ -4,14 +4,36 @@ import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import javax.inject.Inject
 
-class MovieEntityDomainDataMapper @Inject constructor() : Domain_Data_Mapper<MovieDataEntity, MovieDomainEntity> {
+class MovieEntityDomainDataMapper @Inject constructor() :
+    Domain_Data_Mapper<MovieDataEntity, MovieDomainEntity> {
     override fun mapFromDataEntity(from: MovieDataEntity): MovieDomainEntity {
 
-        return MovieDomainEntity(from.id, from.title, from.rating, from.posterPath, from.isFavorite)
+        return MovieDomainEntity(
+            from.backdrop_path,
+            from.genre_ids,
+            from.id,
+            from.overview,
+            from.poster_path,
+            from.release_date,
+            from.title,
+            from.video,
+            from.vote_average
+        )
     }
 
     override fun mapToDataEntity(from: MovieDomainEntity): MovieDataEntity {
 
-        return MovieDataEntity(from.id, from.title, from.rating, from.posterPath, from.isFavorite)
+        return MovieDataEntity(
+            false,
+            from.backdrop_path,
+            from.genre_ids,
+            from.id,
+            from.overview,
+            from.poster_path,
+            from.release_date,
+            from.title,
+            from.video,
+            from.vote_average
+        )
     }
 }
