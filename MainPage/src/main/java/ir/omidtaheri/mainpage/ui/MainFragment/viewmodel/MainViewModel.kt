@@ -7,29 +7,33 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.MovieDomainEntity
-import ir.omidtaheri.domain.interactor.GetMovies
+import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
+import ir.omidtaheri.domain.interactor.GetPopularMovies
+import ir.omidtaheri.domain.interactor.GetTopRatedMovies
+import ir.omidtaheri.domain.interactor.GetUpcomingMovies
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
+import ir.omidtaheri.mainpage.entity.MultiMovieUiEntity
 import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
+import ir.omidtaheri.mainpage.mapper.MultiMovieEntityUiDomainMapper
 
 class MainViewModel(
-    val GetMoviesUseCase: GetMovies,
-    val UiDomainMapper: MovieEntityUiDomainMapper,
+    val GetPopularMoviesUseCase: GetPopularMovies,
+    val GetTopRatedMoviesUseCase: GetTopRatedMovies,
+    val GetUpcomingMoviesUseCase: GetUpcomingMovies,
+    val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel<List<MovieUiEntity>>(application) {
+    BaseViewModel<MultiMovieUiEntity>(application) {
 
 
-    fun getMovieList() {
-
+    fun getPopularMovieList(page: Int) {
         _isLoading.value = true
-        val disposable = GetMoviesUseCase.execute(Unit).subscribeBy { response ->
+        val disposable = GetPopularMoviesUseCase.execute(page).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
                     _isLoading.value = false
-                    _DataLive.value = response.data?.map {
-                        UiDomainMapper.mapToUiEntity(it)
-                    }
+                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
 
@@ -59,7 +63,92 @@ class MainViewModel(
         addDisposable(disposable)
     }
 
-    private fun HandleSnackBarError(errorDataState: DataState.ERROR<List<MovieDomainEntity>>) {
+
+
+
+    fun getTopRatedMovieList(page: Int) {
+        _isLoading.value = true
+        val disposable = GetTopRatedMoviesUseCase.execute(page).subscribeBy { response ->
+            when (response) {
+
+                is DataState.SUCCESS -> {
+                    _isLoading.value = false
+                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                }
+
+
+                is DataState.ERROR -> {
+                    _isLoading.value = false
+                    response.let { errorDataState ->
+
+                        when (errorDataState.stateMessage?.uiComponentType) {
+                            is UiComponentType.SNACKBAR -> {
+                                HandleSnackBarError(errorDataState)
+                            }
+
+                            is UiComponentType.TOAST -> {
+                                HandleToastError(errorDataState)
+                            }
+                        }
+
+
+                    }
+
+
+                }
+
+            }
+        }
+
+        addDisposable(disposable)
+    }
+
+
+
+
+    fun getUpComingMovieList(page: Int) {
+        _isLoading.value = true
+        val disposable = GetUpcomingMoviesUseCase.execute(page).subscribeBy { response ->
+            when (response) {
+
+                is DataState.SUCCESS -> {
+                    _isLoading.value = false
+                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                }
+
+
+                is DataState.ERROR -> {
+                    _isLoading.value = false
+                    response.let { errorDataState ->
+
+                        when (errorDataState.stateMessage?.uiComponentType) {
+                            is UiComponentType.SNACKBAR -> {
+                                HandleSnackBarError(errorDataState)
+                            }
+
+                            is UiComponentType.TOAST -> {
+                                HandleToastError(errorDataState)
+                            }
+                        }
+
+
+                    }
+
+
+                }
+
+            }
+        }
+
+        addDisposable(disposable)
+    }
+
+
+
+
+
+
+    private fun HandleSnackBarError(errorDataState: DataState.ERROR<MultiMovieDomainEntity>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
@@ -76,7 +165,7 @@ class MainViewModel(
         }
     }
 
-    private fun HandleToastError(errorDataState: DataState.ERROR<List<MovieDomainEntity>>) {
+    private fun HandleToastError(errorDataState: DataState.ERROR<MultiMovieDomainEntity>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {

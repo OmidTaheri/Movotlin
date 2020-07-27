@@ -10,9 +10,10 @@ import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpage.databinding.MainFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
+import ir.omidtaheri.mainpage.entity.MultiMovieUiEntity
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
 
-class MainFragment : BaseFragment<List<MovieUiEntity>>() {
+class MainFragment : BaseFragment<MultiMovieUiEntity>() {
 
 
     private var _viewbinding: MainFragmentBinding? = null
