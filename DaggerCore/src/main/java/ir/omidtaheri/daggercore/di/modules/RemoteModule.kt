@@ -2,18 +2,8 @@ package ir.omidtaheri.movotlin.di.modules
 
 import dagger.Module
 import dagger.Provides
-import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
-import ir.omidtaheri.data.datasource.remote.MovieRemoteDataSourceInterface
-import ir.omidtaheri.data.datasource.remote.MovieReviewsRemoteDataSourceInterface
-import ir.omidtaheri.remote.datasource.MovieDetailRemoteDataSourceImp
-import ir.omidtaheri.remote.datasource.MovieRemoteDataSourceImp
-import ir.omidtaheri.remote.datasource.MovieReviewsRemoteDataSourceImp
-import ir.omidtaheri.remote.mapper.MovieDetailResponseToDataEntityMapper
-import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
-import ir.omidtaheri.remote.mapper.MovieReviewResponseToDataEntityMapper
 import ir.omidtaheri.remote.service.MovieApi
 import ir.omidtaheri.remote.service.MovieDetailApi
-import ir.omidtaheri.remote.service.MovieReviewApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -76,11 +66,6 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         return retrofit.create(MovieDetailApi::class.java)
     }
 
-
-    @Provides
-    fun provideMovieReviewApi(retrofit: Retrofit): MovieReviewApi {
-        return retrofit.create(MovieReviewApi::class.java)
-    }
 
 
 

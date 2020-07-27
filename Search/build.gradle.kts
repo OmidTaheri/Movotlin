@@ -34,7 +34,6 @@ android {
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -43,7 +42,6 @@ android {
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"hhttps://api.themoviedb.org/3/\"")
         }
     }
 
