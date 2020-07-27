@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/genre_nav_graph"
+    app:startDestination="@id/genreFragment">
+
+    <fragment
+        android:id="@+id/genreFragment"
+        android:name="ir.omidtaheri.genrelist.ui.GenreFragment.GenreFragment"
+        android:label="genre_fragment"
+        tools:layout="@layout/genre_fragment" >
+        <action
+            android:id="@+id/action_genreFragment_to_movieListFragment"
+            app:destination="@id/movieListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieListFragment"
+        android:name="ir.omidtaheri.genrelist.ui.MovieListFragment.MovieListFragment"
+        android:label="movie_list_fragment"
+        tools:layout="@layout/movie_list_fragment" />
+</navigation>
