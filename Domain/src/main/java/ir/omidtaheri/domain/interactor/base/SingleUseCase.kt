@@ -4,9 +4,9 @@ import io.reactivex.rxjava3.core.Single
 
 abstract class SingleUseCase<in Params, Result>(val schedulers: Schedulers) {
 
-    abstract fun buildSingle(params: Params?): Single<Result>
+    abstract fun buildSingle(params: Params): Single<Result>
 
-    fun execute(params: Params?): Single<Result> {
+    fun execute(params: Params): Single<Result> {
 
         return buildSingle(params)
             .subscribeOn(schedulers.subscribeOn)
