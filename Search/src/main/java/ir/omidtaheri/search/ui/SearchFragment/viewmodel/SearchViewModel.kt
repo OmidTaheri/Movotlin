@@ -1,6 +1,8 @@
 package ir.omidtaheri.search.ui.SearchFragment.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -17,23 +19,38 @@ class SearchViewModel(
     val searchMoviesByQuery: SearchMoviesByQuery,
     val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
     application: Application
-) : BaseViewModel<MultiMovieUiEntity>(application) {
+) : BaseViewModel(application) {
+
+
+    private val _DataLive: MutableLiveData<MultiMovieUiEntity>
+    val DataLive: LiveData<MultiMovieUiEntity>
+        get() = _DataLive
+
+    private val _SearchErrorState: MutableLiveData<Boolean>
+    val SearchErrorState: LiveData<Boolean>
+        get() = _SearchErrorState
+
+
+    init {
+        _DataLive = MutableLiveData()
+        _SearchErrorState = MutableLiveData()
+    }
 
 
     fun SearchMovieByQuery(query: String, page: Int) {
-        _isLoading.value = true
+        //_isLoading.value = true
         val searchParams = SearchMovieByQueryParams(query, page)
         val disposable = searchMoviesByQuery.execute(searchParams).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    _isLoading.value = false
+                  //  _isLoading.value = false
                     _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
 
                 is DataState.ERROR -> {
-                    _isLoading.value = false
+                    //_isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -43,6 +60,10 @@ class SearchViewModel(
 
                             is UiComponentType.TOAST -> {
                                 HandleToastError(errorDataState as DataState.ERROR<Any>)
+                            }
+
+                            is UiComponentType.DIALOG -> {
+                                _SearchErrorState.value = true
                             }
                         }
 

@@ -1,28 +1,59 @@
 package ir.omidtaheri.search.ui.SearchFragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
 import ir.omidtaheri.search.di.components.DaggerSearchComponent
 import ir.omidtaheri.search.entity.MultiMovieUiEntity
+import ir.omidtaheri.search.ui.SearchFragment.adapters.SearchMovieAdapter
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
+import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
-class SearchFragment : BaseFragment<MultiMovieUiEntity>(){
+class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
+
+    private lateinit var recyclerAdapter: SearchMovieAdapter
+    private lateinit var viewModel: SearchViewModel
+
+
     private var _viewbinding: SearchFragmentBinding? = null
 
     private val viewbinding
         get() = _viewbinding!!
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewbinding = null
+    lateinit var multiStatePage: MultiStatePage
+    lateinit var searchbar: EditText
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerViews()
     }
+
+    private fun initRecyclerViews() {
+        multiStatePage.apply {
+            recyclerAdapter = SearchMovieAdapter()
+            recyclerAdapter.SetCallback(this@SearchFragment)
+            ConfigRecyclerView(
+                recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
+                GridLayoutManager(context, 2)
+            )
+            //ToLoadingState()
+        }
+    }
+
+    private fun fetchData(query: String, page: Int) {
+        viewModel.SearchMovieByQuery(query, page)
+    }
+
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = SearchFragmentBinding.inflate(inflater, container, false)
@@ -31,7 +62,9 @@ class SearchFragment : BaseFragment<MultiMovieUiEntity>(){
     }
 
     override fun bindUiComponent() {
+        multiStatePage = _viewbinding!!.MultiStatePage
 
+        searchbar = _viewbinding!!.searchbar
     }
 
     override fun ConfigDaggerComponent() {
@@ -50,9 +83,15 @@ class SearchFragment : BaseFragment<MultiMovieUiEntity>(){
     override fun setDataLiveObserver() {
 
         viewModel.DataLive.observe(this, Observer {
-
-
+            recyclerAdapter.addItems(it.results)
+            multiStatePage.ToDateState()
         })
+
+
+        viewModel.SearchErrorState.observe(this, Observer {
+            multiStatePage.ToEmptyState()
+        })
+
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
@@ -100,4 +139,14 @@ class SearchFragment : BaseFragment<MultiMovieUiEntity>(){
     override fun showDialog(message: String) {
         TODO("Not yet implemented")
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewbinding = null
+    }
+
+    override fun OnItemClick(MovieId: Int) {
+        TODO("Not yet implemented")
+    }
+
 }
