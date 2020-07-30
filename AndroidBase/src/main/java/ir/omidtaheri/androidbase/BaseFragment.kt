@@ -9,12 +9,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
-abstract class BaseFragment<DataLiveType> : Fragment() {
+abstract class BaseFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    protected lateinit var viewModel: BaseViewModel<DataLiveType>
 
 
     override fun onCreateView(
@@ -31,17 +29,13 @@ abstract class BaseFragment<DataLiveType> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindUiComponent()
-    }
-
-    abstract fun bindUiComponent()
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         ConfigDaggerComponent()
         SetViewModel()
         SetLivaDataObserver()
     }
+
+    abstract fun bindUiComponent()
+
 
     private fun SetLivaDataObserver() {
         setLoadingLiveDataObserver()

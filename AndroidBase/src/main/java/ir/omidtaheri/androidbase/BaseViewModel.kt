@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.omidtaheri.androidbase.singleLiveData.SingleLiveData
 
-open class BaseViewModel<DataLiveType>(application: Application) : AndroidViewModel(application) {
+open class BaseViewModel(application: Application) : AndroidViewModel(application) {
     val ApplicationClass: Application
 
     init {
@@ -41,9 +41,9 @@ open class BaseViewModel<DataLiveType>(application: Application) : AndroidViewMo
         get() = _MessageToast
 
 
-    protected val _DataLive: MutableLiveData<DataLiveType>
-    val DataLive: LiveData<DataLiveType>
-        get() = _DataLive
+//    protected val _DataLive: MutableLiveData<DataLiveType>
+//    val DataLive: LiveData<DataLiveType>
+//        get() = _DataLive
 
 
     init {
@@ -52,7 +52,7 @@ open class BaseViewModel<DataLiveType>(application: Application) : AndroidViewMo
         _ErrorToast = SingleLiveData()
         _MessageSnackBar = SingleLiveData()
         _MessageToast = SingleLiveData()
-        _DataLive = MutableLiveData()
+        //_DataLive = MutableLiveData()
     }
 
 
