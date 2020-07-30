@@ -8,15 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.MovieListFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerMovieListComponent
 import ir.omidtaheri.genrelist.entity.MultiMovieUiEntity
+import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.MovieListAdapter
 import ir.omidtaheri.genrelist.ui.MovieListFragment.viewmodel.MovieListViewModel
+import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
-class MovieListFragment : BaseFragment<MultiMovieUiEntity>() {
+class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
+
+    private lateinit var movieListAdapter: MovieListAdapter
+    private lateinit var viewModel: MovieListViewModel
 
 
     private var _viewbinding: MovieListFragmentBinding? = null
@@ -24,10 +31,29 @@ class MovieListFragment : BaseFragment<MultiMovieUiEntity>() {
     private val viewbinding
         get() = _viewbinding!!
 
+    lateinit var multiStatePage: MultiStatePage
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewbinding = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerViews()
+        //fetchData(GenreId)
+    }
+
+    private fun initRecyclerViews() {
+        multiStatePage.apply {
+            movieListAdapter = MovieListAdapter()
+            movieListAdapter.SetCallback(this@MovieListFragment)
+            ConfigRecyclerView(
+                movieListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
+                GridLayoutManager(context, 2)
+            )
+            ToLoadingState()
+        }
+    }
+
+
+    private fun fetchData(GenreId: Int) {
+        viewModel.getMovieListByGenre(GenreId)
     }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -37,7 +63,7 @@ class MovieListFragment : BaseFragment<MultiMovieUiEntity>() {
     }
 
     override fun bindUiComponent() {
-
+        multiStatePage = _viewbinding!!.MultiStatePage
     }
 
     override fun ConfigDaggerComponent() {
@@ -56,8 +82,11 @@ class MovieListFragment : BaseFragment<MultiMovieUiEntity>() {
     override fun setDataLiveObserver() {
 
         viewModel.DataLive.observe(this, Observer {
+            movieListAdapter.addItems(it.results)
+        })
 
-
+        viewModel.MovieErrorState.observe(this, Observer {
+            multiStatePage.ToErrorState()
         })
     }
 
@@ -107,5 +136,12 @@ class MovieListFragment : BaseFragment<MultiMovieUiEntity>() {
         TODO("Not yet implemented")
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewbinding = null
+    }
 
+    override fun OnItemClick(MovieId: Int) {
+        TODO("Not yet implemented")
+    }
 }
