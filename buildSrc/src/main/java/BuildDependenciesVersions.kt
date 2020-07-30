@@ -41,6 +41,7 @@ object BuildDependenciesVersions {
         const val CARDVIEW = "1.0.0"
         const val VIEWPAGER2 = "1.0.0"
         const val VECTORE_DRAWABLE = "1.1.0"
+        const val COORDINATORLAYOUT = "1.1.0"
         const val ANIMATED_VECTORE_DRAWABLE = "1.1.0"
     }
 

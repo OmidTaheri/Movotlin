@@ -31,4 +31,7 @@ object UiDependencies {
         "androidx.viewpager2:viewpager2:${BuildDependenciesVersions.UiDependenciesVersions.VIEWPAGER2}"
 
 
+    const val COORDINATORLAYOUT =
+        "androidx.coordinatorlayout:coordinatorlayout:${BuildDependenciesVersions.UiDependenciesVersions.COORDINATORLAYOUT}"
+
 }
