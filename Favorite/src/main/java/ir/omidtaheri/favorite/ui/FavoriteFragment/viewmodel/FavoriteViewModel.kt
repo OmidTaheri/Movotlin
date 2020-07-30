@@ -1,6 +1,8 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -16,16 +18,31 @@ class FavoriteViewModel(
     val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel<List<FavoritedMovieUiEntity>>(application) {
+    BaseViewModel(application) {
+
+
+    private val _DataLive: MutableLiveData<List<FavoritedMovieUiEntity>>
+    val DataLive: LiveData<List<FavoritedMovieUiEntity>>
+        get() = _DataLive
+
+    private val _FavoriteErrorState: MutableLiveData<Boolean>
+    val FavoriteErrorState: LiveData<Boolean>
+        get() = _FavoriteErrorState
+
+
+    init {
+        _DataLive = MutableLiveData()
+        _FavoriteErrorState = MutableLiveData()
+    }
 
 
     fun getFavoritedMovieList() {
-        _isLoading.value = true
+        // _isLoading.value = true
         val disposable = getFavoriedMovieList.execute(Unit).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    _isLoading.value = false
+                    //_isLoading.value = false
                     _DataLive.value = response.data?.map {
                         favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
                     }
@@ -33,7 +50,7 @@ class FavoriteViewModel(
 
 
                 is DataState.ERROR -> {
-                    _isLoading.value = false
+                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -43,6 +60,10 @@ class FavoriteViewModel(
 
                             is UiComponentType.TOAST -> {
                                 HandleToastError(errorDataState as DataState.ERROR<Any>)
+                            }
+
+                            is UiComponentType.DIALOG -> {
+                                _FavoriteErrorState.value = true
                             }
                         }
 
