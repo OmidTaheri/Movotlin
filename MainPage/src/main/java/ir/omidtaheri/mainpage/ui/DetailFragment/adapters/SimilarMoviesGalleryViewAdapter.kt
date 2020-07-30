@@ -1,4 +1,4 @@
-package ir.omidtaheri.mainpage.ui.MainFragment.adapters
+package ir.omidtaheri.mainpage.ui.DetailFragment.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import ir.omidtaheri.mainpage.databinding.MovieViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 
 
-class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class SimilarMoviesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
 
     var items: MutableList<MovieUiEntity> = mutableListOf()

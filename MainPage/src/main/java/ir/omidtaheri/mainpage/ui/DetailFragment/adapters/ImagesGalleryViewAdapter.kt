@@ -1,31 +1,23 @@
-package ir.omidtaheri.mainpage.ui.MainFragment.adapters
+package ir.omidtaheri.mainpage.ui.DetailFragment.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseViewHolder
-import ir.omidtaheri.mainpage.databinding.MovieViewerEmptyStateBinding
-import ir.omidtaheri.mainpage.databinding.MovieViewerItemBinding
+import ir.omidtaheri.mainpage.databinding.ImagesViewerEmptyStateBinding
+import ir.omidtaheri.mainpage.databinding.ImagesViewerItemBinding
+import ir.omidtaheri.mainpage.entity.MovieImageUiEntity
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 
 
-class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
 
-    var items: MutableList<MovieUiEntity> = mutableListOf()
+    var items: MutableList<MovieImageUiEntity> = mutableListOf()
 
     val VIEW_TYPE_EMPTY = 0
     val VIEW_TYPE_NORMAL = 1
 
-    lateinit var mCallback: Callback
-
-    interface Callback {
-        fun OnItemClick(MovieId: Int)
-    }
-
-    fun SetCallback(callback: Callback) {
-        mCallback = callback
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
@@ -33,7 +25,7 @@ class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
             VIEW_TYPE_EMPTY -> {
                 return EmptyViewHolder(
-                    MovieViewerEmptyStateBinding.inflate(
+                    ImagesViewerEmptyStateBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -43,7 +35,7 @@ class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
             else ->
                 return ViewHolder(
-                    MovieViewerItemBinding.inflate(
+                    ImagesViewerItemBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -79,17 +71,17 @@ class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
 
     //    Helpers
-    fun addItem(item: MovieUiEntity) {
+    fun addItem(item: MovieImageUiEntity) {
         items.add(item)
         notifyItemInserted(items.size - 1)
     }
 
-    fun addItems(list: List<MovieUiEntity>) {
+    fun addItems(list: List<MovieImageUiEntity>) {
         items.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun remove(item: MovieUiEntity) {
+    fun remove(item: MovieImageUiEntity) {
         val index = items.indexOf(item)
         if (index >= 0) {
             items.removeAt(index)
@@ -103,18 +95,15 @@ class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
 
-    inner class ViewHolder(val binding: MovieViewerItemBinding) : BaseViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ImagesViewerItemBinding) : BaseViewHolder(binding.root) {
 
 
         override fun onBind(position: Int) {
             val MovieUiEntity = items.get(position)
 
             binding.apply {
-                //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
-                titleMovie.text = MovieUiEntity.title
-                root.setOnClickListener {
-                    mCallback.OnItemClick(MovieUiEntity.id)
-                }
+
+               // binding.movieImageView.setImageResource()
             }
 
 
@@ -122,7 +111,7 @@ class GalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
 
-    inner class EmptyViewHolder(val binding: MovieViewerEmptyStateBinding) :
+    inner class EmptyViewHolder(val binding: ImagesViewerEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
 
