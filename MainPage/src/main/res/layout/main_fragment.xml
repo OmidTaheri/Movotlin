@@ -1,13 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainFragment.MainFragment">
+    android:orientation="vertical">
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:gravity="left"
+                android:text="TopRate"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+                android:id="@+id/Gallery_viewer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
+                app:layout_constraintTop_toBottomOf="@id/title1" />
+
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:gravity="left"
+                android:text="Popular"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Gallery_viewer1" />
+
+            <ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+                android:id="@+id/Gallery_viewer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
+                app:layout_constraintTop_toBottomOf="@id/title2" />
+
+
+            <TextView
+                android:id="@+id/title3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:gravity="left"
+                android:text="UpComing"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Gallery_viewer2" />
+
+            <ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+                android:id="@+id/Gallery_viewer3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
+                app:layout_constraintTop_toBottomOf="@id/title3" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

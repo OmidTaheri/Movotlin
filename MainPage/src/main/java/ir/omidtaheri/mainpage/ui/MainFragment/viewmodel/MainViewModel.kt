@@ -1,8 +1,11 @@
 package ir.omidtaheri.mainpage.ui.MainFragment.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.singleLiveData.SingleLiveData
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
@@ -23,22 +26,76 @@ class MainViewModel(
     val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel<MultiMovieUiEntity>(application) {
+    BaseViewModel(application) {
+
+
+    private val _PoularLiveData: MutableLiveData<MultiMovieUiEntity>
+    val PoularLiveData: LiveData<MultiMovieUiEntity>
+        get() = _PoularLiveData
+
+    private val _isPoularLoading: MutableLiveData<Boolean>
+    val isPoularLoading: LiveData<Boolean>
+        get() = _isPoularLoading
+
+    private val _PoularErrorState: MutableLiveData<Boolean>
+    val PoularErrorState: LiveData<Boolean>
+        get() = _PoularErrorState
+
+
+    private val _TopRateLiveData: MutableLiveData<MultiMovieUiEntity>
+    val TopRateLiveData: LiveData<MultiMovieUiEntity>
+        get() = _TopRateLiveData
+
+    private val _isTopRateLoading: MutableLiveData<Boolean>
+    val isTopRateLoading: LiveData<Boolean>
+        get() = _isTopRateLoading
+
+    private val _TopRateErrorState: MutableLiveData<Boolean>
+    val TopRateErrorState: LiveData<Boolean>
+        get() = _TopRateErrorState
+
+
+    private val _UpComingLiveData: MutableLiveData<MultiMovieUiEntity>
+    val UpComingLiveData: LiveData<MultiMovieUiEntity>
+        get() = _UpComingLiveData
+
+
+    private val _isUpComingLoading: MutableLiveData<Boolean>
+    val isUpComingLoading: LiveData<Boolean>
+        get() = _isUpComingLoading
+
+    private val _UpComingErrorState: MutableLiveData<Boolean>
+    val UpComingErrorState: LiveData<Boolean>
+        get() = _UpComingErrorState
+
+
+    init {
+        _PoularLiveData = MutableLiveData()
+        _TopRateLiveData = MutableLiveData()
+        _UpComingLiveData = MutableLiveData()
+        _isPoularLoading = MutableLiveData()
+        _isTopRateLoading = MutableLiveData()
+        _isUpComingLoading = MutableLiveData()
+        _PoularErrorState = MutableLiveData()
+        _TopRateErrorState = MutableLiveData()
+        _UpComingErrorState = MutableLiveData()
+    }
 
 
     fun getPopularMovieList(page: Int) {
-        _isLoading.value = true
+       // _isPoularLoading.value = true
         val disposable = GetPopularMoviesUseCase.execute(page).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    _isLoading.value = false
-                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                   // _isPoularLoading.value = false
+                    _PoularLiveData.value =
+                        multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
 
                 is DataState.ERROR -> {
-                    _isLoading.value = false
+                    //_isPoularLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -49,6 +106,11 @@ class MainViewModel(
                             is UiComponentType.TOAST -> {
                                 HandleToastError(errorDataState)
                             }
+
+                            is UiComponentType.DIALOG -> {
+                                _PoularErrorState.value = true
+                            }
+
                         }
 
 
@@ -64,21 +126,19 @@ class MainViewModel(
     }
 
 
-
-
     fun getTopRatedMovieList(page: Int) {
-        _isLoading.value = true
+       // _isTopRateLoading.value = true
         val disposable = GetTopRatedMoviesUseCase.execute(page).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    _isLoading.value = false
-                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                  //  _isTopRateLoading.value = false
+                    _TopRateLiveData.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
 
                 is DataState.ERROR -> {
-                    _isLoading.value = false
+                   // _isTopRateLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -89,6 +149,11 @@ class MainViewModel(
                             is UiComponentType.TOAST -> {
                                 HandleToastError(errorDataState)
                             }
+
+                            is UiComponentType.DIALOG -> {
+                                _TopRateErrorState.value = true
+                            }
+
                         }
 
 
@@ -104,21 +169,19 @@ class MainViewModel(
     }
 
 
-
-
     fun getUpComingMovieList(page: Int) {
-        _isLoading.value = true
+        //_isUpComingLoading.value = true
         val disposable = GetUpcomingMoviesUseCase.execute(page).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    _isLoading.value = false
-                    _DataLive.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                   // _isUpComingLoading.value = false
+                    _UpComingLiveData.value = multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
 
                 is DataState.ERROR -> {
-                    _isLoading.value = false
+                  //  _isUpComingLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -128,6 +191,11 @@ class MainViewModel(
 
                             is UiComponentType.TOAST -> {
                                 HandleToastError(errorDataState)
+                            }
+
+
+                            is UiComponentType.DIALOG -> {
+                                _UpComingErrorState.value = true
                             }
                         }
 
@@ -142,10 +210,6 @@ class MainViewModel(
 
         addDisposable(disposable)
     }
-
-
-
-
 
 
     private fun HandleSnackBarError(errorDataState: DataState.ERROR<MultiMovieDomainEntity>) {
