@@ -7,7 +7,7 @@ object BuildDependenciesVersions {
         const val RXJAVA = "2.2.19"
         const val RXKotlin = "2.4.0"
         const val RXANDROID = "2.0.2"
-        const val GLIDE = "4.6.1"
+        const val GLIDE = "4.11.0"
         const val DAGGER = "2.25.3"
         const val KOTLIN = "1.3.72"
         const val COROUTINES = "1.3.3"

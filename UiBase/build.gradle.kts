@@ -1,16 +1,15 @@
 import dependencies.Dependencies
 import dependencies.UiDependencies
+import dependencies.AnnotationProcessorsDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
-
 
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-
-
+    id(BuildPlugins.KOTLIN_KAPT)
 }
 
 
@@ -64,6 +63,8 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.MATERIAL)
+    implementation(UiDependencies.GLIDE)
+    kapt(AnnotationProcessorsDependencies.GLIDE_COMPILER)
     addTestsDependencies()
 
 }
