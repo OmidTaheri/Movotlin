@@ -4,23 +4,20 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ir.omidtaheri.domain.interactor.*
-import ir.omidtaheri.mainpage.mapper.MovieDetailEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MovieImageEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MovieVideoEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MultiMovieEntityUiDomainMapper
+import ir.omidtaheri.mainpage.mapper.*
 import javax.inject.Inject
 
 class DetailViewModelFactory @Inject constructor(
     val getDetailMovieUseCase: GetMovieDetail,
     val getMovieImagesById: GetMovieImagesById,
     val getMovieVideosById: GetMovieVideosById,
-    val getSimilarMovies: GetSimilarMovies,
+    val getSimilarMovies: GetSimilarMoviesSinglePage,
     val favorieMovie: FavorieMovie,
     val unfavoriteMovie: UnfavoriteMovie,
     val movieDetailEntityUiDomainMapper: MovieDetailEntityUiDomainMapper,
     val movieImageEntityUiDomainMapper: MovieImageEntityUiDomainMapper,
     val movieVideoEntityUiDomainMapper: MovieVideoEntityUiDomainMapper,
-    val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
+    val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
     val application: Application
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -34,7 +31,7 @@ class DetailViewModelFactory @Inject constructor(
             movieDetailEntityUiDomainMapper,
             movieImageEntityUiDomainMapper,
             movieVideoEntityUiDomainMapper,
-            multiMovieEntityUiDomainMapper,
+            movieEntityUiDomainMapper,
             application
         ) as T
     }
