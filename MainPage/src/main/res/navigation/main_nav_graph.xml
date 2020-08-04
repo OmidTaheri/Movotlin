@@ -18,5 +18,11 @@
         android:id="@+id/detailFragment"
         android:name="ir.omidtaheri.mainpage.ui.DetailFragment.DetailFragment"
         android:label="detail_fragment"
-        tools:layout="@layout/detail_fragment" />
+        tools:layout="@layout/detail_fragment">
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="movotlin://detailmovie/{id}" />
+
+    </fragment>
 </navigation>
