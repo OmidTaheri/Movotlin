@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.ChipGroup
@@ -23,6 +24,7 @@ import ir.omidtaheri.mainpage.di.components.DaggerDetailComponent
 import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.entity.MovieDetailUiEntity
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapter
+import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
@@ -64,6 +66,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         GalleryViewerImages.apply {
 
             adapterImages = ImagesGalleryViewAdapter()
+
             ConfigRecyclerView(
                 adapterImages as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
@@ -74,22 +77,42 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
 
         GalleryViewerSimilarMovies.apply {
-            adapterSimilarMovies = SimilarMoviesGalleryViewAdapter()
+            adapterSimilarMovies = SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator)
             adapterSimilarMovies.apply {
                 SetCallback(this@DetailFragment)
+                addLoadStateListener {
+
+                    when (it.refresh) {
+
+                        is LoadState.Loading -> {
+                            ToLoadingState()
+                        }
+
+                        is LoadState.Error -> {
+                            ToErrorState()
+                        }
+
+                        is LoadState.NotLoading -> {
+                            ToDateState()
+                        }
+                    }
+
+
+                }
+
             }
             ConfigRecyclerView(
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            ToLoadingState()
+
         }
 
 
     }
 
     private fun fetchData(MovieId: Int) {
-        viewModel.getSimilarMovies(MovieId, 0)
+        viewModel.getSimilarMovies(MovieId)
         viewModel.getMovieImages(MovieId)
         viewModel.getMovieDetail(MovieId)
     }
@@ -145,9 +168,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         })
 
         viewModel.SimilarMoviesLiveData.observe(this, Observer {
-
-            adapterSimilarMovies.addItems(it.results)
-            GalleryViewerImages.ToDateState()
+            adapterSimilarMovies.submitData(lifecycle, it)
         })
 
 
@@ -157,10 +178,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         })
 
 
-        viewModel.SimilarErrorState.observe(this, Observer {
-            GalleryViewerSimilarMovies.ToErrorState()
 
-        })
 
 
         viewModel.FavoritedLiveData.observe(this, Observer {

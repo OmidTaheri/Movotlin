@@ -1,6 +1,7 @@
 package ir.omidtaheri.domain.interactor
 
-import io.reactivex.rxjava3.core.Single
+
+import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.GenreDomainEntity
 import ir.omidtaheri.domain.entity.MovieDomainEntity

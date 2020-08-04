@@ -1,6 +1,7 @@
 package ir.omidtaheri.remote.service
 
-import io.reactivex.rxjava3.core.Single
+
+import io.reactivex.Single
 import ir.omidtaheri.remote.entity.response.GenreResponseRemoteEntity
 import ir.omidtaheri.remote.entity.response.MultiMovieResponseRemoteEntity
 import retrofit2.http.GET

@@ -27,7 +27,7 @@ class BaseNavigationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Inflate the load_state_footer_view_item for this fragment
         return inflater.inflate(LayoutRes, container, false)
     }
 

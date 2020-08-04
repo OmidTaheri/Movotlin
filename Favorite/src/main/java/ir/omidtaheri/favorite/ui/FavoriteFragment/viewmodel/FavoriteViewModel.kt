@@ -3,7 +3,7 @@ package ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder

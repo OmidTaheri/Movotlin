@@ -1,7 +1,7 @@
 package ir.omidtaheri.data.datasource.remote
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+
+import io.reactivex.Single
 import ir.omidtaheri.data.entity.GenreDataEntity
 import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.data.entity.MultiMovieDataEntity

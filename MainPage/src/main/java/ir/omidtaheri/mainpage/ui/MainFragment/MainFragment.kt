@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
@@ -16,6 +17,7 @@ import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 import ir.omidtaheri.mainpage.entity.MultiMovieUiEntity
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
+import ir.omidtaheri.mainpage.ui.MainFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
@@ -51,23 +53,61 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
         GalleryViewerTopRate.apply {
 
-            adapterTopRate = GalleryViewAdapter()
+            adapterTopRate = GalleryViewAdapter(MovieUiEntityComparator)
             adapterTopRate.apply {
                 SetCallback(this@MainFragment)
+                addLoadStateListener {
+
+                    when (it.refresh) {
+
+                        is LoadState.Loading -> {
+                            ToLoadingState()
+                        }
+
+                        is LoadState.Error -> {
+                            ToErrorState()
+                        }
+
+                        is LoadState.NotLoading -> {
+                            ToDateState()
+                        }
+                    }
+
+
+                }
+
             }
             ConfigRecyclerView(
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            ToLoadingState()
         }
 
 
 
         GalleryViewerPopular.apply {
-            adapterPopular = GalleryViewAdapter()
+            adapterPopular = GalleryViewAdapter(MovieUiEntityComparator)
             adapterPopular.apply {
                 SetCallback(this@MainFragment)
+                addLoadStateListener {
+
+                    when (it.refresh) {
+
+                        is LoadState.Loading -> {
+                            ToLoadingState()
+                        }
+
+                        is LoadState.Error -> {
+                            ToErrorState()
+                        }
+
+                        is LoadState.NotLoading -> {
+                            ToDateState()
+                        }
+                    }
+
+
+                }
             }
             ConfigRecyclerView(
                 adapterPopular as RecyclerView.Adapter<RecyclerView.ViewHolder>,
@@ -79,9 +119,28 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
 
         GalleryViewerUpComing.apply {
-            adapterUpComing = GalleryViewAdapter()
+            adapterUpComing = GalleryViewAdapter(MovieUiEntityComparator)
             adapterUpComing.apply {
                 SetCallback(this@MainFragment)
+                addLoadStateListener {
+
+                    when (it.refresh) {
+
+                        is LoadState.Loading -> {
+                            ToLoadingState()
+                        }
+
+                        is LoadState.Error -> {
+                            ToErrorState()
+                        }
+
+                        is LoadState.NotLoading -> {
+                            ToDateState()
+                        }
+                    }
+
+
+                }
             }
 
             ConfigRecyclerView(
@@ -95,9 +154,9 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     }
 
     private fun fetchData() {
-        viewModel.getPopularMovieList(0)
-        viewModel.getTopRatedMovieList(0)
-        viewModel.getUpComingMovieList(0)
+        viewModel.getPopularMovieList()
+        viewModel.getTopRatedMovieList()
+        viewModel.getUpComingMovieList()
     }
 
 
@@ -129,53 +188,19 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     override fun setDataLiveObserver() {
 
         viewModel.PoularLiveData.observe(this, Observer {
-            adapterPopular.addItems(it.results)
-            GalleryViewerPopular.ToDateState()
+            adapterPopular.submitData(lifecycle, it)
+
         })
 
         viewModel.TopRateLiveData.observe(this, Observer {
-            adapterTopRate.addItems(it.results)
-            GalleryViewerTopRate.ToDateState()
+            adapterTopRate.submitData(lifecycle, it)
+
         })
 
 
         viewModel.UpComingLiveData.observe(this, Observer {
-            adapterUpComing.addItems(it.results)
-            GalleryViewerUpComing.ToDateState()
-        })
+            adapterUpComing.submitData(lifecycle, it)
 
-
-        viewModel.isPoularLoading.observe(this, Observer {
-
-            GalleryViewerPopular.ToLoadingState()
-        })
-
-        viewModel.isTopRateLoading.observe(this, Observer {
-
-            GalleryViewerTopRate.ToLoadingState()
-        })
-
-
-        viewModel.isUpComingLoading.observe(this, Observer {
-            GalleryViewerUpComing.ToLoadingState()
-
-        })
-
-
-        viewModel.PoularErrorState.observe(this, Observer {
-            GalleryViewerPopular.ToErrorState()
-        })
-
-
-        viewModel.TopRateErrorState.observe(this, Observer {
-            GalleryViewerTopRate.ToErrorState()
-
-        })
-
-
-        viewModel.UpComingErrorState.observe(this, Observer {
-
-            GalleryViewerUpComing.ToErrorState()
         })
 
 

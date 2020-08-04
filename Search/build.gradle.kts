@@ -78,7 +78,8 @@ dependencies {
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
-
+    implementation(JetpackDependencies.PAGING)
+    implementation(JetpackDependencies.PAGING_RX)
 
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
     implementation(UiDependencies.RECYCLE_VIEW)

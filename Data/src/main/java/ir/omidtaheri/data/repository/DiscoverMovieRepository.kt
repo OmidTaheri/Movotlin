@@ -1,6 +1,7 @@
 package ir.omidtaheri.data.repository
 
-import io.reactivex.rxjava3.core.Single
+
+import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
 import ir.omidtaheri.data.mapper.MovieDetailEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MovieImageEntityDomainDataMapper

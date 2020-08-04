@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".BaseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment load_state_footer_view_item -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

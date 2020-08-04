@@ -1,6 +1,7 @@
 package ir.omidtaheri.domain.gateway
 
-import io.reactivex.rxjava3.core.Single
+
+import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.*
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams

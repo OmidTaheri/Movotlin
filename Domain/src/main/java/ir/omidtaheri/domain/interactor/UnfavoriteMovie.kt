@@ -1,6 +1,7 @@
 package ir.omidtaheri.domain.interactor
 
-import io.reactivex.rxjava3.core.Completable
+
+import io.reactivex.Completable
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import ir.omidtaheri.domain.gateway.MovieGateWay

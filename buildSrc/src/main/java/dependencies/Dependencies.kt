@@ -42,14 +42,14 @@ object Dependencies {
         "com.google.android.play:core:${BuildDependenciesVersions.DependenciesVersions.PLAY_CORE}"
 
     const val RX_ANDROID =
-        "io.reactivex.rxjava3:rxandroid:${BuildDependenciesVersions.DependenciesVersions.RXANDROID}"
+        "io.reactivex.rxjava2:rxandroid:${BuildDependenciesVersions.DependenciesVersions.RXANDROID}"
 
     const val RX_JAVA =
-        "io.reactivex.rxjava3:rxjava:${BuildDependenciesVersions.DependenciesVersions.RXJAVA}"
+        "io.reactivex.rxjava2:rxjava:${BuildDependenciesVersions.DependenciesVersions.RXJAVA}"
 
 
     const val RX_Kotlin =
-        "io.reactivex.rxjava3:rxkotlin:${BuildDependenciesVersions.DependenciesVersions.RXKotlin}"
+        "io.reactivex.rxjava2:rxkotlin:${BuildDependenciesVersions.DependenciesVersions.RXKotlin}"
 
 
     const val Annotation =

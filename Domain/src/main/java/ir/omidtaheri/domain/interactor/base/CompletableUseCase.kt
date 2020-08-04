@@ -1,6 +1,6 @@
 package ir.omidtaheri.domain.interactor.base
 
-import io.reactivex.rxjava3.core.Completable
+import io.reactivex.Completable
 
 
 abstract class CompletableUseCase<in Params>(val schedulers: Schedulers) {

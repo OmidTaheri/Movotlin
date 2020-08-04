@@ -1,9 +1,8 @@
 package ir.omidtaheri.data.repository
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
+import androidx.lifecycle.Transformations.map
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.mapper.FavoritedMovieEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MovieEntityDomainDataMapper

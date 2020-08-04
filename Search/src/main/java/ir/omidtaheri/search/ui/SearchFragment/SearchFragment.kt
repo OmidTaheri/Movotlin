@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
@@ -14,6 +15,8 @@ import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
 import ir.omidtaheri.search.di.components.DaggerSearchComponent
 import ir.omidtaheri.search.entity.MultiMovieUiEntity
+import ir.omidtaheri.search.ui.SearchFragment.adapters.FooterLoadStateAdapter
+import ir.omidtaheri.search.ui.SearchFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.search.ui.SearchFragment.adapters.SearchMovieAdapter
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
@@ -40,13 +43,40 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            recyclerAdapter = SearchMovieAdapter()
-            recyclerAdapter.SetCallback(this@SearchFragment)
+            recyclerAdapter = SearchMovieAdapter(MovieUiEntityComparator)
+            recyclerAdapter.apply {
+                SetCallback(this@SearchFragment)
+                addLoadStateListener {
+
+                    when (it.refresh) {
+
+                        is LoadState.Loading -> {
+                            ToLoadingState()
+                        }
+
+                        is LoadState.Error -> {
+                            ToErrorState()
+                        }
+
+                        is LoadState.NotLoading -> {
+                            ToDateState()
+                        }
+                    }
+
+
+                }
+
+                withLoadStateFooter(
+                    FooterLoadStateAdapter((::retry))
+                )
+            }
+
+
             ConfigRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-            //ToLoadingState()
+
         }
     }
 
@@ -83,14 +113,10 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     override fun setDataLiveObserver() {
 
         viewModel.DataLive.observe(this, Observer {
-            recyclerAdapter.addItems(it.results)
-            multiStatePage.ToDateState()
+            recyclerAdapter.submitData(lifecycle, it)
+
         })
 
-
-        viewModel.SearchErrorState.observe(this, Observer {
-            multiStatePage.ToEmptyState()
-        })
 
     }
 

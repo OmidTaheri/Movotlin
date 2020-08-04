@@ -2,7 +2,7 @@ import dependencies.Dependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
-
+import dependencies.JetpackDependencies
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -61,6 +61,8 @@ dependencies {
     implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.JavaxInject)
 
+    implementation(JetpackDependencies.PAGING)
+    implementation(JetpackDependencies.PAGING_RX)
 
     addTestsDependencies()
 

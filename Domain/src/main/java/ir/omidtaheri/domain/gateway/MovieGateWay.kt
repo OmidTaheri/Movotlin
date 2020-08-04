@@ -1,10 +1,10 @@
 package ir.omidtaheri.domain.gateway
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
+
+
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.GenreDomainEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 
 interface MovieGateWay {

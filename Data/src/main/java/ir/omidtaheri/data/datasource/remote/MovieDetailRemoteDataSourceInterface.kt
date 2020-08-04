@@ -1,6 +1,7 @@
 package ir.omidtaheri.data.datasource.remote
 
-import io.reactivex.rxjava3.core.Single
+
+import io.reactivex.Single
 import ir.omidtaheri.data.entity.*
 
 import ir.omidtaheri.domain.datastate.DataState

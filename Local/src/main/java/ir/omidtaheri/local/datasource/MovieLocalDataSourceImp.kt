@@ -1,8 +1,8 @@
 package ir.omidtaheri.local.datasource
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
+
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
 import ir.omidtaheri.data.entity.MovieDataEntity

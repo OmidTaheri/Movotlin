@@ -1,6 +1,7 @@
 package ir.omidtaheri.domain.interactor.base
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
+
 
 abstract class SingleUseCase<in Params, Result>(val schedulers: Schedulers) {
 

@@ -4,9 +4,9 @@ object BuildDependenciesVersions {
     object DependenciesVersions {
 
         const val RETROFIT = "2.8.1"
-        const val RXJAVA = "3.0.0"
-        const val RXKotlin = "3.0.0"
-        const val RXANDROID = "3.0.0"
+        const val RXJAVA = "2.2.19"
+        const val RXKotlin = "2.4.0"
+        const val RXANDROID = "2.0.2"
         const val GLIDE = "4.6.1"
         const val DAGGER = "2.25.3"
         const val KOTLIN = "1.3.72"
@@ -28,7 +28,7 @@ object BuildDependenciesVersions {
         const val FUTURES = "1.0.0"
         const val ROOM = "2.2.5"
         const val NAVIGATION = "2.2.2"
-        const val PAGING = "2.1.2"
+        const val PAGING = "3.0.0-alpha03"
         const val WORKERMANAGER = "2.0.1"
     }
 

@@ -3,8 +3,9 @@ package ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxkotlin.subscribeBy
 
-import io.reactivex.rxjava3.kotlin.subscribeBy
+
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
@@ -43,7 +44,7 @@ class GenreViewModel(
 
     fun getMovieListByGenre() {
         //  _isLoading.value = true
-        val disposable = getGenreList.execute(Unit).subscribeBy { response ->
+        val disposable = getGenreList.execute(Unit).subscribeBy{ response ->
             when (response) {
 
                 is DataState.SUCCESS -> {

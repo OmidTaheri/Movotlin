@@ -9,6 +9,7 @@ plugins {
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
 
+
 }
 
 android {
@@ -58,7 +59,6 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(project(mapOf("path" to ":Domain")))
-
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.JavaxInject)

@@ -1,6 +1,6 @@
 package ir.omidtaheri.domain.interactor.base
 
-import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.Flowable
 
 
 abstract class FlowableUseCase<in Params, Result>(val schedulers: Schedulers) {
