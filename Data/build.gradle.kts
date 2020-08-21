@@ -32,17 +32,31 @@ android {
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
+            isDebuggable = BuildTypeRelease.debuggable
+            isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
+
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
+
         }
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            isDebuggable = BuildTypeDebug.debuggable
+            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
+
         }
     }
 
+    flavorDimensions(BuildProductDimensions.BASEDIMENT)
+
+    productFlavors {
+        FullFlavor.libraryCreate(this)
+        DemoFlavor.libraryCreate(this)
+        FullQAFlavor.libraryCreate(this)
+    }
 
 
     compileOptions {
@@ -58,7 +72,7 @@ dependencies {
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
-    implementation(project(mapOf("path" to ":Domain")))
+    implementation(project(mapOf("path" to BuildModules.Domain)))
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.JavaxInject)

@@ -4,6 +4,8 @@ import dependencies.Dependencies
 import dependencies.JetpackDependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
+import extentions.buildConfigStringField
+import extentions.getLocalProperty
 import extentions.kapt
 
 plugins {
@@ -28,26 +30,50 @@ android {
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
     }
 
+    signingConfigs {
+        create(BuildTypes.RELEASE) {
+            keyAlias = getLocalProperty("signing.key.alias")
+            keyPassword = getLocalProperty("signing.key.password")
+            storeFile = file(getLocalProperty("signing.store.file"))
+            storePassword = getLocalProperty("signing.store.password")
+        }
+    }
+
+
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigField("String", "API_KEY", "f5a42625ecb8794bcb6ae2d7238bea7e")
+            isDebuggable = BuildTypeRelease.debuggable
+            isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
+            isShrinkResources = BuildTypeRelease.isMinifyEnabled
+            buildConfigStringField("BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigStringField("API_KEY", "f5a42625ecb8794bcb6ae2d7238bea7e")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName(name)
         }
 
         getByName(BuildTypes.DEBUG) {
             applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
             versionNameSuffix = BuildTypeDebug.versionNameSuffix
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"hhttps://api.themoviedb.org/3/\"")
-            buildConfigField("String", "API_KEY", "f5a42625ecb8794bcb6ae2d7238bea7e")
+            isDebuggable = BuildTypeDebug.debuggable
+            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
+            isShrinkResources = BuildTypeDebug.isMinifyEnabled
+            buildConfigStringField("BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigStringField("API_KEY", "f5a42625ecb8794bcb6ae2d7238bea7e")
         }
     }
 
+    flavorDimensions(BuildProductDimensions.BASEDIMENT)
+
+    productFlavors {
+        FullFlavor.appCreate(this)
+        DemoFlavor.appCreate(this)
+        FullQAFlavor.appCreate(this)
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -69,24 +95,23 @@ dependencies {
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
 
-    implementation(project(mapOf("path" to ":Data")))
-
-    implementation(project(mapOf("path" to ":Domain")))
-
+    implementation(project(mapOf("path" to BuildModules.Data)))
+    implementation(project(mapOf("path" to BuildModules.Domain)))
 
 
-    implementation(project(mapOf("path" to ":Data")))
-
-    implementation(project(mapOf("path" to ":DaggerCore")))
-
-    implementation(project(mapOf("path" to ":MainPage")))
-    implementation(project(mapOf("path" to ":Search")))
-    implementation(project(mapOf("path" to ":Favorite")))
-    implementation(project(mapOf("path" to ":GenreList")))
 
 
-    implementation( JetpackDependencies.NAVIGATION_FRAGMENT)
-    implementation( JetpackDependencies.NAVIGATION_UI)
+
+    implementation(project(mapOf("path" to BuildModules.DaggerCore)))
+
+    implementation(project(mapOf("path" to BuildModules.MainPage)))
+    implementation(project(mapOf("path" to BuildModules.Search)))
+    implementation(project(mapOf("path" to BuildModules.Favorite)))
+    implementation(project(mapOf("path" to BuildModules.GenreList)))
+
+
+    implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
+    implementation(JetpackDependencies.NAVIGATION_UI)
 
     implementation(UiDependencies.MATERIAL)
     implementation(UiDependencies.VIEWPAGER2)
@@ -97,5 +122,5 @@ dependencies {
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
 
-   addTestsDependencies()
+    addTestsDependencies()
 }

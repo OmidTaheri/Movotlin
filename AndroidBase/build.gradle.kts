@@ -32,20 +32,37 @@ android {
 
     }
 
-
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
+            isDebuggable = BuildTypeRelease.debuggable
+            isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+            isDebuggable = BuildTypeDebug.debuggable
+            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
+
         }
     }
+
+    flavorDimensions(BuildProductDimensions.BASEDIMENT)
+
+    productFlavors {
+        FullFlavor.libraryCreate(this)
+        DemoFlavor.libraryCreate(this)
+        FullQAFlavor.libraryCreate(this)
+    }
+
+
+
 
 
 
