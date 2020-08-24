@@ -4,13 +4,13 @@ import extentions.addTestsDependencies
 import extentions.implementation
 import dependencies.AnnotationProcessorsDependencies
 import dependencies.JetpackDependencies
-
+import extentions.kapt
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-
+    id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
@@ -73,7 +73,7 @@ dependencies {
     implementation(UiDependencies.APPCOMPAT)
     implementation(project(mapOf("path" to BuildModules.Data)))
 
-    implementation(AnnotationProcessorsDependencies.ROOM)
+    kapt(AnnotationProcessorsDependencies.ROOM)
     implementation(JetpackDependencies.ROOM)
     implementation(JetpackDependencies.ROOM_KTX)
     implementation(JetpackDependencies.ROOM_RX)
