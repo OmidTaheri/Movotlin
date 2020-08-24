@@ -1,15 +1,11 @@
-package ir.omidtaheri.data.repository
+package ir.omidtaheri.data.repositoryTest
 
-import androidx.lifecycle.Transformations.map
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.mapper.FavoritedMovieEntityDomainDataMapper
-import ir.omidtaheri.data.mapper.MovieEntityDomainDataMapper
 import ir.omidtaheri.domain.datastate.*
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
-import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import javax.inject.Inject
 

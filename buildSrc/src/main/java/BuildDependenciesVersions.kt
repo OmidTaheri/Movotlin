@@ -21,6 +21,7 @@ object BuildDependenciesVersions {
         const val ANOTATION = "1.1.0"
         const val JAVAX_INJECT = "1"
         const val JAVAX_ANNOTATION = "1.0"
+        const val MULTIDEX = "2.0.1"
     }
 
     object JetpackDependenciesVersions {

@@ -63,5 +63,7 @@ object Dependencies {
         "javax.annotation:jsr250-api:${BuildDependenciesVersions.DependenciesVersions.JAVAX_ANNOTATION}"
 
 
+    const val multidex =
+        "androidx.multidex:multidex:${BuildDependenciesVersions.DependenciesVersions.MULTIDEX}"
 
 }

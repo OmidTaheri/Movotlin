@@ -1,17 +1,13 @@
-package ir.omidtaheri.data.repository
+package ir.omidtaheri.data.repositoryTest
 
 
 
 import io.reactivex.Single
-import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.datasource.remote.MovieRemoteDataSourceInterface
-import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.data.mapper.GenreEntityDomainDataMapper
-import ir.omidtaheri.data.mapper.MovieEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MultiMovieEntityDomainDataMapper
 import ir.omidtaheri.domain.datastate.*
 import ir.omidtaheri.domain.entity.GenreDomainEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
 import javax.inject.Inject

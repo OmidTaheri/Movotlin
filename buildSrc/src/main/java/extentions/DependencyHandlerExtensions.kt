@@ -26,7 +26,6 @@ fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dep
 fun DependencyHandler.addTestsDependencies() {
 
 
-
     testImplementation(TestDependencies.MOCKK)
     testImplementation(TestDependencies.CORE)
     testImplementation(TestDependencies.JUNIT)
@@ -34,13 +33,18 @@ fun DependencyHandler.addTestsDependencies() {
     testImplementation(TestDependencies.COROUTINES_TEST)
     testImplementation(TestDependencies.MOCK_WEB_SERVER)
     testImplementation(TestDependencies.ROBOELECTRIC)
+    testImplementation(TestDependencies.EXT_JUNIT)
+    testImplementation(TestDependencies.EXT_TRUTH)
+    testImplementation(TestDependencies.TRUTH)
+
+
 
 
     androidTestImplementation(TestDependencies.CORE)
     androidTestImplementation(TestDependencies.EXT_JUNIT)
     androidTestImplementation(TestDependencies.EXT_TRUTH)
     androidTestImplementation(TestDependencies.TRUTH)
-    
+
     androidTestImplementation(TestAndroidDependencies.MOCKK)
     androidTestImplementation(TestAndroidDependencies.RUNNER)
     androidTestImplementation(TestAndroidDependencies.RULES)
