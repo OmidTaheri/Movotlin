@@ -85,7 +85,7 @@ dependencies {
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
 
-    implementation(AnnotationProcessorsDependencies.ROOM)
+    kapt(AnnotationProcessorsDependencies.ROOM)
     implementation(JetpackDependencies.ROOM)
     implementation(JetpackDependencies.ROOM_KTX)
     implementation(JetpackDependencies.ROOM_RX)
