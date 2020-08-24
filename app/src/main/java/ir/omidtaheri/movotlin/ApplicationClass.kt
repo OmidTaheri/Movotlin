@@ -9,7 +9,7 @@ import ir.omidtaheri.movotlin.di.modules.LocalModule
 import ir.omidtaheri.movotlin.di.modules.RemoteModule
 import ir.omidtaheri.movotlin.di.modules.RepositoryModule
 
-class ApplicationClass : Application(), ApplicationComponentProvider {
+class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
 
     lateinit var ApplicationComponent: ApplicationComponent

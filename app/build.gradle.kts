@@ -25,7 +25,7 @@ android {
         targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
         versionCode = BuildAndroidConfig.VERSION_CODE
         versionName = BuildAndroidConfig.VERSION_NAME
-
+        multiDexEnabled = true
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
     }
@@ -46,8 +46,8 @@ android {
             isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
             isShrinkResources = BuildTypeRelease.isMinifyEnabled
-            buildConfigStringField("BASE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigStringField("API_KEY", "f5a42625ecb8794bcb6ae2d7238bea7e")
+            buildConfigStringField("BASE_URL", "https://api.themoviedb.org/3/")
+            buildConfigStringField("API_KEY", getLocalProperty("API.KEY"))
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -62,8 +62,8 @@ android {
             isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
             isShrinkResources = BuildTypeDebug.isMinifyEnabled
-            buildConfigStringField("BASE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigStringField("API_KEY", "f5a42625ecb8794bcb6ae2d7238bea7e")
+            buildConfigStringField("BASE_URL", "https://api.themoviedb.org/3/")
+            buildConfigStringField("API_KEY", getLocalProperty("API.KEY"))
         }
     }
 
@@ -89,12 +89,17 @@ android {
 
 dependencies {
 
+    
+    
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
-
+    
+    implementation(Dependencies.multidex)
+    
+    
     implementation(project(mapOf("path" to BuildModules.Data)))
     implementation(project(mapOf("path" to BuildModules.Domain)))
 
