@@ -67,16 +67,24 @@ class DiscoverMovieRepositoryTest {
         every { movieDetailRemoteDataSource.GetMovieDetailById(any()) } returns testObservable
         ///Action
         val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
-
+        testObserver.awaitTerminalEvent()
         ///Assertion
 
-        assertEquals(
-            testObserver.values()[0],
-            DataState.SUCCESS(
-                movieDetailEntityMapper.mapFromDataEntity(inputEntity),
-                StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
-            )
-        )
+        val Response_data = testObserver.values()[0]
+        when (Response_data) {
+
+            is DataState.SUCCESS -> {
+                assertEquals(
+                    Response_data.data,
+                    movieDetailEntityMapper.mapFromDataEntity(inputEntity)
+                )
+
+            }
+
+
+        }
+
+
     }
 
 
@@ -89,16 +97,24 @@ class DiscoverMovieRepositoryTest {
 
 
         val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
+        testObserver.awaitTerminalEvent()
 
-        assertEquals(
-            testObserver.values()[0],
-            DataState.ERROR<DataState<MovieDetailDomainEntity>>(
-                StateMessage(
-                    MessageHolder.MESSAGE("RunTimeError"),
-                    UiComponentType.SNACKBAR,
-                    MessageType.ERROR
-                )
-            )
-        )
+        val Response_data = testObserver.values()[0]
+        when (Response_data) {
+
+            is DataState.ERROR -> {
+
+                when (Response_data.stateMessage?.message) {
+                    is MessageHolder.MESSAGE ->
+                        assertEquals((Response_data.stateMessage?.message as MessageHolder.MESSAGE).Message, "RunTimeError")
+                }
+
+
+            }
+
+
+        }
+
+
     }
 }

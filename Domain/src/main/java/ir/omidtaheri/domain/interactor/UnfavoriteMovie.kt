@@ -2,6 +2,8 @@ package ir.omidtaheri.domain.interactor
 
 
 import io.reactivex.Completable
+import io.reactivex.Single
+import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import ir.omidtaheri.domain.gateway.MovieGateWay
@@ -15,10 +17,11 @@ class UnfavoriteMovie @Inject constructor(
     schedulers: Schedulers,
     val favoriteMovieRepository: FavoriteMovieGateWay
 ) :
-    CompletableUseCase<Int>(schedulers) {
-    override fun buildCompletable(params: Int): Completable {
-        return favoriteMovieRepository.UnFavoriteMovie(params)
+    SingleUseCase<FavoritedMovieDomainEntity, Int>(schedulers) {
 
+
+    override fun buildSingle(params: FavoritedMovieDomainEntity): Single<Int> {
+        return favoriteMovieRepository.UnFavoriteMovie(params)
     }
 
 

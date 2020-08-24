@@ -11,10 +11,4 @@ import ir.omidtaheri.local.entity.MovieLocalEntity
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getMovieDao(): MovieDao
 
-//    companion object {
-//        fun newInstance(context: Context): AppDatabase {
-//            return Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
-//        }
-//    }
-
 }

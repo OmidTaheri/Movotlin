@@ -1,18 +1,19 @@
 package ir.omidtaheri.local.datasource
 
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
-
+import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
 import ir.omidtaheri.local.BaseTest
 import ir.omidtaheri.local.fackEntity.FackFacktory
 import ir.omidtaheri.local.mapper.MovieEntityDataLocalMapper
+import org.junit.Assert.assertEquals
 
-import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
+
 
 class MovieLocalDataSourceImpTest : BaseTest() {
 
     lateinit var movieLocalDataSourceImp: MovieLocalDataSourceImp
+
 
     @Before
     override fun setUp() {
@@ -26,19 +27,19 @@ class MovieLocalDataSourceImpTest : BaseTest() {
 
     @Test
     fun favoriteMovie() {
+
         val testObserver =
             movieLocalDataSourceImp.FavoriteMovie(FackFacktory.favoritedMovieDataEntity).test()
 
-        testObserver.assertComplete()
+        testObserver.awaitTerminalEvent()
 
 
-        assertEquals(db.getMovieDao().GetFavoritedMoviesList().test().valueCount(), 1)
+        val firstItem: FavoritedMovieDataEntity =
+            movieLocalDataSourceImp.GetFavoritedMoviesList().blockingFirst()[0]
 
-        assertTrue(
-            db.getMovieDao().GetFavoritedMoviesList().test()
-                .values()[0][0].equals(FackFacktory.favoritedMovieDataEntity)
-        )
-
+        assertEquals(firstItem, FackFacktory.favoritedMovieDataEntity)
 
     }
+
+
 }

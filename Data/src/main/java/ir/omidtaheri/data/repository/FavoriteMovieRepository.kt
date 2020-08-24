@@ -2,6 +2,8 @@ package ir.omidtaheri.data.repository
 
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.Single
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.mapper.FavoritedMovieEntityDomainDataMapper
 import ir.omidtaheri.domain.datastate.*
@@ -15,7 +17,7 @@ class FavoriteMovieRepository @Inject constructor(
 
 ) : FavoriteMovieGateWay {
 
-    override fun FavoriteMovie(Movie: FavoritedMovieDomainEntity): Completable {
+    override fun FavoriteMovie(Movie: FavoritedMovieDomainEntity): Single<Long> {
         return movieLocalDataSource.FavoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
                 Movie
@@ -23,11 +25,15 @@ class FavoriteMovieRepository @Inject constructor(
         )
     }
 
-    override fun UnFavoriteMovie(MovieId: Int): Completable {
-        return movieLocalDataSource.UnFavoriteMovie(MovieId)
+    override fun UnFavoriteMovie(Movie: FavoritedMovieDomainEntity): Single<Int> {
+        return movieLocalDataSource.UnFavoriteMovie(
+            favoritedMovieEntityDomainDataMapper.mapToDataEntity(
+                Movie
+            )
+        )
     }
 
-    override fun getFavoritedMovieList(): Flowable<DataState<List<FavoritedMovieDomainEntity>>> {
+    override fun getFavoritedMovieList(): Observable<DataState<List<FavoritedMovieDomainEntity>>> {
 
         return movieLocalDataSource.GetFavoritedMoviesList()
             .map<DataState<List<FavoritedMovieDomainEntity>>> {
