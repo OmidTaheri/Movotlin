@@ -1,4 +1,4 @@
-package ir.omidtaheri.data.repositoryTest
+package ir.omidtaheri.data.repository
 
 
 import io.reactivex.Single

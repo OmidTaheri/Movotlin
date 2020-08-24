@@ -8,9 +8,9 @@ import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
 import ir.omidtaheri.data.entity.GenreDataEntity
 import ir.omidtaheri.data.entity.MovieDetailDataEntity
 import ir.omidtaheri.data.mapper.*
+import ir.omidtaheri.data.repository.DiscoverMovieRepository
 import ir.omidtaheri.domain.datastate.*
 import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
