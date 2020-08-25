@@ -121,7 +121,7 @@ class DetailViewModel(
             _ErrorToast.value = throwable.message
         }
 
-        val OnCompleteHandler: () -> Unit = {
+        val OnCompleteHandler: (Long) -> Unit = {
             _FavoritedLiveData.value = true
         }
 
@@ -133,18 +133,27 @@ class DetailViewModel(
     }
 
 
-    fun SetUnFavoriteMovie(MovieId: Int) {
+    fun SetUnFavoriteMovie(  backdrop_path: String?,
+                             id: Int,
+                             poster_path: String?,
+                             title: String,
+                             vote_average: Double)
+    {
+        val UseCaseParams =
+            FavoritedMovieDomainEntity(backdrop_path, id, poster_path, title, vote_average)
+
+
         val OnErrorHandler: (Throwable) -> Unit = { throwable ->
             _ErrorToast.value = throwable.message
         }
 
-        val OnCompleteHandler: () -> Unit = {
+        val OnCompleteHandler: (Int) -> Unit = {
             _FavoritedLiveData.value = false
         }
 
 
         val disposable =
-            unfavoriteMovie.execute(MovieId).subscribeBy(OnErrorHandler, OnCompleteHandler)
+            unfavoriteMovie.execute(UseCaseParams).subscribeBy(OnErrorHandler, OnCompleteHandler)
 
         addDisposable(disposable)
     }
