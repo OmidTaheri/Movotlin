@@ -28,6 +28,8 @@ class GetSimilarMoviesSinglePage @Inject constructor(
 ) : ObservablePagingDataUseCase<Int, PagingData<MovieDomainEntity>>(schedulers) {
 
     override fun buildSingle(MovieId: Int): Observable<PagingData<MovieDomainEntity>> {
+
+
         return Pager(
             config = PagingConfig(PAGE_SIZE),
             pagingSourceFactory = { GetSimilarMoviesSinglePageSource(MovieId, discoverMovieRepository) }
