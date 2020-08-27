@@ -57,21 +57,8 @@ ktlint {
 }
 
 detekt {
-    debug = true
     ignoreFailures = true
-    config = project.configurableFileCollection().from("${project.rootDir}/detekt-config.yml")
-    input = project.configurableFileCollection().from("$projectDir")
-    reports {
-
-        html {
-            enabled = true // Enable/Disable HTML report (default: true)
-            destination =
-                file("${project.rootDir}/build/reports/detekt/detekt_${BuildAndroidConfig.VERSION_NAME}.html") // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
-        }
-
-    }
-
-
+    config = files("${project.rootDir}/detekt-config.yml")
 }
 
 tasks {
