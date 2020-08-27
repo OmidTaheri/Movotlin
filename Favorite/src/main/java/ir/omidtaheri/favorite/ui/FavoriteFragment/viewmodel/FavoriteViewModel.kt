@@ -19,17 +19,17 @@ class FavoriteViewModel(
 ) :
     BaseViewModel(application) {
 
-    private val _DataLive: MutableLiveData<List<FavoritedMovieUiEntity>>
-    val DataLive: LiveData<List<FavoritedMovieUiEntity>>
-        get() = _DataLive
+    private val _dataLive: MutableLiveData<List<FavoritedMovieUiEntity>>
+    val dataLive: LiveData<List<FavoritedMovieUiEntity>>
+        get() = _dataLive
 
-    private val _FavoriteErrorState: MutableLiveData<Boolean>
-    val FavoriteErrorState: LiveData<Boolean>
-        get() = _FavoriteErrorState
+    private val _favoriteErrorState: MutableLiveData<Boolean>
+    val favoriteErrorState: LiveData<Boolean>
+        get() = _favoriteErrorState
 
     init {
-        _DataLive = MutableLiveData()
-        _FavoriteErrorState = MutableLiveData()
+        _dataLive = MutableLiveData()
+        _favoriteErrorState = MutableLiveData()
     }
 
     fun getFavoritedMovieList() {
@@ -39,7 +39,7 @@ class FavoriteViewModel(
 
                 is DataState.SUCCESS -> {
                     // _isLoading.value = false
-                    _DataLive.value = response.data?.map {
+                    _dataLive.value = response.data?.map {
                         favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
                     }
                 }
@@ -50,15 +50,15 @@ class FavoriteViewModel(
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState as DataState.ERROR<Any>)
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.DIALOG -> {
-                                _FavoriteErrorState.value = true
+                                _favoriteErrorState.value = true
                             }
                         }
                     }
@@ -69,29 +69,29 @@ class FavoriteViewModel(
         addDisposable(disposable)
     }
 
-    private fun HandleSnackBarError(errorDataState: DataState.ERROR<Any>) {
+    private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
                 is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
-                    messageHolder.Message
+                    messageHolder.message
                 is MessageHolder.Res -> _ErrorSnackBar.value =
                     ApplicationClass.getString(
-                        messageHolder.ResId
+                        messageHolder.resId
                     )
             }
         }
     }
 
-    private fun HandleToastError(errorDataState: DataState.ERROR<Any>) {
+    private fun handleToastError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
                 is MessageHolder.MESSAGE -> _ErrorToast.value =
-                    messageHolder.Message
+                    messageHolder.message
                 is MessageHolder.Res -> _ErrorToast.value =
                     ApplicationClass.getString(
-                        messageHolder.ResId
+                        messageHolder.resId
                     )
             }
         }

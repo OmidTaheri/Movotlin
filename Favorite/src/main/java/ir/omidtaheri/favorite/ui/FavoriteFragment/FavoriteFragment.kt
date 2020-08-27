@@ -37,7 +37,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     private fun initRecyclerViews() {
         multiStatePage.apply {
             recyclerAdapter = FavoritedMovieAdapter()
-            recyclerAdapter.SetCallback(this@FavoriteFragment)
+            recyclerAdapter.setCallback(this@FavoriteFragment)
             ConfigRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
@@ -74,12 +74,12 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.DataLive.observe(this, Observer {
+        viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.addItems(it)
             multiStatePage.ToDateState()
         })
 
-        viewModel.FavoriteErrorState.observe(this, Observer {
+        viewModel.favoriteErrorState.observe(this, Observer {
             multiStatePage.ToEmptyState()
         })
     }
@@ -135,7 +135,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }

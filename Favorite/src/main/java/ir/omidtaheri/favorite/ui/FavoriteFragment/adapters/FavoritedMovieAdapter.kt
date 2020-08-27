@@ -18,10 +18,10 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     lateinit var mCallback: Callback
 
     interface Callback {
-        fun OnItemClick(MovieId: Int)
+        fun onItemClick(movieId: Int)
     }
 
-    fun SetCallback(callback: Callback) {
+    fun setCallback(callback: Callback) {
         mCallback = callback
     }
 
@@ -97,13 +97,13 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     inner class ViewHolder(val binding: FavoriteListItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val FavoriteUiEntity = items.get(position)
+            val favoriteUiEntity = items.get(position)
 
             binding.apply {
                 //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
-                titleMovie.text = FavoriteUiEntity.title
+                titleMovie.text = favoriteUiEntity.title
                 root.setOnClickListener {
-                    mCallback.OnItemClick(FavoriteUiEntity.id)
+                    mCallback.onItemClick(favoriteUiEntity.id)
                 }
             }
         }
