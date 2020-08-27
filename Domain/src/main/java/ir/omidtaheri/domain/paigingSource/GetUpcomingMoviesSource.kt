@@ -10,7 +10,6 @@ import ir.omidtaheri.domain.gateway.MovieGateWay
 class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
-
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
         val PageNumber: Int = params.key ?: 1
@@ -22,12 +21,9 @@ class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
 
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
-                            it.data!!.results
-                            , null,
+                            it.data!!.results, null,
                             if (it.data.page != it.data.total_pages) (it.data!!.page) + 1 else null
                         )
-
-
                     }
 
                     is DataState.ERROR -> {
@@ -42,16 +38,9 @@ class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
                                     Throwable("Error")
                                 )
                             }
-
-
                         }
-
                     }
                 }
             }
-
-
     }
-
-
 }

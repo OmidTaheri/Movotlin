@@ -1,14 +1,11 @@
 package ir.omidtaheri.domain.interactor
 
-
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
-import ir.omidtaheri.domain.gateway.MovieGateWay
-import ir.omidtaheri.domain.interactor.base.*
+import ir.omidtaheri.domain.interactor.base.ObservableUseCase
+import ir.omidtaheri.domain.interactor.base.Schedulers
 import javax.inject.Inject
 
 class GetFavoriedMovieList @Inject constructor(
@@ -20,6 +17,4 @@ class GetFavoriedMovieList @Inject constructor(
     override fun buildSingle(params: Unit): Observable<DataState<List<FavoritedMovieDomainEntity>>> {
         return favoriteMovieRepository.getFavoritedMovieList()
     }
-
-
 }

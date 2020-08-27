@@ -1,12 +1,13 @@
 package ir.omidtaheri.domain.gateway
 
-
 import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
-import ir.omidtaheri.domain.entity.*
+import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
+import ir.omidtaheri.domain.entity.MovieImageDomainEntity
+import ir.omidtaheri.domain.entity.MovieVideoDomainEntity
+import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
-
 
 interface DiscoverMovieGateWay {
     fun GetMovieDetailById(MovieId: Int): Single<DataState<MovieDetailDomainEntity>>

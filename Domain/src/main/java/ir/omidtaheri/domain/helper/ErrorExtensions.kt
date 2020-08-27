@@ -14,7 +14,6 @@ fun getStringErrorMessage(throwable: Throwable): String {
     return message
 }
 
-
 fun getResErrorMessage(throwable: Throwable): Int {
 
     val message = when (throwable) {

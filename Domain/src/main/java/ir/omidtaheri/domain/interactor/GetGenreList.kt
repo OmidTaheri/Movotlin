@@ -1,10 +1,8 @@
 package ir.omidtaheri.domain.interactor
 
-
 import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.GenreDomainEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.base.SingleUseCase
@@ -17,5 +15,4 @@ class GetGenreList @Inject constructor(schedulers: Schedulers, val movieReposito
 
         return movieRepository.GetGenreList()
     }
-
 }

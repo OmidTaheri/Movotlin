@@ -6,13 +6,10 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
-import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
 
 class GetSimilarMoviesSource(val MovieId: Int, val discoverMovieRepository: DiscoverMovieGateWay) :
     RxPagingSource<Int, MovieDomainEntity>() {
-
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
@@ -26,12 +23,9 @@ class GetSimilarMoviesSource(val MovieId: Int, val discoverMovieRepository: Disc
 
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
-                            it.data!!.results
-                            , null,
+                            it.data!!.results, null,
                             if (it.data.page != it.data.total_pages) (it.data!!.page) + 1 else null
                         )
-
-
                     }
 
                     is DataState.ERROR -> {
@@ -46,16 +40,9 @@ class GetSimilarMoviesSource(val MovieId: Int, val discoverMovieRepository: Disc
                                     Throwable("Error")
                                 )
                             }
-
-
                         }
-
                     }
                 }
             }
-
-
     }
-
-
 }

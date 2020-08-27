@@ -1,23 +1,15 @@
 package ir.omidtaheri.domain.interactor
 
-
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.observable
 import io.reactivex.Observable
-import io.reactivex.Single
-import ir.omidtaheri.domain.datastate.DataState
-import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import ir.omidtaheri.domain.entity.MovieDomainEntity
-import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import ir.omidtaheri.domain.interactor.base.MissingUseCaseParamsException
 import ir.omidtaheri.domain.interactor.base.ObservablePagingDataUseCase
 import ir.omidtaheri.domain.interactor.base.Schedulers
-import ir.omidtaheri.domain.interactor.base.SingleUseCase
 import ir.omidtaheri.domain.paigingSource.GetMovieListByGenreSource
-import ir.omidtaheri.domain.paigingSource.GetTopRatedMoviesSource
 import javax.inject.Inject
 
 class GetMovieListByGenreId @Inject constructor(
@@ -30,11 +22,9 @@ class GetMovieListByGenreId @Inject constructor(
             config = PagingConfig(PAGE_SIZE),
             pagingSourceFactory = { GetMovieListByGenreSource(GenreId, discoverMovieRepository) }
         ).observable
-
     }
 
     companion object {
         private const val PAGE_SIZE = 20
     }
-
 }
