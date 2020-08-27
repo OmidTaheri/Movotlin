@@ -17,7 +17,7 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding = GalleryPageBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-    private fun RecyclerViewVisibility(show: Boolean) {
+    private fun recyclerViewVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.recyclerView.visibility = View.VISIBLE
@@ -26,7 +26,7 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         }
     }
 
-    private fun ProgressBarVisibility(show: Boolean) {
+    private fun progressBarVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.progressBar.visibility = View.VISIBLE
@@ -35,7 +35,7 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         }
     }
 
-    private fun ErrorLayoutVisibility(show: Boolean) {
+    private fun errorLayoutVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.root.error_layout.visibility = View.VISIBLE
@@ -52,25 +52,25 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.root.error_btn_retry.text = text
     }
 
-    fun ToLoadingState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(true)
-        ErrorLayoutVisibility(false)
+    fun toLoadingState() {
+        recyclerViewVisibility(false)
+        progressBarVisibility(true)
+        errorLayoutVisibility(false)
     }
 
-    fun ToErrorState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(true)
+    fun toErrorState() {
+        recyclerViewVisibility(false)
+        progressBarVisibility(false)
+        errorLayoutVisibility(true)
     }
 
-    fun ToDateState() {
-        RecyclerViewVisibility(true)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(false)
+    fun toDateState() {
+        recyclerViewVisibility(true)
+        progressBarVisibility(false)
+        errorLayoutVisibility(false)
     }
 
-    fun ConfigRecyclerView(
+    fun configRecyclerView(
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
         layoutManager: RecyclerView.LayoutManager
     ) {
