@@ -42,7 +42,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         multiStatePage.apply {
             recyclerAdapter = SearchMovieAdapter(MovieUiEntityComparator)
             recyclerAdapter.apply {
-                SetCallback(this@SearchFragment)
+                setCallback(this@SearchFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -74,7 +74,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
     private fun fetchData(query: String, page: Int) {
-        viewModel.SearchMovieByQuery(query, page)
+        viewModel.searchMovieByQuery(query, page)
     }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -103,7 +103,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.DataLive.observe(this, Observer {
+        viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.submitData(lifecycle, it)
         })
     }
@@ -159,7 +159,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }

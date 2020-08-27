@@ -17,23 +17,23 @@ class SearchViewModel(
     application: Application
 ) : BaseViewModel(application) {
 
-    private val _DataLive: MutableLiveData<PagingData<MovieUiEntity>>
-    val DataLive: LiveData<PagingData<MovieUiEntity>>
-        get() = _DataLive
+    private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>>
+    val dataLive: LiveData<PagingData<MovieUiEntity>>
+        get() = _dataLive
 
 //    private val _SearchErrorState: MutableLiveData<Boolean>
 //    val SearchErrorState: LiveData<Boolean>
 //        get() = _SearchErrorState
 
     init {
-        _DataLive = MutableLiveData()
+        _dataLive = MutableLiveData()
         //  _SearchErrorState = MutableLiveData()
     }
 
-    fun SearchMovieByQuery(query: String, page: Int) {
+    fun searchMovieByQuery(query: String, page: Int) {
 
         val disposable = searchMoviesByQuery.execute(query).subscribeBy {
-            _DataLive.value = it.map {
+            _dataLive.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
         }
