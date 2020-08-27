@@ -10,7 +10,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 @Module
 class RemoteModule(val baseUrl: String, val apiKey: String) {
 
@@ -37,7 +36,6 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         return interceptors
     }
 
-
     @Provides
     fun provideRetrofit(interceptors: ArrayList<Interceptor>): Retrofit {
 
@@ -60,18 +58,8 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         return retrofit.create(MovieApi::class.java)
     }
 
-
     @Provides
     fun provideMovieDetailApi(retrofit: Retrofit): MovieDetailApi {
         return retrofit.create(MovieDetailApi::class.java)
     }
-
-
-
-
-
-
-
-
-
 }

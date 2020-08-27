@@ -6,7 +6,7 @@ import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.local.datasource.MovieLocalDataSourceImp
 import ir.omidtaheri.movotlin.di.modules.LocalModule
 
-@Module(includes = [  LocalModule::class])
+@Module(includes = [ LocalModule::class])
 class LocalDataSourceModule {
 
     @Provides
@@ -15,5 +15,4 @@ class LocalDataSourceModule {
     ): MovieLocalDataSourceInterface {
         return datasource
     }
-
 }

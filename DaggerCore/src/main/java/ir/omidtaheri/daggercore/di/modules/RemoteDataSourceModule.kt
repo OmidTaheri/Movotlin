@@ -8,7 +8,6 @@ import ir.omidtaheri.movotlin.di.modules.RemoteModule
 import ir.omidtaheri.remote.datasource.MovieDetailRemoteDataSourceImp
 import ir.omidtaheri.remote.datasource.MovieRemoteDataSourceImp
 
-
 @Module(includes = [RemoteModule::class ])
 class RemoteDataSourceModule {
 
@@ -17,11 +16,8 @@ class RemoteDataSourceModule {
         datasource: MovieDetailRemoteDataSourceImp
     ): MovieDetailRemoteDataSourceInterface = datasource
 
-
     @Provides
     fun provideMovieRemoteDataSource(
         datasource: MovieRemoteDataSourceImp
     ): MovieRemoteDataSourceInterface = datasource
-
-
 }
