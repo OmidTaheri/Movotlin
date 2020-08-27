@@ -13,6 +13,6 @@ class GetGenreList @Inject constructor(schedulers: Schedulers, val movieReposito
 
     override fun buildSingle(params: Unit): Single<DataState<List<GenreDomainEntity>>> {
 
-        return movieRepository.GetGenreList()
+        return movieRepository.getGenreList()
     }
 }

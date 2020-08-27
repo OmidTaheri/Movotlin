@@ -14,6 +14,6 @@ class FavorieMovie @Inject constructor(
     SingleUseCase<FavoritedMovieDomainEntity, Long>(schedulers) {
 
     override fun buildSingle(params: FavoritedMovieDomainEntity): Single<Long> {
-        return favoriteMovieRepository.FavoriteMovie(params)
+        return favoriteMovieRepository.favoriteMovie(params)
     }
 }

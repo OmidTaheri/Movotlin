@@ -12,6 +12,6 @@ class GetMovieDetail @Inject constructor(schedulers: Schedulers, val discoverMov
     SingleUseCase<Int, DataState<MovieDetailDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: Int): Single<DataState<MovieDetailDomainEntity>> {
-        return discoverMovieRepository.GetMovieDetailById(params)
+        return discoverMovieRepository.getMovieDetailById(params)
     }
 }

@@ -14,6 +14,6 @@ class GetMovieVideosById @Inject constructor(schedulers: Schedulers, val discove
 
     override fun buildSingle(params: Int): Single<DataState<MovieVideoDomainEntity>> {
         if (params == null) throw MissingUseCaseParamsException("Parameter not found")
-        return discoverMovieRepository.GetMovieVideosById(params)
+        return discoverMovieRepository.getMovieVideosById(params)
     }
 }
