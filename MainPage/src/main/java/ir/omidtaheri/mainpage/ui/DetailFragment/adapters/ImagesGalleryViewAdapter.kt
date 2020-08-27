@@ -87,7 +87,7 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     inner class ViewHolder(val binding: ImagesViewerItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val MovieUiEntity = items.get(position)
+            val movieUiEntity = items.get(position)
 
             binding.apply {
 

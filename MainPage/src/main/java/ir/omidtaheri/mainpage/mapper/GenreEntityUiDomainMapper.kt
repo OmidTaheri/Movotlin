@@ -5,7 +5,7 @@ import ir.omidtaheri.mainpage.entity.GenreUiEntity
 import javax.inject.Inject
 
 class GenreEntityUiDomainMapper @Inject constructor() :
-    Ui_Domain_Mapper<GenreUiEntity, GenreDomainEntity> {
+    UiDomainMapper<GenreUiEntity, GenreDomainEntity> {
     override fun mapFromUiEntity(from: GenreUiEntity): GenreDomainEntity {
         return GenreDomainEntity(from.id, from.name)
     }

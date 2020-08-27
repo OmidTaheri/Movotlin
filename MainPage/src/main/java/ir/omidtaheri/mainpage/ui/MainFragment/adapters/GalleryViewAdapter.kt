@@ -21,10 +21,10 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     lateinit var mCallback: Callback
 
     interface Callback {
-        fun OnItemClick(MovieId: Int)
+        fun onItemClick(movieId: Int)
     }
 
-    fun SetCallback(callback: Callback) {
+    fun setCallback(callback: Callback) {
         mCallback = callback
     }
 
@@ -105,13 +105,13 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     inner class ViewHolder(val binding: MovieViewerItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val MovieUiEntity = getItem(position)
+            val movieUiEntity = getItem(position)
 
             binding.apply {
                 //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
-                titleMovie.text = MovieUiEntity!!.title
+                titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
-                    mCallback.OnItemClick(MovieUiEntity.id)
+                    mCallback.onItemClick(movieUiEntity.id)
                 }
             }
         }

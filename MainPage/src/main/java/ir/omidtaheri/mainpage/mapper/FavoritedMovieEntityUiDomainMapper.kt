@@ -5,7 +5,7 @@ import ir.omidtaheri.mainpage.entity.FavoritedMovieUiEntity
 import javax.inject.Inject
 
 class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
-    Ui_Domain_Mapper<FavoritedMovieUiEntity, FavoritedMovieDomainEntity> {
+    UiDomainMapper<FavoritedMovieUiEntity, FavoritedMovieDomainEntity> {
     override fun mapFromUiEntity(from: FavoritedMovieUiEntity): FavoritedMovieDomainEntity {
         return FavoritedMovieDomainEntity(
             from.backdrop_path,

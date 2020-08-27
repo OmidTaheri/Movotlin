@@ -32,11 +32,11 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     private val viewbinding
         get() = _viewbinding!!
 
-    lateinit var GalleryViewerImages: GalleryViewer
-    lateinit var GalleryViewerSimilarMovies: GalleryViewer
+    lateinit var galleryViewerImages: GalleryViewer
+    lateinit var galleryViewerSimilarMovies: GalleryViewer
     lateinit var favoriteButton: FloatingActionButton
-    lateinit var GenreGroup: ChipGroup
-    lateinit var MovieOverview: TextView
+    lateinit var genreGroup: ChipGroup
+    lateinit var movieOverview: TextView
     lateinit var mainBackdrop: ImageView
     lateinit var rateNumber: TextView
 
@@ -51,7 +51,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
     private fun initRecyclerViews() {
 
-        GalleryViewerImages.apply {
+        galleryViewerImages.apply {
 
             adapterImages = ImagesGalleryViewAdapter()
 
@@ -62,10 +62,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
             ToLoadingState()
         }
 
-        GalleryViewerSimilarMovies.apply {
+        galleryViewerSimilarMovies.apply {
             adapterSimilarMovies = SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator)
             adapterSimilarMovies.apply {
-                SetCallback(this@DetailFragment)
+                setCallback(this@DetailFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -91,10 +91,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         }
     }
 
-    private fun fetchData(MovieId: Int) {
-        viewModel.getSimilarMovies(MovieId)
-        viewModel.getMovieImages(MovieId)
-        viewModel.getMovieDetail(MovieId)
+    private fun fetchData(movieId: Int) {
+        viewModel.getSimilarMovies(movieId)
+        viewModel.getMovieImages(movieId)
+        viewModel.getMovieDetail(movieId)
     }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -104,11 +104,11 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun bindUiComponent() {
-        GalleryViewerImages = _viewbinding!!.ImagesGalleryViewer
-        GalleryViewerSimilarMovies = _viewbinding!!.SimilarMoviesGalleryViewer
+        galleryViewerImages = _viewbinding!!.ImagesGalleryViewer
+        galleryViewerSimilarMovies = _viewbinding!!.SimilarMoviesGalleryViewer
         val favoriteButton = _viewbinding!!.favoriteButton
-        val GenreGroup = _viewbinding!!.groupGenre
-        val MovieOverview = _viewbinding!!.info
+        val genreGroup = _viewbinding!!.groupGenre
+        val movieOverview = _viewbinding!!.info
         val mainBackdrop = _viewbinding!!.mainBackdrop
         val rateNumber = _viewbinding!!.rateNumber
     }
@@ -127,27 +127,27 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
     override fun setDataLiveObserver() {
 
-        viewModel.DetailLiveData.observe(this, Observer {
+        viewModel.detailLiveData.observe(this, Observer {
 
-            MovieOverview.text = it.overview
+            movieOverview.text = it.overview
             // mainBackdrop.setImageResource(it.backdrop_path)
-            rateNumber.text = it.vote_average.toString()
+            rateNumber.text = it.voteAverage.toString()
         })
 
-        viewModel.ImageListLiveData.observe(this, Observer {
+        viewModel.imageListLiveData.observe(this, Observer {
             // adapterImages.addItems(it.backdrops)
-            GalleryViewerImages.ToDateState()
+            galleryViewerImages.ToDateState()
         })
 
-        viewModel.SimilarMoviesLiveData.observe(this, Observer {
+        viewModel.similarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
         })
 
-        viewModel.ImagesErrorState.observe(this, Observer {
-            GalleryViewerImages.ToErrorState()
+        viewModel.imagesErrorState.observe(this, Observer {
+            galleryViewerImages.ToErrorState()
         })
 
-        viewModel.FavoritedLiveData.observe(this, Observer {
+        viewModel.favoritedLiveData.observe(this, Observer {
         })
     }
 
@@ -202,7 +202,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }

@@ -7,7 +7,7 @@ import ir.omidtaheri.mainpage.entity.Poster
 import javax.inject.Inject
 
 class MovieImageEntityUiDomainMapper @Inject constructor() :
-    Ui_Domain_Mapper<MovieImageUiEntity, MovieImageDomainEntity> {
+    UiDomainMapper<MovieImageUiEntity, MovieImageDomainEntity> {
 
     override fun mapFromUiEntity(from: MovieImageUiEntity): MovieImageDomainEntity {
 

@@ -41,21 +41,21 @@ class DetailViewModel(
 ) :
     BaseViewModel(application) {
 
-    private val _DetailLiveData: MutableLiveData<MovieDetailUiEntity>
-    val DetailLiveData: LiveData<MovieDetailUiEntity>
-        get() = _DetailLiveData
+    private val _detailLiveData: MutableLiveData<MovieDetailUiEntity>
+    val detailLiveData: LiveData<MovieDetailUiEntity>
+        get() = _detailLiveData
 
-    private val _ImageListLiveData: MutableLiveData<MovieImageUiEntity>
-    val ImageListLiveData: LiveData<MovieImageUiEntity>
-        get() = _ImageListLiveData
+    private val _imageListLiveData: MutableLiveData<MovieImageUiEntity>
+    val imageListLiveData: LiveData<MovieImageUiEntity>
+        get() = _imageListLiveData
 
-    private val _VideoListLiveData: MutableLiveData<MovieVideoUiEntity>
-    val VideoListLiveData: LiveData<MovieVideoUiEntity>
-        get() = _VideoListLiveData
+    private val _videoListLiveData: MutableLiveData<MovieVideoUiEntity>
+    val videoListLiveData: LiveData<MovieVideoUiEntity>
+        get() = _videoListLiveData
 
-    private val _SimilarMoviesLiveData: MutableLiveData<PagingData<MovieUiEntity>>
-    val SimilarMoviesLiveData: LiveData<PagingData<MovieUiEntity>>
-        get() = _SimilarMoviesLiveData
+    private val _similarMoviesLiveData: MutableLiveData<PagingData<MovieUiEntity>>
+    val similarMoviesLiveData: LiveData<PagingData<MovieUiEntity>>
+        get() = _similarMoviesLiveData
 
     private val _isImageLoading: MutableLiveData<Boolean>
     val isImageLoading: LiveData<Boolean>
@@ -69,89 +69,89 @@ class DetailViewModel(
 //    val isSimilarMovieLoading: LiveData<Boolean>
 //        get() = _isSimilarMovieLoading
 
-    private val _ImagesErrorState: MutableLiveData<Boolean>
-    val ImagesErrorState: LiveData<Boolean>
-        get() = _ImagesErrorState
+    private val _imagesErrorState: MutableLiveData<Boolean>
+    val imagesErrorState: LiveData<Boolean>
+        get() = _imagesErrorState
 
-    private val _VideoErrorState: MutableLiveData<Boolean>
-    val VideoErrorState: LiveData<Boolean>
-        get() = _ImagesErrorState
+    private val _videoErrorState: MutableLiveData<Boolean>
+    val videoErrorState: LiveData<Boolean>
+        get() = _videoErrorState
 
 //    private val _SimilarErrorState: MutableLiveData<Boolean>
 //    val SimilarErrorState: LiveData<Boolean>
 //        get() = _SimilarErrorState
 
-    private val _FavoritedLiveData: MutableLiveData<Boolean>
-    val FavoritedLiveData: LiveData<Boolean>
-        get() = _FavoritedLiveData
+    private val _favoritedLiveData: MutableLiveData<Boolean>
+    val favoritedLiveData: LiveData<Boolean>
+        get() = _favoritedLiveData
 
     init {
-        _ImageListLiveData = MutableLiveData()
-        _VideoListLiveData = MutableLiveData()
-        _SimilarMoviesLiveData = MutableLiveData()
-        _FavoritedLiveData = MutableLiveData()
-        _DetailLiveData = MutableLiveData()
+        _imageListLiveData = MutableLiveData()
+        _videoListLiveData = MutableLiveData()
+        _similarMoviesLiveData = MutableLiveData()
+        _favoritedLiveData = MutableLiveData()
+        _detailLiveData = MutableLiveData()
 
-        _VideoErrorState = MutableLiveData()
-        _ImagesErrorState = MutableLiveData()
+        _videoErrorState = MutableLiveData()
+        _imagesErrorState = MutableLiveData()
 
         _isVideoLoading = MutableLiveData()
         _isImageLoading = MutableLiveData()
     }
 
     fun SetFavoriteMovie(
-        backdrop_path: String?,
+        backdropPath: String?,
         id: Int,
-        poster_path: String?,
+        posterPath: String?,
         title: String,
-        vote_average: Double
+        voteAverage: Double
     ) {
-        val UseCaseParams =
-            FavoritedMovieDomainEntity(backdrop_path, id, poster_path, title, vote_average)
+        val useCaseParams =
+            FavoritedMovieDomainEntity(backdropPath, id, posterPath, title, voteAverage)
 
-        val OnErrorHandler: (Throwable) -> Unit = { throwable ->
+        val onErrorHandler: (Throwable) -> Unit = { throwable ->
             _ErrorToast.value = throwable.message
         }
 
-        val OnCompleteHandler: (Long) -> Unit = {
-            _FavoritedLiveData.value = true
+        val onCompleteHandler: (Long) -> Unit = {
+            _favoritedLiveData.value = true
         }
 
         val disposable =
-            favorieMovie.execute(UseCaseParams).subscribeBy(OnErrorHandler, OnCompleteHandler)
+            favorieMovie.execute(useCaseParams).subscribeBy(onErrorHandler, onCompleteHandler)
 
         addDisposable(disposable)
     }
 
-    fun SetUnFavoriteMovie(
-        backdrop_path: String?,
+    fun setUnFavoriteMovie(
+        backdropPath: String?,
         id: Int,
-        poster_path: String?,
+        posterPath: String?,
         title: String,
-        vote_average: Double
+        voteAverage: Double
     ) {
-        val UseCaseParams =
-            FavoritedMovieDomainEntity(backdrop_path, id, poster_path, title, vote_average)
+        val useCaseParams =
+            FavoritedMovieDomainEntity(backdropPath, id, posterPath, title, voteAverage)
 
-        val OnErrorHandler: (Throwable) -> Unit = { throwable ->
+        val onErrorHandler: (Throwable) -> Unit = { throwable ->
             _ErrorToast.value = throwable.message
         }
 
-        val OnCompleteHandler: (Int) -> Unit = {
-            _FavoritedLiveData.value = false
+        val onCompleteHandler: (Int) -> Unit = {
+            _favoritedLiveData.value = false
         }
 
         val disposable =
-            unfavoriteMovie.execute(UseCaseParams).subscribeBy(OnErrorHandler, OnCompleteHandler)
+            unfavoriteMovie.execute(useCaseParams).subscribeBy(onErrorHandler, onCompleteHandler)
 
         addDisposable(disposable)
     }
 
-    fun getSimilarMovies(MovieId: Int) {
+    fun getSimilarMovies(movieId: Int) {
 
-        val disposable = getSimilarMovies.execute(MovieId).subscribeBy {
+        val disposable = getSimilarMovies.execute(movieId).subscribeBy {
 
-            _SimilarMoviesLiveData.value = it.map {
+            _similarMoviesLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
         }
@@ -159,13 +159,13 @@ class DetailViewModel(
         addDisposable(disposable)
     }
 
-    fun getMovieVideos(MovieId: Int) {
+    fun getMovieVideos(movieId: Int) {
         // _isLoading.value = true
-        val disposable = getMovieVideosById.execute(MovieId).subscribeBy { response ->
+        val disposable = getMovieVideosById.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
                     // _isLoading.value = false
-                    _VideoListLiveData.value =
+                    _videoListLiveData.value =
                         movieVideoEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
@@ -175,15 +175,15 @@ class DetailViewModel(
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState as DataState.ERROR<Any>)
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.DIALOG -> {
-                                _VideoErrorState.value = true
+                                _videoErrorState.value = true
                             }
                         }
                     }
@@ -194,13 +194,13 @@ class DetailViewModel(
         addDisposable(disposable)
     }
 
-    fun getMovieImages(MovieId: Int) {
+    fun getMovieImages(movieId: Int) {
         // _isLoading.value = true
-        val disposable = getMovieImagesById.execute(MovieId).subscribeBy { response ->
+        val disposable = getMovieImagesById.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
                     // _isLoading.value = false
-                    _ImageListLiveData.value =
+                    _imageListLiveData.value =
                         movieImageEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
@@ -210,15 +210,15 @@ class DetailViewModel(
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState as DataState.ERROR<Any>)
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.DIALOG -> {
-                                _ImagesErrorState.value = true
+                                _imagesErrorState.value = true
                             }
                         }
                     }
@@ -229,13 +229,13 @@ class DetailViewModel(
         addDisposable(disposable)
     }
 
-    fun getMovieDetail(MovieId: Int) {
+    fun getMovieDetail(movieId: Int) {
         // _isLoading.value = true
-        val disposable = getDetailMovieUseCase.execute(MovieId).subscribeBy { response ->
+        val disposable = getDetailMovieUseCase.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
                     _isLoading.value = false
-                    _DetailLiveData.value =
+                    _detailLiveData.value =
                         movieDetailEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
@@ -245,11 +245,11 @@ class DetailViewModel(
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState as DataState.ERROR<Any>)
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
                         }
                     }
@@ -260,29 +260,29 @@ class DetailViewModel(
         addDisposable(disposable)
     }
 
-    private fun HandleSnackBarError(errorDataState: DataState.ERROR<Any>) {
+    private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
                 is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
-                    messageHolder.Message
+                    messageHolder.message
                 is MessageHolder.Res -> _ErrorSnackBar.value =
                     ApplicationClass.getString(
-                        messageHolder.ResId
+                        messageHolder.resId
                     )
             }
         }
     }
 
-    private fun HandleToastError(errorDataState: DataState.ERROR<Any>) {
+    private fun handleToastError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
                 is MessageHolder.MESSAGE -> _ErrorToast.value =
-                    messageHolder.Message
+                    messageHolder.message
                 is MessageHolder.Res -> _ErrorToast.value =
                     ApplicationClass.getString(
-                        messageHolder.ResId
+                        messageHolder.resId
                     )
             }
         }

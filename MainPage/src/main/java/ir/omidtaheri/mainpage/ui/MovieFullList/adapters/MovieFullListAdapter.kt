@@ -23,10 +23,10 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     lateinit var mCallback: Callback
 
     interface Callback {
-        fun OnItemClick(MovieId: Int)
+        fun onItemClick(movieId: Int)
     }
 
-    fun SetCallback(callback: Callback) {
+    fun setCallback(callback: Callback) {
         mCallback = callback
     }
 
@@ -48,13 +48,13 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     inner class ViewHolder(val binding: MovieFullListItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val FavoriteUiEntity = getItem(position)
+            val favoriteUiEntity = getItem(position)
 
             binding.apply {
                 //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
-                titleMovie.text = FavoriteUiEntity?.title
+                titleMovie.text = favoriteUiEntity?.title
                 root.setOnClickListener {
-                    mCallback.OnItemClick(FavoriteUiEntity!!.id)
+                    mCallback.onItemClick(favoriteUiEntity!!.id)
                 }
             }
         }

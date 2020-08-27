@@ -14,36 +14,36 @@ import ir.omidtaheri.mainpage.entity.MovieUiEntity
 import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
 
 class MovieFullListViewModel(
-    val GetPopularMoviesUseCase: GetPopularMovies,
-    val GetTopRatedMoviesUseCase: GetTopRatedMovies,
-    val GetUpcomingMoviesUseCase: GetUpcomingMovies,
+    val getPopularMoviesUseCase: GetPopularMovies,
+    val getTopRatedMoviesUseCase: GetTopRatedMovies,
+    val getUpcomingMoviesUseCase: GetUpcomingMovies,
     val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
     application: Application
 ) :
     BaseViewModel(application) {
 
-    private val _PoularLiveData: MutableLiveData<PagingData<MovieUiEntity>>
-    val PoularLiveData: LiveData<PagingData<MovieUiEntity>>
-        get() = _PoularLiveData
+    private val _poularLiveData: MutableLiveData<PagingData<MovieUiEntity>>
+    val poularLiveData: LiveData<PagingData<MovieUiEntity>>
+        get() = _poularLiveData
 
-    private val _TopRateLiveData: MutableLiveData<PagingData<MovieUiEntity>>
-    val TopRateLiveData: LiveData<PagingData<MovieUiEntity>>
-        get() = _TopRateLiveData
+    private val _topRateLiveData: MutableLiveData<PagingData<MovieUiEntity>>
+    val topRateLiveData: LiveData<PagingData<MovieUiEntity>>
+        get() = _topRateLiveData
 
-    private val _UpComingLiveData: MutableLiveData<PagingData<MovieUiEntity>>
-    val UpComingLiveData: LiveData<PagingData<MovieUiEntity>>
-        get() = _UpComingLiveData
+    private val _upComingLiveData: MutableLiveData<PagingData<MovieUiEntity>>
+    val upComingLiveData: LiveData<PagingData<MovieUiEntity>>
+        get() = _upComingLiveData
 
     init {
-        _PoularLiveData = MutableLiveData()
-        _TopRateLiveData = MutableLiveData()
-        _UpComingLiveData = MutableLiveData()
+        _poularLiveData = MutableLiveData()
+        _topRateLiveData = MutableLiveData()
+        _upComingLiveData = MutableLiveData()
     }
 
     fun getPopularMovieList() {
 
-        val disposable = GetPopularMoviesUseCase.execute(Unit).subscribe {
-            _PoularLiveData.value = it.map {
+        val disposable = getPopularMoviesUseCase.execute(Unit).subscribe {
+            _poularLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
         }
@@ -53,8 +53,8 @@ class MovieFullListViewModel(
 
     fun getTopRatedMovieList() {
         // _isTopRateLoading.value = true
-        val disposable = GetTopRatedMoviesUseCase.execute(Unit).subscribeBy {
-            _TopRateLiveData.value = it.map {
+        val disposable = getTopRatedMoviesUseCase.execute(Unit).subscribeBy {
+            _topRateLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
         }
@@ -64,8 +64,8 @@ class MovieFullListViewModel(
 
     fun getUpComingMovieList() {
         // _isUpComingLoading.value = true
-        val disposable = GetUpcomingMoviesUseCase.execute(Unit).subscribeBy {
-            _UpComingLiveData.value = it.map {
+        val disposable = getUpcomingMoviesUseCase.execute(Unit).subscribeBy {
+            _upComingLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
         }

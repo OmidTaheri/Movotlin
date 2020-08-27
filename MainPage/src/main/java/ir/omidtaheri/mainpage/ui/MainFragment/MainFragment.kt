@@ -27,9 +27,9 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     private val viewbinding
         get() = _viewbinding!!
 
-    lateinit var GalleryViewerTopRate: GalleryViewer
-    lateinit var GalleryViewerPopular: GalleryViewer
-    lateinit var GalleryViewerUpComing: GalleryViewer
+    lateinit var galleryViewerTopRate: GalleryViewer
+    lateinit var galleryViewerPopular: GalleryViewer
+    lateinit var galleryViewerUpComing: GalleryViewer
 
     lateinit var adapterTopRate: GalleryViewAdapter
     lateinit var adapterPopular: GalleryViewAdapter
@@ -43,11 +43,11 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
     private fun initRecyclerViews() {
 
-        GalleryViewerTopRate.apply {
+        galleryViewerTopRate.apply {
 
             adapterTopRate = GalleryViewAdapter(MovieUiEntityComparator)
             adapterTopRate.apply {
-                SetCallback(this@MainFragment)
+                setCallback(this@MainFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -72,10 +72,10 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             )
         }
 
-        GalleryViewerPopular.apply {
+        galleryViewerPopular.apply {
             adapterPopular = GalleryViewAdapter(MovieUiEntityComparator)
             adapterPopular.apply {
-                SetCallback(this@MainFragment)
+                setCallback(this@MainFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -101,10 +101,10 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             ToLoadingState()
         }
 
-        GalleryViewerUpComing.apply {
+        galleryViewerUpComing.apply {
             adapterUpComing = GalleryViewAdapter(MovieUiEntityComparator)
             adapterUpComing.apply {
-                SetCallback(this@MainFragment)
+                setCallback(this@MainFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -145,9 +145,9 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     }
 
     override fun bindUiComponent() {
-        GalleryViewerTopRate = _viewbinding!!.GalleryViewer1
-        GalleryViewerPopular = _viewbinding!!.GalleryViewer2
-        GalleryViewerUpComing = _viewbinding!!.GalleryViewer3
+        galleryViewerTopRate = _viewbinding!!.GalleryViewer1
+        galleryViewerPopular = _viewbinding!!.GalleryViewer2
+        galleryViewerUpComing = _viewbinding!!.GalleryViewer3
     }
 
     override fun ConfigDaggerComponent() {
@@ -164,15 +164,15 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.PoularLiveData.observe(this, Observer {
+        viewModel.poularLiveData.observe(this, Observer {
             adapterPopular.submitData(lifecycle, it)
         })
 
-        viewModel.TopRateLiveData.observe(this, Observer {
+        viewModel.topRateLiveData.observe(this, Observer {
             adapterTopRate.submitData(lifecycle, it)
         })
 
-        viewModel.UpComingLiveData.observe(this, Observer {
+        viewModel.upComingLiveData.observe(this, Observer {
             adapterUpComing.submitData(lifecycle, it)
         })
     }
@@ -228,7 +228,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }

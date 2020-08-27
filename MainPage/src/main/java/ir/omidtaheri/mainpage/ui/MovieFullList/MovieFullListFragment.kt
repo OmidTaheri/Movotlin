@@ -42,7 +42,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
             movieListAdapter = MovieFullListAdapter(MovieUiEntityComparator)
 
             movieListAdapter.apply {
-                SetCallback(this@MovieFullListFragment)
+                setCallback(this@MovieFullListFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -73,8 +73,8 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
         }
     }
 
-    private fun fetchData(CategoryId: Int) {
-        when (CategoryId) {
+    private fun fetchData(categoryId: Int) {
+        when (categoryId) {
             1 -> viewModel.getTopRatedMovieList()
             2 -> viewModel.getPopularMovieList()
             3 -> viewModel.getUpComingMovieList()
@@ -106,15 +106,15 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.PoularLiveData.observe(this, Observer {
+        viewModel.poularLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
         })
 
-        viewModel.TopRateLiveData.observe(this, Observer {
+        viewModel.topRateLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
         })
 
-        viewModel.UpComingLiveData.observe(this, Observer {
+        viewModel.upComingLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
         })
     }
@@ -170,7 +170,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }
