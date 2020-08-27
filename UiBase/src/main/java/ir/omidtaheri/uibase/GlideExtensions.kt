@@ -1,9 +1,7 @@
 package ir.omidtaheri.uibase
 
-import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
-
 
 fun ImageView.LoadPoster(posterPath: String) {
 
@@ -11,7 +9,6 @@ fun ImageView.LoadPoster(posterPath: String) {
     requestOptions.apply {
         placeholder(R.drawable.ic_baseline_local_movies_24)
     }
-
 
     GlideApp.with(this.context)
         .load(posterPath)
@@ -24,7 +21,6 @@ fun ImageView.LoadBackdrop(backdropPath: String) {
     requestOptions.apply {
         placeholder(R.drawable.ic_baseline_local_movies_24)
     }
-
 
     GlideApp.with(this.context)
         .load(backdropPath)

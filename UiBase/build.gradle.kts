@@ -1,9 +1,8 @@
+import dependencies.AnnotationProcessorsDependencies
 import dependencies.Dependencies
 import dependencies.UiDependencies
-import dependencies.AnnotationProcessorsDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
-
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -11,8 +10,6 @@ plugins {
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
-
-
 
 android {
     compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
@@ -26,10 +23,7 @@ android {
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
-
-
     }
-
 
     buildTypes {
         getByName(BuildTypes.RELEASE) {
@@ -41,14 +35,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
         }
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
-
         }
     }
 
@@ -60,17 +52,11 @@ android {
         FullQAFlavor.libraryCreate(this)
     }
 
-
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-
 }
-
-
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -81,5 +67,4 @@ dependencies {
     implementation(UiDependencies.GLIDE)
     kapt(AnnotationProcessorsDependencies.GLIDE_COMPILER)
     addTestsDependencies()
-
 }
