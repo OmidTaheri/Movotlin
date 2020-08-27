@@ -1,4 +1,5 @@
 import extentions.applyDefault
+import io.gitlab.arturbosch.detekt.internal.configurableFileCollection
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -10,7 +11,7 @@ plugins {
 
 buildscript {
 
-    val kotlin_version by extra("1.3.72")
+
     repositories {
         google()
         jcenter()
@@ -41,17 +42,25 @@ ktlint {
     verbose.set(true)
     android.set(true)
     outputToConsole.set(true)
+    outputColorName.set("RED")
     ignoreFailures.set(true)
     reporters {
         reporter(ReporterType.HTML)
         reporter(ReporterType.JSON)
     }
+
+    filter {
+        exclude("**/generated/**", "**/test/**", "**/androidTest/**")
+        include("**/kotlin/**")
+    }
+
 }
 
 detekt {
-    debug = true // Adds debug output during task execution. `false` by default.
-    ignoreFailures =
-        true // If set to `true` the build does not fail when the maxIssues count was reached. Defaults to `false`.
+    debug = true
+    ignoreFailures = true
+    config = project.configurableFileCollection().from("${project.rootDir}/detekt-config.yml")
+    input = project.configurableFileCollection().from("$projectDir")
     reports {
 
         html {
