@@ -9,17 +9,17 @@ import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 
 class GetSimilarMoviesSinglePageSource(
-    val MovieId: Int,
+    val movieId: Int,
     val discoverMovieRepository: DiscoverMovieGateWay
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
-        val PageNumber: Int = params.key ?: 1
+        val pageNumber: Int = params.key ?: 1
 
-        val params = GetSimilarMoviesParams(MovieId, PageNumber)
-        return discoverMovieRepository.GetSimilarMovieById(params)
+        val params = GetSimilarMoviesParams(movieId, pageNumber)
+        return discoverMovieRepository.getSimilarMovieById(params)
             .map {
 
                 when (it) {
@@ -36,7 +36,7 @@ class GetSimilarMoviesSinglePageSource(
                             when (it) {
                                 is MessageHolder.MESSAGE ->
                                     LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.Message)
+                                        Throwable(it.message)
                                     )
 
                                 else -> LoadResult.Error<Int, MovieDomainEntity>(

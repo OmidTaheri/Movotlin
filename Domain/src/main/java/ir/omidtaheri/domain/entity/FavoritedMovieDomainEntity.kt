@@ -1,9 +1,9 @@
 package ir.omidtaheri.domain.entity
 
 data class FavoritedMovieDomainEntity(
-    val backdrop_path: String?,
+    val backdropPath: String?,
     val id: Int,
-    val poster_path: String?,
+    val posterPath: String?,
     val title: String,
-    val vote_average: Double
+    val voteAverage: Double
 )

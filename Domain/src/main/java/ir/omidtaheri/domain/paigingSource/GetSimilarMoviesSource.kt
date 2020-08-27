@@ -8,15 +8,15 @@ import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 
-class GetSimilarMoviesSource(val MovieId: Int, val discoverMovieRepository: DiscoverMovieGateWay) :
+class GetSimilarMoviesSource(val movieId: Int, val discoverMovieRepository: DiscoverMovieGateWay) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
-        val PageNumber: Int = params.key ?: 1
+        val pageNumber: Int = params.key ?: 1
 
-        val params = GetSimilarMoviesParams(MovieId, PageNumber)
-        return discoverMovieRepository.GetSimilarMovieById(params)
+        val params = GetSimilarMoviesParams(movieId, pageNumber)
+        return discoverMovieRepository.getSimilarMovieById(params)
             .map {
 
                 when (it) {
@@ -24,7 +24,7 @@ class GetSimilarMoviesSource(val MovieId: Int, val discoverMovieRepository: Disc
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
                             it.data!!.results, null,
-                            if (it.data.page != it.data.total_pages) (it.data!!.page) + 1 else null
+                            if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
                         )
                     }
 
@@ -33,7 +33,7 @@ class GetSimilarMoviesSource(val MovieId: Int, val discoverMovieRepository: Disc
                             when (it) {
                                 is MessageHolder.MESSAGE ->
                                     LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.Message)
+                                        Throwable(it.message)
                                     )
 
                                 else -> LoadResult.Error<Int, MovieDomainEntity>(

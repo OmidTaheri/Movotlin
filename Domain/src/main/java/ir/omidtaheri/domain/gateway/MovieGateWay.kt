@@ -6,8 +6,8 @@ import ir.omidtaheri.domain.entity.GenreDomainEntity
 import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 
 interface MovieGateWay {
-    fun GetTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
-    fun GetPopularMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
-    fun GetGenreList(): Single<DataState<List<GenreDomainEntity>>>
-    fun GetUpComingMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
+    fun getTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
+    fun getPopularMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
+    fun getGenreList(): Single<DataState<List<GenreDomainEntity>>>
+    fun getUpComingMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
 }

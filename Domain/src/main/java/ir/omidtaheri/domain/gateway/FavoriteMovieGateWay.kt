@@ -6,7 +6,7 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 
 interface FavoriteMovieGateWay {
-    fun FavoriteMovie(Movie: FavoritedMovieDomainEntity): Single<Long>
-    fun UnFavoriteMovie(Movie: FavoritedMovieDomainEntity): Single<Int>
+    fun favoriteMovie(movie: FavoritedMovieDomainEntity): Single<Long>
+    fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Single<Int>
     fun getFavoritedMovieList(): Observable<DataState<List<FavoritedMovieDomainEntity>>>
 }

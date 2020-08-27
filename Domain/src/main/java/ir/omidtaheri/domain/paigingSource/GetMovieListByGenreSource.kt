@@ -8,18 +8,18 @@ import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 
 class GetMovieListByGenreSource(
-    val GenreId: Int,
+    val genreId: Int,
     val discoverMovieRepository: DiscoverMovieGateWay
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
-        val PageNumber: Int = params.key ?: 1
+        val pageNumber: Int = params.key ?: 1
 
-        val params: Map<String, Any> = mapOf("genreId" to GenreId, "page" to PageNumber)
+        val params: Map<String, Any> = mapOf("genreId" to genreId, "page" to pageNumber)
 
-        return discoverMovieRepository.GetMovieListByGenreId(params)
+        return discoverMovieRepository.getMovieListByGenreId(params)
             .map {
 
                 when (it) {
@@ -27,7 +27,7 @@ class GetMovieListByGenreSource(
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
                             it.data!!.results, null,
-                            if (it.data.page != it.data.total_pages) (it.data!!.page) + 1 else null
+                            if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
                         )
                     }
 
@@ -36,7 +36,7 @@ class GetMovieListByGenreSource(
                             when (it) {
                                 is MessageHolder.MESSAGE ->
                                     LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.Message)
+                                        Throwable(it.message)
                                     )
 
                                 else -> LoadResult.Error<Int, MovieDomainEntity>(

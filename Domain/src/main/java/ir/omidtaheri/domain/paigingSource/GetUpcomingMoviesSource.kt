@@ -12,9 +12,9 @@ class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
-        val PageNumber: Int = params.key ?: 1
+        val pageNumber: Int = params.key ?: 1
 
-        return movieRepository.GetUpComingMovies(PageNumber)
+        return movieRepository.getUpComingMovies(pageNumber)
             .map {
 
                 when (it) {
@@ -22,7 +22,7 @@ class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
                             it.data!!.results, null,
-                            if (it.data.page != it.data.total_pages) (it.data!!.page) + 1 else null
+                            if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
                         )
                     }
 
@@ -31,7 +31,7 @@ class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
                             when (it) {
                                 is MessageHolder.MESSAGE ->
                                     LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.Message)
+                                        Throwable(it.message)
                                     )
 
                                 else -> LoadResult.Error<Int, MovieDomainEntity>(

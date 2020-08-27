@@ -12,6 +12,6 @@ class GetMovieImagesById @Inject constructor(schedulers: Schedulers, val discove
     SingleUseCase<Int, DataState<MovieImageDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: Int): Single<DataState<MovieImageDomainEntity>> {
-        return discoverMovieRepository.GetMovieImagesById(params)
+        return discoverMovieRepository.getMovieImagesById(params)
     }
 }

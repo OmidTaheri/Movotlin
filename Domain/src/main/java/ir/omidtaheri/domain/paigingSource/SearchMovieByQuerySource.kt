@@ -16,10 +16,10 @@ class SearchMovieByQuerySource(
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
-        val PageNumber: Int = params.key ?: 1
+        val pageNumber: Int = params.key ?: 1
 
-        val params = SearchMovieByQueryParams(query, PageNumber)
-        return discoverMovieRepository.SearchMovieByQuery(params)
+        val params = SearchMovieByQueryParams(query, pageNumber)
+        return discoverMovieRepository.searchMovieByQuery(params)
             .map {
 
                 when (it) {
@@ -27,7 +27,7 @@ class SearchMovieByQuerySource(
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
                             it.data!!.results, null,
-                            if (it.data.page != it.data.total_pages) (it.data!!.page) + 1 else null
+                            if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
                         )
                     }
 
@@ -36,7 +36,7 @@ class SearchMovieByQuerySource(
                             when (it) {
                                 is MessageHolder.MESSAGE ->
                                     LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.Message)
+                                        Throwable(it.message)
                                     )
 
                                 else -> LoadResult.Error<Int, MovieDomainEntity>(

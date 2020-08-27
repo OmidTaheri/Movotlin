@@ -1,13 +1,13 @@
 package ir.omidtaheri.domain.entity
 
 data class MovieDomainEntity(
-    val backdrop_path: String?,
-    val genre_ids: List<Int>,
+    val backdropPath: String?,
+    val genreIds: List<Int>,
     val id: Int,
     val overview: String,
-    val poster_path: String?,
-    val release_date: String,
+    val posterPath: String?,
+    val releaseDate: String,
     val title: String,
     val video: Boolean,
-    val vote_average: Double
+    val voteAverage: Double
 )

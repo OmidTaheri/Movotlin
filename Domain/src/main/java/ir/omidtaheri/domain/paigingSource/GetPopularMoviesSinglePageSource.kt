@@ -12,9 +12,9 @@ class GetPopularMoviesSinglePageSource(val movieRepository: MovieGateWay) :
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
 
-        val PageNumber: Int = params.key ?: 1
+        val pageNumber: Int = params.key ?: 1
 
-        return movieRepository.GetPopularMovies(PageNumber)
+        return movieRepository.getPopularMovies(pageNumber)
             .map {
 
                 when (it) {
@@ -31,7 +31,7 @@ class GetPopularMoviesSinglePageSource(val movieRepository: MovieGateWay) :
                             when (it) {
                                 is MessageHolder.MESSAGE ->
                                     LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.Message)
+                                        Throwable(it.message)
                                     )
 
                                 else -> LoadResult.Error<Int, MovieDomainEntity>(
