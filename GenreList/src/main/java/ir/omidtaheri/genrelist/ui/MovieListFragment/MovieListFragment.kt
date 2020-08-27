@@ -1,23 +1,18 @@
 package ir.omidtaheri.genrelist.ui.MovieListFragment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
-import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.MovieListFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerMovieListComponent
-import ir.omidtaheri.genrelist.entity.MultiMovieUiEntity
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.FooterLoadStateAdapter
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.MovieListAdapter
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.MovieUiEntityComparator
@@ -28,7 +23,6 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
 
     private lateinit var movieListAdapter: MovieListAdapter
     private lateinit var viewModel: MovieListViewModel
-
 
     private var _viewbinding: MovieListFragmentBinding? = null
 
@@ -65,8 +59,6 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
                             ToDateState()
                         }
                     }
-
-
                 }
 
                 withLoadStateFooter(
@@ -74,16 +66,12 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
                 )
             }
 
-
-
             ConfigRecyclerView(
                 movieListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-
         }
     }
-
 
     private fun fetchData(GenreId: Int) {
         viewModel.getMovieListByGenre(GenreId)
@@ -111,14 +99,12 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieListViewModel::class.java)
     }
 
-
     override fun setDataLiveObserver() {
 
         viewModel.DataLive.observe(this, Observer
         {
             movieListAdapter.submitData(lifecycle, it)
         })
-
     }
 
     override fun setSnackBarMessageLiveDataObserver() {

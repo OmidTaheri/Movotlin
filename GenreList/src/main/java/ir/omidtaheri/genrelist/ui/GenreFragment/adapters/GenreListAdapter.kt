@@ -5,14 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.genrelist.databinding.GenreListItemBinding
-import ir.omidtaheri.genrelist.databinding.MovieListEmptyStateBinding
-import ir.omidtaheri.genrelist.databinding.MovieListItemBinding
 import ir.omidtaheri.genrelist.entity.GenreUiEntity
-import ir.omidtaheri.genrelist.entity.MovieUiEntity
-
 
 class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
-
 
     var items: MutableList<GenreUiEntity> = mutableListOf()
 
@@ -51,10 +46,7 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                         false
                     )
                 )
-
         }
-
-
     }
 
     override fun getItemCount(): Int {
@@ -71,14 +63,11 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         } else {
             VIEW_TYPE_EMPTY
         }
-
     }
-
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
 
     //    Helpers
     fun addItem(item: GenreUiEntity) {
@@ -104,9 +93,7 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         notifyDataSetChanged()
     }
 
-
     inner class ViewHolder(val binding: GenreListItemBinding) : BaseViewHolder(binding.root) {
-
 
         override fun onBind(position: Int) {
             val genreUiEntity = items.get(position)
@@ -118,23 +105,16 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                     mCallback.OnItemClick(genreUiEntity.id)
                 }
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: GenreListItemBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
 }
-
-

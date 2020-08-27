@@ -11,6 +11,5 @@ class GenreModule {
     @Provides
     fun provideDetailViewModel(viewmodel: GenreViewModelFactory): ViewModelProvider.Factory {
         return viewmodel
-
     }
 }

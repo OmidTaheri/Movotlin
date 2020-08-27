@@ -1,13 +1,11 @@
 package ir.omidtaheri.genrelist.ui.MovieListFragment.adapters
 
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingDataAdapter
@@ -20,10 +18,8 @@ import ir.omidtaheri.genrelist.databinding.MovieListEmptyStateBinding
 import ir.omidtaheri.genrelist.databinding.MovieListItemBinding
 import ir.omidtaheri.genrelist.entity.MovieUiEntity
 
-
 class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
-
 
 //    var items: MutableList<MovieUiEntity> = mutableListOf()
 //
@@ -64,8 +60,6 @@ class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
         )
 
         //  }
-
-
     }
 
 //    override fun getItemCount(): Int {
@@ -85,11 +79,9 @@ class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 //
 //    }
 
-
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
 
 //    //    Helpers
 //    fun addItem(item: MovieUiEntity) {
@@ -115,9 +107,7 @@ class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 //        notifyDataSetChanged()
 //    }
 
-
     inner class ViewHolder(val binding: MovieListItemBinding) : BaseViewHolder(binding.root) {
-
 
         override fun onBind(position: Int) {
             val FavoriteUiEntity = getItem(position)
@@ -129,25 +119,19 @@ class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
                     mCallback.OnItemClick(FavoriteUiEntity!!.id)
                 }
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: MovieListEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
 }
-
 
 object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {
     override fun areItemsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
@@ -198,6 +182,3 @@ class FooterLoadStateAdapter(
         return LoadStateViewHolder(parent, retry)
     }
 }
-
-
-

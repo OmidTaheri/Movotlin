@@ -1,28 +1,19 @@
 package ir.omidtaheri.genrelist.ui.GenreFragment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
-import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
-import ir.omidtaheri.genrelist.databinding.MovieListFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerGenreComponent
-import ir.omidtaheri.genrelist.entity.GenreUiEntity
-import ir.omidtaheri.genrelist.entity.MultiMovieUiEntity
 import ir.omidtaheri.genrelist.ui.GenreFragment.adapters.GenreListAdapter
 import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModel
-import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.MovieListAdapter
-import ir.omidtaheri.genrelist.ui.MovieListFragment.viewmodel.MovieListViewModel
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
@@ -30,15 +21,12 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
     private lateinit var genreListAdapter: GenreListAdapter
     private lateinit var viewModel: GenreViewModel
 
-
     private var _viewbinding: GenreFragmentBinding? = null
 
     private val viewbinding
         get() = _viewbinding!!
 
-
     lateinit var multiStatePage: MultiStatePage
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,11 +46,9 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         }
     }
 
-
     private fun fetchData() {
         viewModel.getMovieListByGenre()
     }
-
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = GenreFragmentBinding.inflate(inflater, container, false)
@@ -85,7 +71,6 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
     override fun SetViewModel() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(GenreViewModel::class.java)
     }
-
 
     override fun setDataLiveObserver() {
 

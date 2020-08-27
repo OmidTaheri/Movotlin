@@ -2,7 +2,6 @@ package ir.omidtaheri.genrelist.mapper
 
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.genrelist.entity.MovieUiEntity
-
 import javax.inject.Inject
 
 class MovieEntityUiDomainMapper @Inject constructor() :

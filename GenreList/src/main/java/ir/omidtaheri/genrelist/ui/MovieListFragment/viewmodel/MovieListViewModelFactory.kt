@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ir.omidtaheri.domain.interactor.GetMovieListByGenreId
 import ir.omidtaheri.genrelist.mapper.MovieEntityUiDomainMapper
-import ir.omidtaheri.genrelist.mapper.MultiMovieEntityUiDomainMapper
-
 import javax.inject.Inject
 
 class MovieListViewModelFactory @Inject constructor(
