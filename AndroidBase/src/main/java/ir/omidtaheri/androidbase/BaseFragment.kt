@@ -1,11 +1,10 @@
 package ir.omidtaheri.androidbase
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
@@ -14,17 +13,15 @@ abstract class BaseFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return InflateViewBinding(inflater, container)
     }
 
-
     abstract fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View?
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +32,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     abstract fun bindUiComponent()
-
 
     private fun SetLivaDataObserver() {
         setLoadingLiveDataObserver()
@@ -57,7 +53,6 @@ abstract class BaseFragment : Fragment() {
     abstract fun setToastErrorLiveDataObserver()
 
     abstract fun setLoadingLiveDataObserver()
-
 
     abstract fun ConfigDaggerComponent()
 

@@ -31,7 +31,6 @@ class SingleLiveData<T> : MutableLiveData<T>() {
 
     private val mPending = AtomicBoolean(false)
 
-
     @MainThread
     override fun setValue(t: T?) {
         mPending.set(true)
@@ -45,5 +44,4 @@ class SingleLiveData<T> : MutableLiveData<T>() {
     fun call() {
         this.value = null
     }
-
 }
