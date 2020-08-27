@@ -7,21 +7,21 @@ import ir.omidtaheri.domain.entity.MovieImageDomainEntity
 import javax.inject.Inject
 
 class MovieImageEntityDomainDataMapper @Inject constructor() :
-    Domain_Data_Mapper<MovieImageDataEntity, MovieImageDomainEntity> {
+    DomainDataMapper<MovieImageDataEntity, MovieImageDomainEntity> {
 
     override fun mapFromDataEntity(from: MovieImageDataEntity): MovieImageDomainEntity {
         return MovieImageDomainEntity(from.backdrops.map {
-            ir.omidtaheri.domain.entity.Backdrop(it.aspect_ratio, it.file_path, it.height, it.width)
+            ir.omidtaheri.domain.entity.Backdrop(it.aspectRatio, it.filePath, it.height, it.width)
         }, from.id, from.posters.map {
-            ir.omidtaheri.domain.entity.Poster(it.aspect_ratio, it.file_path, it.height, it.width)
+            ir.omidtaheri.domain.entity.Poster(it.aspectRatio, it.filePath, it.height, it.width)
         })
     }
 
     override fun mapToDataEntity(from: MovieImageDomainEntity): MovieImageDataEntity {
         return MovieImageDataEntity(from.backdrops.map {
-            Backdrop(it.aspect_ratio, it.file_path, it.height, it.width)
+            Backdrop(it.aspectRatio, it.filePath, it.height, it.width)
         }, from.id, from.posters.map {
-            Poster(it.aspect_ratio, it.file_path, it.height, it.width)
+            Poster(it.aspectRatio, it.filePath, it.height, it.width)
         })
     }
 }

@@ -6,7 +6,7 @@ import ir.omidtaheri.domain.entity.MovieVideoDomainEntity
 import javax.inject.Inject
 
 class MovieVideoEntityDomainDataMapper @Inject constructor() :
-    Domain_Data_Mapper<MovieVideoDataEntity, MovieVideoDomainEntity> {
+    DomainDataMapper<MovieVideoDataEntity, MovieVideoDomainEntity> {
 
     override fun mapFromDataEntity(from: MovieVideoDataEntity): MovieVideoDomainEntity {
         return MovieVideoDomainEntity(from.id, from.results.map {

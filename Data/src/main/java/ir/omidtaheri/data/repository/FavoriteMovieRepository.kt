@@ -19,25 +19,25 @@ class FavoriteMovieRepository @Inject constructor(
 
 ) : FavoriteMovieGateWay {
 
-    override fun FavoriteMovie(Movie: FavoritedMovieDomainEntity): Single<Long> {
-        return movieLocalDataSource.FavoriteMovie(
+    override fun favoriteMovie(movie: FavoritedMovieDomainEntity): Single<Long> {
+        return movieLocalDataSource.favoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
-                Movie
+                movie
             )
         )
     }
 
-    override fun UnFavoriteMovie(Movie: FavoritedMovieDomainEntity): Single<Int> {
-        return movieLocalDataSource.UnFavoriteMovie(
+    override fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Single<Int> {
+        return movieLocalDataSource.unFavoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
-                Movie
+               movie
             )
         )
     }
 
     override fun getFavoritedMovieList(): Observable<DataState<List<FavoritedMovieDomainEntity>>> {
 
-        return movieLocalDataSource.GetFavoritedMoviesList()
+        return movieLocalDataSource.getFavoritedMoviesList()
             .map<DataState<List<FavoritedMovieDomainEntity>>> {
 
                 DataState.SUCCESS(

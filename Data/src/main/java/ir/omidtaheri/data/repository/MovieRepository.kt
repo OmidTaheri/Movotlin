@@ -20,9 +20,9 @@ class MovieRepository @Inject constructor(
     val genreEntityDomainDataMapper: GenreEntityDomainDataMapper
 ) : MovieGateWay {
 
-    override fun GetTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
+    override fun getTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
 
-        return movieRemoteDataSource.GetTopRatedMovies(page)
+        return movieRemoteDataSource.getTopRatedMovies(page)
             .map<DataState<MultiMovieDomainEntity>> {
 
                 val multiMovieDomain = multiMovieEntityDomainDataMapper.mapFromDataEntity(it)
@@ -43,8 +43,8 @@ class MovieRepository @Inject constructor(
             }
     }
 
-    override fun GetPopularMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
-        return movieRemoteDataSource.GetPopularMovies(page)
+    override fun getPopularMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
+        return movieRemoteDataSource.getPopularMovies(page)
             .map<DataState<MultiMovieDomainEntity>> {
 
                 val multiMovieDomain = multiMovieEntityDomainDataMapper.mapFromDataEntity(it)
@@ -64,8 +64,8 @@ class MovieRepository @Inject constructor(
             }
     }
 
-    override fun GetGenreList(): Single<DataState<List<GenreDomainEntity>>> {
-        return movieRemoteDataSource.GetGenreList().map<DataState<List<GenreDomainEntity>>> {
+    override fun getGenreList(): Single<DataState<List<GenreDomainEntity>>> {
+        return movieRemoteDataSource.getGenreList().map<DataState<List<GenreDomainEntity>>> {
 
             val genreListDomainEntity = it.map {
                 genreEntityDomainDataMapper.mapFromDataEntity(it)
@@ -88,8 +88,8 @@ class MovieRepository @Inject constructor(
             }
     }
 
-    override fun GetUpComingMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
-        return movieRemoteDataSource.GetUpComingMovies(page)
+    override fun getUpComingMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
+        return movieRemoteDataSource.getUpComingMovies(page)
             .map<DataState<MultiMovieDomainEntity>> {
 
                 val multiMovieDomain = multiMovieEntityDomainDataMapper.mapFromDataEntity(it)

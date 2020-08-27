@@ -5,24 +5,24 @@ import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import javax.inject.Inject
 
 class FavoritedMovieEntityDomainDataMapper @Inject constructor() :
-    Domain_Data_Mapper<FavoritedMovieDataEntity, FavoritedMovieDomainEntity> {
+    DomainDataMapper<FavoritedMovieDataEntity, FavoritedMovieDomainEntity> {
     override fun mapFromDataEntity(from: FavoritedMovieDataEntity): FavoritedMovieDomainEntity {
         return FavoritedMovieDomainEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.id,
-            from.poster_path,
+            from.posterPath,
             from.title,
-            from.vote_average
+            from.voteAverage
         )
     }
 
     override fun mapToDataEntity(from: FavoritedMovieDomainEntity): FavoritedMovieDataEntity {
         return FavoritedMovieDataEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.id,
-            from.poster_path,
+            from.posterPath,
             from.title,
-            from.vote_average
+            from.voteAverage
         )
     }
 }

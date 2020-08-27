@@ -26,17 +26,17 @@ class MovieDetailEntityDomainDataMapper @Inject constructor(val genreEntityDomai
     override fun mapToDataEntity(from: MovieDetailDomainEntity): MovieDetailDataEntity {
 
         return MovieDetailDataEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.genres.map {
                 genreEntityDomainDataMapper.mapToDataEntity(it)
             },
             from.id,
             from.overview,
-            from.poster_path,
+            from.posterPath,
             from.tagline,
             from.title,
             from.video,
-            from.vote_average
+            from.voteAverage
         )
     }
 }

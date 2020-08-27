@@ -50,7 +50,7 @@ class DiscoverMovieRepositoryTest {
     fun getMovieDetailById_Successfull() {
         // Arange
         val inputEntity = MovieDetailDataEntity(
-            backdrop_path = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
+            backdropPath = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
             genres = listOf(
                 GenreDataEntity(
                     id = 18,
@@ -59,14 +59,14 @@ class DiscoverMovieRepositoryTest {
             ),
             id = 550,
             overview = "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
-            poster_path = null,
+            posterPath = null,
             tagline = "How much can you know about yourself if you've never been in a fight?",
             title = "Fight Club",
             video = false,
-            vote_average = 7.8
+            voteAverage = 7.8
         )
         val testObservable = Single.just(inputEntity)
-        every { movieDetailRemoteDataSource.GetMovieDetailById(any()) } returns testObservable
+        every { movieDetailRemoteDataSource.getMovieDetailById(any()) } returns testObservable
         // /Action
         val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
         testObserver.awaitTerminalEvent()
@@ -87,7 +87,7 @@ class DiscoverMovieRepositoryTest {
     @Test
     fun getMovieDetailById_Failed() {
 
-        every { movieDetailRemoteDataSource.GetMovieDetailById(any()) } returns Single.error(
+        every { movieDetailRemoteDataSource.getMovieDetailById(any()) } returns Single.error(
             RuntimeException("RunTimeError")
         )
 
@@ -102,7 +102,7 @@ class DiscoverMovieRepositoryTest {
                 when (Response_data.stateMessage?.message) {
                     is MessageHolder.MESSAGE ->
                         assertEquals(
-                            (Response_data.stateMessage?.message as MessageHolder.MESSAGE).Message,
+                            (Response_data.stateMessage?.message as MessageHolder.MESSAGE).message,
                             "RunTimeError"
                         )
                 }

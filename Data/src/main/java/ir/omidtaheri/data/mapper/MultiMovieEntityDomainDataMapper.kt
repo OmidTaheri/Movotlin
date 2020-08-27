@@ -17,6 +17,6 @@ class MultiMovieEntityDomainDataMapper @Inject constructor(val movieEntityDataDo
     override fun mapToDataEntity(from: MultiMovieDomainEntity): MultiMovieDataEntity {
         return MultiMovieDataEntity(from.page, from.results.map {
             movieEntityDataDomainMapper.mapToDataEntity(it)
-        }, from.total_pages, from.total_results)
+        }, from.totalPages, from.totalResults)
     }
 }
