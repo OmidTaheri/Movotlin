@@ -51,7 +51,8 @@ class BrowseErrorActivity : Activity() {
 
     class SpinnerFragment : Fragment() {
         override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
+            inflater: LayoutInflater,
+            container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
             val progressBar = ProgressBar(container?.context)

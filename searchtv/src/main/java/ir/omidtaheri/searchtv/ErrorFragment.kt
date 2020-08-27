@@ -1,8 +1,8 @@
 package ir.omidtaheri.searchtv
 
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import android.view.View
+import androidx.core.content.ContextCompat
 
 /**
  * This class demonstrates how to extend [androidx.leanback.app.ErrorFragment].
