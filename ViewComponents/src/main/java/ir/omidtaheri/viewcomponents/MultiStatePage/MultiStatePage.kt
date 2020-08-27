@@ -18,17 +18,14 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         viewbinding = MultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-
     private fun RecyclerViewVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.recyclerView.visibility = View.VISIBLE
         } else {
             viewbinding.recyclerView.visibility = View.GONE
-
         }
     }
-
 
     private fun ProgressBarVisibility(show: Boolean) {
 
@@ -36,7 +33,6 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             viewbinding.progressBar.visibility = View.VISIBLE
         } else {
             viewbinding.progressBar.visibility = View.GONE
-
         }
     }
 
@@ -46,7 +42,6 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
             viewbinding.root.error_layout.visibility = View.VISIBLE
         } else {
             viewbinding.root.error_layout.visibility = View.GONE
-
         }
     }
 
@@ -56,9 +51,7 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         } else {
             viewbinding.root.empty_layout.visibility = View.GONE
         }
-
     }
-
 
     fun setErrorText(text: String) {
         viewbinding.root.error_text.text = text
@@ -81,7 +74,6 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         ProgressBarVisibility(true)
         ErrorLayoutVisibility(false)
         EmptyLayoutVisibility(false)
-
     }
 
     fun ToErrorState() {
@@ -98,14 +90,12 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         EmptyLayoutVisibility(true)
     }
 
-
     fun ToDateState() {
         RecyclerViewVisibility(true)
         ProgressBarVisibility(false)
         ErrorLayoutVisibility(false)
         EmptyLayoutVisibility(false)
     }
-
 
     fun ConfigRecyclerView(
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
@@ -114,5 +104,4 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         viewbinding.recyclerView.adapter = adapter
         viewbinding.recyclerView.layoutManager = layoutManager
     }
-
 }

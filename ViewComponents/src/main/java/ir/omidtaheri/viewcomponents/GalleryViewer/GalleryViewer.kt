@@ -17,17 +17,14 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding = GalleryPageBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-
     private fun RecyclerViewVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.recyclerView.visibility = View.VISIBLE
         } else {
             viewbinding.recyclerView.visibility = View.GONE
-
         }
     }
-
 
     private fun ProgressBarVisibility(show: Boolean) {
 
@@ -35,7 +32,6 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
             viewbinding.progressBar.visibility = View.VISIBLE
         } else {
             viewbinding.progressBar.visibility = View.GONE
-
         }
     }
 
@@ -45,10 +41,8 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
             viewbinding.root.error_layout.visibility = View.VISIBLE
         } else {
             viewbinding.root.error_layout.visibility = View.GONE
-
         }
     }
-
 
     fun setErrorText(text: String) {
         viewbinding.root.error_text.text = text
@@ -58,29 +52,23 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.root.error_btn_retry.text = text
     }
 
-
     fun ToLoadingState() {
         RecyclerViewVisibility(false)
         ProgressBarVisibility(true)
         ErrorLayoutVisibility(false)
-
-
     }
 
     fun ToErrorState() {
         RecyclerViewVisibility(false)
         ProgressBarVisibility(false)
         ErrorLayoutVisibility(true)
-
     }
-
 
     fun ToDateState() {
         RecyclerViewVisibility(true)
         ProgressBarVisibility(false)
         ErrorLayoutVisibility(false)
     }
-
 
     fun ConfigRecyclerView(
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
@@ -89,5 +77,4 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.recyclerView.adapter = adapter
         viewbinding.recyclerView.layoutManager = layoutManager
     }
-
 }
