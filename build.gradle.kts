@@ -58,7 +58,7 @@ ktlint {
 
 detekt {
     ignoreFailures = true
-    config = files("${project.rootDir}/detekt-config.yml")
+    config = files("config/detekt/detekt.yml")
 }
 
 tasks {
