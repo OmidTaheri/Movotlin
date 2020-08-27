@@ -8,21 +8,21 @@ class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
     UiDomainMapper<FavoritedMovieUiEntity, FavoritedMovieDomainEntity> {
     override fun mapFromUiEntity(from: FavoritedMovieUiEntity): FavoritedMovieDomainEntity {
         return FavoritedMovieDomainEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.id,
-            from.poster_path,
+            from.posterPath,
             from.title,
-            from.vote_average
+            from.voteAverage
         )
     }
 
     override fun mapToUiEntity(from: FavoritedMovieDomainEntity): FavoritedMovieUiEntity {
         return FavoritedMovieUiEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.id,
-            from.poster_path,
+            from.posterPath,
             from.title,
-            from.vote_average
+            from.voteAverage
         )
     }
 }

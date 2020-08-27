@@ -53,20 +53,20 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                     when (it.refresh) {
 
                         is LoadState.Loading -> {
-                            ToLoadingState()
+                            toLoadingState()
                         }
 
                         is LoadState.Error -> {
-                            ToErrorState()
+                            toErrorState()
                         }
 
                         is LoadState.NotLoading -> {
-                            ToDateState()
+                            toDateState()
                         }
                     }
                 }
             }
-            ConfigRecyclerView(
+            configRecyclerView(
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
@@ -81,24 +81,24 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                     when (it.refresh) {
 
                         is LoadState.Loading -> {
-                            ToLoadingState()
+                            toLoadingState()
                         }
 
                         is LoadState.Error -> {
-                            ToErrorState()
+                            toErrorState()
                         }
 
                         is LoadState.NotLoading -> {
-                            ToDateState()
+                            toDateState()
                         }
                     }
                 }
             }
-            ConfigRecyclerView(
+            configRecyclerView(
                 adapterPopular as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            ToLoadingState()
+            toLoadingState()
         }
 
         galleryViewerUpComing.apply {
@@ -110,25 +110,25 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                     when (it.refresh) {
 
                         is LoadState.Loading -> {
-                            ToLoadingState()
+                            toLoadingState()
                         }
 
                         is LoadState.Error -> {
-                            ToErrorState()
+                            toErrorState()
                         }
 
                         is LoadState.NotLoading -> {
-                            ToDateState()
+                            toDateState()
                         }
                     }
                 }
             }
 
-            ConfigRecyclerView(
+            configRecyclerView(
                 adapterUpComing as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            ToLoadingState()
+            toLoadingState()
         }
     }
 

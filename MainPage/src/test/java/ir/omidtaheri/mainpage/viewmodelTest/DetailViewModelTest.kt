@@ -165,7 +165,7 @@ class DetailViewModelTest {
     fun getMovieDetail_Successfull() {
         // Arrange
         val movieDetailDomainEntity = MovieDetailDomainEntity(
-            backdrop_path = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
+            backdropPath = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
             genres = listOf(
                 GenreDomainEntity(
                     id = 18,
@@ -174,11 +174,11 @@ class DetailViewModelTest {
             ),
             id = 550,
             overview = "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
-            poster_path = null,
+            posterPath = null,
             tagline = "How much can you know about yourself if you've never been in a fight?",
             title = "Fight Club",
             video = false,
-            vote_average = 7.8
+            voteAverage = 7.8
         )
 
         val SuccessFull_DataState = DataState.SUCCESS(
@@ -187,7 +187,7 @@ class DetailViewModelTest {
         )
 
         detailViewModel.isLoading.observeForever(LoadingLiveData_MockObserver)
-        detailViewModel.DetailLiveData.observeForever(DetailMovieLiveData_MockObserver)
+        detailViewModel.detailLiveData.observeForever(DetailMovieLiveData_MockObserver)
 
         every { getDetailMovieUseCase.execute(any()) } returns
                 Single.just(SuccessFull_DataState)

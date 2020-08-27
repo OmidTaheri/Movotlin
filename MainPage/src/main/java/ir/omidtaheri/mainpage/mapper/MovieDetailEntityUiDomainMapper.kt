@@ -8,34 +8,34 @@ class MovieDetailEntityUiDomainMapper @Inject constructor(val genreEntityUiDomai
     UiDomainMapper<MovieDetailUiEntity, MovieDetailDomainEntity> {
     override fun mapFromUiEntity(from: MovieDetailUiEntity): MovieDetailDomainEntity {
         return MovieDetailDomainEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.genres.map {
                 genreEntityUiDomainMapper.mapFromUiEntity(it)
             },
             from.id,
             from.overview,
-            from.poster_path,
+            from.posterPath,
             from.tagline,
             from.title,
             from.video,
-            from.vote_average
+            from.voteAverage
         )
     }
 
     override fun mapToUiEntity(from: MovieDetailDomainEntity): MovieDetailUiEntity {
 
         return MovieDetailUiEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.genres.map {
                 genreEntityUiDomainMapper.mapToUiEntity(it)
             },
             from.id,
             from.overview,
-            from.poster_path,
+            from.posterPath,
             from.tagline,
             from.title,
             from.video,
-            from.vote_average
+            from.voteAverage
         )
     }
 }

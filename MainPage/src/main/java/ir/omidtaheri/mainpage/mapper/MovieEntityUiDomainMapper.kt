@@ -10,29 +10,29 @@ class MovieEntityUiDomainMapper @Inject constructor() :
     override fun mapFromUiEntity(from: MovieUiEntity): MovieDomainEntity {
 
         return MovieDomainEntity(
-            from.backdrop_path,
-            from.genre_ids,
+            from.backdropPath,
+            from.genreIds,
             from.id,
             from.overview,
-            from.poster_path,
-            from.release_date,
+            from.posterPath,
+            from.releaseDate,
             from.title,
             from.video,
-            from.vote_average
+            from.voteAverage
         )
     }
 
     override fun mapToUiEntity(from: MovieDomainEntity): MovieUiEntity {
         return MovieUiEntity(
-            from.backdrop_path,
-            from.genre_ids,
+            from.backdropPath,
+            from.genreIds,
             from.id,
             from.overview,
-            from.poster_path,
-            from.release_date,
+            from.posterPath,
+            from.releaseDate,
             from.title,
             from.video,
-            from.vote_average
+            from.voteAverage
         )
     }
 }

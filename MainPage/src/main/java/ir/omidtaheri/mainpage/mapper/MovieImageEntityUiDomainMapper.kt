@@ -12,17 +12,17 @@ class MovieImageEntityUiDomainMapper @Inject constructor() :
     override fun mapFromUiEntity(from: MovieImageUiEntity): MovieImageDomainEntity {
 
         return MovieImageDomainEntity(from.backdrops.map {
-            ir.omidtaheri.domain.entity.Backdrop(it.aspect_ratio, it.file_path, it.height, it.width)
+            ir.omidtaheri.domain.entity.Backdrop(it.aspectRatio, it.filePath, it.height, it.width)
         }, from.id, from.posters.map {
-            ir.omidtaheri.domain.entity.Poster(it.aspect_ratio, it.file_path, it.height, it.width)
+            ir.omidtaheri.domain.entity.Poster(it.aspectRatio, it.filePath, it.height, it.width)
         })
     }
 
     override fun mapToUiEntity(from: MovieImageDomainEntity): MovieImageUiEntity {
         return MovieImageUiEntity(from.backdrops.map {
-            Backdrop(it.aspect_ratio, it.file_path, it.height, it.width)
+            Backdrop(it.aspectRatio, it.filePath, it.height, it.width)
         }, from.id, from.posters.map {
-            Poster(it.aspect_ratio, it.file_path, it.height, it.width)
+            Poster(it.aspectRatio, it.filePath, it.height, it.width)
         })
     }
 }
