@@ -1,14 +1,12 @@
 package ir.omidtaheri.mainpage.mapper
 
-import ir.omidtaheri.domain.entity.MovieDomainEntity
-import ir.omidtaheri.domain.entity.MovieImageDomainEntity
 import ir.omidtaheri.domain.entity.MovieVideoDomainEntity
-import ir.omidtaheri.mainpage.entity.*
+import ir.omidtaheri.mainpage.entity.MovieVideoUiEntity
+import ir.omidtaheri.mainpage.entity.Result
 import javax.inject.Inject
 
 class MovieVideoEntityUiDomainMapper @Inject constructor() :
     Ui_Domain_Mapper<MovieVideoUiEntity, MovieVideoDomainEntity> {
-
 
     override fun mapFromUiEntity(from: MovieVideoUiEntity): MovieVideoDomainEntity {
         return MovieVideoDomainEntity(
@@ -39,6 +37,4 @@ class MovieVideoEntityUiDomainMapper @Inject constructor() :
             }
         )
     }
-
-
 }

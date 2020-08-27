@@ -19,12 +19,10 @@ import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel.MovieFullListViewModel
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
-
 class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
     private lateinit var movieListAdapter: MovieFullListAdapter
     private lateinit var viewModel: MovieFullListViewModel
-
 
     private var _viewbinding: MovieFullListFragmentBinding? = null
 
@@ -61,8 +59,6 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
                             ToDateState()
                         }
                     }
-
-
                 }
 
                 withLoadStateFooter(
@@ -70,16 +66,12 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
                 )
             }
 
-
-
             ConfigRecyclerView(
                 movieListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-
         }
     }
-
 
     private fun fetchData(CategoryId: Int) {
         when (CategoryId) {
@@ -87,8 +79,6 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
             2 -> viewModel.getPopularMovieList()
             3 -> viewModel.getUpComingMovieList()
         }
-
-
     }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -114,26 +104,19 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
             ViewModelProvider(this, viewModelFactory).get(MovieFullListViewModel::class.java)
     }
 
-
     override fun setDataLiveObserver() {
 
         viewModel.PoularLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
-
         })
 
         viewModel.TopRateLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
-
         })
-
 
         viewModel.UpComingLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
-
         })
-
-
     }
 
     override fun setSnackBarMessageLiveDataObserver() {

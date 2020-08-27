@@ -1,7 +1,6 @@
 package ir.omidtaheri.mainpage.entity
 
-
-data class MovieDetailUiEntity (
+data class MovieDetailUiEntity(
     val backdrop_path: String?,
     val genres: List<GenreUiEntity>,
     val id: Int,

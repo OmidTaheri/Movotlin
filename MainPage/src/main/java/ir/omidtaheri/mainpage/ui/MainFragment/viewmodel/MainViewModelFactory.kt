@@ -3,9 +3,10 @@ package ir.omidtaheri.mainpage.ui.MainFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ir.omidtaheri.domain.interactor.*
+import ir.omidtaheri.domain.interactor.GetPopularMoviesSinglePage
+import ir.omidtaheri.domain.interactor.GetTopRatedMoviesSinglePage
+import ir.omidtaheri.domain.interactor.GetUpcomingMoviesSinglePage
 import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MultiMovieEntityUiDomainMapper
 import javax.inject.Inject
 
 class MainViewModelFactory @Inject constructor(

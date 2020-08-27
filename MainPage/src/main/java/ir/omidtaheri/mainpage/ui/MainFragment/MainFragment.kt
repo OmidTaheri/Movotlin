@@ -10,19 +10,15 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseFragment
-import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpage.databinding.MainFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
-import ir.omidtaheri.mainpage.entity.MovieUiEntity
-import ir.omidtaheri.mainpage.entity.MultiMovieUiEntity
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
-
 
     private lateinit var viewModel: MainViewModel
 
@@ -31,16 +27,13 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     private val viewbinding
         get() = _viewbinding!!
 
-
     lateinit var GalleryViewerTopRate: GalleryViewer
     lateinit var GalleryViewerPopular: GalleryViewer
     lateinit var GalleryViewerUpComing: GalleryViewer
 
-
     lateinit var adapterTopRate: GalleryViewAdapter
     lateinit var adapterPopular: GalleryViewAdapter
     lateinit var adapterUpComing: GalleryViewAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +42,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     }
 
     private fun initRecyclerViews() {
-
 
         GalleryViewerTopRate.apply {
 
@@ -72,18 +64,13 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                             ToDateState()
                         }
                     }
-
-
                 }
-
             }
             ConfigRecyclerView(
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
         }
-
-
 
         GalleryViewerPopular.apply {
             adapterPopular = GalleryViewAdapter(MovieUiEntityComparator)
@@ -105,8 +92,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                             ToDateState()
                         }
                     }
-
-
                 }
             }
             ConfigRecyclerView(
@@ -115,8 +100,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             )
             ToLoadingState()
         }
-
-
 
         GalleryViewerUpComing.apply {
             adapterUpComing = GalleryViewAdapter(MovieUiEntityComparator)
@@ -138,8 +121,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                             ToDateState()
                         }
                     }
-
-
                 }
             }
 
@@ -149,8 +130,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             )
             ToLoadingState()
         }
-
-
     }
 
     private fun fetchData() {
@@ -158,7 +137,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         viewModel.getTopRatedMovieList()
         viewModel.getUpComingMovieList()
     }
-
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = MainFragmentBinding.inflate(inflater, container, false)
@@ -184,26 +162,19 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
 
-
     override fun setDataLiveObserver() {
 
         viewModel.PoularLiveData.observe(this, Observer {
             adapterPopular.submitData(lifecycle, it)
-
         })
 
         viewModel.TopRateLiveData.observe(this, Observer {
             adapterTopRate.submitData(lifecycle, it)
-
         })
-
 
         viewModel.UpComingLiveData.observe(this, Observer {
             adapterUpComing.submitData(lifecycle, it)
-
         })
-
-
     }
 
     override fun setSnackBarMessageLiveDataObserver() {

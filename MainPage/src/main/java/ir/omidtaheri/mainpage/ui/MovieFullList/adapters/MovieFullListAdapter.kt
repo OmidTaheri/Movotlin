@@ -1,13 +1,11 @@
 package ir.omidtaheri.mainpage.ui.MovieFullList.adapters
 
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingDataAdapter
@@ -22,7 +20,6 @@ import ir.omidtaheri.mainpage.entity.MovieUiEntity
 class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
 
-
     lateinit var mCallback: Callback
 
     interface Callback {
@@ -35,7 +32,6 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
-
         return ViewHolder(
             MovieFullListItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -43,18 +39,13 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
                 false
             )
         )
-
-
     }
-
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
 
-
     inner class ViewHolder(val binding: MovieFullListItemBinding) : BaseViewHolder(binding.root) {
-
 
         override fun onBind(position: Int) {
             val FavoriteUiEntity = getItem(position)
@@ -66,14 +57,9 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
                     mCallback.OnItemClick(FavoriteUiEntity!!.id)
                 }
             }
-
-
         }
     }
-
-
 }
-
 
 object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {
     override fun areItemsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
@@ -124,6 +110,3 @@ class FooterLoadStateAdapter(
         return LoadStateViewHolder(parent, retry)
     }
 }
-
-
-

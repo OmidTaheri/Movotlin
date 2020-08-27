@@ -4,16 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.mainpage.databinding.MovieViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.MovieViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 
-
 class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
-
 
 //    var items: MutableList<MovieUiEntity> = mutableListOf()
 //
@@ -54,8 +51,6 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
         )
 
 //        }
-
-
     }
 
 //    override fun getItemCount(): Int {
@@ -75,11 +70,9 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
 //
 //    }
 
-
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
 
 //    //    Helpers
 //    fun addItem(item: MovieUiEntity) {
@@ -108,7 +101,6 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
 
     inner class ViewHolder(val binding: MovieViewerItemBinding) : BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
             val MovieUiEntity = getItem(position)
 
@@ -119,20 +111,15 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
                     mCallback.OnItemClick(MovieUiEntity.id)
                 }
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: MovieViewerEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
@@ -148,5 +135,3 @@ object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {
         return oldItem == newItem
     }
 }
-
-

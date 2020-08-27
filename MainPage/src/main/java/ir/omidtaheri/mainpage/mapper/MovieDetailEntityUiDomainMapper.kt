@@ -11,8 +11,7 @@ class MovieDetailEntityUiDomainMapper @Inject constructor(val genreEntityUiDomai
             from.backdrop_path,
             from.genres.map {
                 genreEntityUiDomainMapper.mapFromUiEntity(it)
-            }
-            ,
+            },
             from.id,
             from.overview,
             from.poster_path,
@@ -29,8 +28,7 @@ class MovieDetailEntityUiDomainMapper @Inject constructor(val genreEntityUiDomai
             from.backdrop_path,
             from.genres.map {
                 genreEntityUiDomainMapper.mapToUiEntity(it)
-            }
-            ,
+            },
             from.id,
             from.overview,
             from.poster_path,

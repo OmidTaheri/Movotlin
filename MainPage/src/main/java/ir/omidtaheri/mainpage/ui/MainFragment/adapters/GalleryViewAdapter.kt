@@ -1,22 +1,13 @@
 package ir.omidtaheri.mainpage.ui.MainFragment.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.paging.LoadState
-import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseViewHolder
-import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.MovieViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.MovieViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
-
 
 class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
@@ -61,8 +52,6 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
         )
 //
 //        }
-
-
     }
 //
 //    override fun getItemCount(): Int {
@@ -115,7 +104,6 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 
     inner class ViewHolder(val binding: MovieViewerItemBinding) : BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
             val MovieUiEntity = getItem(position)
 
@@ -126,26 +114,19 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
                     mCallback.OnItemClick(MovieUiEntity.id)
                 }
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: MovieViewerEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
 }
-
-
 
 object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {
     override fun areItemsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
@@ -157,4 +138,3 @@ object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {
         return oldItem == newItem
     }
 }
-

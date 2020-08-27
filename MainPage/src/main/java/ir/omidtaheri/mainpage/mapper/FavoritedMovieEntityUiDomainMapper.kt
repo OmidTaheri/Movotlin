@@ -1,9 +1,7 @@
 package ir.omidtaheri.mainpage.mapper
 
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.mainpage.entity.FavoritedMovieUiEntity
-import ir.omidtaheri.mainpage.entity.MovieUiEntity
 import javax.inject.Inject
 
 class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
@@ -27,5 +25,4 @@ class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
             from.vote_average
         )
     }
-
 }

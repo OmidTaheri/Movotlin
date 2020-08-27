@@ -1,8 +1,6 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,18 +15,12 @@ import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
-import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.DetailFragmentBinding
-import ir.omidtaheri.mainpage.databinding.MainFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerDetailComponent
-import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
-import ir.omidtaheri.mainpage.entity.MovieDetailUiEntity
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
-import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
-import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback {
@@ -40,7 +32,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     private val viewbinding
         get() = _viewbinding!!
 
-
     lateinit var GalleryViewerImages: GalleryViewer
     lateinit var GalleryViewerSimilarMovies: GalleryViewer
     lateinit var favoriteButton: FloatingActionButton
@@ -49,19 +40,16 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     lateinit var mainBackdrop: ImageView
     lateinit var rateNumber: TextView
 
-
     lateinit var adapterImages: ImagesGalleryViewAdapter
     lateinit var adapterSimilarMovies: SimilarMoviesGalleryViewAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
-        //fetchData()
+        // fetchData()
     }
 
     private fun initRecyclerViews() {
-
 
         GalleryViewerImages.apply {
 
@@ -73,8 +61,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
             )
             ToLoadingState()
         }
-
-
 
         GalleryViewerSimilarMovies.apply {
             adapterSimilarMovies = SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator)
@@ -96,19 +82,13 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                             ToDateState()
                         }
                     }
-
-
                 }
-
             }
             ConfigRecyclerView(
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-
         }
-
-
     }
 
     private fun fetchData(MovieId: Int) {
@@ -116,7 +96,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         viewModel.getMovieImages(MovieId)
         viewModel.getMovieDetail(MovieId)
     }
-
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = DetailFragmentBinding.inflate(inflater, container, false)
@@ -132,7 +111,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         val MovieOverview = _viewbinding!!.info
         val mainBackdrop = _viewbinding!!.mainBackdrop
         val rateNumber = _viewbinding!!.rateNumber
-
     }
 
     override fun ConfigDaggerComponent() {
@@ -147,45 +125,30 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
     }
 
-
     override fun setDataLiveObserver() {
 
         viewModel.DetailLiveData.observe(this, Observer {
 
-
             MovieOverview.text = it.overview
-            //mainBackdrop.setImageResource(it.backdrop_path)
+            // mainBackdrop.setImageResource(it.backdrop_path)
             rateNumber.text = it.vote_average.toString()
-
-
         })
 
-
         viewModel.ImageListLiveData.observe(this, Observer {
-            //adapterImages.addItems(it.backdrops)
+            // adapterImages.addItems(it.backdrops)
             GalleryViewerImages.ToDateState()
-
         })
 
         viewModel.SimilarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
         })
 
-
         viewModel.ImagesErrorState.observe(this, Observer {
             GalleryViewerImages.ToErrorState()
-
         })
-
-
-
-
 
         viewModel.FavoritedLiveData.observe(this, Observer {
-
-
         })
-
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
@@ -242,6 +205,4 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     override fun OnItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
-
-
 }

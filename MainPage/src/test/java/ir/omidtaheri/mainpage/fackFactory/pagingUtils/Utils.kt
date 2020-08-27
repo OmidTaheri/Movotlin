@@ -7,18 +7,15 @@ import androidx.paging.rxjava2.observable
 import io.reactivex.Single
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 
-
 fun CreateFackPagingData_Successfull(page_size: Int) = Pager(
     config = PagingConfig(page_size),
     pagingSourceFactory = { CreateFackPagingSource_Successfull() }
 ).observable
 
-
 fun CreateFackPagingData_Failed(page_size: Int) = Pager(
     config = PagingConfig(page_size),
     pagingSourceFactory = { CreateFackPagingSource_Failed() }
 ).observable
-
 
 fun CreateFackPagingSource_Successfull() =
     FackPagingSource_Successfull()
@@ -35,7 +32,6 @@ class FackPagingSource_Failed : RxPagingSource<Int, MovieDomainEntity>() {
                 Throwable("Paging Error")
             )
         )
-
     }
 }
 
@@ -49,9 +45,7 @@ class FackPagingSource_Successfull : RxPagingSource<Int, MovieDomainEntity>() {
                 2
             )
         )
-
     }
-
 }
 
 private fun CreateMovieDomianEntityFackList(): List<MovieDomainEntity> {

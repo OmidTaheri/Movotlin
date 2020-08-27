@@ -7,8 +7,6 @@ import ir.omidtaheri.domain.interactor.GetPopularMovies
 import ir.omidtaheri.domain.interactor.GetTopRatedMovies
 import ir.omidtaheri.domain.interactor.GetUpcomingMovies
 import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MultiMovieEntityUiDomainMapper
-
 import javax.inject.Inject
 
 class MovieFullListViewModelFactory @Inject constructor(

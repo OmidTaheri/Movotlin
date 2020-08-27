@@ -7,17 +7,13 @@ import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.mainpage.databinding.ImagesViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.ImagesViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieImageUiEntity
-import ir.omidtaheri.mainpage.entity.MovieUiEntity
-
 
 class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
-
 
     var items: MutableList<MovieImageUiEntity> = mutableListOf()
 
     val VIEW_TYPE_EMPTY = 0
     val VIEW_TYPE_NORMAL = 1
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
@@ -41,10 +37,7 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                         false
                     )
                 )
-
         }
-
-
     }
 
     override fun getItemCount(): Int {
@@ -61,14 +54,11 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         } else {
             VIEW_TYPE_EMPTY
         }
-
     }
-
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
 
     //    Helpers
     fun addItem(item: MovieImageUiEntity) {
@@ -94,34 +84,25 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         notifyDataSetChanged()
     }
 
-
     inner class ViewHolder(val binding: ImagesViewerItemBinding) : BaseViewHolder(binding.root) {
-
 
         override fun onBind(position: Int) {
             val MovieUiEntity = items.get(position)
 
             binding.apply {
 
-               // binding.movieImageView.setImageResource()
+                // binding.movieImageView.setImageResource()
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: ImagesViewerEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
 }
-
-

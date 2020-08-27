@@ -4,8 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.paging.PagingData
-import androidx.paging.filter
-import androidx.paging.map
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.MockKAnnotations
@@ -13,25 +11,32 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
-import io.reactivex.Observable
 import io.reactivex.Single
-import ir.omidtaheri.domain.datastate.*
+import ir.omidtaheri.domain.datastate.DataState
+import ir.omidtaheri.domain.datastate.MessageHolder
+import ir.omidtaheri.domain.datastate.MessageType
+import ir.omidtaheri.domain.datastate.StateMessage
+import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.GenreDomainEntity
 import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
-import ir.omidtaheri.domain.interactor.*
+import ir.omidtaheri.domain.interactor.FavorieMovie
+import ir.omidtaheri.domain.interactor.GetMovieDetail
+import ir.omidtaheri.domain.interactor.GetMovieImagesById
+import ir.omidtaheri.domain.interactor.GetMovieVideosById
+import ir.omidtaheri.domain.interactor.GetSimilarMoviesSinglePage
+import ir.omidtaheri.domain.interactor.UnfavoriteMovie
 import ir.omidtaheri.mainpage.entity.MovieDetailUiEntity
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
-import ir.omidtaheri.mainpage.fackFactory.pagingUtils.CreateFackPagingData_Failed
-import ir.omidtaheri.mainpage.fackFactory.pagingUtils.CreateFackPagingData_Successfull
-import ir.omidtaheri.mainpage.mapper.*
+import ir.omidtaheri.mainpage.mapper.GenreEntityUiDomainMapper
+import ir.omidtaheri.mainpage.mapper.MovieDetailEntityUiDomainMapper
+import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
+import ir.omidtaheri.mainpage.mapper.MovieImageEntityUiDomainMapper
+import ir.omidtaheri.mainpage.mapper.MovieVideoEntityUiDomainMapper
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
-import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class DetailViewModelTest {
@@ -55,16 +60,13 @@ class DetailViewModelTest {
     @MockK
     lateinit var unfavoriteMovie: UnfavoriteMovie
 
-
     val movieDetailEntityUiDomainMapper =
         MovieDetailEntityUiDomainMapper(GenreEntityUiDomainMapper())
     val movieImageEntityUiDomainMapper = MovieImageEntityUiDomainMapper()
     val movieVideoEntityUiDomainMapper = MovieVideoEntityUiDomainMapper()
     val movieEntityUiDomainMapper = MovieEntityUiDomainMapper()
 
-
     lateinit var application: Application
-
 
     @MockK(relaxed = true)
     lateinit var SimilarMoviesLiveData_MockObserver: Observer<PagingData<MovieUiEntity>>
@@ -77,7 +79,6 @@ class DetailViewModelTest {
 
     @MockK(relaxed = true)
     lateinit var ErrorSnackBar_LiveData_MockObserver: Observer<String>
-
 
     @Before
     fun setUp() {
@@ -100,7 +101,6 @@ class DetailViewModelTest {
             application
         )
     }
-
 
 //    @Test
 //    fun getSimilarMovies_successful() {
@@ -135,12 +135,11 @@ class DetailViewModelTest {
 //            true
 //        }
 //
-////        assertEquals(
-////            capturedlist.get(0).overview,
-////            inputlist.get(0).overview
-////        )
+// //        assertEquals(
+// //            capturedlist.get(0).overview,
+// //            inputlist.get(0).overview
+// //        )
 //    }
-
 
 //    @Test
 //    fun getSimilarMovies_Failed() {
@@ -162,10 +161,9 @@ class DetailViewModelTest {
 //
 //    }
 
-
     @Test
     fun getMovieDetail_Successfull() {
-        //Arrange
+        // Arrange
         val movieDetailDomainEntity = MovieDetailDomainEntity(
             backdrop_path = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
             genres = listOf(
@@ -194,11 +192,10 @@ class DetailViewModelTest {
         every { getDetailMovieUseCase.execute(any()) } returns
                 Single.just(SuccessFull_DataState)
 
-
-        //Action
+        // Action
         detailViewModel.getMovieDetail(550)
 
-        //Asseration
+        // Asseration
         val capture_slot_loading = slot<Boolean>()
         val capture_slot_detailMovie = slot<MovieDetailUiEntity>()
         verify { LoadingLiveData_MockObserver.onChanged(capture(capture_slot_loading)) }
@@ -211,10 +208,9 @@ class DetailViewModelTest {
         )
     }
 
-
     @Test
     fun getMovieDetail_Failed() {
-        //Arrange
+        // Arrange
         val Error_DataState = DataState.ERROR<MovieDetailDomainEntity>(
             StateMessage(
                 MessageHolder.MESSAGE("Loading Error"),
@@ -228,17 +224,14 @@ class DetailViewModelTest {
         every { getDetailMovieUseCase.execute(any()) } returns
                 Single.just(Error_DataState)
 
-
-        //Action
+        // Action
         detailViewModel.getMovieDetail(550)
 
-        //Asseration
+        // Asseration
 
         val capture_slot_error = slot<String>()
         verify { ErrorSnackBar_LiveData_MockObserver.onChanged(capture(capture_slot_error)) }
 
         assertEquals(capture_slot_error.captured, "Loading Error")
-
     }
-
 }
