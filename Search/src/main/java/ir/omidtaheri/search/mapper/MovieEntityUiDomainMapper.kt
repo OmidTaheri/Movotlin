@@ -2,7 +2,6 @@ package ir.omidtaheri.search.mapper
 
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.search.entity.MovieUiEntity
-
 import javax.inject.Inject
 
 class MovieEntityUiDomainMapper @Inject constructor() :

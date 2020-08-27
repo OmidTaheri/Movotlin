@@ -18,10 +18,8 @@ import ir.omidtaheri.search.databinding.SearchListEmptyStateBinding
 import ir.omidtaheri.search.databinding.SearchListItemBinding
 import ir.omidtaheri.search.entity.MovieUiEntity
 
-
 class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
-
 
 //    var items: MutableList<MovieUiEntity> = mutableListOf()
 //
@@ -63,7 +61,6 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 
 //        }
 //
-
     }
 
 //    override fun getItemCount(): Int {
@@ -83,11 +80,9 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 //
 //    }
 
-
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
 
 //    //    Helpers
 //    fun addItem(item: MovieUiEntity) {
@@ -113,9 +108,7 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 //        notifyDataSetChanged()
 //    }
 
-
     inner class ViewHolder(val binding: SearchListItemBinding) : BaseViewHolder(binding.root) {
-
 
         override fun onBind(position: Int) {
             val FavoriteUiEntity = getItem(position)
@@ -127,20 +120,15 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
                     mCallback.OnItemClick(FavoriteUiEntity.id)
                 }
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: SearchListEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
@@ -195,6 +183,3 @@ class FooterLoadStateAdapter(
         return LoadStateViewHolder(parent, retry)
     }
 }
-
-
-

@@ -1,10 +1,10 @@
 import dependencies.AnnotationProcessorsDependencies
 import dependencies.Dependencies
+import dependencies.JetpackDependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 import extentions.kapt
-import dependencies.JetpackDependencies
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -25,10 +25,7 @@ android {
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
-
-
     }
-
 
     buildTypes {
         getByName(BuildTypes.RELEASE) {
@@ -40,14 +37,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
         }
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
-
         }
     }
 
@@ -59,7 +54,6 @@ android {
         FullQAFlavor.libraryCreate(this)
     }
 
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -67,9 +61,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
 }
-
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -86,7 +78,6 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.UiBase)))
     implementation(project(mapOf("path" to BuildModules.ViewComponents)))
 
-
     implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
@@ -98,12 +89,9 @@ dependencies {
     implementation(UiDependencies.RECYCLE_VIEW)
     implementation(UiDependencies.MATERIAL)
 
-
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.RX_Kotlin)
-
-
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)

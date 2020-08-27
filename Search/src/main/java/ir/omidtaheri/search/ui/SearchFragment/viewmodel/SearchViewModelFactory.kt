@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ir.omidtaheri.domain.interactor.SearchMoviesByQuery
 import ir.omidtaheri.search.mapper.MovieEntityUiDomainMapper
-import ir.omidtaheri.search.mapper.MultiMovieEntityUiDomainMapper
-
 import javax.inject.Inject
 
 class SearchViewModelFactory @Inject constructor(

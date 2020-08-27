@@ -14,7 +14,6 @@ import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
 import ir.omidtaheri.search.di.components.DaggerSearchComponent
-import ir.omidtaheri.search.entity.MultiMovieUiEntity
 import ir.omidtaheri.search.ui.SearchFragment.adapters.FooterLoadStateAdapter
 import ir.omidtaheri.search.ui.SearchFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.search.ui.SearchFragment.adapters.SearchMovieAdapter
@@ -26,12 +25,10 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     private lateinit var recyclerAdapter: SearchMovieAdapter
     private lateinit var viewModel: SearchViewModel
 
-
     private var _viewbinding: SearchFragmentBinding? = null
 
     private val viewbinding
         get() = _viewbinding!!
-
 
     lateinit var multiStatePage: MultiStatePage
     lateinit var searchbar: EditText
@@ -62,8 +59,6 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
                             ToDateState()
                         }
                     }
-
-
                 }
 
                 withLoadStateFooter(
@@ -71,19 +66,16 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
                 )
             }
 
-
             ConfigRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-
         }
     }
 
     private fun fetchData(query: String, page: Int) {
         viewModel.SearchMovieByQuery(query, page)
     }
-
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = SearchFragmentBinding.inflate(inflater, container, false)
@@ -109,15 +101,11 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
     }
 
-
     override fun setDataLiveObserver() {
 
         viewModel.DataLive.observe(this, Observer {
             recyclerAdapter.submitData(lifecycle, it)
-
         })
-
-
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
@@ -174,5 +162,4 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     override fun OnItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
-
 }
