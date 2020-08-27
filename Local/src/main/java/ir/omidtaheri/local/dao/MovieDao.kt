@@ -12,11 +12,11 @@ import ir.omidtaheri.local.entity.MovieLocalEntity
 interface MovieDao {
 
     @Insert()
-    fun FavoriteMovie(movie: MovieLocalEntity): Single<Long>
+    fun favoriteMovie(movie: MovieLocalEntity): Single<Long>
 
     @Delete
-    fun UnFavoriteMovie(movie: MovieLocalEntity): Single<Int>
+    fun unFavoriteMovie(movie: MovieLocalEntity): Single<Int>
 
     @Query("SELECT * FROM movie")
-    fun GetFavoritedMoviesList(): Observable<List<MovieLocalEntity>>
+    fun getFavoritedMoviesList(): Observable<List<MovieLocalEntity>>
 }

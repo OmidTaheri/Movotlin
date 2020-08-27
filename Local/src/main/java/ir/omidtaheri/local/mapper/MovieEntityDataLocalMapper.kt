@@ -5,7 +5,7 @@ import ir.omidtaheri.local.entity.MovieLocalEntity
 import javax.inject.Inject
 
 class MovieEntityDataLocalMapper @Inject constructor() :
-    Data_Local_EntityMapper<FavoritedMovieDataEntity, MovieLocalEntity> {
+    DataLocalEntityMapper<FavoritedMovieDataEntity, MovieLocalEntity> {
 
     override fun mapFromDataEntity(from: FavoritedMovieDataEntity): MovieLocalEntity {
         return MovieLocalEntity(
