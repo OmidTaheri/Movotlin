@@ -18,7 +18,3 @@ data class MovieLocalEntity(
     @ColumnInfo(name = "vote_average")
     val vote_average: Double
 )
-
-
-
-

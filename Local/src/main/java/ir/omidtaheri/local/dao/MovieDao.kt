@@ -1,12 +1,12 @@
 package ir.omidtaheri.local.dao
 
-
-import androidx.room.*
-import io.reactivex.Completable
-import ir.omidtaheri.local.entity.MovieLocalEntity
-import java.util.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 import io.reactivex.Observable
 import io.reactivex.Single
+import ir.omidtaheri.local.entity.MovieLocalEntity
 
 @Dao
 interface MovieDao {
@@ -19,5 +19,4 @@ interface MovieDao {
 
     @Query("SELECT * FROM movie")
     fun GetFavoritedMoviesList(): Observable<List<MovieLocalEntity>>
-
 }

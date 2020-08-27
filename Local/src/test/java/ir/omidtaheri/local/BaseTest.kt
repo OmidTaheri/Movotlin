@@ -18,7 +18,7 @@ open class BaseTest {
     open fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
-            .allowMainThreadQueries()//only for testing
+            .allowMainThreadQueries() // only for testing
             .build()
     }
 

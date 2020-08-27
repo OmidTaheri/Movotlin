@@ -1,7 +1,6 @@
 package ir.omidtaheri.local.mapper
 
 import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
-import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.local.entity.MovieLocalEntity
 import javax.inject.Inject
 
@@ -27,6 +26,4 @@ class MovieEntityDataLocalMapper @Inject constructor() :
             from.vote_average
         )
     }
-
-
 }
