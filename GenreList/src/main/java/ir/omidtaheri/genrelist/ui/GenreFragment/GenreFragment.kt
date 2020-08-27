@@ -38,11 +38,11 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         multiStatePage.apply {
             genreListAdapter = GenreListAdapter()
             genreListAdapter.setCallback(this@GenreFragment)
-            ConfigRecyclerView(
+            configRecyclerView(
                 genreListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             )
-            ToLoadingState()
+            toLoadingState()
         }
     }
 
@@ -74,12 +74,12 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.DataLive.observe(this, Observer {
+        viewModel.dataLive.observe(this, Observer {
             genreListAdapter.addItems(it)
         })
 
-        viewModel.GenreErrorState.observe(this, Observer {
-            multiStatePage.ToErrorState()
+        viewModel.genreErrorState.observe(this, Observer {
+            multiStatePage.toErrorState()
         })
     }
 

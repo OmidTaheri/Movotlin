@@ -48,15 +48,15 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
                     when (it.refresh) {
 
                         is LoadState.Loading -> {
-                            ToLoadingState()
+                            toLoadingState()
                         }
 
                         is LoadState.Error -> {
-                            ToErrorState()
+                            toErrorState()
                         }
 
                         is LoadState.NotLoading -> {
-                            ToDateState()
+                            toDateState()
                         }
                     }
                 }
@@ -66,7 +66,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
                 )
             }
 
-            ConfigRecyclerView(
+            configRecyclerView(
                 movieListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
