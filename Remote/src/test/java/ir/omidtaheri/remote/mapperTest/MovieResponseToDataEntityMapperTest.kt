@@ -4,11 +4,9 @@ import ir.omidtaheri.data.entity.MultiMovieDataEntity
 import ir.omidtaheri.remote.entity.response.MultiMovieResponseRemoteEntity
 import ir.omidtaheri.remote.fackEntity.FackFacktory
 import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
-import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class MovieResponseToDataEntityMapperTest {
 
@@ -18,7 +16,6 @@ class MovieResponseToDataEntityMapperTest {
     fun setUp() {
         mapper = MovieResponseToDataEntityMapper()
     }
-
 
     @Test
     fun mapFromDTO() {
@@ -35,6 +32,4 @@ class MovieResponseToDataEntityMapperTest {
         assertEquals(inputEntity.results[0].overview, outputEntity.results[0].overview)
         assertEquals(inputEntity.results[0].title, outputEntity.results[0].title)
     }
-
-
 }

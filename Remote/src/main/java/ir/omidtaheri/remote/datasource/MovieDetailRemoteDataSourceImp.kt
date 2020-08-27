@@ -1,9 +1,11 @@
 package ir.omidtaheri.remote.datasource
 
-
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
-import ir.omidtaheri.data.entity.*
+import ir.omidtaheri.data.entity.MovieDetailDataEntity
+import ir.omidtaheri.data.entity.MovieImageDataEntity
+import ir.omidtaheri.data.entity.MovieVideoDataEntity
+import ir.omidtaheri.data.entity.MultiMovieDataEntity
 import ir.omidtaheri.remote.mapper.MovieDetailResponseToDataEntityMapper
 import ir.omidtaheri.remote.mapper.MovieImagesResponseToDataEntityMapper
 import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
@@ -19,7 +21,6 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
     val movieResponseToDataEntityMapper: MovieResponseToDataEntityMapper
 ) :
     MovieDetailRemoteDataSourceInterface {
-
 
     override fun GetMovieDetailById(MovieId: Int): Single<MovieDetailDataEntity> {
         return movieDetailApi.getMovieDetailById(MovieId).map {
@@ -39,21 +40,20 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
         }
     }
 
-
     override fun GetMovieVideosById(MovieId: Int): Single<MovieVideoDataEntity> {
         return movieDetailApi.getMovieVideosById(MovieId).map {
             movieVideosResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetSimilarMovieById(MovieId: Int,page:Int): Single<MultiMovieDataEntity> {
-        return movieDetailApi.getSimilarMoviesById(MovieId,page).map {
+    override fun GetSimilarMovieById(MovieId: Int, page: Int): Single<MultiMovieDataEntity> {
+        return movieDetailApi.getSimilarMoviesById(MovieId, page).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun SearchMovieByQuery(query: String,page:Int): Single<MultiMovieDataEntity> {
-        return movieDetailApi.searchMovieByQuery(query,page).map {
+    override fun SearchMovieByQuery(query: String, page: Int): Single<MultiMovieDataEntity> {
+        return movieDetailApi.searchMovieByQuery(query, page).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }
     }

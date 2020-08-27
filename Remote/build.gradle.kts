@@ -3,12 +3,10 @@ import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 
-
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-
 }
 
 android {
@@ -23,10 +21,7 @@ android {
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
-
-
     }
-
 
     buildTypes {
         getByName(BuildTypes.RELEASE) {
@@ -38,14 +33,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
         }
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
-
         }
     }
 
@@ -57,16 +50,11 @@ android {
         FullQAFlavor.libraryCreate(this)
     }
 
-
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-
 }
-
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -79,10 +67,8 @@ dependencies {
     implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
-
     implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.JavaxInject)
 
     addTestsDependencies()
-
 }

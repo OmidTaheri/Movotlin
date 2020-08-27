@@ -1,10 +1,8 @@
 package ir.omidtaheri.remote.datasource
 
-
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieRemoteDataSourceInterface
 import ir.omidtaheri.data.entity.GenreDataEntity
-import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.data.entity.MultiMovieDataEntity
 import ir.omidtaheri.remote.mapper.GenreResponseToDataEntityMapper
 import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
@@ -17,7 +15,6 @@ class MovieRemoteDataSourceImp @Inject constructor(
     val genreResponseDtoMapper: GenreResponseToDataEntityMapper
 ) :
     MovieRemoteDataSourceInterface {
-
 
     override fun GetTopRatedMovies(page: Int): Single<MultiMovieDataEntity> {
         return movieApi.getTopRatedMovies(page).map {

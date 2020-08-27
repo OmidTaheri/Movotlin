@@ -1,9 +1,9 @@
 package ir.omidtaheri.remote.mapper
 
-import ir.omidtaheri.data.entity.GenreDataEntity
-import ir.omidtaheri.data.entity.MovieDetailDataEntity
 import ir.omidtaheri.data.entity.MovieImageDataEntity
-import ir.omidtaheri.remote.entity.response.*
+import ir.omidtaheri.remote.entity.response.Backdrop
+import ir.omidtaheri.remote.entity.response.MovieImagesResponseRemoteEntity
+import ir.omidtaheri.remote.entity.response.Poster
 import javax.inject.Inject
 
 class MovieImagesResponseToDataEntityMapper @Inject constructor() :
@@ -16,7 +16,6 @@ class MovieImagesResponseToDataEntityMapper @Inject constructor() :
             mapFromPosterDTO(from.posters)
         )
     }
-
 
     fun mapFromBackdropsDTO(dto_backdrops_list: List<Backdrop>): List<ir.omidtaheri.data.entity.Backdrop> {
 
@@ -32,5 +31,4 @@ class MovieImagesResponseToDataEntityMapper @Inject constructor() :
             ir.omidtaheri.data.entity.Poster(it.aspect_ratio, it.file_path, it.height, it.width)
         }
     }
-
 }

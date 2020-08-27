@@ -9,7 +9,6 @@ import javax.inject.Inject
 class MovieResponseToDataEntityMapper @Inject constructor() :
     ResponseToData_EntityMapper<MultiMovieResponseRemoteEntity, MultiMovieDataEntity> {
 
-
     override fun mapFromDTO(from: MultiMovieResponseRemoteEntity): MultiMovieDataEntity {
 
         return MultiMovieDataEntity(
@@ -19,7 +18,6 @@ class MovieResponseToDataEntityMapper @Inject constructor() :
             from.total_results
         )
     }
-
 
     fun mapFromMultiMovieResultDTO(dto_result_list: List<MultiMovieResult>): List<MovieDataEntity> {
 
@@ -38,5 +36,4 @@ class MovieResponseToDataEntityMapper @Inject constructor() :
             )
         }
     }
-
 }

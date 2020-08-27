@@ -1,9 +1,7 @@
 package ir.omidtaheri.remote.mapper
 
 import ir.omidtaheri.data.entity.GenreDataEntity
-import ir.omidtaheri.data.entity.MovieDetailDataEntity
 import ir.omidtaheri.remote.entity.response.GenreResponseRemoteEntity
-import ir.omidtaheri.remote.entity.response.MovieDetailResponseRemoteEntity
 import javax.inject.Inject
 
 class GenreResponseToDataEntityMapper @Inject constructor() :

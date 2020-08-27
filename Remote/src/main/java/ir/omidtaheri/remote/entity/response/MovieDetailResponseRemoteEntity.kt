@@ -17,4 +17,3 @@ data class MovieDetailResponseRemoteEntity(
     val video: Boolean,
     val vote_average: Double
 )
-

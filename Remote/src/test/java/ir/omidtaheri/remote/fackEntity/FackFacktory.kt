@@ -62,5 +62,4 @@ object FackFacktory {
 
     val Fack_multiMovieResponseRemoteEntity =
         MultiMovieResponseRemoteEntity(1, Fack_multiMovieResult_list, 19629, 982)
-
 }
