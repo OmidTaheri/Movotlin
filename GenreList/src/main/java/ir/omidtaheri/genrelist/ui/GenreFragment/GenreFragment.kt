@@ -37,7 +37,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
     private fun initRecyclerViews() {
         multiStatePage.apply {
             genreListAdapter = GenreListAdapter()
-            genreListAdapter.SetCallback(this@GenreFragment)
+            genreListAdapter.setCallback(this@GenreFragment)
             ConfigRecyclerView(
                 genreListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -134,7 +134,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }

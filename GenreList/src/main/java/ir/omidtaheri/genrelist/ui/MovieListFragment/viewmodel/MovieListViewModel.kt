@@ -18,19 +18,19 @@ class MovieListViewModel(
 ) :
     BaseViewModel(application) {
 
-    private val _DataLive: MutableLiveData<PagingData<MovieUiEntity>>
-    val DataLive: LiveData<PagingData<MovieUiEntity>>
-        get() = _DataLive
+    private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>>
+    val dataLive: LiveData<PagingData<MovieUiEntity>>
+        get() = _dataLive
 
     init {
-        _DataLive = MutableLiveData()
+        _dataLive = MutableLiveData()
     }
 
-    fun getMovieListByGenre(GenreId: Int) {
+    fun getMovieListByGenre(genreId: Int) {
 
-        val disposable = getMovieListByGenreId.execute(GenreId).subscribeBy {
+        val disposable = getMovieListByGenreId.execute(genreId).subscribeBy {
 
-            _DataLive.value = it.map {
+            _dataLive.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
         }

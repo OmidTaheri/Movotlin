@@ -42,7 +42,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
             movieListAdapter = MovieListAdapter(MovieUiEntityComparator)
 
             movieListAdapter.apply {
-                SetCallback(this@MovieListFragment)
+                setCallback(this@MovieListFragment)
                 addLoadStateListener {
 
                     when (it.refresh) {
@@ -73,8 +73,8 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
         }
     }
 
-    private fun fetchData(GenreId: Int) {
-        viewModel.getMovieListByGenre(GenreId)
+    private fun fetchData(genreId: Int) {
+        viewModel.getMovieListByGenre(genreId)
     }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -101,7 +101,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.DataLive.observe(this, Observer
+        viewModel.dataLive.observe(this, Observer
         {
             movieListAdapter.submitData(lifecycle, it)
         })
@@ -158,7 +158,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun OnItemClick(MovieId: Int) {
+    override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
     }
 }

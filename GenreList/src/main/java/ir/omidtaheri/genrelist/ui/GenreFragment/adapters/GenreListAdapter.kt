@@ -17,10 +17,10 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     lateinit var mCallback: Callback
 
     interface Callback {
-        fun OnItemClick(MovieId: Int)
+        fun onItemClick(movieId: Int)
     }
 
-    fun SetCallback(callback: Callback) {
+    fun setCallback(callback: Callback) {
         mCallback = callback
     }
 
@@ -102,7 +102,7 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                 //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
                 genreName.text = genreUiEntity.name
                 root.setOnClickListener {
-                    mCallback.OnItemClick(genreUiEntity.id)
+                    mCallback.onItemClick(genreUiEntity.id)
                 }
             }
         }

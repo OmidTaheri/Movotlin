@@ -19,17 +19,17 @@ class GenreViewModel(
 ) :
     BaseViewModel(application) {
 
-    private val _DataLive: MutableLiveData<List<GenreUiEntity>>
-    val DataLive: LiveData<List<GenreUiEntity>>
-        get() = _DataLive
+    private val _dataLive: MutableLiveData<List<GenreUiEntity>>
+    val dataLive: LiveData<List<GenreUiEntity>>
+        get() = _dataLive
 
-    private val _GenreErrorState: MutableLiveData<Boolean>
-    val GenreErrorState: LiveData<Boolean>
-        get() = _GenreErrorState
+    private val _genreErrorState: MutableLiveData<Boolean>
+    val genreErrorState: LiveData<Boolean>
+        get() = _genreErrorState
 
     init {
-        _DataLive = MutableLiveData()
-        _GenreErrorState = MutableLiveData()
+        _dataLive = MutableLiveData()
+        _genreErrorState = MutableLiveData()
     }
 
     fun getMovieListByGenre() {
@@ -39,7 +39,7 @@ class GenreViewModel(
 
                 is DataState.SUCCESS -> {
                     // _isLoading.value = false
-                    _DataLive.value = response.data?.map {
+                    _dataLive.value = response.data?.map {
                         genreEntityUiDomainMapper.mapToUiEntity(it)
                     }
                 }
@@ -50,15 +50,15 @@ class GenreViewModel(
 
                         when (errorDataState.stateMessage?.uiComponentType) {
                             is UiComponentType.SNACKBAR -> {
-                                HandleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.TOAST -> {
-                                HandleToastError(errorDataState as DataState.ERROR<Any>)
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
 
                             is UiComponentType.DIALOG -> {
-                                _GenreErrorState.value = true
+                                _genreErrorState.value = true
                             }
                         }
                     }
@@ -69,29 +69,29 @@ class GenreViewModel(
         addDisposable(disposable)
     }
 
-    private fun HandleSnackBarError(errorDataState: DataState.ERROR<Any>) {
+    private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
                 is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
-                    messageHolder.Message
+                    messageHolder.message
                 is MessageHolder.Res -> _ErrorSnackBar.value =
                     ApplicationClass.getString(
-                        messageHolder.ResId
+                        messageHolder.resId
                     )
             }
         }
     }
 
-    private fun HandleToastError(errorDataState: DataState.ERROR<Any>) {
+    private fun handleToastError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
                 is MessageHolder.MESSAGE -> _ErrorToast.value =
-                    messageHolder.Message
+                    messageHolder.message
                 is MessageHolder.Res -> _ErrorToast.value =
                     ApplicationClass.getString(
-                        messageHolder.ResId
+                        messageHolder.resId
                     )
             }
         }
