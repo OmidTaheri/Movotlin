@@ -7,5 +7,5 @@ import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 
 @Component(dependencies = [ApplicationComponent::class], modules = [FavoriteModule::class])
 interface FavoriteComponent {
-    fun inject (fragment:FavoriteFragment)
+    fun inject(fragment: FavoriteFragment)
 }

@@ -8,9 +8,7 @@ import ir.omidtaheri.favorite.databinding.FavoriteListEmptyStateBinding
 import ir.omidtaheri.favorite.databinding.FavoriteListItemBinding
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 
-
 class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
-
 
     var items: MutableList<FavoritedMovieUiEntity> = mutableListOf()
 
@@ -49,10 +47,7 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                         false
                     )
                 )
-
         }
-
-
     }
 
     override fun getItemCount(): Int {
@@ -69,14 +64,11 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         } else {
             VIEW_TYPE_EMPTY
         }
-
     }
-
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
 
     //    Helpers
     fun addItem(item: FavoritedMovieUiEntity) {
@@ -102,9 +94,7 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         notifyDataSetChanged()
     }
 
-
     inner class ViewHolder(val binding: FavoriteListItemBinding) : BaseViewHolder(binding.root) {
-
 
         override fun onBind(position: Int) {
             val FavoriteUiEntity = items.get(position)
@@ -116,23 +106,16 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
                     mCallback.OnItemClick(FavoriteUiEntity.id)
                 }
             }
-
-
         }
     }
-
 
     inner class EmptyViewHolder(val binding: FavoriteListEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
-
         override fun onBind(position: Int) {
 
             binding.apply {
-
             }
         }
     }
 }
-
-

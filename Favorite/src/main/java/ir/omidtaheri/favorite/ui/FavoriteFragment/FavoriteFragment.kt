@@ -12,17 +12,14 @@ import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
 import ir.omidtaheri.favorite.di.components.DaggerFavoriteComponent
-import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.ui.FavoriteFragment.adapters.FavoritedMovieAdapter
 import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
-
     private lateinit var recyclerAdapter: FavoritedMovieAdapter
     private lateinit var viewModel: FavoriteViewModel
-
 
     private var _viewbinding: FavoriteFragmentBinding? = null
 
@@ -53,7 +50,6 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         viewModel.getFavoritedMovieList()
     }
 
-
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = FavoriteFragmentBinding.inflate(inflater, container, false)
         val view = viewbinding.root
@@ -76,14 +72,12 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
     }
 
-
     override fun setDataLiveObserver() {
 
         viewModel.DataLive.observe(this, Observer {
             recyclerAdapter.addItems(it)
             multiStatePage.ToDateState()
         })
-
 
         viewModel.FavoriteErrorState.observe(this, Observer {
             multiStatePage.ToEmptyState()

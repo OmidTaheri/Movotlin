@@ -11,6 +11,5 @@ class FavoriteModule {
     @Provides
     fun provideFavoriteViewModel(viewmodel: FavoriteViewModelFactory): ViewModelProvider.Factory {
         return viewmodel
-
     }
 }

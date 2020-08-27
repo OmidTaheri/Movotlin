@@ -4,7 +4,6 @@ import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import javax.inject.Inject
 
-
 class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
     Ui_Domain_Mapper<FavoritedMovieUiEntity, FavoritedMovieDomainEntity> {
     override fun mapFromUiEntity(from: FavoritedMovieUiEntity): FavoritedMovieDomainEntity {
@@ -26,5 +25,4 @@ class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
             from.vote_average
         )
     }
-
 }

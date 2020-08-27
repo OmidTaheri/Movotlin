@@ -8,7 +8,6 @@ import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.interactor.GetFavoriedMovieList
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
@@ -20,7 +19,6 @@ class FavoriteViewModel(
 ) :
     BaseViewModel(application) {
 
-
     private val _DataLive: MutableLiveData<List<FavoritedMovieUiEntity>>
     val DataLive: LiveData<List<FavoritedMovieUiEntity>>
         get() = _DataLive
@@ -29,12 +27,10 @@ class FavoriteViewModel(
     val FavoriteErrorState: LiveData<Boolean>
         get() = _FavoriteErrorState
 
-
     init {
         _DataLive = MutableLiveData()
         _FavoriteErrorState = MutableLiveData()
     }
-
 
     fun getFavoritedMovieList() {
         // _isLoading.value = true
@@ -42,12 +38,11 @@ class FavoriteViewModel(
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    //_isLoading.value = false
+                    // _isLoading.value = false
                     _DataLive.value = response.data?.map {
                         favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
                     }
                 }
-
 
                 is DataState.ERROR -> {
                     // _isLoading.value = false
@@ -66,13 +61,8 @@ class FavoriteViewModel(
                                 _FavoriteErrorState.value = true
                             }
                         }
-
-
                     }
-
-
                 }
-
             }
         }
 
@@ -89,10 +79,7 @@ class FavoriteViewModel(
                     ApplicationClass.getString(
                         messageHolder.ResId
                     )
-
-
             }
-
         }
     }
 
@@ -106,10 +93,7 @@ class FavoriteViewModel(
                     ApplicationClass.getString(
                         messageHolder.ResId
                     )
-
-
             }
-
         }
     }
 }
