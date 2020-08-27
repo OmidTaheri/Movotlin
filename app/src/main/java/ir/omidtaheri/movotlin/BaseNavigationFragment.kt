@@ -10,14 +10,14 @@ import androidx.navigation.findNavController
 
 class BaseNavigationFragment : Fragment() {
 
-    private var LayoutRes = -1
-    private var NavHostId = -1
+    private var _layoutRes = -1
+    private var _navHostId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            LayoutRes = it.getInt("LayoutRes")
-            NavHostId = it.getInt("NavHostId")
+            _layoutRes = it.getInt("LayoutRes")
+            _navHostId = it.getInt("NavHostId")
         }
     }
 
@@ -27,23 +27,23 @@ class BaseNavigationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the load_state_footer_view_item for this fragment
-        return inflater.inflate(LayoutRes, container, false)
+        return inflater.inflate(_layoutRes, container, false)
     }
 
     fun onBackPressed(): Boolean {
         return requireActivity()
-            .findNavController(NavHostId)
+            .findNavController(_navHostId)
             .navigateUp()
     }
 
     fun popToRoot() {
-        val navController = requireActivity().findNavController(NavHostId)
+        val navController = requireActivity().findNavController(_navHostId)
         navController.popBackStack(navController.graph.startDestination, false)
     }
 
     fun handleDeepLink(intent: Intent): Boolean =
         requireActivity()
-            .findNavController(NavHostId)
+            .findNavController(_navHostId)
             .handleDeepLink(intent)
 
     companion object {

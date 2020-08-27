@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemReselectedListener,
     BottomNavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var view_pager: ViewPager2
-    lateinit var bottom_nav_bar: BottomNavigationView
+    lateinit var viewPager: ViewPager2
+    lateinit var bottomNavBar: BottomNavigationView
 
     // overall back stack of containers
     private val backStack = Stack<Int>()
@@ -37,35 +37,29 @@ class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        view_pager = findViewById<ViewPager2>(R.id.pager)
+        viewPager = findViewById<ViewPager2>(R.id.pager)
 
-        view_pager.adapter = ViewPagerAdapter(this)
-        view_pager.setUserInputEnabled(false)
+        viewPager.adapter = ViewPagerAdapter(this)
+        viewPager.setUserInputEnabled(false)
 
         // check deeplink only after viewPager is setup
-        view_pager.post(this::checkDeepLink)
-        view_pager.offscreenPageLimit = fragments.size
+        viewPager.post(this::checkDeepLink)
+        viewPager.offscreenPageLimit = fragments.size
 
-        bottom_nav_bar = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
-        bottom_nav_bar.setOnNavigationItemSelectedListener(this)
-        bottom_nav_bar.setOnNavigationItemReselectedListener(this)
+        bottomNavBar = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        bottomNavBar.setOnNavigationItemSelectedListener(this)
+        bottomNavBar.setOnNavigationItemReselectedListener(this)
 
-        view_pager.registerOnPageChangeCallback(
+        viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                }
+
 
                 override fun onPageSelected(position: Int) {
                     val itemId = indexToPage[position] ?: R.id.home
-                    if (bottom_nav_bar.selectedItemId != itemId) bottom_nav_bar.selectedItemId =
-                        itemId
+                    if (bottomNavBar.selectedItemId != itemId) bottomNavBar.selectedItemId = itemId
                 }
 
-                override fun onPageScrollStateChanged(state: Int) {}
+
             }
         )
 
@@ -81,17 +75,17 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val position = indexToPage.values.indexOf(item.itemId)
-        if (view_pager.currentItem != position) setItem(position)
+        if (viewPager.currentItem != position) setItem(position)
         return true
     }
 
     private fun setItem(position: Int) {
-        view_pager.currentItem = position
+        viewPager.currentItem = position
         backStack.push(position)
     }
 
     override fun onBackPressed() {
-        val fragment = fragments[view_pager.currentItem]
+        val fragment = fragments[viewPager.currentItem]
         val hadNestedFragments = fragment.onBackPressed()
         // if no fragments were popped
         if (!hadNestedFragments) {
@@ -99,7 +93,7 @@ class MainActivity : AppCompatActivity(),
                 // remove current position from stack
                 backStack.pop()
                 // set the next item in stack as current
-                view_pager.currentItem = backStack.peek()
+                viewPager.currentItem = backStack.peek()
             } else super.onBackPressed()
         }
     }

@@ -11,12 +11,12 @@ import ir.omidtaheri.movotlin.di.modules.RepositoryModule
 
 class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
-    lateinit var ApplicationComponent: ApplicationComponent
+    lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
 
-        this.ApplicationComponent =
+        this.applicationComponent =
             DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .localModule(LocalModule("Movotlin"))
@@ -24,10 +24,10 @@ class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
                 .repositoryModule(RepositoryModule())
                 .build()
 
-        ApplicationComponent.inject(this)
+        applicationComponent.inject(this)
     }
 
     override fun provideApplicationComponent(): ApplicationComponent {
-        return ApplicationComponent
+        return applicationComponent
     }
 }
