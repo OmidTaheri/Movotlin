@@ -38,11 +38,11 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         multiStatePage.apply {
             recyclerAdapter = FavoritedMovieAdapter()
             recyclerAdapter.setCallback(this@FavoriteFragment)
-            ConfigRecyclerView(
+            configRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-            ToLoadingState()
+            toLoadingState()
         }
     }
 
@@ -76,11 +76,11 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
         viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.addItems(it)
-            multiStatePage.ToDateState()
+            multiStatePage.toDateState()
         })
 
         viewModel.favoriteErrorState.observe(this, Observer {
-            multiStatePage.ToEmptyState()
+            multiStatePage.toEmptyState()
         })
     }
 
