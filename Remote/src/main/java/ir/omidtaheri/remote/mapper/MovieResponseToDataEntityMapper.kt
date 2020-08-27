@@ -7,7 +7,7 @@ import ir.omidtaheri.remote.entity.response.MultiMovieResult
 import javax.inject.Inject
 
 class MovieResponseToDataEntityMapper @Inject constructor() :
-    ResponseToData_EntityMapper<MultiMovieResponseRemoteEntity, MultiMovieDataEntity> {
+    ResponseToDataEntityMapper<MultiMovieResponseRemoteEntity, MultiMovieDataEntity> {
 
     override fun mapFromDTO(from: MultiMovieResponseRemoteEntity): MultiMovieDataEntity {
 
@@ -19,9 +19,9 @@ class MovieResponseToDataEntityMapper @Inject constructor() :
         )
     }
 
-    fun mapFromMultiMovieResultDTO(dto_result_list: List<MultiMovieResult>): List<MovieDataEntity> {
+    fun mapFromMultiMovieResultDTO(dtoResultList: List<MultiMovieResult>): List<MovieDataEntity> {
 
-        return dto_result_list.map {
+        return dtoResultList.map {
             MovieDataEntity(
                 it.adult,
                 it.backdrop_path,

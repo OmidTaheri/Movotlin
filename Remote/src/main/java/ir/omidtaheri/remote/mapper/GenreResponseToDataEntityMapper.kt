@@ -5,7 +5,7 @@ import ir.omidtaheri.remote.entity.response.GenreResponseRemoteEntity
 import javax.inject.Inject
 
 class GenreResponseToDataEntityMapper @Inject constructor() :
-    ResponseToData_EntityMapper<GenreResponseRemoteEntity, List<GenreDataEntity>> {
+    ResponseToDataEntityMapper<GenreResponseRemoteEntity, List<GenreDataEntity>> {
     override fun mapFromDTO(from: GenreResponseRemoteEntity): List<GenreDataEntity> {
         return from.genres.map {
             GenreDataEntity(it.id, it.name)

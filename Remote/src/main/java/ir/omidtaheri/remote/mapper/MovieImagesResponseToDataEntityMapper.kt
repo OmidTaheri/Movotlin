@@ -7,7 +7,7 @@ import ir.omidtaheri.remote.entity.response.Poster
 import javax.inject.Inject
 
 class MovieImagesResponseToDataEntityMapper @Inject constructor() :
-    ResponseToData_EntityMapper<MovieImagesResponseRemoteEntity, MovieImageDataEntity> {
+    ResponseToDataEntityMapper<MovieImagesResponseRemoteEntity, MovieImageDataEntity> {
     override fun mapFromDTO(from: MovieImagesResponseRemoteEntity): MovieImageDataEntity {
 
         return MovieImageDataEntity(
@@ -17,17 +17,17 @@ class MovieImagesResponseToDataEntityMapper @Inject constructor() :
         )
     }
 
-    fun mapFromBackdropsDTO(dto_backdrops_list: List<Backdrop>): List<ir.omidtaheri.data.entity.Backdrop> {
+    fun mapFromBackdropsDTO(dtoBackdropsList: List<Backdrop>): List<ir.omidtaheri.data.entity.Backdrop> {
 
-        return dto_backdrops_list.map {
+        return dtoBackdropsList.map {
 
             ir.omidtaheri.data.entity.Backdrop(it.aspect_ratio, it.file_path, it.height, it.width)
         }
     }
 
-    fun mapFromPosterDTO(dto_poster_list: List<Poster>): List<ir.omidtaheri.data.entity.Poster> {
+    fun mapFromPosterDTO(dtoPosterList: List<Poster>): List<ir.omidtaheri.data.entity.Poster> {
 
-        return dto_poster_list.map {
+        return dtoPosterList.map {
             ir.omidtaheri.data.entity.Poster(it.aspect_ratio, it.file_path, it.height, it.width)
         }
     }

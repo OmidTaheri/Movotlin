@@ -6,7 +6,7 @@ import ir.omidtaheri.remote.entity.response.MovieDetailResponseRemoteEntity
 import javax.inject.Inject
 
 class MovieDetailResponseToDataEntityMapper @Inject constructor() :
-    ResponseToData_EntityMapper<MovieDetailResponseRemoteEntity, MovieDetailDataEntity> {
+    ResponseToDataEntityMapper<MovieDetailResponseRemoteEntity, MovieDetailDataEntity> {
     override fun mapFromDTO(from: MovieDetailResponseRemoteEntity): MovieDetailDataEntity {
 
         return MovieDetailDataEntity(
