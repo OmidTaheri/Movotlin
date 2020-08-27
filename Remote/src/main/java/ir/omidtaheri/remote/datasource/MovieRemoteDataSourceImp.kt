@@ -16,25 +16,25 @@ class MovieRemoteDataSourceImp @Inject constructor(
 ) :
     MovieRemoteDataSourceInterface {
 
-    override fun GetTopRatedMovies(page: Int): Single<MultiMovieDataEntity> {
+    override fun getTopRatedMovies(page: Int): Single<MultiMovieDataEntity> {
         return movieApi.getTopRatedMovies(page).map {
             movieResponseDtoMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetPopularMovies(page: Int): Single<MultiMovieDataEntity> {
+    override fun getPopularMovies(page: Int): Single<MultiMovieDataEntity> {
         return movieApi.getPopularMovies(page).map {
             movieResponseDtoMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetGenreList(): Single<List<GenreDataEntity>> {
+    override fun getGenreList(): Single<List<GenreDataEntity>> {
         return movieApi.getGenreList().map {
             genreResponseDtoMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetUpComingMovies(page: Int): Single<MultiMovieDataEntity> {
+    override fun getUpComingMovies(page: Int): Single<MultiMovieDataEntity> {
         return movieApi.getUpcomingMovies(page).map {
             movieResponseDtoMapper.mapFromDTO(it)
         }

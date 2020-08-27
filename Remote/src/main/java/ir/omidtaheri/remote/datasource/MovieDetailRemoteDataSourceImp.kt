@@ -22,37 +22,37 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
 ) :
     MovieDetailRemoteDataSourceInterface {
 
-    override fun GetMovieDetailById(MovieId: Int): Single<MovieDetailDataEntity> {
+    override fun getMovieDetailById(MovieId: Int): Single<MovieDetailDataEntity> {
         return movieDetailApi.getMovieDetailById(MovieId).map {
             movieDetailResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetMovieListByGenreId(params: Map<String, Any>): Single<MultiMovieDataEntity> {
+    override fun getMovieListByGenreId(params: Map<String, Any>): Single<MultiMovieDataEntity> {
         return movieDetailApi.getMovieListByGenreId(params).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetMovieImagesById(MovieId: Int): Single<MovieImageDataEntity> {
+    override fun getMovieImagesById(MovieId: Int): Single<MovieImageDataEntity> {
         return movieDetailApi.getMovieImagesById(MovieId).map {
             movieImagesResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetMovieVideosById(MovieId: Int): Single<MovieVideoDataEntity> {
+    override fun getMovieVideosById(MovieId: Int): Single<MovieVideoDataEntity> {
         return movieDetailApi.getMovieVideosById(MovieId).map {
             movieVideosResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun GetSimilarMovieById(MovieId: Int, page: Int): Single<MultiMovieDataEntity> {
+    override fun getSimilarMovieById(MovieId: Int, page: Int): Single<MultiMovieDataEntity> {
         return movieDetailApi.getSimilarMoviesById(MovieId, page).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun SearchMovieByQuery(query: String, page: Int): Single<MultiMovieDataEntity> {
+    override fun searchMovieByQuery(query: String, page: Int): Single<MultiMovieDataEntity> {
         return movieDetailApi.searchMovieByQuery(query, page).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }

@@ -51,7 +51,7 @@ class MovieDetailRemoteDataSourceImpTest : BaseTest() {
                 .setBody(getJson("mock-responses/getMovieDetailById-status-200.json"))
         )
 
-        val testObserver = movieDetailRemoteDataSourceImp.GetMovieDetailById(550).test()
+        val testObserver = movieDetailRemoteDataSourceImp.getMovieDetailById(550).test()
 
         testObserver.assertComplete()
 
@@ -74,7 +74,7 @@ class MovieDetailRemoteDataSourceImpTest : BaseTest() {
                 .setBody(getJson("mock-responses/getMovieDetailById-status-401.json"))
         )
 
-        val testObserver = movieDetailRemoteDataSourceImp.GetMovieDetailById(550).test()
+        val testObserver = movieDetailRemoteDataSourceImp.getMovieDetailById(550).test()
 
         assertEquals(testObserver.errorCount(), 1)
 
@@ -103,7 +103,7 @@ class MovieDetailRemoteDataSourceImpTest : BaseTest() {
                 .setBody(getJson("mock-responses/getMovieDetailById-status-404.json"))
         )
 
-        val testObserver = movieDetailRemoteDataSourceImp.GetMovieDetailById(550).test()
+        val testObserver = movieDetailRemoteDataSourceImp.getMovieDetailById(550).test()
 
         assertEquals(testObserver.errorCount(), 1)
         testObserver.assertError(HttpException::class.java)
@@ -131,7 +131,7 @@ class MovieDetailRemoteDataSourceImpTest : BaseTest() {
                 .setBody(getJson("mock-responses/getSimilarMovieById-status-200.json"))
         )
 
-        val testObserver = movieDetailRemoteDataSourceImp.GetSimilarMovieById(550, 1).test()
+        val testObserver = movieDetailRemoteDataSourceImp.getSimilarMovieById(550, 1).test()
 
         testObserver.assertComplete()
 
@@ -154,7 +154,7 @@ class MovieDetailRemoteDataSourceImpTest : BaseTest() {
                 .setBody(getJson("mock-responses/getSimilarMovieById-status-401.json"))
         )
 
-        val testObserver = movieDetailRemoteDataSourceImp.GetSimilarMovieById(550, 1).test()
+        val testObserver = movieDetailRemoteDataSourceImp.getSimilarMovieById(550, 1).test()
 
         assertEquals(testObserver.errorCount(), 1)
 
@@ -183,7 +183,7 @@ class MovieDetailRemoteDataSourceImpTest : BaseTest() {
                 .setBody(getJson("mock-responses/getSimilarMovieById-status-404.json"))
         )
 
-        val testObserver = movieDetailRemoteDataSourceImp.GetSimilarMovieById(550, 1).test()
+        val testObserver = movieDetailRemoteDataSourceImp.getSimilarMovieById(550, 1).test()
 
         assertEquals(testObserver.errorCount(), 1)
         testObserver.assertError(HttpException::class.java)
