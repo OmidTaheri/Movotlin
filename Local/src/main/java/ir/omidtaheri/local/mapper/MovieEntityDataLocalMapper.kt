@@ -9,21 +9,21 @@ class MovieEntityDataLocalMapper @Inject constructor() :
 
     override fun mapFromDataEntity(from: FavoritedMovieDataEntity): MovieLocalEntity {
         return MovieLocalEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.id,
-            from.poster_path,
+            from.posterPath,
             from.title,
-            from.vote_average
+            from.voteAverage
         )
     }
 
     override fun mapToDataEntity(from: MovieLocalEntity): FavoritedMovieDataEntity {
         return FavoritedMovieDataEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.id,
-            from.poster_path,
+            from.posterPath,
             from.title,
-            from.vote_average
+            from.voteAverage
         )
     }
 }

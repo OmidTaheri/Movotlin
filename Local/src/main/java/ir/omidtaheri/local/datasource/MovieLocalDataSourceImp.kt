@@ -13,16 +13,16 @@ class MovieLocalDataSourceImp @Inject constructor(
     val movieEntityDataLocalMapper: MovieEntityDataLocalMapper
 ) : MovieLocalDataSourceInterface {
 
-    override fun FavoriteMovie(Movie: FavoritedMovieDataEntity): Single<Long> {
-        return movieDao.FavoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(Movie))
+    override fun favoriteMovie(movie: FavoritedMovieDataEntity): Single<Long> {
+        return movieDao.favoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(movie))
     }
 
-    override fun UnFavoriteMovie(Movie: FavoritedMovieDataEntity): Single<Int> {
-        return movieDao.UnFavoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(Movie))
+    override fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Single<Int> {
+        return movieDao.unFavoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(movie))
     }
 
-    override fun GetFavoritedMoviesList(): Observable<List<FavoritedMovieDataEntity>> {
-        return movieDao.GetFavoritedMoviesList().map {
+    override fun getFavoritedMoviesList(): Observable<List<FavoritedMovieDataEntity>> {
+        return movieDao.getFavoritedMoviesList().map {
             it.map {
                 movieEntityDataLocalMapper.mapToDataEntity(it)
             }

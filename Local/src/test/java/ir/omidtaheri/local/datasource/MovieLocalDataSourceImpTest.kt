@@ -25,12 +25,12 @@ class MovieLocalDataSourceImpTest : BaseTest() {
     fun favoriteMovie() {
 
         val testObserver =
-            movieLocalDataSourceImp.FavoriteMovie(FackFacktory.favoritedMovieDataEntity).test()
+            movieLocalDataSourceImp.favoriteMovie(FackFacktory.favoritedMovieDataEntity).test()
 
         testObserver.awaitTerminalEvent()
 
         val firstItem: FavoritedMovieDataEntity =
-            movieLocalDataSourceImp.GetFavoritedMoviesList().blockingFirst()[0]
+            movieLocalDataSourceImp.getFavoritedMoviesList().blockingFirst()[0]
 
         assertEquals(firstItem, FackFacktory.favoritedMovieDataEntity)
     }
