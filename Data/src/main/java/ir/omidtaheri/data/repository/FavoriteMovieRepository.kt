@@ -1,12 +1,14 @@
 package ir.omidtaheri.data.repository
 
-import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.mapper.FavoritedMovieEntityDomainDataMapper
-import ir.omidtaheri.domain.datastate.*
+import ir.omidtaheri.domain.datastate.DataState
+import ir.omidtaheri.domain.datastate.MessageHolder
+import ir.omidtaheri.domain.datastate.MessageType
+import ir.omidtaheri.domain.datastate.StateMessage
+import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import javax.inject.Inject
@@ -44,7 +46,6 @@ class FavoriteMovieRepository @Inject constructor(
                     },
                     StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
                 )
-
             }.onErrorReturn {
                 DataState.ERROR(
                     StateMessage(
@@ -55,8 +56,4 @@ class FavoriteMovieRepository @Inject constructor(
                 )
             }
     }
-
-
 }
-
-

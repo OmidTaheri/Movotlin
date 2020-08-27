@@ -7,14 +7,18 @@ import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
 import ir.omidtaheri.data.entity.GenreDataEntity
 import ir.omidtaheri.data.entity.MovieDetailDataEntity
-import ir.omidtaheri.data.mapper.*
+import ir.omidtaheri.data.mapper.GenreEntityDomainDataMapper
+import ir.omidtaheri.data.mapper.MovieDetailEntityDomainDataMapper
+import ir.omidtaheri.data.mapper.MovieEntityDomainDataMapper
+import ir.omidtaheri.data.mapper.MovieImageEntityDomainDataMapper
+import ir.omidtaheri.data.mapper.MovieVideoEntityDomainDataMapper
+import ir.omidtaheri.data.mapper.MultiMovieEntityDomainDataMapper
 import ir.omidtaheri.data.repository.DiscoverMovieRepository
-import ir.omidtaheri.domain.datastate.*
-import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
+import ir.omidtaheri.domain.datastate.DataState
+import ir.omidtaheri.domain.datastate.MessageHolder
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class DiscoverMovieRepositoryTest {
 
@@ -29,7 +33,6 @@ class DiscoverMovieRepositoryTest {
     val multiMovieEntityDomainDataMapper =
         MultiMovieEntityDomainDataMapper(MovieEntityDomainDataMapper())
 
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
@@ -43,10 +46,9 @@ class DiscoverMovieRepositoryTest {
         )
     }
 
-
     @Test
     fun getMovieDetailById_Successfull() {
-        //Arange
+        // Arange
         val inputEntity = MovieDetailDataEntity(
             backdrop_path = "/fCayJrkfRaCRCTh8GqN30f8oyQF.jpg",
             genres = listOf(
@@ -65,10 +67,10 @@ class DiscoverMovieRepositoryTest {
         )
         val testObservable = Single.just(inputEntity)
         every { movieDetailRemoteDataSource.GetMovieDetailById(any()) } returns testObservable
-        ///Action
+        // /Action
         val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
         testObserver.awaitTerminalEvent()
-        ///Assertion
+        // /Assertion
 
         val Response_data = testObserver.values()[0]
         when (Response_data) {
@@ -78,15 +80,9 @@ class DiscoverMovieRepositoryTest {
                     Response_data.data,
                     movieDetailEntityMapper.mapFromDataEntity(inputEntity)
                 )
-
             }
-
-
         }
-
-
     }
-
 
     @Test
     fun getMovieDetailById_Failed() {
@@ -94,7 +90,6 @@ class DiscoverMovieRepositoryTest {
         every { movieDetailRemoteDataSource.GetMovieDetailById(any()) } returns Single.error(
             RuntimeException("RunTimeError")
         )
-
 
         val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
         testObserver.awaitTerminalEvent()
@@ -106,15 +101,12 @@ class DiscoverMovieRepositoryTest {
 
                 when (Response_data.stateMessage?.message) {
                     is MessageHolder.MESSAGE ->
-                        assertEquals((Response_data.stateMessage?.message as MessageHolder.MESSAGE).Message, "RunTimeError")
+                        assertEquals(
+                            (Response_data.stateMessage?.message as MessageHolder.MESSAGE).Message,
+                            "RunTimeError"
+                        )
                 }
-
-
             }
-
-
         }
-
-
     }
 }

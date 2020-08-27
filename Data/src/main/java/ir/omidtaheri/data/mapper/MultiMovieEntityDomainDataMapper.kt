@@ -1,8 +1,6 @@
 package ir.omidtaheri.data.mapper
 
-import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.data.entity.MultiMovieDataEntity
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import javax.inject.Inject
 
@@ -21,5 +19,4 @@ class MultiMovieEntityDomainDataMapper @Inject constructor(val movieEntityDataDo
             movieEntityDataDomainMapper.mapToDataEntity(it)
         }, from.total_pages, from.total_results)
     }
-
 }

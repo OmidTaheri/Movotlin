@@ -1,12 +1,14 @@
 package ir.omidtaheri.data.repository
 
-
-
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieRemoteDataSourceInterface
 import ir.omidtaheri.data.mapper.GenreEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MultiMovieEntityDomainDataMapper
-import ir.omidtaheri.domain.datastate.*
+import ir.omidtaheri.domain.datastate.DataState
+import ir.omidtaheri.domain.datastate.MessageHolder
+import ir.omidtaheri.domain.datastate.MessageType
+import ir.omidtaheri.domain.datastate.StateMessage
+import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.GenreDomainEntity
 import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
@@ -17,7 +19,6 @@ class MovieRepository @Inject constructor(
     val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper,
     val genreEntityDomainDataMapper: GenreEntityDomainDataMapper
 ) : MovieGateWay {
-
 
     override fun GetTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
 
@@ -30,7 +31,6 @@ class MovieRepository @Inject constructor(
                     multiMovieDomain,
                     StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
                 )
-
             }
             .onErrorReturn {
                 DataState.ERROR(
@@ -41,7 +41,6 @@ class MovieRepository @Inject constructor(
                     )
                 )
             }
-
     }
 
     override fun GetPopularMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {
@@ -54,7 +53,6 @@ class MovieRepository @Inject constructor(
                     multiMovieDomain,
                     StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
                 )
-
             }.onErrorReturn {
                 DataState.ERROR(
                     StateMessage(
@@ -66,10 +64,8 @@ class MovieRepository @Inject constructor(
             }
     }
 
-
     override fun GetGenreList(): Single<DataState<List<GenreDomainEntity>>> {
         return movieRemoteDataSource.GetGenreList().map<DataState<List<GenreDomainEntity>>> {
-
 
             val genreListDomainEntity = it.map {
                 genreEntityDomainDataMapper.mapFromDataEntity(it)
@@ -79,7 +75,6 @@ class MovieRepository @Inject constructor(
                 genreListDomainEntity,
                 StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
             )
-
         }
             .onErrorReturn {
 
@@ -103,7 +98,6 @@ class MovieRepository @Inject constructor(
                     multiMovieDomain,
                     StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
                 )
-
             }.onErrorReturn {
                 DataState.ERROR(
                     StateMessage(
@@ -114,6 +108,4 @@ class MovieRepository @Inject constructor(
                 )
             }
     }
-
-
 }

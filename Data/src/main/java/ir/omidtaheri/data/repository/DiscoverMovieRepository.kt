@@ -1,15 +1,20 @@
 package ir.omidtaheri.data.repository
 
-
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
 import ir.omidtaheri.data.mapper.MovieDetailEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MovieImageEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MovieVideoEntityDomainDataMapper
 import ir.omidtaheri.data.mapper.MultiMovieEntityDomainDataMapper
-import ir.omidtaheri.domain.datastate.*
-import ir.omidtaheri.domain.entity.*
-
+import ir.omidtaheri.domain.datastate.DataState
+import ir.omidtaheri.domain.datastate.MessageHolder
+import ir.omidtaheri.domain.datastate.MessageType
+import ir.omidtaheri.domain.datastate.StateMessage
+import ir.omidtaheri.domain.datastate.UiComponentType
+import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
+import ir.omidtaheri.domain.entity.MovieImageDomainEntity
+import ir.omidtaheri.domain.entity.MovieVideoDomainEntity
+import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
@@ -22,7 +27,6 @@ class DiscoverMovieRepository @Inject constructor(
     val movieVideoEntityDomainDataMapper: MovieVideoEntityDomainDataMapper,
     val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper
 ) : DiscoverMovieGateWay {
-
 
     override fun GetMovieDetailById(MovieId: Int): Single<DataState<MovieDetailDomainEntity>> {
         return movieDetailRemoteDataSource.GetMovieDetailById(MovieId)
@@ -60,7 +64,6 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-
     override fun GetMovieImagesById(MovieId: Int): Single<DataState<MovieImageDomainEntity>> {
 
         return movieDetailRemoteDataSource.GetMovieImagesById(MovieId)
@@ -78,8 +81,6 @@ class DiscoverMovieRepository @Inject constructor(
                     )
                 )
             }
-
-
     }
 
     override fun GetMovieVideosById(MovieId: Int): Single<DataState<MovieVideoDomainEntity>> {
@@ -135,6 +136,4 @@ class DiscoverMovieRepository @Inject constructor(
                 )
             }
     }
-
-
 }

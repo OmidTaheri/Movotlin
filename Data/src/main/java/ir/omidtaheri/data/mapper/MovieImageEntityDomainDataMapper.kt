@@ -1,10 +1,8 @@
 package ir.omidtaheri.data.mapper
 
 import ir.omidtaheri.data.entity.Backdrop
-import ir.omidtaheri.data.entity.MovieDataEntity
 import ir.omidtaheri.data.entity.MovieImageDataEntity
 import ir.omidtaheri.data.entity.Poster
-import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.entity.MovieImageDomainEntity
 import javax.inject.Inject
 
@@ -26,5 +24,4 @@ class MovieImageEntityDomainDataMapper @Inject constructor() :
             Poster(it.aspect_ratio, it.file_path, it.height, it.width)
         })
     }
-
 }

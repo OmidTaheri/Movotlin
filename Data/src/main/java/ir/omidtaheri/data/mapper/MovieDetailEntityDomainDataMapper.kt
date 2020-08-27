@@ -38,6 +38,5 @@ class MovieDetailEntityDomainDataMapper @Inject constructor(val genreEntityDomai
             from.video,
             from.vote_average
         )
-
     }
 }
