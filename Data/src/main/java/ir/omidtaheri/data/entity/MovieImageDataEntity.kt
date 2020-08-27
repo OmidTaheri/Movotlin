@@ -7,15 +7,15 @@ data class MovieImageDataEntity(
 )
 
 data class Backdrop(
-    val aspect_ratio: Double,
-    val file_path: String,
+    val aspectRatio: Double,
+    val filePath: String,
     val height: Int,
     val width: Int
 )
 
 data class Poster(
-    val aspect_ratio: Double,
-    val file_path: String,
+    val aspectRatio: Double,
+    val filePath: String,
     val height: Int,
     val width: Int
 )

@@ -5,21 +5,21 @@ import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import javax.inject.Inject
 
 class MovieDetailEntityDomainDataMapper @Inject constructor(val genreEntityDomainDataMapper: GenreEntityDomainDataMapper) :
-    Domain_Data_Mapper<MovieDetailDataEntity, MovieDetailDomainEntity> {
+    DomainDataMapper<MovieDetailDataEntity, MovieDetailDomainEntity> {
     override fun mapFromDataEntity(from: MovieDetailDataEntity): MovieDetailDomainEntity {
 
         return MovieDetailDomainEntity(
-            from.backdrop_path,
+            from.backdropPath,
             from.genres.map {
                 genreEntityDomainDataMapper.mapFromDataEntity(it)
             },
             from.id,
             from.overview,
-            from.poster_path,
+            from.posterPath,
             from.tagline,
             from.title,
             from.video,
-            from.vote_average
+            from.voteAverage
         )
     }
 

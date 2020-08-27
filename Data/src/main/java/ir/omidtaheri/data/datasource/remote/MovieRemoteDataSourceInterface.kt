@@ -5,8 +5,8 @@ import ir.omidtaheri.data.entity.GenreDataEntity
 import ir.omidtaheri.data.entity.MultiMovieDataEntity
 
 interface MovieRemoteDataSourceInterface {
-    fun GetTopRatedMovies(page: Int): Single<MultiMovieDataEntity>
-    fun GetPopularMovies(page: Int): Single<MultiMovieDataEntity>
-    fun GetGenreList(): Single<List<GenreDataEntity>>
-    fun GetUpComingMovies(page: Int): Single<MultiMovieDataEntity>
+    fun getTopRatedMovies(page: Int): Single<MultiMovieDataEntity>
+    fun getPopularMovies(page: Int): Single<MultiMovieDataEntity>
+    fun getGenreList(): Single<List<GenreDataEntity>>
+    fun getUpComingMovies(page: Int): Single<MultiMovieDataEntity>
 }

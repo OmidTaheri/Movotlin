@@ -5,13 +5,13 @@ import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import javax.inject.Inject
 
 class MultiMovieEntityDomainDataMapper @Inject constructor(val movieEntityDataDomainMapper: MovieEntityDomainDataMapper) :
-    Domain_Data_Mapper<MultiMovieDataEntity, MultiMovieDomainEntity> {
+    DomainDataMapper<MultiMovieDataEntity, MultiMovieDomainEntity> {
 
     override fun mapFromDataEntity(from: MultiMovieDataEntity): MultiMovieDomainEntity {
 
         return MultiMovieDomainEntity(from.page, from.results.map {
             movieEntityDataDomainMapper.mapFromDataEntity(it)
-        }, from.total_pages, from.total_results)
+        }, from.totalPages, from.totalResults)
     }
 
     override fun mapToDataEntity(from: MultiMovieDomainEntity): MultiMovieDataEntity {
