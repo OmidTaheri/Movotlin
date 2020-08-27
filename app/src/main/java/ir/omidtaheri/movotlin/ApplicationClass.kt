@@ -1,5 +1,6 @@
 package ir.omidtaheri.movotlin
 
+import androidx.multidex.MultiDexApplication
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 import ir.omidtaheri.movotlin.di.components.DaggerApplicationComponent
