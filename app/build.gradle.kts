@@ -39,7 +39,6 @@ android {
         }
     }
 
-
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
@@ -84,28 +83,20 @@ android {
         setHtmlReport(true)
         setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
     }
-
 }
 
 dependencies {
 
-    
-    
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
-    
+
     implementation(Dependencies.multidex)
-    
-    
+
     implementation(project(mapOf("path" to BuildModules.Data)))
     implementation(project(mapOf("path" to BuildModules.Domain)))
-
-
-
-
 
     implementation(project(mapOf("path" to BuildModules.DaggerCore)))
 
@@ -114,13 +105,11 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Favorite)))
     implementation(project(mapOf("path" to BuildModules.GenreList)))
 
-
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
 
     implementation(UiDependencies.MATERIAL)
     implementation(UiDependencies.VIEWPAGER2)
-
 
     debugImplementation(DebugDependencies.LEAKCANARY)
 

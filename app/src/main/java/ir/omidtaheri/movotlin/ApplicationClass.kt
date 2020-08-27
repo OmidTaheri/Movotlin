@@ -1,6 +1,5 @@
 package ir.omidtaheri.movotlin
 
-import android.app.Application
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 import ir.omidtaheri.movotlin.di.components.DaggerApplicationComponent
@@ -11,7 +10,6 @@ import ir.omidtaheri.movotlin.di.modules.RepositoryModule
 
 class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
-
     lateinit var ApplicationComponent: ApplicationComponent
 
     override fun onCreate() {
@@ -21,16 +19,14 @@ class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
             DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .localModule(LocalModule("Movotlin"))
-                .remoteModule(RemoteModule(BuildConfig.BASE_URL,BuildConfig.API_KEY))
+                .remoteModule(RemoteModule(BuildConfig.BASE_URL, BuildConfig.API_KEY))
                 .repositoryModule(RepositoryModule())
                 .build()
 
         ApplicationComponent.inject(this)
-
     }
 
     override fun provideApplicationComponent(): ApplicationComponent {
         return ApplicationComponent
     }
-
 }

@@ -9,8 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
-import java.util.*
-
+import java.util.Stack
 
 class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemReselectedListener,
@@ -32,8 +31,7 @@ class MainActivity : AppCompatActivity(),
 
     // map of navigation_id to container index
     private val indexToPage =
-        mapOf(0 to R.id.MainFragment, 1 to R.id.SearchFragment, 2 to R.id.FavoriteFragment,3 to R.id.GenreFragment)
-
+        mapOf(0 to R.id.MainFragment, 1 to R.id.SearchFragment, 2 to R.id.FavoriteFragment, 3 to R.id.GenreFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +46,9 @@ class MainActivity : AppCompatActivity(),
         view_pager.post(this::checkDeepLink)
         view_pager.offscreenPageLimit = fragments.size
 
-
-
         bottom_nav_bar = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
         bottom_nav_bar.setOnNavigationItemSelectedListener(this)
         bottom_nav_bar.setOnNavigationItemReselectedListener(this)
-
 
         view_pager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
@@ -73,7 +68,6 @@ class MainActivity : AppCompatActivity(),
                 override fun onPageScrollStateChanged(state: Int) {}
             }
         )
-
 
         // initialize backStack with elements
         if (backStack.empty()) backStack.push(0)
@@ -96,7 +90,6 @@ class MainActivity : AppCompatActivity(),
         backStack.push(position)
     }
 
-
     override fun onBackPressed() {
         val fragment = fragments[view_pager.currentItem]
         val hadNestedFragments = fragment.onBackPressed()
@@ -107,7 +100,6 @@ class MainActivity : AppCompatActivity(),
                 backStack.pop()
                 // set the next item in stack as current
                 view_pager.currentItem = backStack.peek()
-
             } else super.onBackPressed()
         }
     }
@@ -128,7 +120,5 @@ class MainActivity : AppCompatActivity(),
         override fun createFragment(position: Int): Fragment {
             return fragments[position]
         }
-
-
     }
 }
