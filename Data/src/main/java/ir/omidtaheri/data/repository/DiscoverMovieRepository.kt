@@ -28,8 +28,8 @@ class DiscoverMovieRepository @Inject constructor(
     val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper
 ) : DiscoverMovieGateWay {
 
-    override fun GetMovieDetailById(MovieId: Int): Single<DataState<MovieDetailDomainEntity>> {
-        return movieDetailRemoteDataSource.GetMovieDetailById(MovieId)
+    override fun getMovieDetailById(movieId: Int): Single<DataState<MovieDetailDomainEntity>> {
+        return movieDetailRemoteDataSource.getMovieDetailById(movieId)
             .map<DataState<MovieDetailDomainEntity>> {
                 DataState.SUCCESS(
                     movieDetailEntityMapper.mapFromDataEntity(it),
@@ -46,8 +46,8 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-    override fun GetMovieListByGenreId(Params: Map<String, Any>): Single<DataState<MultiMovieDomainEntity>> {
-        return movieDetailRemoteDataSource.GetMovieListByGenreId(Params)
+    override fun getMovieListByGenreId(params: Map<String, Any>): Single<DataState<MultiMovieDomainEntity>> {
+        return movieDetailRemoteDataSource.getMovieListByGenreId(params)
             .map<DataState<MultiMovieDomainEntity>> {
                 DataState.SUCCESS(
                     multiMovieEntityDomainDataMapper.mapFromDataEntity(it),
@@ -64,9 +64,9 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-    override fun GetMovieImagesById(MovieId: Int): Single<DataState<MovieImageDomainEntity>> {
+    override fun getMovieImagesById(movieId: Int): Single<DataState<MovieImageDomainEntity>> {
 
-        return movieDetailRemoteDataSource.GetMovieImagesById(MovieId)
+        return movieDetailRemoteDataSource.getMovieImagesById(movieId)
             .map<DataState<MovieImageDomainEntity>> {
                 DataState.SUCCESS(
                     movieImageEntityDomainDataMapper.mapFromDataEntity(it),
@@ -83,8 +83,8 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-    override fun GetMovieVideosById(MovieId: Int): Single<DataState<MovieVideoDomainEntity>> {
-        return movieDetailRemoteDataSource.GetMovieVideosById(MovieId)
+    override fun getMovieVideosById(movieId: Int): Single<DataState<MovieVideoDomainEntity>> {
+        return movieDetailRemoteDataSource.getMovieVideosById(movieId)
             .map<DataState<MovieVideoDomainEntity>> {
                 DataState.SUCCESS(
                     movieVideoEntityDomainDataMapper.mapFromDataEntity(it),
@@ -101,8 +101,8 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-    override fun GetSimilarMovieById(Params: GetSimilarMoviesParams): Single<DataState<MultiMovieDomainEntity>> {
-        return movieDetailRemoteDataSource.GetSimilarMovieById(Params.MovieId, Params.page)
+    override fun getSimilarMovieById(params: GetSimilarMoviesParams): Single<DataState<MultiMovieDomainEntity>> {
+        return movieDetailRemoteDataSource.getSimilarMovieById(params.movieId, params.page)
             .map<DataState<MultiMovieDomainEntity>> {
                 DataState.SUCCESS(
                     multiMovieEntityDomainDataMapper.mapFromDataEntity(it),
@@ -119,8 +119,8 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-    override fun SearchMovieByQuery(params: SearchMovieByQueryParams): Single<DataState<MultiMovieDomainEntity>> {
-        return movieDetailRemoteDataSource.SearchMovieByQuery(params.query, params.page)
+    override fun searchMovieByQuery(params: SearchMovieByQueryParams): Single<DataState<MultiMovieDomainEntity>> {
+        return movieDetailRemoteDataSource.searchMovieByQuery(params.query, params.page)
             .map<DataState<MultiMovieDomainEntity>> {
                 DataState.SUCCESS(
                     multiMovieEntityDomainDataMapper.mapFromDataEntity(it),

@@ -22,8 +22,8 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
 ) :
     MovieDetailRemoteDataSourceInterface {
 
-    override fun getMovieDetailById(MovieId: Int): Single<MovieDetailDataEntity> {
-        return movieDetailApi.getMovieDetailById(MovieId).map {
+    override fun getMovieDetailById(movieId: Int): Single<MovieDetailDataEntity> {
+        return movieDetailApi.getMovieDetailById(movieId).map {
             movieDetailResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
@@ -34,20 +34,20 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
         }
     }
 
-    override fun getMovieImagesById(MovieId: Int): Single<MovieImageDataEntity> {
-        return movieDetailApi.getMovieImagesById(MovieId).map {
+    override fun getMovieImagesById(movieId: Int): Single<MovieImageDataEntity> {
+        return movieDetailApi.getMovieImagesById(movieId).map {
             movieImagesResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun getMovieVideosById(MovieId: Int): Single<MovieVideoDataEntity> {
-        return movieDetailApi.getMovieVideosById(MovieId).map {
+    override fun getMovieVideosById(movieId: Int): Single<MovieVideoDataEntity> {
+        return movieDetailApi.getMovieVideosById(movieId).map {
             movieVideosResponseToDataEntityMapper.mapFromDTO(it)
         }
     }
 
-    override fun getSimilarMovieById(MovieId: Int, page: Int): Single<MultiMovieDataEntity> {
-        return movieDetailApi.getSimilarMoviesById(MovieId, page).map {
+    override fun getSimilarMovieById(movieId: Int, page: Int): Single<MultiMovieDataEntity> {
+        return movieDetailApi.getSimilarMoviesById(movieId, page).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }
     }

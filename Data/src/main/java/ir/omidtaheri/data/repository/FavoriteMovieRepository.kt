@@ -30,7 +30,7 @@ class FavoriteMovieRepository @Inject constructor(
     override fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Single<Int> {
         return movieLocalDataSource.unFavoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
-               movie
+                movie
             )
         )
     }

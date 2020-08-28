@@ -17,10 +17,10 @@ class GetMovieListByGenreId @Inject constructor(
     val discoverMovieRepository: DiscoverMovieGateWay
 ) : ObservablePagingDataUseCase<Int, PagingData<MovieDomainEntity>>(schedulers) {
 
-    override fun buildSingle(GenreId: Int): Observable<PagingData<MovieDomainEntity>> {
+    override fun buildSingle(genreId: Int): Observable<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetMovieListByGenreSource(GenreId, discoverMovieRepository) }
+            pagingSourceFactory = { GetMovieListByGenreSource(genreId, discoverMovieRepository) }
         ).observable
     }
 

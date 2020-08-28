@@ -1,5 +1,6 @@
 package ir.omidtaheri.local.datasource
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
 import ir.omidtaheri.local.BaseTest
 import ir.omidtaheri.local.fackEntity.FackFacktory
@@ -7,7 +8,9 @@ import ir.omidtaheri.local.mapper.MovieEntityDataLocalMapper
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
 class MovieLocalDataSourceImpTest : BaseTest() {
 
     lateinit var movieLocalDataSourceImp: MovieLocalDataSourceImp

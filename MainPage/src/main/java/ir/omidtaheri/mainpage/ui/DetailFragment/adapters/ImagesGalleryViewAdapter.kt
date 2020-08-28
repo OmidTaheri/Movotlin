@@ -41,7 +41,7 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return if (items != null && items.size != 0) {
+        return if (items.size != 0) {
             items.size
         } else {
             1
@@ -49,7 +49,7 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (items != null && items.size > 0) {
+        return if (items.size > 0) {
             VIEW_TYPE_NORMAL
         } else {
             VIEW_TYPE_EMPTY

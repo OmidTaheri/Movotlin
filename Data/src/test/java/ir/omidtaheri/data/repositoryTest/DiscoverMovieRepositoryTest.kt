@@ -68,7 +68,7 @@ class DiscoverMovieRepositoryTest {
         val testObservable = Single.just(inputEntity)
         every { movieDetailRemoteDataSource.getMovieDetailById(any()) } returns testObservable
         // /Action
-        val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
+        val testObserver = discoverMovieRepository.getMovieDetailById(550).test()
         testObserver.awaitTerminalEvent()
         // /Assertion
 
@@ -91,7 +91,7 @@ class DiscoverMovieRepositoryTest {
             RuntimeException("RunTimeError")
         )
 
-        val testObserver = discoverMovieRepository.GetMovieDetailById(550).test()
+        val testObserver = discoverMovieRepository.getMovieDetailById(550).test()
         testObserver.awaitTerminalEvent()
 
         val Response_data = testObserver.values()[0]

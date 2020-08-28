@@ -53,13 +53,10 @@ class MainActivity : AppCompatActivity(),
         viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
 
-
                 override fun onPageSelected(position: Int) {
                     val itemId = indexToPage[position] ?: R.id.home
                     if (bottomNavBar.selectedItemId != itemId) bottomNavBar.selectedItemId = itemId
                 }
-
-
             }
         )
 
@@ -69,7 +66,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNavigationItemReselected(item: MenuItem) {
         val position = indexToPage.values.indexOf(item.itemId)
-        val fragment = fragments[position!!]
+        val fragment = fragments[position]
         fragment.popToRoot()
     }
 

@@ -27,7 +27,7 @@ class SearchMovieByQuerySource(
                     is DataState.SUCCESS -> {
                         LoadResult.Page(
                             it.data!!.results, null,
-                            if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
+                            if (it.data.page != it.data.totalPages) (it.data.page) + 1 else null
                         )
                     }
 

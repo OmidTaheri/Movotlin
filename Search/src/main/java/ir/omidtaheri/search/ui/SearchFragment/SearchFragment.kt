@@ -159,7 +159,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun onItemClick(MovieId: Int) {
+    override fun onItemClick(movieId: Int) {
         TODO("Not yet implemented")
     }
 }

@@ -1,5 +1,4 @@
 import extentions.applyDefault
-import io.gitlab.arturbosch.detekt.internal.configurableFileCollection
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -11,7 +10,6 @@ plugins {
 
 buildscript {
 
-
     repositories {
         google()
         jcenter()
@@ -20,7 +18,6 @@ buildscript {
     dependencies {
         classpath("${BuildPluginsClasspath.GRADLE_FOR_ANDROID}")
         classpath("${BuildPluginsClasspath.GRADLE_FOR_KOTLIN}")
-
     }
 }
 
@@ -53,7 +50,6 @@ ktlint {
         exclude("**/generated/**", "**/test/**", "**/androidTest/**")
         include("**/kotlin/**")
     }
-
 }
 
 detekt {
@@ -67,6 +63,3 @@ tasks {
         outputDirectory = "$buildDir/dokka"
     }
 }
-
-
-
