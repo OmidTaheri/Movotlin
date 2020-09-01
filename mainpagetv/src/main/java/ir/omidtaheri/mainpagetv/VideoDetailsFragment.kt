@@ -26,9 +26,8 @@ import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
+import ir.omidtaheri.uibase.GlideApp
 import java.util.Collections
 
 /**
@@ -67,20 +66,20 @@ class VideoDetailsFragment : DetailsFragment() {
 
     private fun initializeBackground(movie: Movie?) {
         mDetailsBackground.enableParallax()
-        Glide.with(activity)
-            .load(movie?.backgroundImageUrl)
-            .asBitmap()
-            .centerCrop()
-            .error(R.drawable.default_background)
-            .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(
-                    bitmap: Bitmap,
-                    glideAnimation: GlideAnimation<in Bitmap>
-                ) {
-                    mDetailsBackground.coverBitmap = bitmap
-                    mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size())
-                }
-            })
+//        GlideApp.with(activity)
+//            .load(movie?.backgroundImageUrl)
+//            .asBitmap()
+//            .centerCrop()
+//            .error(R.drawable.default_background)
+//            .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
+//                override fun onResourceReady(
+//                    bitmap: Bitmap,
+//                    glideAnimation: GlideAnimation<in Bitmap>
+//                ) {
+//                    mDetailsBackground.coverBitmap = bitmap
+//                    mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size())
+//                }
+//            })
     }
 
     private fun setupDetailsOverviewRow() {
@@ -88,21 +87,21 @@ class VideoDetailsFragment : DetailsFragment() {
         val row = DetailsOverviewRow(mSelectedMovie)
         row.imageDrawable = ContextCompat.getDrawable(activity, R.drawable.default_background)
         val width = convertDpToPixel(activity, DETAIL_THUMB_WIDTH)
-        val height = convertDpToPixel(activity, DETAIL_THUMB_HEIGHT)
-        Glide.with(activity)
-            .load(mSelectedMovie?.cardImageUrl)
-            .centerCrop()
-            .error(R.drawable.default_background)
-            .into<SimpleTarget<GlideDrawable>>(object : SimpleTarget<GlideDrawable>(width, height) {
-                override fun onResourceReady(
-                    resource: GlideDrawable,
-                    glideAnimation: GlideAnimation<in GlideDrawable>
-                ) {
-                    Log.d(TAG, "details overview card image url ready: " + resource)
-                    row.imageDrawable = resource
-                    mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size())
-                }
-            })
+//        val height = convertDpToPixel(activity, DETAIL_THUMB_HEIGHT)
+//        GlideApp.with(activity)
+//            .load(mSelectedMovie?.cardImageUrl)
+//            .centerCrop()
+//            .error(R.drawable.default_background)
+//            .into<SimpleTarget<GlideDrawable>>(object : SimpleTarget<GlideDrawable>(width, height) {
+//                override fun onResourceReady(
+//                    resource: GlideDrawable,
+//                    glideAnimation: GlideAnimation<in GlideDrawable>
+//                ) {
+//                    Log.d(TAG, "details overview card image url ready: " + resource)
+//                    row.imageDrawable = resource
+//                    mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size())
+//                }
+//            })
 
         val actionAdapter = ArrayObjectAdapter()
 
@@ -136,7 +135,7 @@ class VideoDetailsFragment : DetailsFragment() {
         // Set detail background.
         val detailsPresenter = FullWidthDetailsOverviewRowPresenter(DetailsDescriptionPresenter())
         detailsPresenter.backgroundColor =
-            ContextCompat.getColor(activity, R.color.selected_background)
+            ContextCompat.getColor(activity, R.color.tv_selected_background)
 
         // Hook up transition element.
         val sharedElementHelper = FullWidthDetailsOverviewSharedElementHelper()

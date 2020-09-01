@@ -26,9 +26,8 @@ import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
+import ir.omidtaheri.uibase.GlideApp
 import java.util.Collections
 import java.util.Timer
 import java.util.TimerTask
@@ -80,9 +79,9 @@ class MainFragment : BrowseFragment() {
         isHeadersTransitionOnBackEnabled = true
 
         // set fastLane (or headers) background color
-        brandColor = ContextCompat.getColor(activity, R.color.fastlane_background)
+        brandColor = ContextCompat.getColor(activity, R.color.tv_fastlane_background)
         // set search icon color
-        searchAffordanceColor = ContextCompat.getColor(activity, R.color.search_opaque)
+        searchAffordanceColor = ContextCompat.getColor(activity, R.color.tv_search_opaque)
     }
 
     private fun loadRows() {
@@ -173,19 +172,19 @@ class MainFragment : BrowseFragment() {
     private fun updateBackground(uri: String?) {
         val width = mMetrics.widthPixels
         val height = mMetrics.heightPixels
-        Glide.with(activity)
-            .load(uri)
-            .centerCrop()
-            .error(mDefaultBackground)
-            .into<SimpleTarget<GlideDrawable>>(
-                object : SimpleTarget<GlideDrawable>(width, height) {
-                    override fun onResourceReady(
-                        resource: GlideDrawable,
-                        glideAnimation: GlideAnimation<in GlideDrawable>
-                    ) {
-                        mBackgroundManager.drawable = resource
-                    }
-                })
+//        GlideApp.with(activity)
+//            .load(uri)
+//            .centerCrop()
+//            .error(mDefaultBackground)
+//            .into<SimpleTarget<GlideDrawable>>(
+//                object : SimpleTarget<GlideDrawable>(width, height) {
+//                    override fun onResourceReady(
+//                        resource: GlideDrawable,
+//                        glideAnimation: GlideAnimation<in GlideDrawable>
+//                    ) {
+//                        mBackgroundManager.drawable = resource
+//                    }
+//                })
         mBackgroundTimer?.cancel()
     }
 
@@ -208,7 +207,7 @@ class MainFragment : BrowseFragment() {
             view.layoutParams = ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT)
             view.isFocusable = true
             view.isFocusableInTouchMode = true
-            view.setBackgroundColor(ContextCompat.getColor(activity, R.color.default_background))
+            view.setBackgroundColor(ContextCompat.getColor(activity, R.color.tv_default_background))
             view.setTextColor(Color.WHITE)
             view.gravity = Gravity.CENTER
             return Presenter.ViewHolder(view)
