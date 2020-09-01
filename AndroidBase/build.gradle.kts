@@ -74,6 +74,7 @@ dependencies {
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
 
+
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
 
