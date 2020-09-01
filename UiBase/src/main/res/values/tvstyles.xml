@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TvAppTheme" parent="Theme.Leanback">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/tv_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/tv_colorPrimaryDark</item>
+        <item name="colorAccent">@color/tv_colorAccent</item>
+    </style>
+</resources>

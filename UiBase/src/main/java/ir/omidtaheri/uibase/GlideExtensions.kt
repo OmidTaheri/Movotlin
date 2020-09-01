@@ -8,6 +8,7 @@ fun ImageView.LoadPoster(posterPath: String) {
     val requestOptions = RequestOptions()
     requestOptions.apply {
         placeholder(R.drawable.ic_baseline_local_movies_24)
+
     }
 
     GlideApp.with(this.context)
