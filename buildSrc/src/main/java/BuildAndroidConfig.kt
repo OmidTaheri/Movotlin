@@ -1,10 +1,12 @@
 object BuildAndroidConfig {
 
     const val APPLICATION_ID = "ir.omidtaheri.movotlin"
+    const val TV_APPLICATION_ID = "ir.omidtaheri.movotlintv"
 
     const val BUILD_TOOLS_VERSION = "29.0.3"
     const val COMPILE_SDK_VERSION =29
-    const val MIN_SDK_VERSION =16
+    const val MIN_SDK_VERSION =17
+    const val TV_MIN_SDK_VERSION =17
     const val TARGET_SDK_VERSION =29
 
     const val VERSION_CODE = 1

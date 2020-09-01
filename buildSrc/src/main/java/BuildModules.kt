@@ -15,6 +15,6 @@ object BuildModules {
     const val Favorite = ":Favorite"
     const val Search = ":Search"
     const val MainPage = ":MainPage"
-
+    const val tvapp = ":tvapp"
 
 }

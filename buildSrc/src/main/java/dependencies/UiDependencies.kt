@@ -34,4 +34,11 @@ object UiDependencies {
     const val COORDINATORLAYOUT =
         "androidx.coordinatorlayout:coordinatorlayout:${BuildDependenciesVersions.UiDependenciesVersions.COORDINATORLAYOUT}"
 
+
+    const val LEANBACK =
+        "androidx.leanback:leanback:${BuildDependenciesVersions.UiDependenciesVersions.LEANBACK}"
+
+    const val LEANBACK_PAGING =
+        "androidx.leanback:leanback-paging:${BuildDependenciesVersions.UiDependenciesVersions.LEANBACK}"
+
 }

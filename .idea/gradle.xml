@@ -18,7 +18,6 @@
             <option value="$PROJECT_DIR$/Favorite" />
             <option value="$PROJECT_DIR$/GenreList" />
             <option value="$PROJECT_DIR$/Local" />
-            <option value="$PROJECT_DIR$/Logging" />
             <option value="$PROJECT_DIR$/MainPage" />
             <option value="$PROJECT_DIR$/Remote" />
             <option value="$PROJECT_DIR$/Search" />
@@ -27,7 +26,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/mainpagetv" />
-            <option value="$PROJECT_DIR$/searchtv" />
+            <option value="$PROJECT_DIR$/tvapp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
