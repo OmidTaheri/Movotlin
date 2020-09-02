@@ -83,7 +83,9 @@ dependencies {
     implementation (UiDependencies.LEANBACK)
 
 
+    implementation(project(mapOf("path" to BuildModules.DaggerCore)))
     implementation(project(mapOf("path" to BuildModules.AndroidBase)))
+    implementation(project(mapOf("path" to BuildModules.Domain)))
     implementation(project(mapOf("path" to BuildModules.UiBase)))
 
     implementation(Dependencies.RX_ANDROID)

@@ -1,6 +1,7 @@
-package ir.omidtaheri.mainpagetv
+package ir.omidtaheri.mainpagetv.presenters
 
 import androidx.leanback.widget.AbstractDetailsDescriptionPresenter
+import ir.omidtaheri.mainpagetv.Movie
 
 class DetailsDescriptionPresenter : AbstractDetailsDescriptionPresenter() {
 

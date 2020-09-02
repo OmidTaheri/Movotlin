@@ -1,4 +1,4 @@
-package ir.omidtaheri.mainpagetv
+package ir.omidtaheri.mainpagetv.presenters
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
-import com.bumptech.glide.request.RequestOptions
+import ir.omidtaheri.mainpagetv.Movie
+import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.uibase.GlideApp
-import ir.omidtaheri.uibase.LoadPoster
 import kotlin.properties.Delegates
 
 /**
@@ -23,7 +23,9 @@ class CardPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): Presenter.ViewHolder {
         Log.d(TAG, "onCreateViewHolder")
 
-        sDefaultBackgroundColor = ContextCompat.getColor(parent.context, R.color.tv_default_background)
+        sDefaultBackgroundColor = ContextCompat.getColor(parent.context,
+            R.color.tv_default_background
+        )
         sSelectedBackgroundColor =
             ContextCompat.getColor(parent.context, R.color.tv_selected_background)
         mDefaultCardImage = ContextCompat.getDrawable(parent.context, R.drawable.movie)

@@ -1,16 +1,18 @@
-package ir.omidtaheri.mainpagetv
+package ir.omidtaheri.mainpagetv.ui.DetailFragment
 
 import android.app.Activity
 import android.os.Bundle
+import ir.omidtaheri.androidbase.BaseTvActivity
+import ir.omidtaheri.mainpagetv.R
 
 /**
- * Details activity class that loads [VideoDetailsFragment] class.
+ * Details activity class that loads [DetailsFragment] class.
  */
-class DetailsActivity : Activity() {
+class DetailsActivity : BaseTvActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
+        addFragment(DetailsFragment())
     }
 
     companion object {
