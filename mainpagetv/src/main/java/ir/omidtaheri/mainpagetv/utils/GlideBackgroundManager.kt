@@ -72,7 +72,7 @@ class GlideBackgroundManager(activity: Activity) {
             val width = mMetrics.widthPixels
             val height = mMetrics.heightPixels
             GlideApp.with(mActivityWeakReference.get() as Activity)
-                .load(mBackgroundUri)
+                .load("http://image.tmdb.org/t/p/w1280/" + mBackgroundUri)
                 .centerCrop()
                 .error(mDefaultBackground)
                 .into<CustomTarget<Drawable>>(

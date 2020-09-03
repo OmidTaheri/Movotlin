@@ -1,18 +1,26 @@
 package ir.omidtaheri.mainpagetv.presenters
 
-import androidx.leanback.widget.AbstractDetailsDescriptionPresenter
-import ir.omidtaheri.mainpagetv.Movie
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.leanback.widget.Presenter
+import ir.omidtaheri.mainpagetv.R
+import ir.omidtaheri.mainpagetv.entity.MovieDetailUiEntity
+import ir.omidtaheri.mainpagetv.viewHolders.MovieDetailsViewHolder
 
-class DetailsDescriptionPresenter : AbstractDetailsDescriptionPresenter() {
+class DetailsDescriptionPresenter : Presenter() {
+    override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
+        val view =
+            LayoutInflater.from(parent?.context).inflate(R.layout.vh_movie_details, parent, false)
+        return MovieDetailsViewHolder(view)
+    }
 
-    override fun onBindDescription(
-        viewHolder: AbstractDetailsDescriptionPresenter.ViewHolder,
-        item: Any
-    ) {
-        val movie = item as Movie
+    override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
+        val movieDetailsViewHolder = viewHolder as MovieDetailsViewHolder
+        val movieDetails = item as MovieDetailUiEntity
 
-        viewHolder.title.text = movie.title
-        viewHolder.subtitle.text = movie.studio
-        viewHolder.body.text = movie.description
+        movieDetailsViewHolder.bind(movieDetails)
+    }
+
+    override fun onUnbindViewHolder(viewHolder: ViewHolder?) {
     }
 }

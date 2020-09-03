@@ -3,8 +3,14 @@ package ir.omidtaheri.mainpagetv.ui.DetailFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ir.omidtaheri.domain.interactor.*
-import ir.omidtaheri.mainpagetv.mapper.*
+import ir.omidtaheri.domain.interactor.GetMovieDetail
+import ir.omidtaheri.domain.interactor.GetMovieImagesById
+import ir.omidtaheri.domain.interactor.GetMovieVideosById
+import ir.omidtaheri.domain.interactor.GetSimilarMoviesWithoutPaging
+import ir.omidtaheri.mainpagetv.mapper.MovieDetailEntityUiDomainMapper
+import ir.omidtaheri.mainpagetv.mapper.MovieImageEntityUiDomainMapper
+import ir.omidtaheri.mainpagetv.mapper.MovieVideoEntityUiDomainMapper
+import ir.omidtaheri.mainpagetv.mapper.MultiMovieEntityUiDomainMapper
 import javax.inject.Inject
 
 class DetailViewModelFactory @Inject constructor(

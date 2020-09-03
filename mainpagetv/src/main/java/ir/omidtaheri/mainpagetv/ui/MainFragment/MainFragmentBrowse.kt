@@ -238,7 +238,7 @@ class MainFragmentBrowse : BaseBrowseTvFragment() {
                 Log.d(TAG, "Item: " + item.toString())
                 val intent = Intent(activity, DetailsActivity::class.java)
 
-                intent.putExtra(DetailsActivity.MOVIE, item.id)
+                intent.putExtra(DetailsActivity.MOVIEID, item.id)
 
                 val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     requireActivity(),

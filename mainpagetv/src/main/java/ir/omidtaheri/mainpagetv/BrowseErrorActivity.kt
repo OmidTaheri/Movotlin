@@ -1,7 +1,5 @@
 package ir.omidtaheri.mainpagetv
 
-import android.app.Activity
-import android.app.Fragment
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
@@ -10,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 /**
  * BrowseErrorActivity shows how to use ErrorFragment.
  */
-class BrowseErrorActivity : Activity() {
+class BrowseErrorActivity : AppCompatActivity() {
 
     private lateinit var mErrorFragment: ErrorFragment
     private lateinit var mSpinnerFragment: SpinnerFragment
@@ -28,20 +28,20 @@ class BrowseErrorActivity : Activity() {
 
     private fun testError() {
         mErrorFragment = ErrorFragment()
-        fragmentManager
+        supportFragmentManager
             .beginTransaction()
             .add(R.id.main_browse_fragment, mErrorFragment)
             .commit()
 
         mSpinnerFragment = SpinnerFragment()
-        fragmentManager
+        supportFragmentManager
             .beginTransaction()
             .add(R.id.main_browse_fragment, mSpinnerFragment)
             .commit()
 
         val handler = Handler()
         handler.postDelayed({
-            fragmentManager
+            supportFragmentManager
                 .beginTransaction()
                 .remove(mSpinnerFragment)
                 .commit()
@@ -66,8 +66,8 @@ class BrowseErrorActivity : Activity() {
     }
 
     companion object {
-        private val TIMER_DELAY = 3000L
-        private val SPINNER_WIDTH = 100
-        private val SPINNER_HEIGHT = 100
+        private const val TIMER_DELAY = 3000L
+        private const val SPINNER_WIDTH = 100
+        private const val SPINNER_HEIGHT = 100
     }
 }
