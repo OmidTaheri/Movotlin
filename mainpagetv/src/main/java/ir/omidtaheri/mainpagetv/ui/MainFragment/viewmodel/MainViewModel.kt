@@ -8,14 +8,11 @@ import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
-import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 import ir.omidtaheri.domain.interactor.GetPopularMoviesWithoutPaging
 import ir.omidtaheri.domain.interactor.GetTopRatedMoviesWithoutPaging
 import ir.omidtaheri.domain.interactor.GetUpcomingMoviesWithoutPaging
 import ir.omidtaheri.mainpagetv.entity.MultiMovieUiEntity
-import ir.omidtaheri.mainpagetv.mapper.MovieEntityUiDomainMapper
 import ir.omidtaheri.mainpagetv.mapper.MultiMovieEntityUiDomainMapper
-
 
 class MainViewModel(
     val getPopularMoviesUseCase: GetPopularMoviesWithoutPaging,
@@ -65,14 +62,10 @@ class MainViewModel(
                             is UiComponentType.TOAST -> {
                                 handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
-
-
                         }
                     }
                 }
             }
-
-
         }
 
         addDisposable(disposable)
@@ -100,14 +93,10 @@ class MainViewModel(
                             is UiComponentType.TOAST -> {
                                 handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
-
-
                         }
                     }
                 }
             }
-
-
         }
 
         addDisposable(disposable)
@@ -137,19 +126,14 @@ class MainViewModel(
                             is UiComponentType.TOAST -> {
                                 handleToastError(errorDataState as DataState.ERROR<Any>)
                             }
-
-
                         }
                     }
                 }
             }
-
-
         }
 
         addDisposable(disposable)
     }
-
 
     private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->

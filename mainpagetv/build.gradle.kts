@@ -64,7 +64,6 @@ android {
     }
 }
 
-
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -75,13 +74,10 @@ dependencies {
     implementation(UiDependencies.APPCOMPAT)
     implementation(Dependencies.JavaxInject)
 
-
     implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
 
-
-    implementation (UiDependencies.LEANBACK)
-
+    implementation(UiDependencies.LEANBACK)
 
     implementation(project(mapOf("path" to BuildModules.DaggerCore)))
     implementation(project(mapOf("path" to BuildModules.AndroidBase)))

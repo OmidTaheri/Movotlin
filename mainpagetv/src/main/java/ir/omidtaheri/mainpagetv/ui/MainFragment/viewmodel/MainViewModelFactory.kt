@@ -3,8 +3,9 @@ package ir.omidtaheri.mainpagetv.ui.MainFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ir.omidtaheri.domain.interactor.*
-import ir.omidtaheri.mainpagetv.mapper.MovieEntityUiDomainMapper
+import ir.omidtaheri.domain.interactor.GetPopularMoviesWithoutPaging
+import ir.omidtaheri.domain.interactor.GetTopRatedMoviesWithoutPaging
+import ir.omidtaheri.domain.interactor.GetUpcomingMoviesWithoutPaging
 import ir.omidtaheri.mainpagetv.mapper.MultiMovieEntityUiDomainMapper
 import javax.inject.Inject
 

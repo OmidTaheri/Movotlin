@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
-import ir.omidtaheri.mainpagetv.Movie
 import ir.omidtaheri.mainpagetv.R
+import ir.omidtaheri.mainpagetv.entity.MovieUiEntity
 import ir.omidtaheri.uibase.GlideApp
 import kotlin.properties.Delegates
 
@@ -15,7 +15,7 @@ import kotlin.properties.Delegates
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
  * It contains an ImageCardView.
  */
-class CardPresenter : Presenter() {
+class MovieCardPresenter : Presenter() {
     private var mDefaultCardImage: Drawable? = null
     private var sSelectedBackgroundColor: Int by Delegates.notNull()
     private var sDefaultBackgroundColor: Int by Delegates.notNull()
@@ -44,17 +44,17 @@ class CardPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any) {
-        val movie = item as Movie
+        val movie = item as MovieUiEntity
         val cardView = viewHolder.view as ImageCardView
 
         Log.d(TAG, "onBindViewHolder")
-        if (movie.cardImageUrl != null) {
+        if (movie.posterPath != null) {
             cardView.titleText = movie.title
-            cardView.contentText = movie.studio
+            cardView.contentText = movie.voteAverage.toString()
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
 
             GlideApp.with(viewHolder.view.context)
-                .load(movie.cardImageUrl)
+                .load(movie.posterPath)
                 .centerCrop()
                 .error(mDefaultCardImage)
                 .into(cardView.mainImageView)
@@ -78,9 +78,9 @@ class CardPresenter : Presenter() {
     }
 
     companion object {
-        private val TAG = "CardPresenter"
+        private const val TAG = "MovieCardPresenter"
 
-        private val CARD_WIDTH = 313
-        private val CARD_HEIGHT = 176
+        private const val CARD_WIDTH = 313
+        private const val CARD_HEIGHT = 176
     }
 }
