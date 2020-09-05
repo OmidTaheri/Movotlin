@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpage.databinding.DetailFragmentBinding
@@ -21,6 +23,8 @@ import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapte
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
+import ir.omidtaheri.uibase.LoadBackdrop
+import ir.omidtaheri.uibase.LoadPoster
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback {
@@ -88,7 +92,9 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
+            toLoadingState()
         }
+
     }
 
     private fun fetchData(movieId: Int) {
@@ -130,17 +136,21 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         viewModel.detailLiveData.observe(this, Observer {
 
             movieOverview.text = it.overview
-            // mainBackdrop.setImageResource(it.backdrop_path)
+            it.posterPath?.let { it1 -> mainBackdrop.LoadPoster(it1) }
+                ?: it.backdropPath?.let { it1 -> mainBackdrop.LoadBackdrop(it1) }
             rateNumber.text = it.voteAverage.toString()
         })
 
         viewModel.imageListLiveData.observe(this, Observer {
-            // adapterImages.addItems(it.backdrops)
+            it.posters.forEach {
+                adapterImages.addItem(it)
+            }
             galleryViewerImages.toDateState()
         })
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
+            galleryViewerSimilarMovies.toDateState()
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
@@ -186,11 +196,11 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun showSnackBar(message: String) {
-        TODO("Not yet implemented")
+        Snackbar.make(viewbinding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showDialog(message: String) {

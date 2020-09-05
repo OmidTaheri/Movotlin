@@ -8,6 +8,8 @@ import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.mainpage.databinding.MovieViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.MovieViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
+import ir.omidtaheri.uibase.LoadBackdrop
+import ir.omidtaheri.uibase.LoadPoster
 
 class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
@@ -108,7 +110,7 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
             val movieUiEntity = getItem(position)
 
             binding.apply {
-                //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) } ?:  movieUiEntity?.backdropPath?.let {  movieImageView.LoadBackdrop(it)  }
                 titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity.id)

@@ -32,7 +32,6 @@ android {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
-
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

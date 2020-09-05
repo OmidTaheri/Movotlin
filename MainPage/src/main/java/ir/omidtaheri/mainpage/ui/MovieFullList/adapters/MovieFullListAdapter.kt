@@ -16,6 +16,8 @@ import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.LoadStateFooterViewItemBinding
 import ir.omidtaheri.mainpage.databinding.MovieFullListItemBinding
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
+import ir.omidtaheri.uibase.LoadBackdrop
+import ir.omidtaheri.uibase.LoadPoster
 
 class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
@@ -48,13 +50,14 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     inner class ViewHolder(val binding: MovieFullListItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val favoriteUiEntity = getItem(position)
+            val movieUiEntity = getItem(position)
 
             binding.apply {
-                //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
-                titleMovie.text = favoriteUiEntity?.title
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it) }
+                titleMovie.text = movieUiEntity?.title
                 root.setOnClickListener {
-                    mCallback.onItemClick(favoriteUiEntity!!.id)
+                    mCallback.onItemClick(movieUiEntity!!.id)
                 }
             }
         }

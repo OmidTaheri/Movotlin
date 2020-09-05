@@ -17,6 +17,8 @@ import ir.omidtaheri.search.databinding.LoadStateFooterViewItemBinding
 import ir.omidtaheri.search.databinding.SearchListEmptyStateBinding
 import ir.omidtaheri.search.databinding.SearchListItemBinding
 import ir.omidtaheri.search.entity.MovieUiEntity
+import ir.omidtaheri.uibase.LoadBackdrop
+import ir.omidtaheri.uibase.LoadPoster
 
 class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
@@ -111,13 +113,14 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
     inner class ViewHolder(val binding: SearchListItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val favoriteUiEntity = getItem(position)
+            val movieUiEntity = getItem(position)
 
             binding.apply {
-                //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
-                titleMovie.text = favoriteUiEntity!!.title
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it) }
+                titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
-                    mCallback.onItemClick(favoriteUiEntity.id)
+                    mCallback.onItemClick(movieUiEntity.id)
                 }
             }
         }

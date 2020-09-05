@@ -7,6 +7,8 @@ import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.favorite.databinding.FavoriteListEmptyStateBinding
 import ir.omidtaheri.favorite.databinding.FavoriteListItemBinding
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
+import ir.omidtaheri.uibase.LoadBackdrop
+import ir.omidtaheri.uibase.LoadPoster
 
 class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -100,7 +102,8 @@ class FavoritedMovieAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             val favoriteUiEntity = items.get(position)
 
             binding.apply {
-                //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
+                favoriteUiEntity.posterPath?.let { movieImageView.LoadPoster(it) }
+                    ?: favoriteUiEntity.backdropPath?.let { movieImageView.LoadBackdrop(it) }
                 titleMovie.text = favoriteUiEntity.title
                 root.setOnClickListener {
                     mCallback.onItemClick(favoriteUiEntity.id)

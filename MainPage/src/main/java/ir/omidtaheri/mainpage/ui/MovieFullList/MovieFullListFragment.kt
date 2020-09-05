@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpage.databinding.MovieFullListFragmentBinding
@@ -64,6 +66,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
                 withLoadStateFooter(
                     FooterLoadStateAdapter((::retry))
                 )
+                toLoadingState()
             }
 
             configRecyclerView(
@@ -108,14 +111,17 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
         viewModel.poularLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
+            multiStatePage.toDateState()
         })
 
         viewModel.topRateLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
+            multiStatePage.toDateState()
         })
 
         viewModel.upComingLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
+            multiStatePage.toDateState()
         })
     }
 
@@ -154,11 +160,11 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        TODO("Not yet implemented")
+        Snackbar.make(viewbinding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showDialog(message: String) {

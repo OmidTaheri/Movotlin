@@ -99,7 +99,6 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             val genreUiEntity = items.get(position)
 
             binding.apply {
-                //  glide // movieImageView.setImageResource(MovieUiEntity.poster_path)
                 genreName.text = genreUiEntity.name
                 root.setOnClickListener {
                     mCallback.onItemClick(genreUiEntity.id)

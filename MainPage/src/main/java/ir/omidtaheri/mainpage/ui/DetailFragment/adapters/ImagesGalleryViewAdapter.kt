@@ -7,10 +7,12 @@ import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.mainpage.databinding.ImagesViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.ImagesViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieImageUiEntity
+import ir.omidtaheri.mainpage.entity.Poster
+import ir.omidtaheri.uibase.LoadPoster
 
 class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
-    var items: MutableList<MovieImageUiEntity> = mutableListOf()
+    var items: MutableList<Poster> = mutableListOf()
 
     val VIEW_TYPE_EMPTY = 0
     val VIEW_TYPE_NORMAL = 1
@@ -61,17 +63,17 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     //    Helpers
-    fun addItem(item: MovieImageUiEntity) {
+    fun addItem(item: Poster) {
         items.add(item)
         notifyItemInserted(items.size - 1)
     }
 
-    fun addItems(list: List<MovieImageUiEntity>) {
+    fun addItems(list: List<Poster>) {
         items.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun remove(item: MovieImageUiEntity) {
+    fun remove(item: Poster) {
         val index = items.indexOf(item)
         if (index >= 0) {
             items.removeAt(index)
@@ -87,11 +89,10 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     inner class ViewHolder(val binding: ImagesViewerItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val movieUiEntity = items.get(position)
+            val moviePosterEntity = items.get(position)
 
             binding.apply {
-
-                // binding.movieImageView.setImageResource()
+                  binding.movieImageView.LoadPoster(moviePosterEntity.filePath)
             }
         }
     }

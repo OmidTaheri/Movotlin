@@ -8,11 +8,10 @@ fun ImageView.LoadPoster(posterPath: String) {
     val requestOptions = RequestOptions()
     requestOptions.apply {
         placeholder(R.drawable.ic_baseline_local_movies_24)
-
     }
 
     GlideApp.with(this.context)
-        .load(posterPath)
+        .load(BuildConfig.POSTER_URL + posterPath)
         .apply(requestOptions)
         .into(this)
 }
@@ -24,7 +23,7 @@ fun ImageView.LoadBackdrop(backdropPath: String) {
     }
 
     GlideApp.with(this.context)
-        .load(backdropPath)
+        .load(BuildConfig.BACKDROP_URL + backdropPath)
         .apply(requestOptions)
         .into(this)
 }
