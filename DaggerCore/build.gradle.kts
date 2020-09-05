@@ -5,6 +5,7 @@ import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 import extentions.kapt
+import dependencies.DebugDependencies
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -83,7 +84,10 @@ dependencies {
     implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
+    debugImplementation(DebugDependencies.OKHTTP_STETHO)
+
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
+
     addTestsDependencies()
 }

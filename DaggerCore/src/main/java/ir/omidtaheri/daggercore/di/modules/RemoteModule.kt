@@ -1,7 +1,9 @@
 package ir.omidtaheri.movotlin.di.modules
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
+import ir.omidtaheri.daggercore.BuildConfig
 import ir.omidtaheri.remote.service.MovieApi
 import ir.omidtaheri.remote.service.MovieDetailApi
 import okhttp3.Interceptor
@@ -45,6 +47,11 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
                 clientBuilder.addInterceptor(interceptor)
             }
         }
+
+        if(BuildConfig.DEBUG){
+            clientBuilder.addNetworkInterceptor(StethoInterceptor())
+        }
+
         return Retrofit.Builder()
             .client(clientBuilder.build())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

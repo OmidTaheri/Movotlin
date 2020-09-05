@@ -1,6 +1,7 @@
 package ir.omidtaheri.movotlin
 
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 import ir.omidtaheri.movotlin.di.components.DaggerApplicationComponent
@@ -15,6 +16,10 @@ class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
 
         this.applicationComponent =
             DaggerApplicationComponent.builder()

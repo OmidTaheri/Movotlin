@@ -16,6 +16,7 @@ object BuildDependenciesVersions {
         const val LIVEDATA_KTX = "2.2.0"
         const val PLAY_CORE = "1.6.4"
         const val LEAKCANARY = "2.4"
+        const val STETHO = "1.5.1"
         const val DATABINDING = "3.1.4"
         const val AUTO_SERVICE = "1.0-rc4"
         const val ANOTATION = "1.1.0"
@@ -46,8 +47,6 @@ object BuildDependenciesVersions {
         const val ANIMATED_VECTORE_DRAWABLE = "1.1.0"
         const val LEANBACK = "1.0.0"
     }
-
-
 
 
     object TestDependenciesVersions {

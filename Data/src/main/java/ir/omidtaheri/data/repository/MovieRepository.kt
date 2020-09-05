@@ -77,10 +77,9 @@ class MovieRepository @Inject constructor(
             )
         }
             .onErrorReturn {
-
                 DataState.ERROR(
                     StateMessage(
-                        MessageHolder.MESSAGE(it.message ?: "Error"),
+                        MessageHolder.MESSAGE(it.message  ?: "Error"),
                         UiComponentType.SNACKBAR,
                         MessageType.ERROR
                     )

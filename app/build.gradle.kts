@@ -46,8 +46,6 @@ android {
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
             isShrinkResources = BuildTypeRelease.isMinifyEnabled
             buildConfigStringField("BASE_URL", "https://api.themoviedb.org/3/")
-            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280/")
-            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600/")
             buildConfigStringField("API_KEY", getLocalProperty("API.KEY"))
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -116,6 +114,8 @@ dependencies {
     implementation(UiDependencies.VIEWPAGER2)
 
     debugImplementation(DebugDependencies.LEAKCANARY)
+    debugImplementation(DebugDependencies.STETHO)
+
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
