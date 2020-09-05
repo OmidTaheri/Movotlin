@@ -140,7 +140,7 @@ class MainFragmentBrowse : BaseBrowseTvFragment() {
     }
 
     override fun showToast(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showDialog(message: String) {

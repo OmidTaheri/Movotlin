@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
+import ir.omidtaheri.mainpagetv.BuildConfig
 import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.mainpagetv.entity.MovieUiEntity
+import ir.omidtaheri.uibase.BuildConfig.POSTER_URL
 import ir.omidtaheri.uibase.GlideApp
 import kotlin.properties.Delegates
 
@@ -23,7 +25,8 @@ class MovieCardPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): Presenter.ViewHolder {
         Log.d(TAG, "onCreateViewHolder")
 
-        sDefaultBackgroundColor = ContextCompat.getColor(parent.context,
+        sDefaultBackgroundColor = ContextCompat.getColor(
+            parent.context,
             R.color.tv_default_background
         )
         sSelectedBackgroundColor =
@@ -54,7 +57,7 @@ class MovieCardPresenter : Presenter() {
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
 
             GlideApp.with(viewHolder.view.context)
-                .load(movie.posterPath)
+                .load(BuildConfig.POSTER_URL + movie.posterPath)
                 .centerCrop()
                 .error(mDefaultCardImage)
                 .into(cardView.mainImageView)

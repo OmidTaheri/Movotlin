@@ -74,7 +74,7 @@ dependencies {
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
 
-    implementation (UiDependencies.LEANBACK)
+    implementation(UiDependencies.LEANBACK)
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)

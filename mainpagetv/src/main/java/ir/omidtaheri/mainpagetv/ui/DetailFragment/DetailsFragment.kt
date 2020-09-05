@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import ir.omidtaheri.androidbase.BaseDetailTvFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.mainpagetv.BuildConfig
 import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.mainpagetv.di.components.DaggerDetailComponent
 import ir.omidtaheri.mainpagetv.entity.MovieDetailUiEntity
@@ -142,7 +143,7 @@ class DetailsFragment : BaseDetailTvFragment() {
 
         GlideApp.with(requireActivity())
             .asBitmap()
-            .load("http://image.tmdb.org/t/p/w1280" + movieDetailUiEntity?.backdropPath)
+            .load(BuildConfig.BACKDROP_URL + movieDetailUiEntity?.backdropPath)
             .centerCrop()
             .error(R.drawable.default_background)
             .into(object : CustomTarget<Bitmap>() {
@@ -169,7 +170,7 @@ class DetailsFragment : BaseDetailTvFragment() {
         val height = convertDpToPixel(requireContext(), DETAIL_THUMB_HEIGHT)
 
         GlideApp.with(requireActivity())
-            .load("http://image.tmdb.org/t/p/w1280" + movieDetailUiEntity?.backdropPath)
+            .load(BuildConfig.POSTER_URL + movieDetailUiEntity?.posterPath)
             .centerCrop()
             .error(R.drawable.default_background)
             .into<CustomTarget<Drawable>>(object : CustomTarget<Drawable>(width, height) {

@@ -1,11 +1,9 @@
 package ir.omidtaheri.mainpagetv.viewHolders
 
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.leanback.widget.Presenter
 import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.mainpagetv.entity.MovieDetailUiEntity
@@ -26,9 +24,7 @@ class MovieDetailsViewHolder(view: View?) : Presenter.ViewHolder(view) {
         overview = view?.findViewById(R.id.overview)
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun bind(movieDetail: MovieDetailUiEntity) {
-
         voteAverage.setText(movieDetail.voteAverage.toString())
         tagline.setText(movieDetail.tagline)
         movieTitle.setText(movieDetail.title)
@@ -45,19 +41,23 @@ class MovieDetailsViewHolder(view: View?) : Presenter.ViewHolder(view) {
             shape.setColor(view.resources.getColor(R.color.colorPrimary))
             tv.setPadding(8, 8, 8, 8)
             tv.background = shape
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
                 )
-            )
-            params.setMargins(
-                0,
-                0,
-                16,
-                0
-            )
-            tv.layoutParams = params
+                params.setMargins(
+                    0,
+                    0,
+                    16,
+                    0
+                )
+                tv.layoutParams = params
+            }
+
             genres.addView(tv)
         }
     }

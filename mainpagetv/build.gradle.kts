@@ -3,6 +3,7 @@ import dependencies.Dependencies
 import dependencies.JetpackDependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
+import extentions.buildConfigStringField
 import extentions.implementation
 import extentions.kapt
 
@@ -32,7 +33,8 @@ android {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
-
+            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280")
+            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -43,6 +45,8 @@ android {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
+            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280")
+            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600")
         }
     }
 

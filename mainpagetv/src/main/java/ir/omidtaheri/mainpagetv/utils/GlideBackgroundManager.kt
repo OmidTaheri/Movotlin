@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.leanback.app.BackgroundManager
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import ir.omidtaheri.mainpagetv.BuildConfig
 import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.uibase.GlideApp
 import java.lang.ref.WeakReference
@@ -72,7 +73,7 @@ class GlideBackgroundManager(activity: Activity) {
             val width = mMetrics.widthPixels
             val height = mMetrics.heightPixels
             GlideApp.with(mActivityWeakReference.get() as Activity)
-                .load("http://image.tmdb.org/t/p/w1280/" + mBackgroundUri)
+                .load(BuildConfig.BACKDROP_URL + mBackgroundUri)
                 .centerCrop()
                 .error(mDefaultBackground)
                 .into<CustomTarget<Drawable>>(

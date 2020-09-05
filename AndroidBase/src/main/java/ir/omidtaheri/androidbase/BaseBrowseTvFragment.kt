@@ -10,15 +10,12 @@ abstract class BaseBrowseTvFragment : BrowseSupportFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         ConfigDaggerComponent()
         SetViewModel()
         SetLivaDataObserver()
     }
-
 
     private fun SetLivaDataObserver() {
         setToastErrorLiveDataObserver()
@@ -29,20 +26,12 @@ abstract class BaseBrowseTvFragment : BrowseSupportFragment() {
     }
 
     abstract fun setDataLiveObserver()
-
     abstract fun setSnackBarMessageLiveDataObserver()
-
     abstract fun setToastMessageLiveDataObserver()
-
     abstract fun setSnackBarErrorLivaDataObserver()
-
     abstract fun setToastErrorLiveDataObserver()
-
-
     abstract fun ConfigDaggerComponent()
-
     abstract fun SetViewModel()
-
     abstract fun showSnackBar(message: String)
     abstract fun showToast(message: String)
     abstract fun showDialog(message: String)

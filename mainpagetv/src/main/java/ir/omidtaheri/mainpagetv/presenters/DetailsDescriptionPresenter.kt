@@ -17,7 +17,6 @@ class DetailsDescriptionPresenter : Presenter() {
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
         val movieDetailsViewHolder = viewHolder as MovieDetailsViewHolder
         val movieDetails = item as MovieDetailUiEntity
-
         movieDetailsViewHolder.bind(movieDetails)
     }
 

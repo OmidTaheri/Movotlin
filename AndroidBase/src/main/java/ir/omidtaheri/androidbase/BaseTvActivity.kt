@@ -17,6 +17,4 @@ open class BaseTvActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.tv_frame_content, fragment)
         fragmentTransaction.commit()
     }
-
 }
-
