@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.mainpage.databinding.ImagesViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.ImagesViewerItemBinding
-import ir.omidtaheri.mainpage.entity.MovieImageUiEntity
 import ir.omidtaheri.mainpage.entity.Poster
 import ir.omidtaheri.uibase.LoadPoster
 
@@ -92,7 +91,7 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             val moviePosterEntity = items.get(position)
 
             binding.apply {
-                  binding.movieImageView.LoadPoster(moviePosterEntity.filePath)
+                binding.movieImageView.LoadPoster(moviePosterEntity.filePath)
             }
         }
     }

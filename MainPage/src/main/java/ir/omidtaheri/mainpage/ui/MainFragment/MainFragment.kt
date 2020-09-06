@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
@@ -170,7 +172,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         viewModel.poularLiveData.observe(this, Observer {
             adapterPopular.submitData(lifecycle, it)
             galleryViewerPopular.toDateState()
-
         })
 
         viewModel.topRateLiveData.observe(this, Observer {
@@ -219,7 +220,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -235,7 +236,13 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         _viewbinding = null
     }
 
-    override fun onItemClick(MovieId: Int) {
-        TODO("Not yet implemented")
+    override fun onItemClick(movieId: Int) {
+        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(movieId)
+        findNavController().navigate(action)
+    }
+
+    fun goToMovieFullList(categoryId: Int) {
+        val action = MainFragmentDirections.actionMainFragmentToMovieFullListFragment(categoryId)
+        findNavController().navigate(action)
     }
 }

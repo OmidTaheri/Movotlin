@@ -107,7 +107,8 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
             val movieUiEntity = getItem(position)
 
             binding.apply {
-                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) } ?:  movieUiEntity?.backdropPath?.let {  movieImageView.LoadBackdrop(it)  }
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it) }
                 titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity.id)

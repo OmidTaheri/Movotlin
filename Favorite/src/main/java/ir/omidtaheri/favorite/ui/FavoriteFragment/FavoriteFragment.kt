@@ -1,5 +1,6 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
@@ -121,7 +125,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -138,6 +142,9 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     override fun onItemClick(movieId: Int) {
-        TODO("Not yet implemented")
+        val request = NavDeepLinkRequest.Builder
+            .fromUri(Uri.parse("movotlin://detailmovie/" + movieId))
+            .build()
+        findNavController().navigate(request)
     }
 }

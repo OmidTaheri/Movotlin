@@ -9,10 +9,13 @@
         android:id="@+id/mainFragment"
         android:name="ir.omidtaheri.mainpage.ui.MainFragment.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" >
+        tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_movieFullListFragment"
+            app:destination="@id/movieFullListFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -22,7 +25,21 @@
 
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="movotlin://detailmovie/{id}" />
+            app:uri="movotlin://detailmovie/{movieId}" />
+        <argument
+            android:name="movieId"
+            android:defaultValue="0"
+            app:argType="integer" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieFullListFragment"
+        android:name="ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragment"
+        android:label="MovieFullListFragment">
+        <argument
+            android:name="categoryId"
+            android:defaultValue="1"
+            app:argType="integer" />
     </fragment>
 </navigation>

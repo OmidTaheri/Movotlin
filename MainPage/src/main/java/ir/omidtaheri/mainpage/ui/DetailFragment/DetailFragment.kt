@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
@@ -47,10 +48,13 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     lateinit var adapterImages: ImagesGalleryViewAdapter
     lateinit var adapterSimilarMovies: SimilarMoviesGalleryViewAdapter
 
+    lateinit var args: DetailFragmentArgs
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
-        // fetchData()
+        val movieId = args.movieId
+        fetchData(movieId)
     }
 
     private fun initRecyclerViews() {
@@ -94,7 +98,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
             )
             toLoadingState()
         }
-
     }
 
     private fun fetchData(movieId: Int) {
@@ -196,7 +199,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {

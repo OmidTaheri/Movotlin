@@ -17,7 +17,7 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     lateinit var mCallback: Callback
 
     interface Callback {
-        fun onItemClick(movieId: Int)
+        fun onItemClick(genreId: Int)
     }
 
     fun setCallback(callback: Callback) {

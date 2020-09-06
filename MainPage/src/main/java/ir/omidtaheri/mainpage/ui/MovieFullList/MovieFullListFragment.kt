@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
@@ -33,10 +34,13 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
     lateinit var multiStatePage: MultiStatePage
 
+    lateinit var args: MovieFullListFragmentArgs
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
-        fetchData(1)
+        val CategoryId = args.categoryId
+        fetchData(CategoryId)
     }
 
     private fun initRecyclerViews() {
@@ -160,7 +164,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {

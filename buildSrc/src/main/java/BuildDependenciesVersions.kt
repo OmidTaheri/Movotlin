@@ -29,7 +29,7 @@ object BuildDependenciesVersions {
         const val LIFECYCLE = "2.2.0"
         const val FUTURES = "1.0.0"
         const val ROOM = "2.2.5"
-        const val NAVIGATION = "2.2.2"
+        const val NAVIGATION = "2.3.0"
         const val PAGING = "3.0.0-alpha03"
         const val WORKERMANAGER = "2.0.1"
     }
@@ -69,6 +69,7 @@ object BuildDependenciesVersions {
     object GradlePluginsVersions {
         const val GRADLE_ANDROID_PLUGIN = "4.0.0"
         const val GRADLE_KOTLIN_PLUGIN = "1.3.72"
+        const val SAFEARGS = JetpackDependenciesVersions.NAVIGATION
     }
 
 
@@ -76,5 +77,6 @@ object BuildDependenciesVersions {
         const val KTLINT_PLUGIN = "9.2.1"
         const val DETEKT_PLUGIN = "1.10.0-RC1"
         const val DOKKA_PLUGIN = "0.10.1"
+        const val SAFEARGS = JetpackDependenciesVersions.NAVIGATION
     }
 }
