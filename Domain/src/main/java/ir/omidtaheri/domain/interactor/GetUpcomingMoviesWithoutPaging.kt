@@ -8,12 +8,11 @@ import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.base.SingleUseCase
 import javax.inject.Inject
 
-class GetUpcomingMoviesWithoutPaging  @Inject constructor(schedulers: Schedulers, val movieRepository: MovieGateWay) :
+class GetUpcomingMoviesWithoutPaging @Inject constructor(schedulers: Schedulers, val movieRepository: MovieGateWay) :
     SingleUseCase<Int, DataState<MultiMovieDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: Int): Single<DataState<MultiMovieDomainEntity>> {
 
         return movieRepository.getUpComingMovies(params)
     }
-
 }
