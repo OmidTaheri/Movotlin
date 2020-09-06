@@ -48,7 +48,7 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
             }
         }
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             clientBuilder.addNetworkInterceptor(StethoInterceptor())
         }
 
