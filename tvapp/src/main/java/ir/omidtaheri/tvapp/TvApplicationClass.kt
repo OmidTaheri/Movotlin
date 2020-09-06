@@ -9,7 +9,6 @@ import ir.omidtaheri.movotlin.di.modules.LocalModule
 import ir.omidtaheri.movotlin.di.modules.RemoteModule
 import ir.omidtaheri.movotlin.di.modules.RepositoryModule
 
-
 class TvApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
     lateinit var applicationComponent: ApplicationComponent

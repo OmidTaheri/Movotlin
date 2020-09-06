@@ -1,13 +1,11 @@
 import dependencies.AnnotationProcessorsDependencies
 import dependencies.DebugDependencies
 import dependencies.Dependencies
-import dependencies.JetpackDependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.buildConfigStringField
 import extentions.getLocalProperty
 import extentions.kapt
-
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
@@ -15,8 +13,6 @@ plugins {
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
-
-
 
 android {
     compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
@@ -88,8 +84,6 @@ android {
     }
 }
 
-
-
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -105,14 +99,9 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.DaggerCore)))
     implementation(project(mapOf("path" to BuildModules.mainpagetv)))
 
-
-
-
     debugImplementation(DebugDependencies.LEAKCANARY)
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
 
     addTestsDependencies()
 }
-
-
