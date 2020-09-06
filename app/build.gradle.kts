@@ -13,6 +13,7 @@ plugins {
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
+    id(BuildPlugins.NAVIGATION_SAFE_ARGS)
 }
 
 android {
@@ -114,8 +115,7 @@ dependencies {
     implementation(UiDependencies.VIEWPAGER2)
 
     debugImplementation(DebugDependencies.LEAKCANARY)
-    debugImplementation(DebugDependencies.STETHO)
-
+    implementation(DebugDependencies.STETHO)
 
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
