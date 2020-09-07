@@ -1,6 +1,7 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,7 +50,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     lateinit var mainBackdrop: ImageView
     lateinit var rateNumber: TextView
     lateinit var tagline: TextView
-    lateinit var toolbar: Toolbar
+    lateinit var toolbar: CollapsingToolbarLayout
 
     lateinit var adapterImages: ImagesGalleryViewAdapter
     lateinit var adapterSimilarMovies: SimilarMoviesGalleryViewAdapter
@@ -126,7 +128,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         mainBackdrop = _viewbinding!!.mainBackdrop
         rateNumber = _viewbinding!!.rateNumber
         tagline = _viewbinding!!.rateText
-        toolbar = _viewbinding!!.mainToolbar
+        toolbar = _viewbinding!!.mainCollapsing
     }
 
     override fun ConfigDaggerComponent() {
@@ -165,8 +167,9 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         viewModel.imageListLiveData.observe(this, Observer {
             it.backdrops.forEach {
                 adapterImages.addItem(it)
-                galleryViewerImages.toDateState()
+                Log.i("adapterImages",it.filePath)
             }
+            galleryViewerImages.toDateState()
         })
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
@@ -175,6 +178,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         viewModel.imagesErrorState.observe(this, Observer {
             galleryViewerImages.toErrorState()
+            Log.i("adapterImages","toErrorState")
         })
 
         viewModel.favoritedLiveData.observe(this, Observer {
@@ -216,6 +220,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun showSnackBar(message: String) {
+        Log.i("adapterImages55",message)
         Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 

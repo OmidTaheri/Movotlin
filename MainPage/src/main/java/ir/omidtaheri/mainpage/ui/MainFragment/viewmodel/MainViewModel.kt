@@ -3,8 +3,10 @@ package ir.omidtaheri.mainpage.ui.MainFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
+import androidx.paging.rxjava2.cachedIn
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.interactor.GetPopularMoviesSinglePage
@@ -12,6 +14,7 @@ import ir.omidtaheri.domain.interactor.GetTopRatedMoviesSinglePage
 import ir.omidtaheri.domain.interactor.GetUpcomingMoviesSinglePage
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
+import kotlinx.coroutines.CoroutineScope
 
 class MainViewModel(
     val getPopularMoviesUseCase: GetPopularMoviesSinglePage,
@@ -41,34 +44,37 @@ class MainViewModel(
     }
 
     fun getPopularMovieList() {
-
-        val disposable = getPopularMoviesUseCase.execute(Unit).subscribe {
-            _poularLiveData.value = it.map {
-                movieEntityUiDomainMapper.mapToUiEntity(it)
+        val disposable = getPopularMoviesUseCase.execute(Unit).cachedIn(viewModelScope)
+            .subscribe {
+                _poularLiveData.value = it.map {
+                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                }
             }
-        }
 
         addDisposable(disposable)
     }
 
+    
     fun getTopRatedMovieList() {
         // _isTopRateLoading.value = true
-        val disposable = getTopRatedMoviesUseCase.execute(Unit).subscribeBy {
-            _topRateLiveData.value = it.map {
-                movieEntityUiDomainMapper.mapToUiEntity(it)
+        val disposable = getTopRatedMoviesUseCase.execute(Unit).cachedIn(viewModelScope)
+            .subscribeBy {
+                _topRateLiveData.value = it.map {
+                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                }
             }
-        }
 
         addDisposable(disposable)
     }
 
     fun getUpComingMovieList() {
         // _isUpComingLoading.value = true
-        val disposable = getUpcomingMoviesUseCase.execute(Unit).subscribeBy {
-            _upComingLiveData.value = it.map {
-                movieEntityUiDomainMapper.mapToUiEntity(it)
+        val disposable = getUpcomingMoviesUseCase.execute(Unit).cachedIn(viewModelScope)
+            .subscribeBy {
+                _upComingLiveData.value = it.map {
+                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                }
             }
-        }
 
         addDisposable(disposable)
     }

@@ -1,6 +1,7 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
@@ -234,7 +235,7 @@ class DetailViewModel(
         val disposable = getDetailMovieUseCase.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
-                   // _isLoading.value = false
+                    // _isLoading.value = false
                     _detailLiveData.value =
                         movieDetailEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
@@ -264,8 +265,12 @@ class DetailViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
-                    messageHolder.message
+
+                is MessageHolder.MESSAGE -> {
+                    _ErrorSnackBar.value =
+                        messageHolder.message
+                }
+
                 is MessageHolder.Res -> _ErrorSnackBar.value =
                     ApplicationClass.getString(
                         messageHolder.resId
