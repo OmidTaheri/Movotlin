@@ -21,7 +21,7 @@ class GetSimilarMoviesSinglePage @Inject constructor(
 
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetSimilarMoviesSinglePageSource(movieId, discoverMovieRepository) }
+            pagingSourceFactory = { GetSimilarMoviesSinglePageSource(movieId, discoverMovieRepository,schedulers) }
         ).observable
     }
 

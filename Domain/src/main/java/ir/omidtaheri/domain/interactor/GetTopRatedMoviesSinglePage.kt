@@ -21,7 +21,7 @@ class GetTopRatedMoviesSinglePage @Inject constructor(
     override fun buildSingle(params: Unit): Observable<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetTopRatedMoviesSinglePageSource(movieRepository) }
+            pagingSourceFactory = { GetTopRatedMoviesSinglePageSource(movieRepository,schedulers) }
         ).observable
     }
 

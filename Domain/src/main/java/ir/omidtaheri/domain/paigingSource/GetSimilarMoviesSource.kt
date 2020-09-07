@@ -6,9 +6,14 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
+import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 
-class GetSimilarMoviesSource(val movieId: Int, val discoverMovieRepository: DiscoverMovieGateWay) :
+class GetSimilarMoviesSource(
+    val movieId: Int,
+    val discoverMovieRepository: DiscoverMovieGateWay,
+    val schedulers: Schedulers
+) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
@@ -17,6 +22,8 @@ class GetSimilarMoviesSource(val movieId: Int, val discoverMovieRepository: Disc
 
         val params = GetSimilarMoviesParams(movieId, pageNumber)
         return discoverMovieRepository.getSimilarMovieById(params)
+            .subscribeOn(schedulers.subscribeOn)
+            .observeOn(schedulers.observeOn)
             .map {
 
                 when (it) {

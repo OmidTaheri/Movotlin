@@ -21,7 +21,7 @@ class SearchMoviesByQuery @Inject constructor(
     override fun buildSingle(params: String): Observable<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { SearchMovieByQuerySource(params, discoverMovieRepository) }
+            pagingSourceFactory = { SearchMovieByQuerySource(params, discoverMovieRepository,schedulers) }
         ).observable
     }
 

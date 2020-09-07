@@ -6,8 +6,9 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
+import ir.omidtaheri.domain.interactor.base.Schedulers
 
-class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
+class GetUpcomingMoviesSource(val movieRepository: MovieGateWay, val schedulers: Schedulers) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
@@ -15,6 +16,8 @@ class GetUpcomingMoviesSource(val movieRepository: MovieGateWay) :
         val pageNumber: Int = params.key ?: 1
 
         return movieRepository.getUpComingMovies(pageNumber)
+            .subscribeOn(schedulers.subscribeOn)
+            .observeOn(schedulers.observeOn)
             .map {
 
                 when (it) {

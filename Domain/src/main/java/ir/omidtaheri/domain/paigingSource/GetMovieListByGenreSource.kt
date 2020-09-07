@@ -6,10 +6,12 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
+import ir.omidtaheri.domain.interactor.base.Schedulers
 
 class GetMovieListByGenreSource(
     val genreId: Int,
-    val discoverMovieRepository: DiscoverMovieGateWay
+    val discoverMovieRepository: DiscoverMovieGateWay,
+    val schedulers: Schedulers
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
@@ -20,6 +22,8 @@ class GetMovieListByGenreSource(
         val params: Map<String, Int> = mapOf("genreId" to genreId, "page" to pageNumber)
 
         return discoverMovieRepository.getMovieListByGenreId(params)
+            .subscribeOn(schedulers.subscribeOn)
+            .observeOn(schedulers.observeOn)
             .map {
 
                 when (it) {

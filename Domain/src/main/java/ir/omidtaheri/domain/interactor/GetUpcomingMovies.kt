@@ -20,7 +20,7 @@ class GetUpcomingMovies @Inject constructor(
     override fun buildSingle(params: Unit): Observable<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetUpcomingMoviesSource(movieRepository) }
+            pagingSourceFactory = { GetUpcomingMoviesSource(movieRepository,schedulers) }
         ).observable
     }
 

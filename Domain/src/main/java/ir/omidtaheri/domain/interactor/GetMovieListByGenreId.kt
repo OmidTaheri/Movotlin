@@ -20,7 +20,7 @@ class GetMovieListByGenreId @Inject constructor(
     override fun buildSingle(genreId: Int): Observable<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetMovieListByGenreSource(genreId, discoverMovieRepository) }
+            pagingSourceFactory = { GetMovieListByGenreSource(genreId, discoverMovieRepository,schedulers) }
         ).observable
     }
 
