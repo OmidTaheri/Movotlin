@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavArgsLazy
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -42,6 +43,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
+        args = MovieListFragmentArgs.fromBundle(requireArguments())
         val genreId = args.genreId
         fetchData(genreId)
     }
