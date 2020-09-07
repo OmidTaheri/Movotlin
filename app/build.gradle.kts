@@ -107,6 +107,7 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Search)))
     implementation(project(mapOf("path" to BuildModules.Favorite)))
     implementation(project(mapOf("path" to BuildModules.GenreList)))
+    implementation(project(mapOf("path" to BuildModules.UiBase)))
 
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
