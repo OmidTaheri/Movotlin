@@ -113,7 +113,6 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
         viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.submitData(lifecycle, it)
-            multiStatePage.toDateState()
         })
     }
 
