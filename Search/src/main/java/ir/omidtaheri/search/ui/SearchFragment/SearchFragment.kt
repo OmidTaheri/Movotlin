@@ -2,6 +2,7 @@ package ir.omidtaheri.search.ui.SearchFragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,13 +71,13 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
                 withLoadStateFooter(
                     FooterLoadStateAdapter((::retry))
                 )
-                toLoadingState()
             }
 
             configRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
+            toEmptyState()
         }
     }
 
