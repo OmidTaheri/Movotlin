@@ -71,7 +71,6 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
                 withLoadStateFooter(
                     FooterLoadStateAdapter((::retry))
                 )
-                toLoadingState()
             }
 
             configRecyclerView(
@@ -116,17 +115,14 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
         viewModel.poularLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
-            multiStatePage.toDateState()
         })
 
         viewModel.topRateLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
-            multiStatePage.toDateState()
         })
 
         viewModel.upComingLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
-            multiStatePage.toDateState()
         })
     }
 

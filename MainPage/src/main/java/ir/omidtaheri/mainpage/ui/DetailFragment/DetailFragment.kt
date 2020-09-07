@@ -98,7 +98,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            toLoadingState()
         }
     }
 
@@ -150,12 +149,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
             it.posters.forEach {
                 adapterImages.addItem(it)
             }
-            galleryViewerImages.toDateState()
         })
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
-            galleryViewerSimilarMovies.toDateState()
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
