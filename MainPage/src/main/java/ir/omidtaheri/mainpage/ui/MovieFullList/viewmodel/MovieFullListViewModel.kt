@@ -3,8 +3,10 @@ package ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
+import androidx.paging.rxjava2.cachedIn
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.interactor.GetPopularMovies
@@ -42,7 +44,7 @@ class MovieFullListViewModel(
 
     fun getPopularMovieList() {
 
-        val disposable = getPopularMoviesUseCase.execute(Unit).subscribe {
+        val disposable = getPopularMoviesUseCase.execute(Unit).cachedIn(viewModelScope).subscribe {
             _poularLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
@@ -53,7 +55,7 @@ class MovieFullListViewModel(
 
     fun getTopRatedMovieList() {
         // _isTopRateLoading.value = true
-        val disposable = getTopRatedMoviesUseCase.execute(Unit).subscribeBy {
+        val disposable = getTopRatedMoviesUseCase.execute(Unit).cachedIn(viewModelScope).subscribeBy {
             _topRateLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }
@@ -64,7 +66,7 @@ class MovieFullListViewModel(
 
     fun getUpComingMovieList() {
         // _isUpComingLoading.value = true
-        val disposable = getUpcomingMoviesUseCase.execute(Unit).subscribeBy {
+        val disposable = getUpcomingMoviesUseCase.execute(Unit).cachedIn(viewModelScope).subscribeBy {
             _upComingLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
             }

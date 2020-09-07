@@ -3,8 +3,10 @@ package ir.omidtaheri.genrelist.ui.MovieListFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
+import androidx.paging.rxjava2.cachedIn
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.interactor.GetMovieListByGenreId
@@ -28,7 +30,7 @@ class MovieListViewModel(
 
     fun getMovieListByGenre(genreId: Int) {
 
-        val disposable = getMovieListByGenreId.execute(genreId).subscribeBy {
+        val disposable = getMovieListByGenreId.execute(genreId).cachedIn(viewModelScope).subscribeBy {
 
             _dataLive.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
