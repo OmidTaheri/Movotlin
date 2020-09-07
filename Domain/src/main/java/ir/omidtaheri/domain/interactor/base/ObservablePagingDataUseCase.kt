@@ -9,7 +9,5 @@ abstract class ObservablePagingDataUseCase<in Params, Result>(val schedulers: Sc
     fun execute(params: Params): Observable<Result> {
 
         return buildSingle(params)
-            .subscribeOn(schedulers.subscribeOn)
-            .observeOn(schedulers.observeOn)
     }
 }

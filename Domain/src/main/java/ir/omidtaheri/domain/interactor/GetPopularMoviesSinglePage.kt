@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.observable
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.base.ObservablePagingDataUseCase
@@ -21,7 +22,7 @@ class GetPopularMoviesSinglePage @Inject constructor(
     override fun buildSingle(params: Unit): Observable<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetPopularMoviesSinglePageSource(movieRepository) }
+            pagingSourceFactory = { GetPopularMoviesSinglePageSource(movieRepository,schedulers) }
         ).observable
     }
 

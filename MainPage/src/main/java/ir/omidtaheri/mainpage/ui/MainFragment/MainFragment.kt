@@ -1,6 +1,7 @@
 package ir.omidtaheri.mainpage.ui.MainFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,7 +75,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            toLoadingState()
+//            toLoadingState()
         }
 
         galleryViewerPopular.apply {
@@ -103,7 +104,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterPopular as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            toLoadingState()
+            // toLoadingState()
         }
 
         galleryViewerUpComing.apply {
@@ -133,7 +134,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterUpComing as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-            toLoadingState()
         }
     }
 
@@ -171,17 +171,14 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
         viewModel.poularLiveData.observe(this, Observer {
             adapterPopular.submitData(lifecycle, it)
-            galleryViewerPopular.toDateState()
         })
 
         viewModel.topRateLiveData.observe(this, Observer {
             adapterTopRate.submitData(lifecycle, it)
-            galleryViewerTopRate.toDateState()
         })
 
         viewModel.upComingLiveData.observe(this, Observer {
             adapterUpComing.submitData(lifecycle, it)
-            galleryViewerUpComing.toDateState()
         })
     }
 
