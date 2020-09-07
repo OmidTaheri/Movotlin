@@ -234,7 +234,7 @@ class DetailViewModel(
         val disposable = getDetailMovieUseCase.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
-                    _isLoading.value = false
+                   // _isLoading.value = false
                     _detailLiveData.value =
                         movieDetailEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }

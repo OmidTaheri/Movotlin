@@ -16,7 +16,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/main_collapsing"
             android:layout_width="match_parent"
-            android:layout_height="296dp"
+            android:layout_height="190dp"
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:layout_marginTop="296dp">
+        android:layout_marginTop="190dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,6 +92,7 @@
 
 
             <com.google.android.material.chip.ChipGroup
+                app:singleLine="true"
                 android:id="@+id/group_genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
