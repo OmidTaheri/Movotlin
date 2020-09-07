@@ -39,6 +39,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
+        args = MovieFullListFragmentArgs.fromBundle(requireArguments())
         val CategoryId = args.categoryId
         fetchData(CategoryId)
     }
