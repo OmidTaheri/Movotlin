@@ -81,8 +81,13 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     override fun setDataLiveObserver() {
 
         viewModel.dataLive.observe(this, Observer {
-            recyclerAdapter.addItems(it)
-            multiStatePage.toDateState()
+            if (it != null && it.size > 0) {
+                recyclerAdapter.addItems(it)
+                multiStatePage.toDateState()
+            } else {
+                multiStatePage.toEmptyState()
+            }
+
         })
 
         viewModel.favoriteErrorState.observe(this, Observer {

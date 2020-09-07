@@ -50,7 +50,7 @@ class FavoriteMovieRepository @Inject constructor(
                 DataState.ERROR(
                     StateMessage(
                         MessageHolder.MESSAGE(it.message ?: "Error"),
-                        UiComponentType.SNACKBAR,
+                        UiComponentType.DIALOG,
                         MessageType.ERROR
                     )
                 )
