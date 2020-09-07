@@ -31,8 +31,8 @@ android {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
-            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280")
-            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600")
+            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w500")
+            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w500")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -43,8 +43,8 @@ android {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
             isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
-            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280")
-            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600")
+            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w500")
+            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w500")
         }
     }
 
