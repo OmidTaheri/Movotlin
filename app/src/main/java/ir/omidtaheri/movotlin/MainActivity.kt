@@ -31,7 +31,12 @@ class MainActivity : AppCompatActivity(),
 
     // map of navigation_id to container index
     private val indexToPage =
-        mapOf(0 to R.id.MainFragment, 1 to R.id.SearchFragment, 2 to R.id.FavoriteFragment, 3 to R.id.GenreFragment)
+        mapOf(
+            0 to R.id.MainFragment,
+            1 to R.id.SearchFragment,
+            2 to R.id.FavoriteFragment,
+            3 to R.id.GenreFragment
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

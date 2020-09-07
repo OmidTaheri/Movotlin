@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ir.omidtaheri.movotlin">
 
-    <uses-permission android:name="android.permission.INTERNER"></uses-permission>
-
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
