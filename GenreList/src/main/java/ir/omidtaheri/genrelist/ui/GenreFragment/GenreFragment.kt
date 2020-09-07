@@ -1,6 +1,7 @@
 package ir.omidtaheri.genrelist.ui.GenreFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,12 +103,14 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
     override fun setSnackBarErrorLivaDataObserver() {
         viewModel.ErrorSnackBar.observe(this, Observer {
+            multiStatePage.toErrorState()
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
         viewModel.ErrorToast.observe(this, Observer {
+            multiStatePage.toErrorState()
             showToast(it)
         })
     }
@@ -124,6 +127,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
     override fun showSnackBar(message: String) {
         Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        showToast(message)
     }
 
     override fun showToast(message: String) {
