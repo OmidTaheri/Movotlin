@@ -24,6 +24,7 @@ import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapte
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
+import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentArgs
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
@@ -53,6 +54,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
+        args = DetailFragmentArgs.fromBundle(requireArguments())
         val movieId = args.movieId
         fetchData(movieId)
     }
