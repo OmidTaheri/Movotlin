@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ir.omidtaheri.mainpage">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 </manifest>
