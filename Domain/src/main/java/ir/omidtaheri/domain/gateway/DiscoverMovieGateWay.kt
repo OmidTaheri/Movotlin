@@ -11,7 +11,7 @@ import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
 
 interface DiscoverMovieGateWay {
     fun getMovieDetailById(movieId: Int): Single<DataState<MovieDetailDomainEntity>>
-    fun getMovieListByGenreId(params: Map<String, Any>): Single<DataState<MultiMovieDomainEntity>>
+    fun getMovieListByGenreId(params: Map<String, Int>): Single<DataState<MultiMovieDomainEntity>>
     fun getMovieImagesById(movieId: Int): Single<DataState<MovieImageDomainEntity>>
     fun getMovieVideosById(movieId: Int): Single<DataState<MovieVideoDomainEntity>>
     fun getSimilarMovieById(params: GetSimilarMoviesParams): Single<DataState<MultiMovieDomainEntity>>

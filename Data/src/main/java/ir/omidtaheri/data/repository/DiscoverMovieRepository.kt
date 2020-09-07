@@ -46,7 +46,7 @@ class DiscoverMovieRepository @Inject constructor(
             }
     }
 
-    override fun getMovieListByGenreId(params: Map<String, Any>): Single<DataState<MultiMovieDomainEntity>> {
+    override fun getMovieListByGenreId(params: Map<String, Int>): Single<DataState<MultiMovieDomainEntity>> {
         return movieDetailRemoteDataSource.getMovieListByGenreId(params)
             .map<DataState<MultiMovieDomainEntity>> {
                 DataState.SUCCESS(

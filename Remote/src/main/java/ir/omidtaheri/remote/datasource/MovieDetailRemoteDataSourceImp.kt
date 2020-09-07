@@ -28,7 +28,7 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
         }
     }
 
-    override fun getMovieListByGenreId(params: Map<String, Any>): Single<MultiMovieDataEntity> {
+    override fun getMovieListByGenreId(params: Map<String, Int>): Single<MultiMovieDataEntity> {
         return movieDetailApi.getMovieListByGenreId(params).map {
             movieResponseToDataEntityMapper.mapFromDTO(it)
         }

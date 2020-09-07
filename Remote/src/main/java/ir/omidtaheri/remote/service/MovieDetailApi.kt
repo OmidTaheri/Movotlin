@@ -34,5 +34,5 @@ interface MovieDetailApi {
     ): Single<MultiMovieResponseRemoteEntity>
 
     @GET("/discover/movie")
-    fun getMovieListByGenreId(@QueryMap params: Map<String, Any>): Single<MultiMovieResponseRemoteEntity>
+    fun getMovieListByGenreId(@QueryMap params: Map<String, Int>): Single<MultiMovieResponseRemoteEntity>
 }

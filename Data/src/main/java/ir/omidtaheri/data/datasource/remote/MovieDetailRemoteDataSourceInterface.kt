@@ -9,7 +9,7 @@ import ir.omidtaheri.data.entity.MultiMovieDataEntity
 interface MovieDetailRemoteDataSourceInterface {
 
     fun getMovieDetailById(movieId: Int): Single<MovieDetailDataEntity>
-    fun getMovieListByGenreId(params: Map<String, Any>): Single<MultiMovieDataEntity>
+    fun getMovieListByGenreId(params: Map<String, Int>): Single<MultiMovieDataEntity>
     fun getMovieImagesById(movieId: Int): Single<MovieImageDataEntity>
     fun getMovieVideosById(movieId: Int): Single<MovieVideoDataEntity>
     fun getSimilarMovieById(movieId: Int, page: Int): Single<MultiMovieDataEntity>
