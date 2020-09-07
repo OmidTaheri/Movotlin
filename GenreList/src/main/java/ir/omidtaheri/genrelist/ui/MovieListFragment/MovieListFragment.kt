@@ -75,7 +75,6 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
                 withLoadStateFooter(
                     FooterLoadStateAdapter((::retry))
                 )
-                toLoadingState()
             }
 
             configRecyclerView(
@@ -113,10 +112,8 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.dataLive.observe(this, Observer
-        {
+        viewModel.dataLive.observe(this, Observer{
             movieListAdapter.submitData(lifecycle, it)
-            multiStatePage.toDateState()
         })
     }
 
