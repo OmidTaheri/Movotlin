@@ -12,7 +12,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
+import ir.omidtaheri.mainpage.ui.DetailFragment.DetailFragmentDirections
 import ir.omidtaheri.mainpage.ui.MainFragment.MainFragmentDirections
+import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentDirections
 import java.util.Stack
 
 class MainActivity : AppCompatActivity(),
@@ -128,8 +130,29 @@ class MainActivity : AppCompatActivity(),
 //        val scheme = intent?.scheme
 //        val host = intent?.data?.host
         val movieId = intent?.data?.path?.substring(1)
-        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
-        findNavController(R.id.nav_host_main).navigate(action)
+
+        if (findNavController(R.id.nav_host_main).currentDestination?.id == R.id.mainFragment) {
+
+            val action =
+                MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
+            findNavController(R.id.nav_host_main).navigate(action)
+
+
+        } else if (findNavController(R.id.nav_host_main).currentDestination?.id == R.id.detailFragment) {
+
+            val action =
+                DetailFragmentDirections.actionDetailFragmentSelf(movieId?.toInt()!!)
+            findNavController(R.id.nav_host_main).navigate(action)
+
+
+        } else if (findNavController(R.id.nav_host_main).currentDestination?.id == R.id.movieFullListFragment) {
+
+            val action =
+                MovieFullListFragmentDirections.actionMovieFullListFragmentToDetailFragment(movieId?.toInt()!!)
+            findNavController(R.id.nav_host_main).navigate(action)
+
+        }
+
         setItem(0)
     }
 }

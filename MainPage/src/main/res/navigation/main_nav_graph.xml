@@ -44,5 +44,8 @@
             android:name="categoryId"
             android:defaultValue="1"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_movieFullListFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 </navigation>
