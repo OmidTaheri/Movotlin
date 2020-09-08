@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ir.omidtaheri.mainpagetv.BuildConfig
 import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.mainpagetv.entity.MovieUiEntity
@@ -58,6 +59,7 @@ class MovieCardPresenter : Presenter() {
 
             GlideApp.with(viewHolder.view.context)
                 .load(BuildConfig.POSTER_URL + movie.posterPath)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(mDefaultCardImage)
                 .into(cardView.mainImageView)

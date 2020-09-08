@@ -18,6 +18,7 @@ import androidx.leanback.widget.ListRow
 import androidx.leanback.widget.ListRowPresenter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import ir.omidtaheri.androidbase.BaseDetailTvFragment
@@ -144,6 +145,7 @@ class DetailsFragment : BaseDetailTvFragment() {
         GlideApp.with(requireActivity())
             .asBitmap()
             .load(BuildConfig.BACKDROP_URL + movieDetailUiEntity?.backdropPath)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .error(R.drawable.default_background)
             .into(object : CustomTarget<Bitmap>() {
@@ -171,6 +173,7 @@ class DetailsFragment : BaseDetailTvFragment() {
 
         GlideApp.with(requireActivity())
             .load(BuildConfig.POSTER_URL + movieDetailUiEntity?.posterPath)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .error(R.drawable.default_background)
             .into<CustomTarget<Drawable>>(object : CustomTarget<Drawable>(width, height) {

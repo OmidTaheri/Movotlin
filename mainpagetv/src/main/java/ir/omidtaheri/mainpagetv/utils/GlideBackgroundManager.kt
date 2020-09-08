@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.DisplayMetrics
 import androidx.core.content.ContextCompat
 import androidx.leanback.app.BackgroundManager
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import ir.omidtaheri.mainpagetv.BuildConfig
@@ -74,6 +75,7 @@ class GlideBackgroundManager(activity: Activity) {
             val height = mMetrics.heightPixels
             GlideApp.with(mActivityWeakReference.get() as Activity)
                 .load(BuildConfig.BACKDROP_URL + mBackgroundUri)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .error(mDefaultBackground)
                 .into<CustomTarget<Drawable>>(
