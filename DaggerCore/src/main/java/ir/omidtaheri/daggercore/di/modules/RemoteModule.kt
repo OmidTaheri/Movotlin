@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 @Module
 class RemoteModule(val baseUrl: String, val apiKey: String) {
@@ -51,7 +52,7 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         if (BuildConfig.DEBUG) {
             clientBuilder.addNetworkInterceptor(StethoInterceptor())
         }
-
+        
         return Retrofit.Builder()
             .client(clientBuilder.build())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
