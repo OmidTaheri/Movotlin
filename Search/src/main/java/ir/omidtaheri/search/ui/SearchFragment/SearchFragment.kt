@@ -1,5 +1,6 @@
 package ir.omidtaheri.search.ui.SearchFragment
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -168,9 +169,10 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
     override fun onItemClick(movieId: Int) {
-        val request = NavDeepLinkRequest.Builder
-            .fromUri(Uri.parse("movotlin://detailmovie/" + movieId))
-            .build()
-        findNavController().navigate(request)
+        val i = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("movotlin://detailmovie/" + movieId)
+        )
+        requireContext().startActivity(i)
     }
 }

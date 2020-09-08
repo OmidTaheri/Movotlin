@@ -1,5 +1,6 @@
 package ir.omidtaheri.genrelist.ui.MovieListFragment
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavArgsLazy
-import androidx.navigation.NavDeepLinkBuilder
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +16,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
-import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.MovieListFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerMovieListComponent
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.FooterLoadStateAdapter
@@ -114,7 +110,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
 
     override fun setDataLiveObserver() {
 
-        viewModel.dataLive.observe(this, Observer{
+        viewModel.dataLive.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
         })
     }
@@ -171,9 +167,10 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
     }
 
     override fun onItemClick(movieId: Int) {
-        val request = NavDeepLinkRequest.Builder
-            .fromUri(Uri.parse("movotlin://detailmovie/" + movieId))
-            .build()
-        findNavController().navigate(request)
+        val i = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("movotlin://detailmovie/" + movieId)
+        )
+        requireContext().startActivity(i)
     }
 }
