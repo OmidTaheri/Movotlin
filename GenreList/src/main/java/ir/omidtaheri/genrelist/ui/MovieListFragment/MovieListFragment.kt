@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavArgsLazy
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.MovieListFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerMovieListComponent
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.FooterLoadStateAdapter
