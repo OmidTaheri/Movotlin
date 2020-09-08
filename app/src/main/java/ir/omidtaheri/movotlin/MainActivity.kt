@@ -1,19 +1,24 @@
 package ir.omidtaheri.movotlin
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
+import ir.omidtaheri.mainpage.ui.MainFragment.MainFragmentDirections
 import java.util.Stack
 
 class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemReselectedListener,
     BottomNavigationView.OnNavigationItemSelectedListener {
+
 
     lateinit var viewPager: ViewPager2
     lateinit var bottomNavBar: BottomNavigationView
@@ -116,5 +121,15 @@ class MainActivity : AppCompatActivity(),
         override fun createFragment(position: Int): Fragment {
             return fragments[position]
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+//        val scheme = intent?.scheme
+//        val host = intent?.data?.host
+        val movieId = intent?.data?.path?.substring(1)
+        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
+        findNavController(R.id.nav_host_main).navigate(action)
+        setItem(0)
     }
 }
