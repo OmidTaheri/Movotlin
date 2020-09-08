@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -167,7 +168,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         viewModel.imageListLiveData.observe(this, Observer {
             it.backdrops.forEach {
                 adapterImages.addItem(it)
-                Log.i("adapterImages",it.filePath)
+                Log.i("adapterImages", it.filePath)
             }
             galleryViewerImages.toDateState()
         })
@@ -178,7 +179,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         viewModel.imagesErrorState.observe(this, Observer {
             galleryViewerImages.toErrorState()
-            Log.i("adapterImages","toErrorState")
+            Log.i("adapterImages", "toErrorState")
         })
 
         viewModel.favoritedLiveData.observe(this, Observer {
@@ -220,7 +221,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun showSnackBar(message: String) {
-        Log.i("adapterImages55",message)
+        Log.i("adapterImages55", message)
         Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
@@ -238,6 +239,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun onItemClick(movieId: Int) {
-        TODO("Not yet implemented")
+        val action = DetailFragmentDirections.actionDetailFragmentSelf(movieId)
+        findNavController().navigate(action)
     }
 }
