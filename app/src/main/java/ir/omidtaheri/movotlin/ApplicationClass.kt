@@ -1,8 +1,11 @@
 package ir.omidtaheri.movotlin
 
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.multidex.MultiDexApplication
+import androidx.navigation.NavDeepLinkBuilder
 import com.facebook.stetho.Stetho
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
+import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 import ir.omidtaheri.movotlin.di.components.DaggerApplicationComponent
 import ir.omidtaheri.movotlin.di.modules.ApplicationModule
