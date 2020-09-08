@@ -4,8 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
+import androidx.paging.rxjava2.cachedIn
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -150,7 +152,7 @@ class DetailViewModel(
 
     fun getSimilarMovies(movieId: Int) {
 
-        val disposable = getSimilarMovies.execute(movieId).subscribeBy {
+        val disposable = getSimilarMovies.execute(movieId).cachedIn(viewModelScope).subscribeBy {
 
             _similarMoviesLiveData.value = it.map {
                 movieEntityUiDomainMapper.mapToUiEntity(it)
