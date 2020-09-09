@@ -55,6 +55,12 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         compositeDisposable.add(disposable)
     }
 
+    fun deleteDisposable(disposable: Disposable) {
+
+        compositeDisposable.delete(disposable)
+    }
+
+
     private fun clearDisposables() {
         compositeDisposable.clear()
     }
