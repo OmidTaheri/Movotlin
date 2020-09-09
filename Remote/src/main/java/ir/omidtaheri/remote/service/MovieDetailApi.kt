@@ -29,7 +29,7 @@ interface MovieDetailApi {
 
     @GET("search/movie")
     fun searchMovieByQuery(
-        @Path("query") query: String,
+        @Query("query") query: String,
         @Query("page") page: Int
     ): Single<MultiMovieResponseRemoteEntity>
 
