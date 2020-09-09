@@ -22,7 +22,8 @@ class FavoritedMovieEntityUiDomainMapper @Inject constructor() :
             from.id,
             from.posterPath,
             from.title,
-            from.voteAverage
+            from.voteAverage,
+            true
         )
     }
 }

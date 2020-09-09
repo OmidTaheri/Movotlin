@@ -5,5 +5,6 @@ data class FavoritedMovieUiEntity(
     val id: Int,
     val posterPath: String?,
     val title: String,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val isFavorite:Boolean
 )

@@ -8,26 +8,20 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
+import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.subjects.PublishSubject
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
-import ir.omidtaheri.domain.interactor.FavorieMovie
-import ir.omidtaheri.domain.interactor.GetMovieDetail
-import ir.omidtaheri.domain.interactor.GetMovieImagesById
-import ir.omidtaheri.domain.interactor.GetMovieVideosById
-import ir.omidtaheri.domain.interactor.GetSimilarMoviesSinglePage
-import ir.omidtaheri.domain.interactor.UnfavoriteMovie
-import ir.omidtaheri.mainpage.entity.MovieDetailUiEntity
-import ir.omidtaheri.mainpage.entity.MovieImageUiEntity
-import ir.omidtaheri.mainpage.entity.MovieUiEntity
-import ir.omidtaheri.mainpage.entity.MovieVideoUiEntity
-import ir.omidtaheri.mainpage.mapper.MovieDetailEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MovieImageEntityUiDomainMapper
-import ir.omidtaheri.mainpage.mapper.MovieVideoEntityUiDomainMapper
+import ir.omidtaheri.domain.interactor.*
+import ir.omidtaheri.domain.interactor.base.Schedulers
+import ir.omidtaheri.mainpage.entity.*
+import ir.omidtaheri.mainpage.mapper.*
+import java.util.concurrent.TimeUnit
 
 class DetailViewModel(
     val getDetailMovieUseCase: GetMovieDetail,
@@ -36,13 +30,20 @@ class DetailViewModel(
     val getSimilarMovies: GetSimilarMoviesSinglePage,
     val favorieMovie: FavorieMovie,
     val unfavoriteMovie: UnfavoriteMovie,
+    val getFavoriedMovieList: GetFavoriedMovieList,
     val movieDetailEntityUiDomainMapper: MovieDetailEntityUiDomainMapper,
     val movieImageEntityUiDomainMapper: MovieImageEntityUiDomainMapper,
     val movieVideoEntityUiDomainMapper: MovieVideoEntityUiDomainMapper,
     val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
+    val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
+    val schedulers: Schedulers,
     application: Application
 ) :
     BaseViewModel(application) {
+
+
+    val favoriteSubject: PublishSubject<FavoritedMovieUiEntity> = PublishSubject.create()
+    lateinit var favoriteDisposable: Disposable
 
     private val _detailLiveData: MutableLiveData<MovieDetailUiEntity>
     val detailLiveData: LiveData<MovieDetailUiEntity>
@@ -102,53 +103,113 @@ class DetailViewModel(
         _isImageLoading = MutableLiveData()
     }
 
-    fun SetFavoriteMovie(
-        backdropPath: String?,
-        id: Int,
-        posterPath: String?,
-        title: String,
-        voteAverage: Double
-    ) {
-        val useCaseParams =
-            FavoritedMovieDomainEntity(backdropPath, id, posterPath, title, voteAverage)
+
+    fun SetFavoriteMovie(favoriteMovie: FavoritedMovieUiEntity): Single<Long> {
+
+        val useCaseParams = favoritedMovieEntityUiDomainMapper.mapFromUiEntity(favoriteMovie)
+
+        return favorieMovie.execute(useCaseParams)
+
+    }
+
+
+    fun setUnFavoriteMovie(
+        favoriteMovie: FavoritedMovieUiEntity
+    ): Single<Int> {
+        val useCaseParams = favoritedMovieEntityUiDomainMapper.mapFromUiEntity(favoriteMovie)
+        return unfavoriteMovie.execute(useCaseParams)
+    }
+
+
+    fun setFavoriteSubjectObserver() {
+
+        if (::favoriteDisposable.isInitialized) {
+            deleteDisposable(favoriteDisposable)
+        }
 
         val onErrorHandler: (Throwable) -> Unit = { throwable ->
             _ErrorToast.value = throwable.message
         }
 
-        val onCompleteHandler: (Long) -> Unit = {
+        val FavoriteonCompleteHandler: () -> Unit = {
             _favoritedLiveData.value = true
         }
 
-        val disposable =
-            favorieMovie.execute(useCaseParams).subscribeBy(onErrorHandler, onCompleteHandler)
-
-        addDisposable(disposable)
-    }
-
-    fun setUnFavoriteMovie(
-        backdropPath: String?,
-        id: Int,
-        posterPath: String?,
-        title: String,
-        voteAverage: Double
-    ) {
-        val useCaseParams =
-            FavoritedMovieDomainEntity(backdropPath, id, posterPath, title, voteAverage)
-
-        val onErrorHandler: (Throwable) -> Unit = { throwable ->
-            _ErrorToast.value = throwable.message
-        }
-
-        val onCompleteHandler: (Int) -> Unit = {
+        val UnfavoriteonCompleteHandler: () -> Unit = {
             _favoritedLiveData.value = false
         }
 
-        val disposable =
-            unfavoriteMovie.execute(useCaseParams).subscribeBy(onErrorHandler, onCompleteHandler)
+
+        var isFavorite = false
+
+        val observable = favoriteSubject.debounce(1000, TimeUnit.MILLISECONDS)
+            .subscribeOn(schedulers.subscribeOn)
+            .switchMapSingle {
+                isFavorite = it.isFavorite
+                if (it.isFavorite) {
+                    SetFavoriteMovie(it)
+                } else {
+                    setUnFavoriteMovie(it)
+                }
+
+            }
+            .observeOn(schedulers.observeOn)
+
+        if (isFavorite) {
+            favoriteDisposable = observable.subscribeBy(onErrorHandler, FavoriteonCompleteHandler)
+        } else {
+            favoriteDisposable = observable.subscribeBy(onErrorHandler, UnfavoriteonCompleteHandler)
+        }
+
+        addDisposable(favoriteDisposable)
+
+    }
+
+    fun checkFavoriteStatus(movieId: Int) {
+
+        val disposable = getFavoriedMovieList.execute(Unit).subscribeBy { response ->
+            when (response) {
+
+                is DataState.SUCCESS -> {
+
+                    _favoritedLiveData.value = false
+                    response.data?.forEach {
+                        if (it.id == movieId) {
+                            _favoritedLiveData.value = true
+                            return@forEach
+                        }
+                    }
+
+                }
+
+                is DataState.ERROR -> {
+                    // _isLoading.value = false
+                    response.let { errorDataState ->
+
+                        when (errorDataState.stateMessage?.uiComponentType) {
+                            is UiComponentType.SNACKBAR -> {
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                _favoritedLiveData.value = false
+                            }
+
+                            is UiComponentType.TOAST -> {
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
+                                _favoritedLiveData.value = false
+                            }
+
+                            is UiComponentType.DIALOG -> {
+                                _favoritedLiveData.value = false
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         addDisposable(disposable)
+
     }
+
 
     fun getSimilarMovies(movieId: Int) {
 

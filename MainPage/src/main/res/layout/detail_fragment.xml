@@ -172,5 +172,6 @@
         android:layout_margin="@dimen/material_layout_keylines_screen_edge_margin"
         app:layout_anchor="@id/main_collapsing"
         app:layout_anchorGravity="bottom|right"
-        app:srcCompat="@drawable/abc_vector_test" />
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+        app:tint="@null"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

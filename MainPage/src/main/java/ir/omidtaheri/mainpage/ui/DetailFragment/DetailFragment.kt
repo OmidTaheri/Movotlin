@@ -23,8 +23,10 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.DetailFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerDetailComponent
+import ir.omidtaheri.mainpage.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
@@ -58,13 +60,17 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
     lateinit var args: DetailFragmentArgs
 
+    var isFavorite = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
         args = DetailFragmentArgs.fromBundle(requireArguments())
         val movieId = args.movieId
+        checkFavoriteStatus(movieId)
         fetchData(movieId)
     }
+
 
     private fun initRecyclerViews() {
 
@@ -108,6 +114,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         }
     }
 
+
+    private fun checkFavoriteStatus(movieId: Int) {
+        viewModel.checkFavoriteStatus(movieId)
+    }
     private fun fetchData(movieId: Int) {
         viewModel.getSimilarMovies(movieId)
         viewModel.getMovieImages(movieId)
@@ -131,6 +141,43 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         tagline = _viewbinding!!.rateText
         toolbar = _viewbinding!!.mainCollapsing
     }
+
+    private fun setFabListner(
+        backdropPath: String?,
+        id: Int,
+        posterPath: String?,
+        title: String,
+        voteAverage: Double
+    ) {
+
+        viewModel.setFavoriteSubjectObserver()
+
+        favoriteButton.setOnClickListener {
+            isFavorite = !isFavorite
+
+            if (isFavorite) {
+                favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+            } else {
+                favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            }
+
+            viewModel.favoriteSubject.onNext(
+                FavoritedMovieUiEntity(
+                    backdropPath,
+                    id,
+                    posterPath,
+                    title,
+                    voteAverage,
+                    isFavorite
+                )
+            )
+
+
+        }
+
+
+    }
+
 
     override fun ConfigDaggerComponent() {
         DaggerDetailComponent
@@ -162,7 +209,13 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 chip.text = index.name
                 genreGroup.addView(chip)
             }
-
+            setFabListner(
+                it.backdropPath,
+                it.id,
+                it.posterPath,
+                it.title,
+                it.voteAverage
+            )
         })
 
         viewModel.imageListLiveData.observe(this, Observer {
@@ -179,10 +232,17 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         viewModel.imagesErrorState.observe(this, Observer {
             galleryViewerImages.toErrorState()
-            Log.i("adapterImages", "toErrorState")
         })
 
         viewModel.favoritedLiveData.observe(this, Observer {
+            isFavorite = it
+
+            if (it) {
+                favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+            } else {
+                favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            }
+
         })
     }
 
