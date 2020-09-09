@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDeepLinkRequest
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.disposables.Disposable
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
@@ -44,7 +46,9 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
+        setViewListners()
     }
+
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
@@ -82,9 +86,6 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         }
     }
 
-    private fun fetchData(query: String, page: Int) {
-        viewModel.searchMovieByQuery(query, page)
-    }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = SearchFragmentBinding.inflate(inflater, container, false)
@@ -94,9 +95,19 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
     override fun bindUiComponent() {
         multiStatePage = _viewbinding!!.MultiStatePage
-
         searchbar = _viewbinding!!.searchbar
     }
+
+    private fun setViewListners() {
+
+        viewModel.setSearchSubjectObserver()
+
+        searchbar.doOnTextChanged { text, start, before, count ->
+            viewModel.searchSubject.onNext(text.toString())
+        }
+
+    }
+
 
     override fun ConfigDaggerComponent() {
         DaggerSearchComponent
@@ -115,6 +126,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.submitData(lifecycle, it)
         })
+
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
@@ -148,7 +160,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
     override fun showLoading(show: Boolean) {
-        TODO("Not yet implemented")
+        multiStatePage.toLoadingState()
     }
 
     override fun showSnackBar(message: String) {

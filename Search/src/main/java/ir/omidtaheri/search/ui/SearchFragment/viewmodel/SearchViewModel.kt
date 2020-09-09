@@ -7,17 +7,26 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.subjects.PublishSubject
 import ir.omidtaheri.androidbase.BaseViewModel
 import ir.omidtaheri.domain.interactor.SearchMoviesByQuery
+import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.search.entity.MovieUiEntity
 import ir.omidtaheri.search.mapper.MovieEntityUiDomainMapper
+import java.util.concurrent.TimeUnit
 
 class SearchViewModel(
     val searchMoviesByQuery: SearchMoviesByQuery,
     val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
+    val schedulers: Schedulers,
     application: Application
 ) : BaseViewModel(application) {
+
+    val searchSubject: PublishSubject<String> = PublishSubject.create()
+    lateinit var currentDisposable: Disposable
+
 
     private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>>
     val dataLive: LiveData<PagingData<MovieUiEntity>>
@@ -32,14 +41,32 @@ class SearchViewModel(
         //  _SearchErrorState = MutableLiveData()
     }
 
-    fun searchMovieByQuery(query: String, page: Int) {
 
-        val disposable = searchMoviesByQuery.execute(query).cachedIn(viewModelScope).subscribeBy {
-            _dataLive.value = it.map {
-                movieEntityUiDomainMapper.mapToUiEntity(it)
-            }
+    fun setSearchSubjectObserver() {
+        if (::currentDisposable.isInitialized) {
+            deleteDisposable(currentDisposable)
         }
 
-        addDisposable(disposable)
+        currentDisposable = searchSubject.debounce(1000, TimeUnit.MILLISECONDS)
+            .subscribeOn(schedulers.subscribeOn)
+            .filter {
+                !it.isEmpty()
+            }
+            .distinctUntilChanged()
+            .switchMap {
+                _isLoading.postValue(true)
+                searchMoviesByQuery.execute(it).cachedIn(viewModelScope)
+            }
+            .observeOn(schedulers.observeOn)
+            .subscribeBy {
+                _dataLive.value = it.map {
+                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                }
+            }
+
+        addDisposable(currentDisposable)
+
     }
+
+
 }
