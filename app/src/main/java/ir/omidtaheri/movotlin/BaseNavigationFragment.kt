@@ -41,10 +41,10 @@ class BaseNavigationFragment : Fragment() {
         navController.popBackStack(navController.graph.startDestination, false)
     }
 
-    fun handleDeepLink(intent: Intent): Boolean =
-        requireActivity()
-            .findNavController(_navHostId)
-            .handleDeepLink(intent)
+//    fun handleDeepLink(intent: Intent): Boolean =
+//        requireActivity()
+//            .findNavController(_navHostId)
+//            .handleDeepLink(intent)
 
     companion object {
 

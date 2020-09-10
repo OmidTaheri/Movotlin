@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(),
         viewPager.setUserInputEnabled(false)
 
         // check deeplink only after viewPager is setup
-        viewPager.post(this::checkDeepLink)
+        //viewPager.post(this::checkDeepLink)
         viewPager.offscreenPageLimit = fragments.size
 
         bottomNavBar = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
@@ -107,12 +107,12 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun checkDeepLink() {
-        fragments.forEachIndexed { index, fragment ->
-            val hasDeepLink = fragment.handleDeepLink(intent)
-            if (hasDeepLink) setItem(index)
-        }
-    }
+//    private fun checkDeepLink() {
+//        fragments.forEachIndexed { index, fragment ->
+//            val hasDeepLink = fragment.handleDeepLink(intent)
+//            if (hasDeepLink) setItem(index)
+//        }
+//    }
 
     inner class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
