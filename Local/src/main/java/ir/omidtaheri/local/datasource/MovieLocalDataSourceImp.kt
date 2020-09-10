@@ -1,5 +1,6 @@
 package ir.omidtaheri.local.datasource
 
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
@@ -28,4 +29,13 @@ class MovieLocalDataSourceImp @Inject constructor(
             }
         }
     }
+
+    override fun getFavoritedMoviesListByFlowable(): Flowable<List<FavoritedMovieDataEntity>> {
+        return movieDao.getFavoritedMoviesListByFlowable().map {
+            it.map {
+                movieEntityDataLocalMapper.mapToDataEntity(it)
+            }
+        }
+    }
+
 }

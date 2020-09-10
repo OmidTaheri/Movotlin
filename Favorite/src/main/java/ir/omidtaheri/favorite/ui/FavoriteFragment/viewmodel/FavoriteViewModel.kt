@@ -9,11 +9,13 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.interactor.GetFavoriedMovieList
+import ir.omidtaheri.domain.interactor.GetFavoriedMovieListByFlowable
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
 
 class FavoriteViewModel(
     val getFavoriedMovieList: GetFavoriedMovieList,
+    val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
     val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     application: Application
 ) :
@@ -68,6 +70,47 @@ class FavoriteViewModel(
 
         addDisposable(disposable)
     }
+
+
+
+    fun getFavoritedMovieListByFlowable() {
+        // _isLoading.value = true
+        val disposable = getFavoriedMovieListByFlowable.execute(Unit).subscribeBy { response ->
+            when (response) {
+
+                is DataState.SUCCESS -> {
+                    // _isLoading.value = false
+                    _dataLive.value = response.data?.map {
+                        favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
+                    }
+                }
+
+                is DataState.ERROR -> {
+                    // _isLoading.value = false
+                    response.let { errorDataState ->
+
+                        when (errorDataState.stateMessage?.uiComponentType) {
+                            is UiComponentType.SNACKBAR -> {
+                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                            }
+
+                            is UiComponentType.TOAST -> {
+                                handleToastError(errorDataState as DataState.ERROR<Any>)
+                            }
+
+                            is UiComponentType.DIALOG -> {
+                                _favoriteErrorState.value = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        addDisposable(disposable)
+    }
+
+
 
     private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
         errorDataState.stateMessage!!.message.let { messageHolder ->

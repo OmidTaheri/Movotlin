@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import ir.omidtaheri.local.entity.MovieLocalEntity
@@ -19,4 +20,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM movie")
     fun getFavoritedMoviesList(): Observable<List<MovieLocalEntity>>
+
+    @Query("SELECT * FROM movie")
+    fun getFavoritedMoviesListByFlowable(): Flowable<List<MovieLocalEntity>>
 }

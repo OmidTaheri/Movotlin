@@ -1,5 +1,6 @@
 package ir.omidtaheri.data.repository
 
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
@@ -56,4 +57,30 @@ class FavoriteMovieRepository @Inject constructor(
                 )
             }
     }
+
+
+
+    override fun getFavoritedMoviesListByFlowable(): Flowable<DataState<List<FavoritedMovieDomainEntity>>> {
+
+        return movieLocalDataSource.getFavoritedMoviesListByFlowable()
+            .map<DataState<List<FavoritedMovieDomainEntity>>> {
+
+                DataState.SUCCESS(
+                    it.map {
+                        favoritedMovieEntityDomainDataMapper.mapFromDataEntity(it)
+                    },
+                    StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
+                )
+            }.onErrorReturn {
+                DataState.ERROR(
+                    StateMessage(
+                        MessageHolder.MESSAGE(it.message ?: "Error"),
+                        UiComponentType.DIALOG,
+                        MessageType.ERROR
+                    )
+                )
+            }
+    }
+
+
 }

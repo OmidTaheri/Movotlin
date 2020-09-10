@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -54,7 +52,8 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     private fun fetchData() {
-        viewModel.getFavoritedMovieList()
+//        viewModel.getFavoritedMovieList()
+        viewModel.getFavoritedMovieListByFlowable()
     }
 
     override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -154,4 +153,5 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         )
         requireContext().startActivity(i)
     }
+
 }
