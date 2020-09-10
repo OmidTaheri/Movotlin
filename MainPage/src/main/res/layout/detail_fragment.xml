@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorSecondary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_appbar"
@@ -24,7 +24,7 @@
             app:expandedTitleMarginEnd="@dimen/material_layout_keylines_content_left_margin_from_screen_edge"
             app:expandedTitleMarginStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="title">
+            app:title="">
 
 
             <ImageView
@@ -52,7 +52,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +70,7 @@
                 android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
                 android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
                 android:gravity="left"
-                android:text="8"
+                android:text=""
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +83,7 @@
                 android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
                 android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
                 android:gravity="left"
-                android:text="Rate"
+                android:text=""
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rateNumber" />
 
@@ -108,7 +108,7 @@
                 android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
                 android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
                 android:gravity="left"
-                android:text="text"
+                android:text=""
                 style="@style/TextAppearance.MyApp.Body1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
