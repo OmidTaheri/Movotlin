@@ -14,6 +14,7 @@ fun ImageView.LoadPoster(posterPath: String) {
     GlideApp.with(this.context)
         .load(BuildConfig.POSTER_URL + posterPath)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .override(160, 160)
         .apply(requestOptions)
         .into(this)
 }
@@ -27,6 +28,7 @@ fun ImageView.LoadBackdrop(backdropPath: String) {
     GlideApp.with(this.context)
         .load(BuildConfig.BACKDROP_URL + backdropPath)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .override(180, 180)
         .apply(requestOptions)
         .into(this)
 }
