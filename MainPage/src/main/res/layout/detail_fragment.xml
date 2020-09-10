@@ -158,8 +158,6 @@
                 android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
                 app:layout_constraintTop_toBottomOf="@id/title2" />
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
