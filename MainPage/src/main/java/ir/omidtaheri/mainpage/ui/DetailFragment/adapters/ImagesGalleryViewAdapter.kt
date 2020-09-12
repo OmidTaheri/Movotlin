@@ -1,6 +1,6 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment.adapters
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,9 +9,10 @@ import ir.omidtaheri.mainpage.databinding.ImagesViewerEmptyStateBinding
 import ir.omidtaheri.mainpage.databinding.ImagesViewerItemBinding
 import ir.omidtaheri.mainpage.entity.Backdrop
 import ir.omidtaheri.uibase.LoadBackdrop
-import ir.omidtaheri.uibase.LoadPoster
+import ir.omidtaheri.uibase.clear
+import kotlinx.android.synthetic.main.movie_viewer_item.view.*
 
-class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+class ImagesGalleryViewAdapter(val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     var items: MutableList<Backdrop> = mutableListOf()
 
@@ -93,7 +94,7 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             val movieBackdropEntity = items.get(position)
 
             binding.apply {
-                binding.movieImageView.LoadBackdrop(movieBackdropEntity.filePath)
+                movieImageView.LoadBackdrop(movieBackdropEntity.filePath,context)
             }
         }
     }
@@ -107,4 +108,12 @@ class ImagesGalleryViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             }
         }
     }
+
+    override fun onViewRecycled(holder: BaseViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is ViewHolder) {
+            holder.binding.movieImageView.clear(context)
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package ir.omidtaheri.genrelist.ui.MovieListFragment.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +18,13 @@ import ir.omidtaheri.genrelist.databinding.LoadStateFooterViewItemBinding
 import ir.omidtaheri.genrelist.databinding.MovieListEmptyStateBinding
 import ir.omidtaheri.genrelist.databinding.MovieListItemBinding
 import ir.omidtaheri.genrelist.entity.MovieUiEntity
+import ir.omidtaheri.uibase.GlideApp
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
+import ir.omidtaheri.uibase.clear
+import kotlinx.android.synthetic.main.movie_list_item.view.*
 
-class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
+class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>, val context: Context) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
 
 //    var items: MutableList<MovieUiEntity> = mutableListOf()
@@ -115,8 +119,8 @@ class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
             val movieUiEntity = getItem(position)
 
             binding.apply {
-                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) }
-                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it) }
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it, context) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it, context) }
                 titleMovie.text = movieUiEntity?.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity!!.id)
@@ -132,6 +136,13 @@ class MovieListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 
             binding.apply {
             }
+        }
+    }
+
+    override fun onViewRecycled(holder: BaseViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is ViewHolder) {
+            holder.binding.movieImageView.clear(context)
         }
     }
 }

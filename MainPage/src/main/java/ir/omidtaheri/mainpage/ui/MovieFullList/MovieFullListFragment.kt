@@ -20,6 +20,7 @@ import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.FooterLoadStateAdapter
 import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.MovieFullListAdapter
 import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel.MovieFullListViewModel
+import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
@@ -46,7 +47,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            movieListAdapter = MovieFullListAdapter(MovieUiEntityComparator)
+            movieListAdapter = MovieFullListAdapter(MovieUiEntityComparator,requireContext())
 
             movieListAdapter.apply {
                 setCallback(this@MovieFullListFragment)
@@ -175,6 +176,10 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
     override fun onDestroyView() {
         super.onDestroyView()
         _viewbinding = null
+    }
+    override fun onStop() {
+        super.onStop()
+        onDestroyGlide()
     }
 
     override fun onItemClick(MovieId: Int) {

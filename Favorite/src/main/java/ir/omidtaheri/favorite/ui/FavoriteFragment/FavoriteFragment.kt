@@ -19,6 +19,7 @@ import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
 import ir.omidtaheri.favorite.di.components.DaggerFavoriteComponent
 import ir.omidtaheri.favorite.ui.FavoriteFragment.adapters.FavoritedMovieAdapter
 import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
+import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
@@ -41,7 +42,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            recyclerAdapter = FavoritedMovieAdapter()
+            recyclerAdapter = FavoritedMovieAdapter(requireContext())
             recyclerAdapter.setCallback(this@FavoriteFragment)
             configRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
@@ -52,7 +53,6 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     private fun fetchData() {
-//        viewModel.getFavoritedMovieList()
         viewModel.getFavoritedMovieListByFlowable()
     }
 
@@ -153,5 +153,8 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         )
         requireContext().startActivity(i)
     }
-
+    override fun onStop() {
+        super.onStop()
+        onDestroyGlide()
+    }
 }

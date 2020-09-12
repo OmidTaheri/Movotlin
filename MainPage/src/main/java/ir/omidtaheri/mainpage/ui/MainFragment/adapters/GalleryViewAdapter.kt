@@ -1,5 +1,6 @@
 package ir.omidtaheri.mainpage.ui.MainFragment.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -10,8 +11,10 @@ import ir.omidtaheri.mainpage.databinding.MovieViewerItemBinding
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
+import ir.omidtaheri.uibase.clear
 
-class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
+
+class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>,val context: Context) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
 
 //
@@ -110,8 +113,8 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
             val movieUiEntity = getItem(position)
 
             binding.apply {
-                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) }
-                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it) }
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it,context) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it,context) }
                 titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity.id)
@@ -129,6 +132,15 @@ class GalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
             }
         }
     }
+
+
+    override fun onViewRecycled(holder: BaseViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is ViewHolder) {
+            holder.binding.movieImageView.clear(context)
+        }
+    }
+
 }
 
 object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {

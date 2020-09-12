@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -31,9 +30,10 @@ import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapte
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
-import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentArgs
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
+import ir.omidtaheri.uibase.clear
+import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback {
@@ -62,6 +62,9 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
     var isFavorite = false
 
+    var SavedState_mainbackdrop: String? = null
+    var SavedState_mainposter: String? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
@@ -76,7 +79,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         galleryViewerImages.apply {
 
-            adapterImages = ImagesGalleryViewAdapter()
+            adapterImages = ImagesGalleryViewAdapter(requireContext())
 
             configRecyclerView(
                 adapterImages as RecyclerView.Adapter<RecyclerView.ViewHolder>,
@@ -86,7 +89,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         }
 
         galleryViewerSimilarMovies.apply {
-            adapterSimilarMovies = SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator)
+            adapterSimilarMovies = SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator,requireContext())
             adapterSimilarMovies.apply {
                 setCallback(this@DetailFragment)
                 addLoadStateListener {
@@ -118,6 +121,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     private fun checkFavoriteStatus(movieId: Int) {
         viewModel.checkFavoriteStatus(movieId)
     }
+
     private fun fetchData(movieId: Int) {
         viewModel.getSimilarMovies(movieId)
         viewModel.getMovieImages(movieId)
@@ -179,6 +183,13 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
 
+    override fun onStop() {
+        super.onStop()
+        onDestroyGlide()
+    }
+
+
+
     override fun ConfigDaggerComponent() {
         DaggerDetailComponent
             .builder()
@@ -198,8 +209,15 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
             movieOverview.text = it.overview
             toolbar.title = it.title
 
-            it.backdropPath?.let { it1 -> mainBackdrop.LoadBackdrop(it1) }
-                ?: it.posterPath?.let { it1 -> mainBackdrop.LoadPoster(it1) }
+            it.backdropPath?.let { it1 ->
+                SavedState_mainbackdrop = it1
+                mainBackdrop.LoadBackdrop(it1,requireContext())
+            }
+                ?: it.posterPath?.let { it1 ->
+                    SavedState_mainposter = it1
+                    mainBackdrop.LoadPoster(it1,requireContext())
+                }
+
 
             rateNumber.text = it.voteAverage.toString()
             tagline.text = it.tagline

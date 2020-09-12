@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.androidbase.BaseViewHolder
 import ir.omidtaheri.genrelist.databinding.GenreListItemBinding
 import ir.omidtaheri.genrelist.entity.GenreUiEntity
+import ir.omidtaheri.uibase.clear
 
 class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -116,4 +117,7 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
             }
         }
     }
+
+
+
 }

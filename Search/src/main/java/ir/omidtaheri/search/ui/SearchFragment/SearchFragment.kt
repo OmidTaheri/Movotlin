@@ -28,6 +28,7 @@ import ir.omidtaheri.search.ui.SearchFragment.adapters.FooterLoadStateAdapter
 import ir.omidtaheri.search.ui.SearchFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.search.ui.SearchFragment.adapters.SearchMovieAdapter
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
+import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
@@ -52,7 +53,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            recyclerAdapter = SearchMovieAdapter(MovieUiEntityComparator)
+            recyclerAdapter = SearchMovieAdapter(MovieUiEntityComparator,requireContext())
             recyclerAdapter.apply {
                 setCallback(this@SearchFragment)
                 addLoadStateListener {
@@ -186,5 +187,9 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
             Uri.parse("movotlin://detailmovie/" + movieId)
         )
         requireContext().startActivity(i)
+    }
+    override fun onStop() {
+        super.onStop()
+        onDestroyGlide()
     }
 }

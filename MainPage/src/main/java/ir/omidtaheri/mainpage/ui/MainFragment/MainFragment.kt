@@ -1,7 +1,6 @@
 package ir.omidtaheri.mainpage.ui.MainFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +20,15 @@ import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
+import ir.omidtaheri.uibase.clear
+import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+
 
 class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
     private lateinit var viewModel: MainViewModel
+
 
     private var _viewbinding: MainFragmentBinding? = null
 
@@ -50,7 +53,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
         galleryViewerTopRate.apply {
 
-            adapterTopRate = GalleryViewAdapter(MovieUiEntityComparator)
+            adapterTopRate = GalleryViewAdapter(MovieUiEntityComparator, requireContext())
             adapterTopRate.apply {
                 setCallback(this@MainFragment)
                 addLoadStateListener {
@@ -79,7 +82,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         }
 
         galleryViewerPopular.apply {
-            adapterPopular = GalleryViewAdapter(MovieUiEntityComparator)
+            adapterPopular = GalleryViewAdapter(MovieUiEntityComparator, requireContext())
             adapterPopular.apply {
                 setCallback(this@MainFragment)
                 addLoadStateListener {
@@ -108,7 +111,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         }
 
         galleryViewerUpComing.apply {
-            adapterUpComing = GalleryViewAdapter(MovieUiEntityComparator)
+            adapterUpComing = GalleryViewAdapter(MovieUiEntityComparator, requireContext())
             adapterUpComing.apply {
                 setCallback(this@MainFragment)
                 addLoadStateListener {
@@ -233,6 +236,12 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         _viewbinding = null
     }
 
+    override fun onStop() {
+        super.onStop()
+        onDestroyGlide()
+    }
+
+
     override fun onItemClick(movieId: Int) {
         val action = MainFragmentDirections.actionMainFragmentToDetailFragment(movieId)
         findNavController().navigate(action)
@@ -242,4 +251,5 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         val action = MainFragmentDirections.actionMainFragmentToMovieFullListFragment(categoryId)
         findNavController().navigate(action)
     }
+
 }

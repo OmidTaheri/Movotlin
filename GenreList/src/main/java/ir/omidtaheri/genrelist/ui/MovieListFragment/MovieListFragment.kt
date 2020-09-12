@@ -22,6 +22,7 @@ import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.FooterLoadStateAdap
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.MovieListAdapter
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.genrelist.ui.MovieListFragment.viewmodel.MovieListViewModel
+import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
@@ -48,7 +49,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            movieListAdapter = MovieListAdapter(MovieUiEntityComparator)
+            movieListAdapter = MovieListAdapter(MovieUiEntityComparator,requireContext())
 
             movieListAdapter.apply {
                 setCallback(this@MovieListFragment)
@@ -172,5 +173,10 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
             Uri.parse("movotlin://detailmovie/" + movieId)
         )
         requireContext().startActivity(i)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        onDestroyGlide()
     }
 }

@@ -1,5 +1,6 @@
 package ir.omidtaheri.search.ui.SearchFragment.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,10 @@ import ir.omidtaheri.search.databinding.SearchListItemBinding
 import ir.omidtaheri.search.entity.MovieUiEntity
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
+import ir.omidtaheri.uibase.clear
+import kotlinx.android.synthetic.main.search_list_item.view.*
 
-class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
+class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>, val context: Context) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
 
 //    var items: MutableList<MovieUiEntity> = mutableListOf()
@@ -116,8 +119,8 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
             val movieUiEntity = getItem(position)
 
             binding.apply {
-                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it) }
-                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it) }
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it,context) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it,context) }
                 titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity.id)
@@ -133,6 +136,13 @@ class SearchMovieAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>) :
 
             binding.apply {
             }
+        }
+    }
+
+    override fun onViewRecycled(holder: BaseViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is  ViewHolder) {
+            holder.binding.movieImageView.clear(context)
         }
     }
 }
