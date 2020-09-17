@@ -52,16 +52,22 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.root.error_btn_retry.text = text
     }
 
+    fun ErrorButtonClickListner(listner: OnClickListener) {
+        viewbinding.root.error_btn_retry.setOnClickListener(listner)
+    }
+
+
     fun toLoadingState() {
         recyclerViewVisibility(false)
         progressBarVisibility(true)
         errorLayoutVisibility(false)
     }
 
-    fun toErrorState() {
+    fun toErrorState(listner: OnClickListener) {
         recyclerViewVisibility(false)
         progressBarVisibility(false)
         errorLayoutVisibility(true)
+        ErrorButtonClickListner(listner)
     }
 
     fun toDateState() {
@@ -77,6 +83,7 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.recyclerView.adapter = adapter
         viewbinding.recyclerView.layoutManager = layoutManager
     }
+
 
     fun getRecyclerView() = viewbinding.recyclerView
 }

@@ -69,6 +69,11 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         viewbinding.root.imageViewEmpty.setImageResource(resId)
     }
 
+    fun ErrorButtonClickListner(listner: OnClickListener) {
+        viewbinding.root.error_btn_retry.setOnClickListener(listner)
+    }
+
+
     fun toLoadingState() {
         recyclerViewVisibility(false)
         progressBarVisibility(true)
@@ -76,11 +81,12 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         emptyLayoutVisibility(false)
     }
 
-    fun toErrorState() {
+    fun toErrorState(listner: OnClickListener) {
         recyclerViewVisibility(false)
         progressBarVisibility(false)
         errorLayoutVisibility(true)
         emptyLayoutVisibility(false)
+        ErrorButtonClickListner(listner)
     }
 
     fun toEmptyState() {
