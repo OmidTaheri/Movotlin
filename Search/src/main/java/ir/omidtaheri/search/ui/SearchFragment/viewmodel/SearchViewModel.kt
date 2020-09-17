@@ -51,6 +51,7 @@ class SearchViewModel(
             .subscribeOn(schedulers.subscribeOn)
             .filter {
                 !it.isEmpty()
+
             }
             .distinctUntilChanged()
             .switchMap {
@@ -65,6 +66,20 @@ class SearchViewModel(
             }
 
         addDisposable(currentDisposable)
+
+    }
+
+
+    fun initSearch(query: String) {
+
+        val disposable = searchMoviesByQuery.execute(query).cachedIn(viewModelScope)
+            .subscribeBy {
+                _dataLive.value = it.map {
+                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                }
+            }
+
+        addDisposable(disposable)
 
     }
 
