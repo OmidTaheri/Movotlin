@@ -63,11 +63,13 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     var SavedState_mainbackdrop: String? = null
     var SavedState_mainposter: String? = null
 
+    var movieId: Int = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
         args = DetailFragmentArgs.fromBundle(requireArguments())
-        val movieId = args.movieId
+        movieId = args.movieId
         checkFavoriteStatus(movieId)
         fetchData(movieId)
     }
@@ -87,7 +89,8 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         }
 
         galleryViewerSimilarMovies.apply {
-            adapterSimilarMovies = SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator,requireContext())
+            adapterSimilarMovies =
+                SimilarMoviesGalleryViewAdapter(MovieUiEntityComparator, requireContext())
             adapterSimilarMovies.apply {
                 setCallback(this@DetailFragment)
                 addLoadStateListener {
@@ -99,7 +102,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                         }
 
                         is LoadState.Error -> {
-                            toErrorState()
+                            toErrorState(View.OnClickListener {
+                                viewModel.getSimilarMovies(movieId)
+
+                            })
                         }
 
                         is LoadState.NotLoading -> {
@@ -187,7 +193,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
 
-
     override fun ConfigDaggerComponent() {
         DaggerDetailComponent
             .builder()
@@ -209,11 +214,11 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
             it.backdropPath?.let { it1 ->
                 SavedState_mainbackdrop = it1
-                mainBackdrop.LoadBackdrop(it1,requireContext())
+                mainBackdrop.LoadBackdrop(it1, requireContext())
             }
                 ?: it.posterPath?.let { it1 ->
                     SavedState_mainposter = it1
-                    mainBackdrop.LoadPoster(it1,requireContext())
+                    mainBackdrop.LoadPoster(it1, requireContext())
                 }
 
 
@@ -246,7 +251,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
-            galleryViewerImages.toErrorState()
+            galleryViewerImages.toErrorState(View.OnClickListener {
+                galleryViewerImages.toLoadingState()
+                viewModel.getMovieImages(movieId)
+            })
         })
 
         viewModel.favoritedLiveData.observe(this, Observer {

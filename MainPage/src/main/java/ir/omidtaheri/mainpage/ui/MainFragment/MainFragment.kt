@@ -100,7 +100,9 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                         }
 
                         is LoadState.Error -> {
-                            toErrorState()
+                            toErrorState(View.OnClickListener {
+                                viewModel.getTopRatedMovieList()
+                            })
                         }
 
                         is LoadState.NotLoading -> {
@@ -128,7 +130,9 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                         }
 
                         is LoadState.Error -> {
-                            toErrorState()
+                            toErrorState(View.OnClickListener {
+                                viewModel.getPopularMovieList()
+                            })
                         }
 
                         is LoadState.NotLoading -> {
@@ -157,7 +161,9 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                         }
 
                         is LoadState.Error -> {
-                            toErrorState()
+                            toErrorState(View.OnClickListener {
+                                viewModel.getUpComingMovieList()
+                            })
                         }
 
                         is LoadState.NotLoading -> {

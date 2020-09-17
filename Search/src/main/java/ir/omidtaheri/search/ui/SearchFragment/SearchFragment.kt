@@ -96,7 +96,13 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
                         }
 
                         is LoadState.Error -> {
-                            toErrorState()
+                            toErrorState(View.OnClickListener {
+
+                                val query = searchbar.text.toString()
+                                viewModel.initSearch(query)
+
+
+                            })
                         }
 
                         is LoadState.NotLoading -> {

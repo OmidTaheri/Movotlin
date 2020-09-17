@@ -37,11 +37,13 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
     lateinit var args: MovieFullListFragmentArgs
 
+    var CategoryId: Int = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
         args = MovieFullListFragmentArgs.fromBundle(requireArguments())
-        val CategoryId = args.categoryId
+        CategoryId = args.categoryId
         fetchData(CategoryId)
     }
 
@@ -60,7 +62,13 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
                         }
 
                         is LoadState.Error -> {
-                            toErrorState()
+                            toErrorState(View.OnClickListener {
+                                when (CategoryId) {
+                                    1 -> viewModel.getTopRatedMovieList()
+                                    2 -> viewModel.getPopularMovieList()
+                                    3 -> viewModel.getUpComingMovieList()
+                                }
+                            })
                         }
 
                         is LoadState.NotLoading -> {

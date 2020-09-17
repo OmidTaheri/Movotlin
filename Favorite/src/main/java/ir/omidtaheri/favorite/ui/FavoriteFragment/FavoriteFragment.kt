@@ -43,7 +43,6 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     var STATE_FavoriteRecyclerview: Parcelable? = null
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -115,7 +114,6 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
                 }
 
 
-
             } else {
                 multiStatePage.toEmptyState()
             }
@@ -123,7 +121,9 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         })
 
         viewModel.favoriteErrorState.observe(this, Observer {
-            multiStatePage.toErrorState()
+            multiStatePage.toErrorState(View.OnClickListener {
+                viewModel.getFavoritedMovieListByFlowable()
+            })
         })
     }
 
@@ -196,6 +196,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         )
         requireContext().startActivity(i)
     }
+
     override fun onStop() {
         super.onStop()
 

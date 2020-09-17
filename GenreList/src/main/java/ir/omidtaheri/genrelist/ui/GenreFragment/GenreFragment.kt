@@ -114,7 +114,13 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         })
 
         viewModel.genreErrorState.observe(this, Observer {
-            multiStatePage.toErrorState()
+            multiStatePage.toErrorState(
+                View.OnClickListener {
+                    multiStatePage.toLoadingState()
+                    viewModel.getMovieListByGenre()
+                }
+
+            )
         })
     }
 
