@@ -77,4 +77,6 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.recyclerView.adapter = adapter
         viewbinding.recyclerView.layoutManager = layoutManager
     }
+
+    fun getRecyclerView() = viewbinding.recyclerView
 }
