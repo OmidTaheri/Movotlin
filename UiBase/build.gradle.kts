@@ -75,5 +75,6 @@ dependencies {
     implementation(UiDependencies.GLIDE)
     kapt(AnnotationProcessorsDependencies.GLIDE_COMPILER)
     implementation(UiDependencies.LEANBACK)
+    implementation(Dependencies.RETROFIT_CONVERTER)
     addTestsDependencies()
 }
