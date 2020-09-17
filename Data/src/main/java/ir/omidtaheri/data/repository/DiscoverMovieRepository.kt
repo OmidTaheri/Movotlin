@@ -76,7 +76,7 @@ class DiscoverMovieRepository @Inject constructor(
                 DataState.ERROR(
                     StateMessage(
                         MessageHolder.MESSAGE(it.message ?: "Error"),
-                        UiComponentType.SNACKBAR,
+                        UiComponentType.DIALOG,
                         MessageType.ERROR
                     )
                 )
@@ -94,7 +94,7 @@ class DiscoverMovieRepository @Inject constructor(
                 DataState.ERROR(
                     StateMessage(
                         MessageHolder.MESSAGE(it.message ?: "Error"),
-                        UiComponentType.SNACKBAR,
+                        UiComponentType.DIALOG,
                         MessageType.ERROR
                     )
                 )
