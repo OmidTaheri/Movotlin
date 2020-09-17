@@ -19,7 +19,7 @@ class GetMovieListByGenreSource(
 
         val pageNumber: Int = params.key ?: 1
 
-        val params: Map<String, Int> = mapOf("genreId" to genreId, "page" to pageNumber)
+        val params: Map<String, Int> = mapOf("with_genres" to genreId, "page" to pageNumber)
 
         return discoverMovieRepository.getMovieListByGenreId(params)
             .subscribeOn(schedulers.subscribeOn)
