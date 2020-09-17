@@ -77,6 +77,7 @@ class GenreListAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     }
 
     fun addItems(list: List<GenreUiEntity>) {
+        clear()
         items.addAll(list)
         notifyDataSetChanged()
     }
