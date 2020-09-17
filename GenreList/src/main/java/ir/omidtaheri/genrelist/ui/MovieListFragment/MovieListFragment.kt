@@ -49,7 +49,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            movieListAdapter = MovieListAdapter(MovieUiEntityComparator,requireContext())
+            movieListAdapter = MovieListAdapter(MovieUiEntityComparator, requireContext())
 
             movieListAdapter.apply {
                 setCallback(this@MovieListFragment)

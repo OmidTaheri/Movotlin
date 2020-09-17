@@ -1,6 +1,9 @@
 package ir.omidtaheri.mainpage.ui.MainFragment
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +23,9 @@ import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
-import ir.omidtaheri.uibase.clear
+import ir.omidtaheri.uibase.loadRecyclerViewState
 import ir.omidtaheri.uibase.onDestroyGlide
+import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 
@@ -43,8 +47,39 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     lateinit var adapterPopular: GalleryViewAdapter
     lateinit var adapterUpComing: GalleryViewAdapter
 
+    var STATE_TopRatedRecyclerview: Parcelable? = null
+    var STATE_PopularRecyclerview: Parcelable? = null
+    var STATE_UpcomingRecyclerview: Parcelable? = null
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+
+        val saveSharedPreferences: SharedPreferences =
+            requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
+
+
+        val TOPRATED_ViewSavedState =
+            loadRecyclerViewState(saveSharedPreferences, "TOPRATED_RECYCLERVIEW_STATE")
+        val POPULAR_ViewSavedState =
+            loadRecyclerViewState(saveSharedPreferences, "POPULAR_RECYCLERVIEW_STATE")
+        val UPCOMING_ViewSavedState =
+            loadRecyclerViewState(saveSharedPreferences, "UPCOMING_RECYCLERVIEW_STATE")
+
+
+        TOPRATED_ViewSavedState?.let {
+            STATE_TopRatedRecyclerview = it
+        }
+
+        POPULAR_ViewSavedState?.let {
+            STATE_PopularRecyclerview = it
+        }
+
+        UPCOMING_ViewSavedState?.let {
+            STATE_UpcomingRecyclerview = it
+        }
+
         initRecyclerViews()
         fetchData()
     }
@@ -78,7 +113,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
-//            toLoadingState()
         }
 
         galleryViewerPopular.apply {
@@ -174,14 +208,38 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
         viewModel.poularLiveData.observe(this, Observer {
             adapterPopular.submitData(lifecycle, it)
+
+            STATE_PopularRecyclerview?.let {
+                galleryViewerPopular.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    it
+                )
+                STATE_PopularRecyclerview = null
+            }
+
         })
 
         viewModel.topRateLiveData.observe(this, Observer {
             adapterTopRate.submitData(lifecycle, it)
+
+            STATE_TopRatedRecyclerview?.let {
+
+                galleryViewerTopRate.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    it
+                )
+                STATE_TopRatedRecyclerview = null
+            }
+
         })
 
         viewModel.upComingLiveData.observe(this, Observer {
             adapterUpComing.submitData(lifecycle, it)
+
+            STATE_UpcomingRecyclerview?.let {
+                galleryViewerUpComing.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    it
+                )
+                STATE_UpcomingRecyclerview = null
+            }
         })
     }
 
@@ -236,8 +294,53 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         _viewbinding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
+
+    }
+
+
     override fun onStop() {
         super.onStop()
+
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+
+
+        val topRatedRecyclerState =
+            galleryViewerTopRate.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        val popularRecyclerState =
+            galleryViewerPopular.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+
+        val upcomingRecyclerState =
+            galleryViewerUpComing.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+
+        saveRecyclerViewStat(
+            ed,
+            "TOPRATED_RECYCLERVIEW_STATE",
+            topRatedRecyclerState as LinearLayoutManager.SavedState
+        )
+        saveRecyclerViewStat(
+            ed,
+            "POPULAR_RECYCLERVIEW_STATE",
+            popularRecyclerState as LinearLayoutManager.SavedState
+        )
+        saveRecyclerViewStat(
+            ed,
+            "UPCOMING_RECYCLERVIEW_STATE",
+            upcomingRecyclerState as LinearLayoutManager.SavedState
+        )
+        ed.commit()
+
+
         onDestroyGlide()
     }
 

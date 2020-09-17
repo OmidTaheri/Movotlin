@@ -47,7 +47,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
     private fun initRecyclerViews() {
         multiStatePage.apply {
-            movieListAdapter = MovieFullListAdapter(MovieUiEntityComparator,requireContext())
+            movieListAdapter = MovieFullListAdapter(MovieUiEntityComparator, requireContext())
 
             movieListAdapter.apply {
                 setCallback(this@MovieFullListFragment)
@@ -177,6 +177,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
         super.onDestroyView()
         _viewbinding = null
     }
+
     override fun onStop() {
         super.onStop()
         onDestroyGlide()

@@ -1,7 +1,6 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryVie
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
-import ir.omidtaheri.uibase.clear
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
@@ -239,7 +237,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         viewModel.imageListLiveData.observe(this, Observer {
             it.backdrops.forEach {
                 adapterImages.addItem(it)
-                Log.i("adapterImages", it.filePath)
             }
             galleryViewerImages.toDateState()
         })
@@ -299,7 +296,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun showSnackBar(message: String) {
-        Log.i("adapterImages55", message)
         Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 

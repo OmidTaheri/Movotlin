@@ -1,8 +1,11 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -19,7 +23,9 @@ import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
 import ir.omidtaheri.favorite.di.components.DaggerFavoriteComponent
 import ir.omidtaheri.favorite.ui.FavoriteFragment.adapters.FavoritedMovieAdapter
 import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
+import ir.omidtaheri.uibase.loadRecyclerViewState
 import ir.omidtaheri.uibase.onDestroyGlide
+import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
@@ -34,8 +40,24 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
     lateinit var multiStatePage: MultiStatePage
 
+    var STATE_FavoriteRecyclerview: Parcelable? = null
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val saveSharedPreferences: SharedPreferences =
+            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
+
+
+        val FAVORIT_ViewSavedState =
+            loadRecyclerViewState(saveSharedPreferences, "FAVORITE_RECYCLERVIEW_STATE")
+
+        FAVORIT_ViewSavedState?.let {
+            STATE_FavoriteRecyclerview = it
+        }
+
         initRecyclerViews()
         fetchData()
     }
@@ -84,6 +106,16 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             if (it != null && it.size > 0) {
                 recyclerAdapter.addItems(it)
                 multiStatePage.toDateState()
+
+                STATE_FavoriteRecyclerview?.let {
+                    multiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                        it
+                    )
+                    STATE_FavoriteRecyclerview = null
+                }
+
+
+
             } else {
                 multiStatePage.toEmptyState()
             }
@@ -146,6 +178,17 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         _viewbinding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
+
+    }
+
+
     override fun onItemClick(movieId: Int) {
         val i = Intent(
             Intent.ACTION_VIEW,
@@ -155,6 +198,24 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
     override fun onStop() {
         super.onStop()
+
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+
+        val RecyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+
+        saveRecyclerViewStat(
+            ed,
+            "FAVORITE_RECYCLERVIEW_STATE",
+            RecyclerState as LinearLayoutManager.SavedState
+        )
+
+        ed.commit()
+
+
         onDestroyGlide()
     }
 }

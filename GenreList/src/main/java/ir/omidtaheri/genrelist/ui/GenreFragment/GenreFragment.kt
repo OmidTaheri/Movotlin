@@ -1,7 +1,9 @@
 package ir.omidtaheri.genrelist.ui.GenreFragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,8 @@ import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerGenreComponent
 import ir.omidtaheri.genrelist.ui.GenreFragment.adapters.GenreListAdapter
 import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModel
+import ir.omidtaheri.uibase.loadRecyclerViewState
+import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
@@ -33,8 +37,23 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
     lateinit var multiStatePage: MultiStatePage
 
+    var STATE_GenreRecyclerview: Parcelable? = null
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val saveSharedPreferences: SharedPreferences =
+            requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
+
+
+        val GENRE_ViewSavedState =
+            loadRecyclerViewState(saveSharedPreferences, "GENRE_RECYCLERVIEW_STATE")
+
+        GENRE_ViewSavedState?.let {
+            STATE_GenreRecyclerview = it
+        }
+
         initRecyclerViews()
         fetchData()
     }
@@ -80,8 +99,18 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
     override fun setDataLiveObserver() {
 
         viewModel.dataLive.observe(this, Observer {
+
             genreListAdapter.addItems(it)
             multiStatePage.toDateState()
+
+            STATE_GenreRecyclerview?.let {
+                multiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    it
+                )
+                STATE_GenreRecyclerview = null
+            }
+
+
         })
 
         viewModel.genreErrorState.observe(this, Observer {
@@ -139,6 +168,37 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         super.onDestroyView()
         _viewbinding = null
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+
+        val genreRatedRecyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        saveRecyclerViewStat(
+            ed,
+            "GENRE_RECYCLERVIEW_STATE",
+            genreRatedRecyclerState as LinearLayoutManager.SavedState
+        )
+
+        ed.commit()
+
+    }
+
 
     override fun onItemClick(genreId: Int) {
         val action = GenreFragmentDirections.actionGenreFragmentToMovieListFragment(genreId)

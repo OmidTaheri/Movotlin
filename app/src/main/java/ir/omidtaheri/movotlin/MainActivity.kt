@@ -1,13 +1,12 @@
 package ir.omidtaheri.movotlin
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,7 +14,9 @@ import ir.omidtaheri.advancenavigation.BaseNavigationFragment
 import ir.omidtaheri.mainpage.ui.DetailFragment.DetailFragmentDirections
 import ir.omidtaheri.mainpage.ui.MainFragment.MainFragmentDirections
 import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentDirections
-import java.util.Stack
+import ir.omidtaheri.uibase.loadBundle
+import ir.omidtaheri.uibase.saveBundle
+import java.util.*
 
 class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemReselectedListener,
@@ -45,20 +46,20 @@ class MainActivity : AppCompatActivity(),
             3 to R.id.GenreFragment
         )
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        viewPager = findViewById<ViewPager2>(R.id.pager)
+        viewPager = findViewById(R.id.pager)
 
         viewPager.adapter = ViewPagerAdapter(this)
         viewPager.setUserInputEnabled(false)
+        // viewPager.offscreenPageLimit = fragments.size
 
-        // check deeplink only after viewPager is setup
-        //viewPager.post(this::checkDeepLink)
-        viewPager.offscreenPageLimit = fragments.size
-
-        bottomNavBar = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        bottomNavBar = findViewById(R.id.bottom_nav_view)
         bottomNavBar.setOnNavigationItemSelectedListener(this)
         bottomNavBar.setOnNavigationItemReselectedListener(this)
 
@@ -74,6 +75,22 @@ class MainActivity : AppCompatActivity(),
 
         // initialize backStack with elements
         if (backStack.empty()) backStack.push(0)
+
+
+        val saveSharedPreferences: SharedPreferences =
+            getSharedPreferences("MainActivityState", MODE_PRIVATE)
+        val current = saveSharedPreferences.getInt("VIEW_PAGER_POSITION", 0)
+
+        loadBundle(
+            saveSharedPreferences,
+            "VIEW_PAGER_STATE"
+        )?.let {
+            (viewPager.adapter as FragmentStateAdapter).restoreState(
+                it
+            )
+        }
+
+        setItem(current)
     }
 
     override fun onNavigationItemReselected(item: MenuItem) {
@@ -93,6 +110,7 @@ class MainActivity : AppCompatActivity(),
         backStack.push(position)
     }
 
+
     override fun onBackPressed() {
         val fragment = fragments[viewPager.currentItem]
         val hadNestedFragments = fragment.onBackPressed()
@@ -107,13 +125,6 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-//    private fun checkDeepLink() {
-//        fragments.forEachIndexed { index, fragment ->
-//            val hasDeepLink = fragment.handleDeepLink(intent)
-//            if (hasDeepLink) setItem(index)
-//        }
-//    }
-
     inner class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
         override fun getItemCount(): Int {
@@ -127,32 +138,101 @@ class MainActivity : AppCompatActivity(),
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-//        val scheme = intent?.scheme
-//        val host = intent?.data?.host
+
         val movieId = intent?.data?.path?.substring(1)
 
-        if (findNavController(R.id.nav_host_main).currentDestination?.id == R.id.mainFragment) {
-
-            val action =
-                MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
-            findNavController(R.id.nav_host_main).navigate(action)
+        movieId?.let {
 
 
-        } else if (findNavController(R.id.nav_host_main).currentDestination?.id == R.id.detailFragment) {
+            val navController = fragments.get(0).getNavFragmentController()
 
-            val action =
-                DetailFragmentDirections.actionDetailFragmentSelf(movieId?.toInt()!!)
-            findNavController(R.id.nav_host_main).navigate(action)
+            if (navController.currentDestination?.id == R.id.mainFragment) {
+
+                val action =
+                    MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
+                navController.navigate(action)
 
 
-        } else if (findNavController(R.id.nav_host_main).currentDestination?.id == R.id.movieFullListFragment) {
+            } else if (navController.currentDestination?.id == R.id.detailFragment) {
 
-            val action =
-                MovieFullListFragmentDirections.actionMovieFullListFragmentToDetailFragment(movieId?.toInt()!!)
-            findNavController(R.id.nav_host_main).navigate(action)
+                val action =
+                    DetailFragmentDirections.actionDetailFragmentSelf(movieId?.toInt()!!)
+                navController.navigate(action)
 
+
+            } else if (navController.currentDestination?.id == R.id.movieFullListFragment) {
+
+                val action =
+                    MovieFullListFragmentDirections.actionMovieFullListFragmentToDetailFragment(
+                        movieId?.toInt()!!
+                    )
+                navController.navigate(action)
+
+            }
+
+            setItem(0)
         }
 
-        setItem(0)
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+
+        val save: SharedPreferences =
+            getSharedPreferences("MainActivityState", MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+
+        ed.putInt("VIEW_PAGER_POSITION", viewPager.currentItem)
+
+//        val navController_main = fragments.get(0).getNavFragmentController()
+//        val navController_search = fragments.get(1).getNavFragmentController()
+//        val navController_favorite = fragments.get(2).getNavFragmentController()
+//        val navController__genre = fragments.get(3).getNavFragmentController()
+//
+//
+//        saveBundle(
+//            ed,
+//            "NAVIGATION_CONTROLLER_STATE_0",
+//            navController_main.saveState()
+//        )
+//
+//
+//
+//        saveBundle(
+//            ed,
+//            "NAVIGATION_CONTROLLER_STATE_1",
+//            navController_search.saveState()
+//        )
+//
+//
+//        saveBundle(
+//            ed,
+//            "NAVIGATION_CONTROLLER_STATE_2",
+//            navController_favorite.saveState()
+//        )
+//
+//
+//        saveBundle(
+//            ed,
+//            "NAVIGATION_CONTROLLER_STATE_3",
+//            navController__genre.saveState()
+//        )
+//
+        saveBundle(
+            ed,
+            "VIEW_PAGER_STATE",
+            (viewPager.adapter as FragmentStateAdapter).saveState() as Bundle
+        )
+
+        ed.commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val save: SharedPreferences =
+            getSharedPreferences("MainActivityState", MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
     }
 }

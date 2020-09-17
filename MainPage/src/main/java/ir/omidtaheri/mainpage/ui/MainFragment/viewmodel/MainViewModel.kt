@@ -14,7 +14,6 @@ import ir.omidtaheri.domain.interactor.GetTopRatedMoviesSinglePage
 import ir.omidtaheri.domain.interactor.GetUpcomingMoviesSinglePage
 import ir.omidtaheri.mainpage.entity.MovieUiEntity
 import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
-import kotlinx.coroutines.CoroutineScope
 
 class MainViewModel(
     val getPopularMoviesUseCase: GetPopularMoviesSinglePage,
@@ -24,6 +23,7 @@ class MainViewModel(
     application: Application
 ) :
     BaseViewModel(application) {
+
 
     private val _poularLiveData: MutableLiveData<PagingData<MovieUiEntity>>
     val poularLiveData: LiveData<PagingData<MovieUiEntity>>
@@ -54,7 +54,7 @@ class MainViewModel(
         addDisposable(disposable)
     }
 
-    
+
     fun getTopRatedMovieList() {
         // _isTopRateLoading.value = true
         val disposable = getTopRatedMoviesUseCase.execute(Unit).cachedIn(viewModelScope)
