@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
-                android:id="@+id/MultiStatePage"
+            <ir.omidtaheri.viewcomponents.SwipeRefreshMultiState.SwipeRefreshMultiStatePage
+                android:id="@+id/swipeRefreshMultiStatePage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"

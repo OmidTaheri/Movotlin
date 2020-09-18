@@ -91,6 +91,7 @@ dependencies {
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
     implementation(UiDependencies.RECYCLE_VIEW)
     implementation(UiDependencies.MATERIAL)
+    implementation(UiDependencies.SWIPE_REFRESH_LAYOUT)
 
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)

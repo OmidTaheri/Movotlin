@@ -26,7 +26,7 @@ import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
 import ir.omidtaheri.uibase.loadRecyclerViewState
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.uibase.saveRecyclerViewStat
-import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
+import ir.omidtaheri.viewcomponents.SwipeRefreshMultiState.SwipeRefreshMultiStatePage
 
 class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
@@ -38,7 +38,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     private val viewbinding
         get() = _viewbinding!!
 
-    lateinit var multiStatePage: MultiStatePage
+    lateinit var swipeRefreshmultiStatePage: SwipeRefreshMultiStatePage
 
     var STATE_FavoriteRecyclerview: Parcelable? = null
 
@@ -62,13 +62,17 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     private fun initRecyclerViews() {
-        multiStatePage.apply {
+        swipeRefreshmultiStatePage.apply {
             recyclerAdapter = FavoritedMovieAdapter(requireContext())
             recyclerAdapter.setCallback(this@FavoriteFragment)
             configRecyclerView(
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
+            getSwipeRefresh().setOnRefreshListener {
+                fetchData()
+            }
+
             toLoadingState()
         }
     }
@@ -84,7 +88,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     override fun bindUiComponent() {
-        multiStatePage = _viewbinding!!.MultiStatePage
+        swipeRefreshmultiStatePage = _viewbinding!!.swipeRefreshMultiStatePage
     }
 
     override fun ConfigDaggerComponent() {
@@ -102,26 +106,35 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     override fun setDataLiveObserver() {
 
         viewModel.dataLive.observe(this, Observer {
+            recyclerAdapter.clear()
             if (it != null && it.size > 0) {
+
                 recyclerAdapter.addItems(it)
-                multiStatePage.toDateState()
+                swipeRefreshmultiStatePage.toDateState()
 
                 STATE_FavoriteRecyclerview?.let {
-                    multiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
                         it
                     )
                     STATE_FavoriteRecyclerview = null
                 }
 
-
             } else {
-                multiStatePage.toEmptyState()
+                swipeRefreshmultiStatePage.toDateState()
+                swipeRefreshmultiStatePage.apply {
+                    configRecyclerView(
+                        recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
+                        GridLayoutManager(context, 1)
+                    )
+                }
+
             }
+
 
         })
 
         viewModel.favoriteErrorState.observe(this, Observer {
-            multiStatePage.toErrorState(View.OnClickListener {
+            swipeRefreshmultiStatePage.toErrorState(View.OnClickListener {
                 viewModel.getFavoritedMovieListByFlowable()
             })
         })
@@ -205,7 +218,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         val ed: SharedPreferences.Editor = save.edit()
 
         val RecyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+            swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
 
         saveRecyclerViewStat(

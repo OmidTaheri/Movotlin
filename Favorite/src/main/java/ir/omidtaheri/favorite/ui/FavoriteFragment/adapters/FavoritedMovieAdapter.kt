@@ -82,6 +82,7 @@ class FavoritedMovieAdapter(val context: Context) : RecyclerView.Adapter<BaseVie
     }
 
     fun addItems(list: List<FavoritedMovieUiEntity>) {
+        clear()
         items.addAll(list)
         notifyDataSetChanged()
     }

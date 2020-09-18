@@ -46,6 +46,7 @@ object BuildDependenciesVersions {
         const val COORDINATORLAYOUT = "1.1.0"
         const val ANIMATED_VECTORE_DRAWABLE = "1.1.0"
         const val LEANBACK = "1.0.0"
+        const val SWIPE_REFRESH_LAYOUT = "1.1.0"
     }
 
 

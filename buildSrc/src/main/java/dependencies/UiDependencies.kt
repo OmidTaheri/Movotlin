@@ -17,6 +17,11 @@ object UiDependencies {
     const val CARDVIEW =
         "androidx.cardview:cardview:${BuildDependenciesVersions.UiDependenciesVersions.CARDVIEW}"
 
+    const val SWIPE_REFRESH_LAYOUT =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${BuildDependenciesVersions.UiDependenciesVersions.SWIPE_REFRESH_LAYOUT}"
+
+
+
     const val VECTOR_DRAWABLE =
         "androidx.vectordrawable:vectordrawable:${BuildDependenciesVersions.UiDependenciesVersions.VECTORE_DRAWABLE}"
 
