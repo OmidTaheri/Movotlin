@@ -75,6 +75,7 @@ dependencies {
 
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
     implementation(UiDependencies.RECYCLE_VIEW)
+    implementation(UiDependencies.SWIPE_REFRESH_LAYOUT)
 
     addTestsDependencies()
 }
