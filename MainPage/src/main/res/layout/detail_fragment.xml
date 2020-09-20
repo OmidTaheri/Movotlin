@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorSurface">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/main_collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:background="@color/colorPrimary"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginBottom="@dimen/material_layout_vertical_spacing_between_content_areas"
+            app:expandedTitleMarginEnd="@dimen/material_layout_keylines_content_left_margin_from_screen_edge"
+            app:expandedTitleMarginStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="">
+
+
+            <ImageView
+                android:id="@+id/main_backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+                android:fitsSystemWindows="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_baseline_local_movies_24"
+                tools:ignore="ContentDescription" />
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:title="" />
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSurface"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/rateNumber"
+                style="@style/TextAppearance.MyApp.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:gravity="left"
+                android:text=""
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/rateText"
+                style="@style/TextAppearance.MyApp.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:gravity="left"
+                android:text=""
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rateNumber" />
+
+
+            <com.google.android.material.chip.ChipGroup
+                app:singleLine="true"
+                android:id="@+id/group_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginRight="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginBottom="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:layoutDirection="ltr"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rateText" />
+
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:gravity="left"
+                android:text=""
+                style="@style/TextAppearance.MyApp.Body1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/group_genre" />
+
+
+
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:gravity="left"
+                android:text="Images"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/info" />
+
+            <ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+                android:id="@+id/Images_Gallery_viewer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
+                app:layout_constraintTop_toBottomOf="@id/title1" />
+
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:gravity="left"
+                android:text="Similar"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Images_Gallery_viewer" />
+
+            <ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+                android:id="@+id/Similar_Movies_Gallery_viewer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
+                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+                android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
+                app:layout_constraintTop_toBottomOf="@id/title2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/material_layout_keylines_screen_edge_margin"
+        app:layout_anchor="@id/main_collapsing"
+        app:layout_anchorGravity="bottom|right"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+        app:tint="@null"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,16 +3,24 @@ package ir.omidtaheri.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.IGNORE
+import androidx.room.Query
+import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.Single
 import ir.omidtaheri.local.entity.MovieLocalEntity
 
 @Dao
 interface MovieDao {
 
-    @Insert(onConflict = IGNORE)
-    fun FavoriteMovie(movie: MovieLocalEntity)
+    @Insert()
+    fun favoriteMovie(movie: MovieLocalEntity): Single<Long>
 
     @Delete
-    fun UnFavoriteMovie(movie: MovieLocalEntity)
+    fun unFavoriteMovie(movie: MovieLocalEntity): Single<Int>
 
+    @Query("SELECT * FROM movie")
+    fun getFavoritedMoviesList(): Observable<List<MovieLocalEntity>>
+
+    @Query("SELECT * FROM movie")
+    fun getFavoritedMoviesListByFlowable(): Flowable<List<MovieLocalEntity>>
 }

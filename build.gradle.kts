@@ -10,7 +10,6 @@ plugins {
 
 buildscript {
 
-    val kotlin_version by extra("1.3.72")
     repositories {
         google()
         jcenter()
@@ -19,7 +18,7 @@ buildscript {
     dependencies {
         classpath("${BuildPluginsClasspath.GRADLE_FOR_ANDROID}")
         classpath("${BuildPluginsClasspath.GRADLE_FOR_KOTLIN}")
-
+        classpath("${BuildPluginsClasspath.SAFEARGS}")
     }
 }
 
@@ -41,28 +40,22 @@ ktlint {
     verbose.set(true)
     android.set(true)
     outputToConsole.set(true)
+    outputColorName.set("RED")
     ignoreFailures.set(true)
     reporters {
         reporter(ReporterType.HTML)
         reporter(ReporterType.JSON)
     }
+
+    filter {
+        exclude("**/generated/**", "**/test/**", "**/androidTest/**")
+        include("**/kotlin/**")
+    }
 }
 
 detekt {
-    debug = true // Adds debug output during task execution. `false` by default.
-    ignoreFailures =
-        true // If set to `true` the build does not fail when the maxIssues count was reached. Defaults to `false`.
-    reports {
-
-        html {
-            enabled = true // Enable/Disable HTML report (default: true)
-            destination =
-                file("${project.rootDir}/build/reports/detekt/detekt_${BuildAndroidConfig.VERSION_NAME}.html") // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
-        }
-
-    }
-
-
+    ignoreFailures = true
+    config = files("config/detekt/detekt.yml")
 }
 
 tasks {
@@ -71,6 +64,3 @@ tasks {
         outputDirectory = "$buildDir/dokka"
     }
 }
-
-
-

@@ -27,7 +27,7 @@ interface CustomCallback {
 }
 
 sealed class MessageHolder {
-    class MESSAGE(val Message: String) : MessageHolder()
-    class Res(val ResId: Int) : MessageHolder()
+    class MESSAGE(val message: String) : MessageHolder()
+    class Res(val resId: Int) : MessageHolder()
     object NONE : MessageHolder()
 }

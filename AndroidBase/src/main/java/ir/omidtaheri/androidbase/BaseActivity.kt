@@ -9,7 +9,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 
-
 abstract class BaseActivity : AppCompatActivity() {
 
     private val mActivityComponent: Any = TODO()
@@ -17,9 +16,8 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ///Dagger Activity Component
+        // /Dagger Activity Component
     }
-
 
 //    fun getActivityComponent(): ActivityComponent? {
 //        return mActivityComponent
@@ -50,7 +48,6 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
     }
@@ -63,12 +60,8 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun showStringError(message: String)
     abstract fun showResError(ResId: Int)
 
-
     abstract fun showSnackBar(message: String)
     abstract fun showToast(message: String)
 
-
     abstract fun showDialog(message: String)
-
-
 }

@@ -17,38 +17,32 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding = GalleryPageBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-
-    private fun RecyclerViewVisibility(show: Boolean) {
+    private fun recyclerViewVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.recyclerView.visibility = View.VISIBLE
         } else {
             viewbinding.recyclerView.visibility = View.GONE
-
         }
     }
 
-
-    private fun ProgressBarVisibility(show: Boolean) {
+    private fun progressBarVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.progressBar.visibility = View.VISIBLE
         } else {
             viewbinding.progressBar.visibility = View.GONE
-
         }
     }
 
-    private fun ErrorLayoutVisibility(show: Boolean) {
+    private fun errorLayoutVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.root.error_layout.visibility = View.VISIBLE
         } else {
             viewbinding.root.error_layout.visibility = View.GONE
-
         }
     }
-
 
     fun setErrorText(text: String) {
         viewbinding.root.error_text.text = text
@@ -58,31 +52,31 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.root.error_btn_retry.text = text
     }
 
-
-    fun ToLoadingState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(true)
-        ErrorLayoutVisibility(false)
-
-
-    }
-
-    fun ToErrorState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(true)
-
+    fun ErrorButtonClickListner(listner: OnClickListener) {
+        viewbinding.root.error_btn_retry.setOnClickListener(listner)
     }
 
 
-    fun ToDateState() {
-        RecyclerViewVisibility(true)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(false)
+    fun toLoadingState() {
+        recyclerViewVisibility(false)
+        progressBarVisibility(true)
+        errorLayoutVisibility(false)
     }
 
+    fun toErrorState(listner: OnClickListener) {
+        recyclerViewVisibility(false)
+        progressBarVisibility(false)
+        errorLayoutVisibility(true)
+        ErrorButtonClickListner(listner)
+    }
 
-    fun ConfigRecyclerView(
+    fun toDateState() {
+        recyclerViewVisibility(true)
+        progressBarVisibility(false)
+        errorLayoutVisibility(false)
+    }
+
+    fun configRecyclerView(
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
         layoutManager: RecyclerView.LayoutManager
     ) {
@@ -90,4 +84,6 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
         viewbinding.recyclerView.layoutManager = layoutManager
     }
 
+
+    fun getRecyclerView() = viewbinding.recyclerView
 }

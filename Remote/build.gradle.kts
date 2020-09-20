@@ -3,12 +3,10 @@ import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 
-
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-
 }
 
 android {
@@ -23,15 +21,14 @@ android {
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
-
-
     }
-
 
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            isDebuggable = BuildTypeRelease.debuggable
+            isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -40,36 +37,43 @@ android {
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"hhttps://api.themoviedb.org/3/\"")
+            isDebuggable = BuildTypeDebug.debuggable
+            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
         }
     }
 
+    flavorDimensions(BuildProductDimensions.BASEDIMENT)
 
+    productFlavors {
+        FullFlavor.libraryCreate(this)
+        DemoFlavor.libraryCreate(this)
+        FullQAFlavor.libraryCreate(this)
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 
 }
-
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
-    implementation(project(mapOf("path" to ":Data")))
+    implementation(project(mapOf("path" to BuildModules.Data)))
 
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
-
     implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.JavaxInject)
 
     addTestsDependencies()
-
 }

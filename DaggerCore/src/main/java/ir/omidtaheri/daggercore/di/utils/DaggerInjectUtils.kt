@@ -6,12 +6,12 @@ import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 
 object DaggerInjectUtils {
 
-    fun provideApplicationComponent(applicationContext: Context) : ApplicationComponent {
+    fun provideApplicationComponent(applicationContext: Context): ApplicationComponent {
 
-       return if(applicationContext is ApplicationComponentProvider){
+        return if (applicationContext is ApplicationComponentProvider) {
             applicationContext.provideApplicationComponent()
-        }else{
-           throw IllegalStateException("Provide the application context which implement ApplicationComponentProvider")
-       }
+            } else {
+            throw IllegalStateException("Provide the application context which implement ApplicationComponentProvider")
+            }
     }
 }

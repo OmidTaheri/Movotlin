@@ -1,10 +1,11 @@
 import dependencies.AnnotationProcessorsDependencies
+import dependencies.DebugDependencies
 import dependencies.Dependencies
+import dependencies.JetpackDependencies
 import dependencies.UiDependencies
 import extentions.addTestsDependencies
 import extentions.implementation
 import extentions.kapt
-import dependencies.JetpackDependencies
 
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
@@ -12,7 +13,6 @@ plugins {
     kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
-
 
 android {
     compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
@@ -26,15 +26,14 @@ android {
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
-
-
     }
-
 
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/3/\"")
+            isDebuggable = BuildTypeRelease.debuggable
+            isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -43,20 +42,27 @@ android {
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            buildConfigField("String", "BASE_URL", "\"hhttps://api.themoviedb.org/3/\"")
+            isDebuggable = BuildTypeDebug.debuggable
+            isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
         }
     }
 
+    flavorDimensions(BuildProductDimensions.BASEDIMENT)
 
+    productFlavors {
+        FullFlavor.libraryCreate(this)
+        DemoFlavor.libraryCreate(this)
+        FullQAFlavor.libraryCreate(this)
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
-
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -64,25 +70,27 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
 
-    implementation(project(mapOf("path" to ":Data")))
-    implementation(project(mapOf("path" to ":Domain")))
-    implementation(project(mapOf("path" to ":Local")))
-    implementation(project(mapOf("path" to ":Remote")))
+    implementation(project(mapOf("path" to BuildModules.Data)))
+    implementation(project(mapOf("path" to BuildModules.Domain)))
+    implementation(project(mapOf("path" to BuildModules.Local)))
+    implementation(project(mapOf("path" to BuildModules.Remote)))
 
     implementation(Dependencies.RX_ANDROID)
     implementation(Dependencies.RX_JAVA)
 
-    implementation(AnnotationProcessorsDependencies.ROOM)
+    kapt(AnnotationProcessorsDependencies.ROOM)
     implementation(JetpackDependencies.ROOM)
     implementation(JetpackDependencies.ROOM_KTX)
     implementation(JetpackDependencies.ROOM_RX)
-
 
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
+    implementation(DebugDependencies.OKHTTP_STETHO)
+
     kapt(AnnotationProcessorsDependencies.DAGGER)
     implementation(Dependencies.DAGGER)
+
     addTestsDependencies()
 }

@@ -18,47 +18,40 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         viewbinding = MultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-
-    private fun RecyclerViewVisibility(show: Boolean) {
+    private fun recyclerViewVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.recyclerView.visibility = View.VISIBLE
         } else {
             viewbinding.recyclerView.visibility = View.GONE
-
         }
     }
 
-
-    private fun ProgressBarVisibility(show: Boolean) {
+    private fun progressBarVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.progressBar.visibility = View.VISIBLE
         } else {
             viewbinding.progressBar.visibility = View.GONE
-
         }
     }
 
-    private fun ErrorLayoutVisibility(show: Boolean) {
+    private fun errorLayoutVisibility(show: Boolean) {
 
         if (show) {
             viewbinding.root.error_layout.visibility = View.VISIBLE
         } else {
             viewbinding.root.error_layout.visibility = View.GONE
-
         }
     }
 
-    private fun EmptyLayoutVisibility(show: Boolean) {
+    private fun emptyLayoutVisibility(show: Boolean) {
         if (show) {
             viewbinding.root.empty_layout.visibility = View.VISIBLE
         } else {
             viewbinding.root.empty_layout.visibility = View.GONE
         }
-
     }
-
 
     fun setErrorText(text: String) {
         viewbinding.root.error_text.text = text
@@ -72,42 +65,45 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         viewbinding.root.messageEmpty.text = text
     }
 
-    fun setEmptyImage(ResId: Int) {
-        viewbinding.root.imageViewEmpty.setImageResource(ResId)
+    fun setEmptyImage(resId: Int) {
+        viewbinding.root.imageViewEmpty.setImageResource(resId)
     }
 
-    fun ToLoadingState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(true)
-        ErrorLayoutVisibility(false)
-        EmptyLayoutVisibility(false)
-
-    }
-
-    fun ToErrorState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(true)
-        EmptyLayoutVisibility(false)
-    }
-
-    fun ToEmptyState() {
-        RecyclerViewVisibility(false)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(false)
-        EmptyLayoutVisibility(true)
+    fun ErrorButtonClickListner(listner: OnClickListener) {
+        viewbinding.root.error_btn_retry.setOnClickListener(listner)
     }
 
 
-    fun ToDateState() {
-        RecyclerViewVisibility(true)
-        ProgressBarVisibility(false)
-        ErrorLayoutVisibility(false)
-        EmptyLayoutVisibility(false)
+    fun toLoadingState() {
+        recyclerViewVisibility(false)
+        progressBarVisibility(true)
+        errorLayoutVisibility(false)
+        emptyLayoutVisibility(false)
     }
 
+    fun toErrorState(listner: OnClickListener) {
+        recyclerViewVisibility(false)
+        progressBarVisibility(false)
+        errorLayoutVisibility(true)
+        emptyLayoutVisibility(false)
+        ErrorButtonClickListner(listner)
+    }
 
-    fun ConfigRecyclerView(
+    fun toEmptyState() {
+        recyclerViewVisibility(false)
+        progressBarVisibility(false)
+        errorLayoutVisibility(false)
+        emptyLayoutVisibility(true)
+    }
+
+    fun toDateState() {
+        recyclerViewVisibility(true)
+        progressBarVisibility(false)
+        errorLayoutVisibility(false)
+        emptyLayoutVisibility(false)
+    }
+
+    fun configRecyclerView(
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
         layoutManager: RecyclerView.LayoutManager
     ) {
@@ -115,4 +111,5 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         viewbinding.recyclerView.layoutManager = layoutManager
     }
 
+    fun getRecyclerView() = viewbinding.recyclerView
 }

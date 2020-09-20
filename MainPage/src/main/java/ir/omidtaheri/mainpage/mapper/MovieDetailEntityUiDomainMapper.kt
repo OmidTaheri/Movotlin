@@ -4,32 +4,38 @@ import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import ir.omidtaheri.mainpage.entity.MovieDetailUiEntity
 import javax.inject.Inject
 
-class MovieDetailEntityUiDomainMapper @Inject constructor():
-    Ui_Domain_Mapper<MovieDetailUiEntity, MovieDetailDomainEntity> {
+class MovieDetailEntityUiDomainMapper @Inject constructor(val genreEntityUiDomainMapper: GenreEntityUiDomainMapper) :
+    UiDomainMapper<MovieDetailUiEntity, MovieDetailDomainEntity> {
     override fun mapFromUiEntity(from: MovieDetailUiEntity): MovieDetailDomainEntity {
         return MovieDetailDomainEntity(
-            from.id,
-            from.title,
-            from.voteAverage,
-            from.posterPath,
             from.backdropPath,
+            from.genres.map {
+                genreEntityUiDomainMapper.mapFromUiEntity(it)
+            },
+            from.id,
             from.overview,
+            from.posterPath,
             from.tagline,
-            from.isFavorite
+            from.title,
+            from.video,
+            from.voteAverage
         )
     }
 
     override fun mapToUiEntity(from: MovieDetailDomainEntity): MovieDetailUiEntity {
 
         return MovieDetailUiEntity(
-            from.id,
-            from.title,
-            from.voteAverage,
-            from.posterPath,
             from.backdropPath,
+            from.genres.map {
+                genreEntityUiDomainMapper.mapToUiEntity(it)
+            },
+            from.id,
             from.overview,
+            from.posterPath,
             from.tagline,
-            from.isFavorite
+            from.title,
+            from.video,
+            from.voteAverage
         )
     }
 }

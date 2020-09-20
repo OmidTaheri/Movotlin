@@ -2,8 +2,9 @@ package ir.omidtaheri.data.mapper
 
 import ir.omidtaheri.data.entity.GenreDataEntity
 import ir.omidtaheri.domain.entity.GenreDomainEntity
+import javax.inject.Inject
 
-class GenreEntityDomainDataMapper : Domain_Data_Mapper<GenreDataEntity, GenreDomainEntity> {
+class GenreEntityDomainDataMapper @Inject constructor() : DomainDataMapper<GenreDataEntity, GenreDomainEntity> {
 
     override fun mapFromDataEntity(from: GenreDataEntity): GenreDomainEntity {
 

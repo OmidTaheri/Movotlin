@@ -2,22 +2,20 @@ package ir.omidtaheri.movotlin.di.modules
 
 import dagger.Module
 import dagger.Provides
-import ir.omidtaheri.data.repository.MovieDetailRepository
+import ir.omidtaheri.data.repository.DiscoverMovieRepository
+import ir.omidtaheri.data.repository.FavoriteMovieRepository
 import ir.omidtaheri.data.repository.MovieRepository
-import ir.omidtaheri.data.repository.MovieReviewsRepository
-import ir.omidtaheri.domain.gateway.MovieDetailGateWay
+import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
+import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import ir.omidtaheri.domain.gateway.MovieGateWay
-import ir.omidtaheri.domain.gateway.MovieReviewsGateWay
-
 
 @Module
 class RepositoryModule {
 
     @Provides
-    fun provideMovieDetailRepository(
-        repository: MovieDetailRepository
-    ): MovieDetailGateWay = repository
-
+    fun provideDiscoverMovieRepository(
+        repository: DiscoverMovieRepository
+    ): DiscoverMovieGateWay = repository
 
     @Provides
     fun provideMovieRepository(
@@ -25,9 +23,7 @@ class RepositoryModule {
     ): MovieGateWay = repository
 
     @Provides
-    fun provideMovieReviewsRepository(
-        repository: MovieReviewsRepository
-    ): MovieReviewsGateWay = repository
-
-
+    fun provideFavoriteMovieRepository(
+        repository: FavoriteMovieRepository
+    ): FavoriteMovieGateWay = repository
 }

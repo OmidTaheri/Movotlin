@@ -1,25 +1,17 @@
 package ir.omidtaheri.movotlin.di.modules
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
-import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
-import ir.omidtaheri.data.datasource.remote.MovieRemoteDataSourceInterface
-import ir.omidtaheri.data.datasource.remote.MovieReviewsRemoteDataSourceInterface
-import ir.omidtaheri.remote.datasource.MovieDetailRemoteDataSourceImp
-import ir.omidtaheri.remote.datasource.MovieRemoteDataSourceImp
-import ir.omidtaheri.remote.datasource.MovieReviewsRemoteDataSourceImp
-import ir.omidtaheri.remote.mapper.MovieDetailResponseToDataEntityMapper
-import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
-import ir.omidtaheri.remote.mapper.MovieReviewResponseToDataEntityMapper
+import ir.omidtaheri.daggercore.BuildConfig
 import ir.omidtaheri.remote.service.MovieApi
 import ir.omidtaheri.remote.service.MovieDetailApi
-import ir.omidtaheri.remote.service.MovieReviewApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
+import java.util.concurrent.TimeUnit
 
 @Module
 class RemoteModule(val baseUrl: String, val apiKey: String) {
@@ -47,7 +39,6 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         return interceptors
     }
 
-
     @Provides
     fun provideRetrofit(interceptors: ArrayList<Interceptor>): Retrofit {
 
@@ -57,6 +48,11 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
                 clientBuilder.addInterceptor(interceptor)
             }
         }
+
+        if (BuildConfig.DEBUG) {
+            clientBuilder.addNetworkInterceptor(StethoInterceptor())
+        }
+        
         return Retrofit.Builder()
             .client(clientBuilder.build())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -70,23 +66,8 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         return retrofit.create(MovieApi::class.java)
     }
 
-
     @Provides
     fun provideMovieDetailApi(retrofit: Retrofit): MovieDetailApi {
         return retrofit.create(MovieDetailApi::class.java)
     }
-
-
-    @Provides
-    fun provideMovieReviewApi(retrofit: Retrofit): MovieReviewApi {
-        return retrofit.create(MovieReviewApi::class.java)
-    }
-
-
-
-
-
-
-
-
 }

@@ -17,6 +17,11 @@ object UiDependencies {
     const val CARDVIEW =
         "androidx.cardview:cardview:${BuildDependenciesVersions.UiDependenciesVersions.CARDVIEW}"
 
+    const val SWIPE_REFRESH_LAYOUT =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${BuildDependenciesVersions.UiDependenciesVersions.SWIPE_REFRESH_LAYOUT}"
+
+
+
     const val VECTOR_DRAWABLE =
         "androidx.vectordrawable:vectordrawable:${BuildDependenciesVersions.UiDependenciesVersions.VECTORE_DRAWABLE}"
 
@@ -26,5 +31,19 @@ object UiDependencies {
     const val GLIDE =
         "com.github.bumptech.glide:glide:${BuildDependenciesVersions.DependenciesVersions.GLIDE}"
 
+
+    const val VIEWPAGER2 =
+        "androidx.viewpager2:viewpager2:${BuildDependenciesVersions.UiDependenciesVersions.VIEWPAGER2}"
+
+
+    const val COORDINATORLAYOUT =
+        "androidx.coordinatorlayout:coordinatorlayout:${BuildDependenciesVersions.UiDependenciesVersions.COORDINATORLAYOUT}"
+
+
+    const val LEANBACK =
+        "androidx.leanback:leanback:${BuildDependenciesVersions.UiDependenciesVersions.LEANBACK}"
+
+    const val LEANBACK_PAGING =
+        "androidx.leanback:leanback-paging:${BuildDependenciesVersions.UiDependenciesVersions.LEANBACK}"
 
 }

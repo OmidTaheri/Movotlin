@@ -1,3 +1,3 @@
 package ir.omidtaheri.domain.entity
 
-data class GenreDomainEntity(val id: Long, val name: String)
+data class GenreDomainEntity(val id: Int, val name: String)

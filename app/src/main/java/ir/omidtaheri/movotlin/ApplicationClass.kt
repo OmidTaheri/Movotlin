@@ -1,6 +1,7 @@
 package ir.omidtaheri.movotlin
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 import ir.omidtaheri.movotlin.di.components.DaggerApplicationComponent
@@ -9,28 +10,30 @@ import ir.omidtaheri.movotlin.di.modules.LocalModule
 import ir.omidtaheri.movotlin.di.modules.RemoteModule
 import ir.omidtaheri.movotlin.di.modules.RepositoryModule
 
-class ApplicationClass : Application(), ApplicationComponentProvider {
 
+class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
-    lateinit var ApplicationComponent: ApplicationComponent
+    lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
 
-        this.ApplicationComponent =
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this)
+        }
+
+        this.applicationComponent =
             DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .localModule(LocalModule("Movotlin"))
-                .remoteModule(RemoteModule(BuildConfig.BASE_URL,"123456"))
+                .remoteModule(RemoteModule(BuildConfig.BASE_URL, BuildConfig.API_KEY))
                 .repositoryModule(RepositoryModule())
                 .build()
 
-        ApplicationComponent.inject(this)
-
+        applicationComponent.inject(this)
     }
 
     override fun provideApplicationComponent(): ApplicationComponent {
-        return ApplicationComponent
+        return applicationComponent
     }
-
 }

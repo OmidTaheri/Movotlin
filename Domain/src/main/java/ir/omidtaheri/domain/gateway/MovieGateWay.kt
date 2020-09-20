@@ -1,13 +1,13 @@
 package ir.omidtaheri.domain.gateway
 
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
-import ir.omidtaheri.domain.entity.MovieDomainEntity
+import ir.omidtaheri.domain.entity.GenreDomainEntity
+import ir.omidtaheri.domain.entity.MultiMovieDomainEntity
 
 interface MovieGateWay {
-    fun FavoriteMovie(Movie: MovieDomainEntity): Completable
-    fun UnFavoriteMovie(Movie: MovieDomainEntity): Completable
-    fun GetMovies(): Single<DataState<List<MovieDomainEntity>>>
-
+    fun getTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
+    fun getPopularMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
+    fun getGenreList(): Single<DataState<List<GenreDomainEntity>>>
+    fun getUpComingMovies(page: Int): Single<DataState<MultiMovieDomainEntity>>
 }
