@@ -306,7 +306,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
         val ed: SharedPreferences.Editor = save.edit()
         ed.clear().apply()
-
     }
 
 
