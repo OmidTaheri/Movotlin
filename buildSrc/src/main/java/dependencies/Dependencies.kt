@@ -52,11 +52,6 @@ object Dependencies {
         "io.reactivex.rxjava2:rxkotlin:${BuildDependenciesVersions.DependenciesVersions.RXKotlin}"
 
 
-
-    const val RX_Kotlin =
-        "io.reactivex.rxjava3:rxkotlin:${BuildDependenciesVersions.DependenciesVersions.RXKotlin}"
-
-
     const val Annotation =
         "androidx.annotation:annotation:${BuildDependenciesVersions.DependenciesVersions.ANOTATION}"
 
