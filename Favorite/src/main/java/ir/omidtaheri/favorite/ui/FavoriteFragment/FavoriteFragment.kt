@@ -112,6 +112,13 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
                 recyclerAdapter.addItems(it)
                 swipeRefreshmultiStatePage.toDateState()
 
+                swipeRefreshmultiStatePage.apply {
+                    configRecyclerView(
+                        recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
+                        GridLayoutManager(context, 2)
+                    )
+                }
+
                 STATE_FavoriteRecyclerview?.let {
                     swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
                         it
