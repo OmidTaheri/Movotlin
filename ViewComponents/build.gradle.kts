@@ -77,5 +77,7 @@ dependencies {
     implementation(UiDependencies.RECYCLE_VIEW)
     implementation(UiDependencies.SWIPE_REFRESH_LAYOUT)
 
+    implementation(project(mapOf("path" to BuildModules.UiBase)))
+
     addTestsDependencies()
 }
