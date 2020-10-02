@@ -66,7 +66,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -76,7 +76,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -86,7 +86,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -96,7 +96,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -106,7 +106,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -116,7 +116,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -126,7 +126,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -135,7 +135,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -145,7 +145,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -155,7 +155,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -165,7 +165,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -175,7 +175,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
 
     </style>
 
@@ -185,8 +185,10 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">true</item>
-
+        <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
+
+
 
 
 </resources>
