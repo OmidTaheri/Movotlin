@@ -9,7 +9,6 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
@@ -44,7 +44,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
         get() = _viewbinding!!
 
     lateinit var multiStatePage: MultiStatePage
-    lateinit var searchbar: EditText
+    lateinit var searchbar: TextInputEditText
 
     var STATE_SearchRecyclerview: Parcelable? = null
 

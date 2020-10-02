@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="@dimen/material_layout_vertical_spacing_between_content_areas">
 
     <TextView
         android:id="@+id/error_msg"
@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:textColor="?android:textColorPrimary"
         android:textSize="12sp"
-        tools:text="Timeout" />
+        tools:text="Timeout"
+        android:textAppearance="?attr/textAppearanceBody1"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -28,5 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="retry" />
+        android:text="retry"
+        android:textAppearance="?attr/textAppearanceSubtitle2"/>
 </LinearLayout>
