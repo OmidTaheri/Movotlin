@@ -7,7 +7,6 @@
     tools:context=".MainActivity"
     android:fitsSystemWindows="true">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
@@ -24,6 +23,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        app:backgroundTint="@color/colorSecondary"/>
+        app:backgroundTint="?attr/colorSecondary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
