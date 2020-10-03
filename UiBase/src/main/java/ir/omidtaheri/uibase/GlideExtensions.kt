@@ -27,9 +27,6 @@ fun ImageView.LoadPoster(posterPath: String, myConetxt: Context) {
 
 fun ImageView.LoadBackdrop(backdropPath: String, myConetxt: Context) {
     val requestOptions = RequestOptions()
-    requestOptions.apply {
-        placeholder(R.drawable.ic_baseline_local_movies_24)
-    }
 
     GlideApp.with(myConetxt)
         .load(BuildConfig.BACKDROP_URL + backdropPath)
@@ -40,6 +37,21 @@ fun ImageView.LoadBackdrop(backdropPath: String, myConetxt: Context) {
         .apply(requestOptions)
         .into(this)
 }
+
+
+fun ImageView.LoadMainBackdrop(backdropPath: String, myConetxt: Context) {
+    val requestOptions = RequestOptions()
+
+    GlideApp.with(myConetxt)
+        .load(BuildConfig.BACKDROP_URL + backdropPath)
+        .skipMemoryCache(true)
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .override(480, 480)
+        .thumbnail(0.6f)
+        .apply(requestOptions)
+        .into(this)
+}
+
 
 
 fun ImageView.clear(myconetxt: Context) {

@@ -29,7 +29,7 @@ import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.ImagesGalleryViewAdapte
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.DetailFragment.adapters.SimilarMoviesGalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel.DetailViewModel
-import ir.omidtaheri.uibase.LoadBackdrop
+import ir.omidtaheri.uibase.LoadMainBackdrop
 import ir.omidtaheri.uibase.LoadPoster
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
@@ -231,7 +231,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
             it.backdropPath?.let { it1 ->
                 SavedState_mainbackdrop = it1
-                mainBackdrop.LoadBackdrop(it1, requireContext())
+                mainBackdrop.LoadMainBackdrop(it1, requireContext())
             }
                 ?: it.posterPath?.let { it1 ->
                     SavedState_mainposter = it1
