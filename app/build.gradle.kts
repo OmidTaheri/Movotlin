@@ -63,8 +63,6 @@ android {
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
             isShrinkResources = BuildTypeDebug.isMinifyEnabled
             buildConfigStringField("BASE_URL", "https://api.themoviedb.org/3/")
-            buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280/")
-            buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600/")
             buildConfigStringField("API_KEY", getLocalProperty("API.KEY"))
         }
     }
