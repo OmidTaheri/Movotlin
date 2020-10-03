@@ -26,9 +26,6 @@
             style="@style/Widget.MyApp.SearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
-            android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
-            android:layout_marginBottom="@dimen/material_layout_vertical_spacing_between_content_areas"
             android:hint="Search"
             android:maxLines="1"
             app:counterMaxLength="10">
