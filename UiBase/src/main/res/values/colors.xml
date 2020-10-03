@@ -5,8 +5,8 @@
     <color name="colorPrimaryVariant">#8e0038</color>
     <color name="colorOnPrimary">#FFFFFF</color>
 
-    <color name="colorSecondary">#a7ffeb</color>
-    <color name="colorSecondaryVariant">#75ccb9</color>
+    <color name="colorSecondary">#75ccb9</color>
+    <color name="colorSecondaryVariant">#006c5c</color>
     <color name="colorOnSecondary">#000000</color>
 
 
@@ -18,6 +18,8 @@
 
     <color name="colorError">#B00020</color>
     <color name="colorOnError">#FFFFFF</color>
+
+
 
 
 </resources>
