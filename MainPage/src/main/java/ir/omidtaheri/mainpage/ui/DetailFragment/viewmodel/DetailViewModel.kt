@@ -330,8 +330,8 @@ class DetailViewModel(
             when (messageHolder) {
 
                 is MessageHolder.MESSAGE -> {
-                    _ErrorSnackBar.value =
-                        messageHolder.message
+                    _ErrorSnackBar.value ="Error.Please Retry"
+                        //messageHolder.message
                 }
 
                 is MessageHolder.Res -> _ErrorSnackBar.value =

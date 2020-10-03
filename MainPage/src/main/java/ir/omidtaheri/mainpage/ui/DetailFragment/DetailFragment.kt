@@ -53,6 +53,9 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     lateinit var tagline: TextView
     lateinit var toolbar: CollapsingToolbarLayout
 
+    lateinit var titleSimilar: TextView
+    lateinit var titleImages: TextView
+
     lateinit var adapterImages: ImagesGalleryViewAdapter
     lateinit var adapterSimilarMovies: SimilarMoviesGalleryViewAdapter
 
@@ -148,6 +151,9 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         rateNumber = _viewbinding!!.rateNumber
         tagline = _viewbinding!!.rateText
         toolbar = _viewbinding!!.mainCollapsing
+        titleSimilar = _viewbinding!!.titleSimilar
+        titleImages = _viewbinding!!.titleImages
+
     }
 
     private fun setFabListner(
@@ -209,8 +215,19 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         viewModel.detailLiveData.observe(this, Observer {
 
-            movieOverview.text = it.overview
+            movieOverview.visibility = View.GONE
+
+            it.overview?.let {
+
+                if (it.length > 0) {
+                    movieOverview.text = it
+                    movieOverview.visibility = View.VISIBLE
+                }
+            }
+
+
             toolbar.title = it.title
+
 
             it.backdropPath?.let { it1 ->
                 SavedState_mainbackdrop = it1
@@ -222,9 +239,20 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 }
 
 
-            rateNumber.text = it.voteAverage.toString()
-            tagline.text = it.tagline
 
+            rateNumber.text = it.voteAverage.toString()
+
+
+            tagline.visibility = View.GONE
+            it.tagline?.let {
+
+                if (it.length > 0) {
+                    tagline.text = it
+                    tagline.visibility = View.VISIBLE
+                }
+            }
+
+            genreGroup.removeAllViews()
             for (index in it.genres) {
                 val chip = Chip(context)
                 chip.text = index.name
@@ -240,14 +268,23 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
         })
 
         viewModel.imageListLiveData.observe(this, Observer {
-            it.backdrops.forEach {
-                adapterImages.addItem(it)
+
+            if (it.backdrops.size > 0) {
+                it.backdrops.forEach {
+                    adapterImages.addItem(it)
+                }
+                galleryViewerImages.toDateState()
+            } else {
+                titleImages.visibility = View.GONE
+                galleryViewerImages.visibility == View.GONE
             }
-            galleryViewerImages.toDateState()
+
+
         })
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
+
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
@@ -304,7 +341,10 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
+            .setAction(R.string.retry_action_text) {
+                viewModel.getMovieDetail(movieId)
+            }.show()
     }
 
     override fun showToast(message: String) {
