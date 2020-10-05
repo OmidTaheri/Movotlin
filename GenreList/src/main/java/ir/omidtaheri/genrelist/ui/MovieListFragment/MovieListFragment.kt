@@ -3,6 +3,7 @@ package ir.omidtaheri.genrelist.ui.MovieListFragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.MovieListFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerMovieListComponent
 import ir.omidtaheri.genrelist.ui.MovieListFragment.adapters.FooterLoadStateAdapter
@@ -84,6 +86,7 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
                 movieListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down_long_time)
         }
     }
 

@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerGenreComponent
 import ir.omidtaheri.genrelist.ui.GenreFragment.adapters.GenreListAdapter
@@ -66,6 +67,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
                 genreListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
     }
