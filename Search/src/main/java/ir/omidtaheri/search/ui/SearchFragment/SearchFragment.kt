@@ -1,5 +1,6 @@
 package ir.omidtaheri.search.ui.SearchFragment
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -33,6 +34,7 @@ import ir.omidtaheri.uibase.loadRecyclerViewState
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
+
 
 class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
@@ -245,7 +247,13 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
             Intent.ACTION_VIEW,
             Uri.parse("movotlin://detailmovie/" + movieId)
         )
-        requireContext().startActivity(i)
+
+        val options = ActivityOptions.makeCustomAnimation(
+            requireContext(),
+            R.anim.anim_fade_scale_in,
+            R.anim.anim_fade_scale_out
+        )
+        requireContext().startActivity(i, options.toBundle())
     }
 
     override fun onStop() {

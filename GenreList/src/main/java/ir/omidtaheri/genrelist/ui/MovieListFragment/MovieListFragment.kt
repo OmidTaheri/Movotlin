@@ -1,5 +1,6 @@
 package ir.omidtaheri.genrelist.ui.MovieListFragment
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -179,7 +180,12 @@ class MovieListFragment : BaseFragment(), MovieListAdapter.Callback {
             Intent.ACTION_VIEW,
             Uri.parse("movotlin://detailmovie/" + movieId)
         )
-        requireContext().startActivity(i)
+        val options = ActivityOptions.makeCustomAnimation(
+            requireContext(),
+            R.anim.anim_fade_scale_in,
+            R.anim.anim_fade_scale_out
+        )
+        requireContext().startActivity(i, options.toBundle())
     }
 
     override fun onStop() {

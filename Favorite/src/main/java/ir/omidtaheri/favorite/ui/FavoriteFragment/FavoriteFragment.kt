@@ -1,5 +1,6 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -216,7 +217,12 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             Intent.ACTION_VIEW,
             Uri.parse("movotlin://detailmovie/" + movieId)
         )
-        requireContext().startActivity(i)
+        val options = ActivityOptions.makeCustomAnimation(
+            requireContext(),
+            R.anim.anim_fade_scale_in,
+            R.anim.anim_fade_scale_out
+        )
+        requireContext().startActivity(i, options.toBundle())
     }
 
     override fun onStop() {
