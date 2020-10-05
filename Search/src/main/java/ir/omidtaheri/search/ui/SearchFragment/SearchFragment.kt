@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.search.R
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
 import ir.omidtaheri.search.di.components.DaggerSearchComponent
 import ir.omidtaheri.search.ui.SearchFragment.adapters.FooterLoadStateAdapter
@@ -120,6 +121,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toEmptyState()
         }
     }
