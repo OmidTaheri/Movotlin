@@ -1,14 +1,18 @@
 package ir.omidtaheri.viewcomponents.MultiStatePage
 
+import android.R
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.viewcomponents.databinding.MultiStatePageBinding
 import kotlinx.android.synthetic.main.multi_state_empty_state.view.*
 import kotlinx.android.synthetic.main.multi_state_error_state.view.*
+
 
 class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
@@ -112,4 +116,11 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
     }
 
     fun getRecyclerView() = viewbinding.recyclerView
+
+    fun setCustomLayoutAnimation(resId: Int) {
+
+        val animation: LayoutAnimationController =
+            AnimationUtils.loadLayoutAnimation(viewbinding.recyclerView.context, resId)
+        getRecyclerView().setLayoutAnimation(animation)
+    }
 }

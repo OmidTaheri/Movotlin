@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.viewcomponents.databinding.SwipeRefreshMultiStatePageBinding
@@ -104,4 +106,12 @@ class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
     fun getSwipeRefresh() = viewbinding.swiperefresh
 
     fun getRecyclerView() = viewbinding.recyclerView
+
+    fun setCustomLayoutAnimation(resId: Int) {
+
+        val animation: LayoutAnimationController =
+            AnimationUtils.loadLayoutAnimation(viewbinding.recyclerView.context, resId)
+        getRecyclerView().setLayoutAnimation(animation)
+    }
+
 }
