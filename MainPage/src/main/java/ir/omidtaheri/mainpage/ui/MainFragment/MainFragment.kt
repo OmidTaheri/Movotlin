@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.MainFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
@@ -115,6 +116,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
 
         galleryViewerPopular.apply {
@@ -145,6 +147,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterPopular as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             // toLoadingState()
         }
 
@@ -177,6 +180,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 adapterUpComing as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
     }
 

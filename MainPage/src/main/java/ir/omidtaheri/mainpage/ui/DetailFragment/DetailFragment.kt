@@ -88,6 +88,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 adapterImages as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
 
@@ -121,6 +122,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
     }
 
@@ -215,17 +217,6 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         viewModel.detailLiveData.observe(this, Observer {
 
-            movieOverview.visibility = View.GONE
-
-            it.overview?.let {
-
-                if (it.length > 0) {
-                    movieOverview.text = it
-                    movieOverview.visibility = View.VISIBLE
-                }
-            }
-
-
             toolbar.title = it.title
 
 
@@ -239,18 +230,35 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 }
 
 
-
-            rateNumber.text = it.voteAverage.toString()
-
-
             tagline.visibility = View.GONE
             it.tagline?.let {
 
                 if (it.length > 0) {
                     tagline.text = it
                     tagline.visibility = View.VISIBLE
+                    tagline.alpha = 0F
+                    tagline.animate().alpha(1F).setDuration(1000).start()
                 }
             }
+
+
+            movieOverview.visibility = View.GONE
+
+            it.overview?.let {
+
+                if (it.length > 0) {
+                    movieOverview.text = it
+                    movieOverview.visibility = View.VISIBLE
+                    movieOverview.alpha = 0F
+                    movieOverview.animate().alpha(1F).setDuration(1000).start()
+                }
+            }
+
+
+            rateNumber.text = it.voteAverage.toString()
+            rateNumber.animate().rotation(720F).setDuration(2000).start()
+
+
 
             genreGroup.removeAllViews()
             for (index in it.genres) {
@@ -258,6 +266,9 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 chip.text = index.name
                 genreGroup.addView(chip)
             }
+            genreGroup.alpha = 0F
+            genreGroup.animate().alpha(1F).setDuration(1000).start()
+
             setFabListner(
                 it.backdropPath,
                 it.id,
