@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
+import ir.omidtaheri.favorite.R
 import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
 import ir.omidtaheri.favorite.di.components.DaggerFavoriteComponent
 import ir.omidtaheri.favorite.ui.FavoriteFragment.adapters.FavoritedMovieAdapter
@@ -72,7 +73,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             getSwipeRefresh().setOnRefreshListener {
                 fetchData()
             }
-
+            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
     }
@@ -117,6 +118,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
                         recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                         GridLayoutManager(context, 2)
                     )
+                    setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
                 }
 
                 STATE_FavoriteRecyclerview?.let {
