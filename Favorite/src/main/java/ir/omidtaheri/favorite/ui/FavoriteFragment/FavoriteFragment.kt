@@ -97,10 +97,10 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
 
         if (getDarkModeStatus(requireContext())) {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
         } else {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
         }
 
@@ -144,7 +144,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             if (it != null && it.size > 0) {
 
                 recyclerAdapter.addItems(it)
-                swipeRefreshmultiStatePage.toDateState()
+
 
                 swipeRefreshmultiStatePage.apply {
                     configRecyclerView(
@@ -160,16 +160,16 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
                     )
                     STATE_FavoriteRecyclerview = null
                 }
-
-            } else {
                 swipeRefreshmultiStatePage.toDateState()
+            } else {
+
                 swipeRefreshmultiStatePage.apply {
                     configRecyclerView(
                         recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                         GridLayoutManager(context, 1)
                     )
                 }
-
+                swipeRefreshmultiStatePage.toDateState()
             }
 
 
