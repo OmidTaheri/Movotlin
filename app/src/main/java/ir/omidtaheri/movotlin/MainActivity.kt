@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(),
 
         viewPager.adapter = ViewPagerAdapter(this)
         viewPager.setUserInputEnabled(false)
-        // viewPager.offscreenPageLimit = fragments.size
+        viewPager.offscreenPageLimit = fragments.size
 
         bottomNavBar = findViewById(R.id.bottom_nav_view)
         bottomNavBar.setOnNavigationItemSelectedListener(this)
