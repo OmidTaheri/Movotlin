@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
@@ -24,13 +26,12 @@ import ir.omidtaheri.mainpage.di.components.DaggerMainComponent
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.GalleryViewAdapter
 import ir.omidtaheri.mainpage.ui.MainFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
-import ir.omidtaheri.uibase.loadRecyclerViewState
-import ir.omidtaheri.uibase.onDestroyGlide
-import ir.omidtaheri.uibase.saveRecyclerViewStat
+import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 
 class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
+
 
     private lateinit var viewModel: MainViewModel
 
@@ -43,6 +44,8 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     lateinit var galleryViewerTopRate: GalleryViewer
     lateinit var galleryViewerPopular: GalleryViewer
     lateinit var galleryViewerUpComing: GalleryViewer
+    lateinit var toolbar: MaterialToolbar
+
 
     lateinit var adapterTopRate: GalleryViewAdapter
     lateinit var adapterPopular: GalleryViewAdapter
@@ -200,6 +203,36 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         galleryViewerTopRate = _viewbinding!!.GalleryViewer1
         galleryViewerPopular = _viewbinding!!.GalleryViewer2
         galleryViewerUpComing = _viewbinding!!.GalleryViewer3
+        toolbar = _viewbinding!!.mainToolbar
+
+
+        if (getDarkModeStatus(requireContext())) {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+        } else {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+        }
+
+
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.change_theme -> {
+                    switchThemeMode(requireContext())
+                    if (getDarkModeStatus(requireContext())) {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+                    } else {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+                    }
+
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     override fun ConfigDaggerComponent() {

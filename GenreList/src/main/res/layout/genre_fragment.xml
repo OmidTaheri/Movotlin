@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:fitsSystemWindows="true"
-            app:title="@string/app_name" />
+            app:title="@string/app_name"
+            app:menu="@menu/top_app_bar"/>
 
 
 

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -30,14 +32,13 @@ import ir.omidtaheri.search.ui.SearchFragment.adapters.FooterLoadStateAdapter
 import ir.omidtaheri.search.ui.SearchFragment.adapters.MovieUiEntityComparator
 import ir.omidtaheri.search.ui.SearchFragment.adapters.SearchMovieAdapter
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
-import ir.omidtaheri.uibase.loadRecyclerViewState
-import ir.omidtaheri.uibase.onDestroyGlide
-import ir.omidtaheri.uibase.saveRecyclerViewStat
+import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 
 class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerAdapter: SearchMovieAdapter
     private lateinit var viewModel: SearchViewModel
 
@@ -138,6 +139,36 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     override fun bindUiComponent() {
         multiStatePage = _viewbinding!!.MultiStatePage
         searchbar = _viewbinding!!.searchbar
+
+        toolbar = _viewbinding!!.mainToolbar
+
+
+        if (getDarkModeStatus(requireContext())) {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+        } else {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+        }
+
+
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.change_theme -> {
+                    switchThemeMode(requireContext())
+                    if (getDarkModeStatus(requireContext())) {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+                    } else {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+                    }
+
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setViewListners() {

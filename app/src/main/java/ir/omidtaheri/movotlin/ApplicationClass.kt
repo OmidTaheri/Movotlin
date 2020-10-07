@@ -1,5 +1,7 @@
 package ir.omidtaheri.movotlin
 
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
@@ -9,6 +11,8 @@ import ir.omidtaheri.movotlin.di.modules.ApplicationModule
 import ir.omidtaheri.movotlin.di.modules.LocalModule
 import ir.omidtaheri.movotlin.di.modules.RemoteModule
 import ir.omidtaheri.movotlin.di.modules.RepositoryModule
+import ir.omidtaheri.uibase.enableDarkMode
+import ir.omidtaheri.uibase.getDarkModeStatus
 
 
 class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
@@ -31,9 +35,18 @@ class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
                 .build()
 
         applicationComponent.inject(this)
+
+        if (getDarkModeStatus(applicationContext)) {
+            enableDarkMode(true)
+        } else {
+            enableDarkMode(false)
+        }
+
     }
 
     override fun provideApplicationComponent(): ApplicationComponent {
         return applicationComponent
     }
+
+
 }

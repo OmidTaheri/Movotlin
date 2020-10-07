@@ -11,11 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
@@ -25,13 +27,12 @@ import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
 import ir.omidtaheri.favorite.di.components.DaggerFavoriteComponent
 import ir.omidtaheri.favorite.ui.FavoriteFragment.adapters.FavoritedMovieAdapter
 import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
-import ir.omidtaheri.uibase.loadRecyclerViewState
-import ir.omidtaheri.uibase.onDestroyGlide
-import ir.omidtaheri.uibase.saveRecyclerViewStat
+import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.SwipeRefreshMultiState.SwipeRefreshMultiStatePage
 
 class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerAdapter: FavoritedMovieAdapter
     private lateinit var viewModel: FavoriteViewModel
 
@@ -91,6 +92,37 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
     override fun bindUiComponent() {
         swipeRefreshmultiStatePage = _viewbinding!!.swipeRefreshMultiStatePage
+
+        toolbar = _viewbinding!!.mainToolbar
+
+
+        if (getDarkModeStatus(requireContext())) {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+        } else {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+        }
+
+
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.change_theme -> {
+                    switchThemeMode(requireContext())
+                    if (getDarkModeStatus(requireContext())) {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+                    } else {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+                    }
+
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     override fun ConfigDaggerComponent() {

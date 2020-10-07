@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
@@ -22,12 +24,15 @@ import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerGenreComponent
 import ir.omidtaheri.genrelist.ui.GenreFragment.adapters.GenreListAdapter
 import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModel
+import ir.omidtaheri.uibase.getDarkModeStatus
 import ir.omidtaheri.uibase.loadRecyclerViewState
 import ir.omidtaheri.uibase.saveRecyclerViewStat
+import ir.omidtaheri.uibase.switchThemeMode
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var genreListAdapter: GenreListAdapter
     private lateinit var viewModel: GenreViewModel
 
@@ -84,6 +89,36 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
     override fun bindUiComponent() {
         multiStatePage = _viewbinding!!.MultiStatePage
+
+        toolbar = _viewbinding!!.mainToolbar
+
+
+        if (getDarkModeStatus(requireContext())) {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+        } else {
+            toolbar.menu.findItem( R.id.change_theme).icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+        }
+
+
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.change_theme -> {
+                    switchThemeMode(requireContext())
+                    if (getDarkModeStatus(requireContext())) {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
+                    } else {
+                        menuItem.icon =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
+                    }
+
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun ConfigDaggerComponent() {
