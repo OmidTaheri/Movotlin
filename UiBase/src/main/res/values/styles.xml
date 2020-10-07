@@ -214,7 +214,9 @@
 
     <style name="Widget.MyApp.SearchBar" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorHint">@color/searchBarHintColor</item>
     </style>
+
 
 
 </resources>

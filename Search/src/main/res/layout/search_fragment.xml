@@ -10,7 +10,8 @@
         android:id="@+id/main_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="?attr/colorPrimary">
 
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -34,7 +35,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/material_component_bottom_navigation_height" />
+                android:layout_height="@dimen/material_component_bottom_navigation_height"
+                android:textColor="@color/searchBarTextColor"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

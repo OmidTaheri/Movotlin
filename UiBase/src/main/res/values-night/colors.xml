@@ -19,5 +19,7 @@
     <color name="colorError">#B00020</color>
     <color name="colorOnError">#FFFFFF</color>
 
+    <color name="searchBarHintColor">#99000000</color>
+    <color name="searchBarTextColor">#000000</color>
 
 </resources>
