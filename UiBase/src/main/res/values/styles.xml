@@ -203,6 +203,8 @@
     <style name="Widget.MyApp.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextAppearance">@style/TextAppearance.MyApp.Headline5</item>
         <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="android:background">?attr/colorPrimary</item>
+
     </style>
 
     <style name="Widget.MyApp.ListTitle" parent="TextAppearance.MyApp.Headline6">
