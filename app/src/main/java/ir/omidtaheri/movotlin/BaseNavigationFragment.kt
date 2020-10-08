@@ -1,20 +1,26 @@
 package ir.omidtaheri.advancenavigation
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import ir.omidtaheri.movotlin.ApplicationClass
+import ir.omidtaheri.movotlin.R
 
 
 class BaseNavigationFragment : Fragment() {
 
     private var _layoutRes = -1
     private var _navHostId = -1
+    private lateinit var hostActivity: Activity
+    private lateinit var myChildFragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +28,33 @@ class BaseNavigationFragment : Fragment() {
             _layoutRes = it.getInt("LayoutRes")
             _navHostId = it.getInt("NavHostId")
         }
+
+        when (_layoutRes) {
+
+            R.layout.content_main_base -> {
+                (requireActivity().application as ApplicationClass).setFragManager0(
+                    childFragmentManager
+                )
+            }
+            R.layout.content_search_base -> {
+                (requireActivity().application as ApplicationClass).setFragManager1(
+                    childFragmentManager
+                )
+            }
+            R.layout.content_favorite_base -> {
+                (requireActivity().application as ApplicationClass).setFragManager2(
+                    childFragmentManager
+                )
+            }
+            R.layout.content_genre_base -> {
+                (requireActivity().application as ApplicationClass).setFragManager3(
+                    childFragmentManager
+                )
+            }
+
+        }
+
+
     }
 
     override fun onCreateView(
@@ -35,68 +68,64 @@ class BaseNavigationFragment : Fragment() {
 
 
     fun onBackPressed(): Boolean {
-        return requireActivity()
-            .findNavController(_navHostId)
-            .navigateUp()
+        if (isAdded) {
+            return requireActivity()
+                .findNavController(_navHostId)
+                .navigateUp()
+        } else {
+
+            when (::hostActivity.isInitialized) {
+                true ->
+                    return hostActivity
+                        .findNavController(_navHostId)
+                        .navigateUp()
+
+                false -> return false
+            }
+
+        }
     }
 
     fun popToRoot() {
-        val navController = requireActivity().findNavController(_navHostId)
-        navController.popBackStack(navController.graph.startDestination, false)
-    }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        val saveSharedPreferencesActivity: SharedPreferences =
-//            requireActivity().getSharedPreferences(
-//                "MainActivityState",
-//                AppCompatActivity.MODE_PRIVATE
-//            )
-//
-//        var Navcontoller: Bundle? = null
-//
-//        var NavGraphId: Int = R.navigation.main_nav_graph
-//
-//        when (_navHostId) {
-//
-//            R.id.nav_host_main -> {
-//                Navcontoller =
-//                    loadBundle(saveSharedPreferencesActivity, "NAVIGATION_CONTROLLER_STATE_0")
-//                NavGraphId = R.navigation.main_nav_graph
-//            }
-//
-//            R.id.nav_host_search -> {
-//                Navcontoller =
-//                    loadBundle(saveSharedPreferencesActivity, "NAVIGATION_CONTROLLER_STATE_1")
-//                NavGraphId = R.navigation.search_nav_graph
-//            }
-//            R.id.nav_host_favorite -> {
-//                Navcontoller =
-//                    loadBundle(saveSharedPreferencesActivity, "NAVIGATION_CONTROLLER_STATE_2")
-//                NavGraphId = R.navigation.favorite_nav_graph
-//            }
-//            R.id.nav_host_genre -> {
-//                Navcontoller =
-//                    loadBundle(saveSharedPreferencesActivity, "NAVIGATION_CONTROLLER_STATE_3")
-//                NavGraphId = R.navigation.genre_nav_graph
-//            }
-//        }
-//
-//        Navcontoller?.let {
-//            val navfrag = childFragmentManager.findFragmentById(_navHostId) as NavHostFragment
-//            navfrag.findNavController().restoreState(it)
-//            val graphInflater = navfrag.findNavController().navInflater
-//            val navGraph = graphInflater.inflate(NavGraphId)
-//            navfrag.findNavController().graph = navGraph
-//        }
+        if (isAdded) {
+            val navController = requireActivity().findNavController(_navHostId)
+            navController.popBackStack(navController.graph.startDestination, false)
+        } else {
+            when (::hostActivity.isInitialized) {
+                true -> {
+                    val navController = hostActivity.findNavController(_navHostId)
+                    navController.popBackStack(navController.graph.startDestination, false)
+                }
+            }
+        }
 
     }
+
 
     fun getNavFragmentController(): NavController {
-        val navfrag = childFragmentManager.findFragmentById(_navHostId) as NavHostFragment
-        return navfrag.findNavController()
+
+        if (isAdded) {
+
+            val navfrag = childFragmentManager.findFragmentById(_navHostId) as NavHostFragment
+            return navfrag.findNavController()
+
+        } else {
+            when (::myChildFragmentManager.isInitialized) {
+                true -> {
+                    val navfrag =
+                        myChildFragmentManager.findFragmentById(_navHostId) as NavHostFragment
+                    return navfrag.findNavController()
+                }
+
+                false -> {
+                    throw  Exception("not found childFragmentManager")
+                }
+
+            }
+        }
+
+
     }
 
     companion object {
@@ -109,5 +138,17 @@ class BaseNavigationFragment : Fragment() {
                     putInt("NavHostId", navhostid)
                 }
             }
+    }
+
+    fun setHost(
+        activity: Activity,
+        layoutRes: Int,
+        navHostId: Int,
+        fragmentManager: FragmentManager
+    ) {
+        hostActivity = activity
+        _layoutRes = layoutRes
+        _navHostId = navHostId
+        myChildFragmentManager = fragmentManager
     }
 }
