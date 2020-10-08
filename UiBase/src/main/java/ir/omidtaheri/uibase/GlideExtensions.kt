@@ -46,7 +46,7 @@ fun ImageView.LoadMainBackdrop(backdropPath: String, myConetxt: Context) {
         .load(BuildConfig.BACKDROP_URL + backdropPath)
         .skipMemoryCache(true)
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        .override(480, 480)
+        .override(300, 300)
         .thumbnail(0.6f)
         .apply(requestOptions)
         .into(this)
