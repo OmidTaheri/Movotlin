@@ -1,5 +1,3 @@
-
-
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
 
@@ -124,20 +122,25 @@
     <!-- Tooltips -->
 
 
-    <!-- ========================= Material Tall scripts Text size =================================== -->
-    <!--Tablet +1 font size-->
+    <!-- ========================== Md default Text size ======================================= -->
+    <!-- https://material.io/guidelines/style/typography.html#typography-styles -->
 
-    <!-- South and Southeast Asian and Middle Eastern languages, including Arabic, Hindi, and Thai. -->
-    <dimen name="material_tall_text_size_display_4_regular">113sp</dimen>
-    <dimen name="material_tall_text_size_display_3_regular">57sp</dimen>
-    <dimen name="material_tall_text_size_display_2_regular">46sp</dimen>
-    <dimen name="material_tall_text_size_display_1_regular">35sp</dimen>
-    <dimen name="material_tall_text_headline_regular">25sp</dimen>
-    <dimen name="material_tall_text_title_bold">22sp</dimen>
-    <dimen name="material_tall_text_subheading_regular">18sp</dimen>
-    <dimen name="material_tall_text_body_bold">16sp</dimen>
-    <dimen name="material_tall_text_body_regular">16sp</dimen>
-    <dimen name="material_tall_text_caption_regular">14sp</dimen>
-    <dimen name="material_tall_text_button_bold">16sp</dimen>
+
+    <dimen name="material_english_text_size_headline_1_light">98sp</dimen>
+    <dimen name="material_english_text_size_headline_2_light">62sp</dimen>
+    <dimen name="material_english_text_size_headline_3_regular">50sp</dimen>
+    <dimen name="material_english_text_size_headline_4_regular">36sp</dimen>
+    <dimen name="material_english_text_size_headline_5_regular">26sp</dimen>
+    <dimen name="material_english_text_size_headline_6_medium">22sp</dimen>
+
+    <dimen name="material_english_text_size_subtitle_1_regular">18sp</dimen>
+    <dimen name="material_english_text_size_subtitle_2_medium">16sp</dimen>
+    <dimen name="material_english_text_size_body_1_regular">18sp</dimen>
+    <dimen name="material_english_text_size_body_2_regular">16sp</dimen>
+    <dimen name="material_english_text_size_button_medium">16sp</dimen>
+    <dimen name="material_english_text_size_caption_regular">14sp</dimen>
+    <dimen name="material_english_text_size_overline_regular">12sp</dimen>
+
+
 
 </resources>

@@ -123,16 +123,24 @@
     <!-- ========================= Material Tall scripts Text size =================================== -->
     <!--Tablet -2 font size-->
     <!-- South and Southeast Asian and Middle Eastern languages, including Arabic, Hindi, and Thai. -->
-    <dimen name="material_tall_text_size_display_4_regular">110sp</dimen>
-    <dimen name="material_tall_text_size_display_3_regular">54sp</dimen>
-    <dimen name="material_tall_text_size_display_2_regular">43sp</dimen>
-    <dimen name="material_tall_text_size_display_1_regular">32sp</dimen>
-    <dimen name="material_tall_text_headline_regular">22sp</dimen>
-    <dimen name="material_tall_text_title_bold">19sp</dimen>
-    <dimen name="material_tall_text_subheading_regular">15sp</dimen>
-    <dimen name="material_tall_text_body_bold">13sp</dimen>
-    <dimen name="material_tall_text_body_regular">13sp</dimen>
-    <dimen name="material_tall_text_caption_regular">11sp</dimen>
-    <dimen name="material_tall_text_button_bold">13sp</dimen>
+    <!-- ========================== Md default Text size ======================================= -->
+    <!-- https://material.io/guidelines/style/typography.html#typography-styles -->
+
+
+    <dimen name="material_english_text_size_headline_1_light">94sp</dimen>
+    <dimen name="material_english_text_size_headline_2_light">58sp</dimen>
+    <dimen name="material_english_text_size_headline_3_regular">46sp</dimen>
+    <dimen name="material_english_text_size_headline_4_regular">32sp</dimen>
+    <dimen name="material_english_text_size_headline_5_regular">22sp</dimen>
+    <dimen name="material_english_text_size_headline_6_medium">18sp</dimen>
+
+    <dimen name="material_english_text_size_subtitle_1_regular">14sp</dimen>
+    <dimen name="material_english_text_size_subtitle_2_medium">12sp</dimen>
+    <dimen name="material_english_text_size_body_1_regular">14sp</dimen>
+    <dimen name="material_english_text_size_body_2_regular">12sp</dimen>
+    <dimen name="material_english_text_size_button_medium">12sp</dimen>
+    <dimen name="material_english_text_size_caption_regular">10sp</dimen>
+    <dimen name="material_english_text_size_overline_regular">8sp</dimen>
+
 
 </resources>
