@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -205,6 +206,18 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
                 )
                 STATE_SearchRecyclerview = null
             }
+
+
+            val handler = Handler()
+            val runnable: Runnable = object : Runnable {
+                override fun run() {
+                    if (recyclerAdapter.getItemCount() == 0) {
+                        multiStatePage.toEmptyState()
+                    }
+
+                }
+            }
+            handler.postDelayed(runnable, 3000)
 
         })
 

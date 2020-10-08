@@ -14,7 +14,10 @@ import ir.omidtaheri.uibase.LoadPoster
 import ir.omidtaheri.uibase.clear
 import kotlinx.android.synthetic.main.movie_viewer_item.view.*
 
-class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>,val context: Context) :
+class SimilarMoviesGalleryViewAdapter(
+    diffCallback: DiffUtil.ItemCallback<MovieUiEntity>,
+    val context: Context
+) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
 
 //    var items: MutableList<MovieUiEntity> = mutableListOf()
@@ -32,7 +35,9 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
         mCallback = callback
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+
 
 //        when (viewType) {
 //
@@ -110,8 +115,8 @@ class SimilarMoviesGalleryViewAdapter(diffCallback: DiffUtil.ItemCallback<MovieU
             val movieUiEntity = getItem(position)
 
             binding.apply {
-                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it,context) }
-                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it,context) }
+                movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it, context) }
+                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it, context) }
                 titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity.id)

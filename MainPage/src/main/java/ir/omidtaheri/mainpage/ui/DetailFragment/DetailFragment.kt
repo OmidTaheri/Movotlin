@@ -1,6 +1,8 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +35,7 @@ import ir.omidtaheri.uibase.LoadMainBackdrop
 import ir.omidtaheri.uibase.LoadPoster
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+
 
 class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback {
 
@@ -295,6 +298,18 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
+
+            val handler = Handler()
+            val runnable: Runnable = object : Runnable {
+                override fun run() {
+                    if (adapterSimilarMovies.getItemCount() == 0) {
+                        titleSimilar.visibility = View.GONE
+                        galleryViewerSimilarMovies.visibility = View.GONE
+                    }
+
+                }
+            }
+            handler.postDelayed(runnable, 5000)
 
         })
 
