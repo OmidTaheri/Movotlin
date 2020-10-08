@@ -14,7 +14,6 @@ import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
 
 class FavoriteViewModel(
-    val getFavoriedMovieList: GetFavoriedMovieList,
     val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
     val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     application: Application
@@ -33,45 +32,6 @@ class FavoriteViewModel(
         _dataLive = MutableLiveData()
         _favoriteErrorState = MutableLiveData()
     }
-
-    fun getFavoritedMovieList() {
-        // _isLoading.value = true
-        val disposable = getFavoriedMovieList.execute(Unit).subscribeBy { response ->
-            when (response) {
-
-                is DataState.SUCCESS -> {
-                    // _isLoading.value = false
-                    _dataLive.value = response.data?.map {
-                        favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
-                    }
-                }
-
-                is DataState.ERROR -> {
-                    // _isLoading.value = false
-                    response.let { errorDataState ->
-
-                        when (errorDataState.stateMessage?.uiComponentType) {
-                            is UiComponentType.SNACKBAR -> {
-                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
-                            }
-
-                            is UiComponentType.TOAST -> {
-                                handleToastError(errorDataState as DataState.ERROR<Any>)
-                            }
-
-                            is UiComponentType.DIALOG -> {
-                                _favoriteErrorState.value = true
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        addDisposable(disposable)
-    }
-
-
 
     fun getFavoritedMovieListByFlowable() {
         // _isLoading.value = true

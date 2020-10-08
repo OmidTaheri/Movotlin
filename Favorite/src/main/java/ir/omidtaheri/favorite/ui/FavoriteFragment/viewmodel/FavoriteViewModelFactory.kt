@@ -9,14 +9,12 @@ import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
 import javax.inject.Inject
 
 class FavoriteViewModelFactory @Inject constructor(
-    val getFavoriedMovieList: GetFavoriedMovieList,
     val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
     val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     val application: Application
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return FavoriteViewModel(
-            getFavoriedMovieList,
             getFavoriedMovieListByFlowable,
             favoritedMovieEntityUiDomainMapper,
             application
