@@ -1,7 +1,7 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-
-
+    <dimen name="detail_fragment_appbar_size">190dp</dimen>
+    <dimen name="image_viewer_item_width">160dp</dimen>
+    <dimen name="movie_viewer_item_width">140dp</dimen>
     <!-- Layout -->
     <!-- Metrics & Keylines -->
     <!-- https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-keylines-spacing -->

@@ -1,8 +1,6 @@
 package ir.omidtaheri.uibase
 
 import android.content.Context
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.load.engine.DiskCacheStrategy
