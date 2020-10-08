@@ -287,7 +287,7 @@ class DetailFragment : BaseFragment(), SimilarMoviesGalleryViewAdapter.Callback 
                 galleryViewerImages.toDateState()
             } else {
                 titleImages.visibility = View.GONE
-                galleryViewerImages.visibility == View.GONE
+                galleryViewerImages.visibility = View.GONE
             }
 
 
