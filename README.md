@@ -2,7 +2,7 @@
 <h1 align="center"> Movotlin </h1>
 <br>
 <p align="center">
-    <img alt="Movotlin" title="Movotlin" src="ScreenShots/mainIcon.png" width="300">
+    <img alt="Movotlin" title="Movotlin" src="ScreenShots/mainIcon.jpg" width="300">
 </p>
 
 
@@ -17,11 +17,11 @@ Movotlin is an application that has been developed using modern Android developm
 #### `Screenshot` 
 
 <p align="center">
-  <img src = "ScreenShots/screenshot1.png" width=250>
-   <img src = "ScreenShots/screenshot2.png" width=250>
+  <img src = "ScreenShots/screenshot1.jpg" width=250>
+   <img src = "ScreenShots/screenshot2.jpg" width=250>
   <br>
-   <img src = "ScreenShots/screenshot3.png" width=250>
-   <img src = "ScreenShots/screenshot4.png" width=250>
+   <img src = "ScreenShots/screenshot3.jpg" width=250>
+   <img src = "ScreenShots/screenshot4.jpg" width=250>
   </p>
   
   ![-----------------------------------------------------](ScreenShots/rainbow.png)
@@ -34,8 +34,8 @@ Movotlin is an application that has been developed using modern Android developm
     <td><b>Dark Theme</td>
   </tr>
   <tr>
-    <td><img src = "ScreenShots/screenshot1.png" width=250></td>
-    <td><img src = "ScreenShots/screenshot5.png" width=250></td>
+    <td><img src = "ScreenShots/screenshot1.jpg" width=250></td>
+    <td><img src = "ScreenShots/screenshot5.jpg" width=250></td>
   </tr>
 </table>
 
