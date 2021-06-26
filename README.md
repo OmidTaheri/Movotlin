@@ -2,7 +2,7 @@
 <h1 align="center"> Movotlin </h1>
 <br>
 <p align="center">
-    <img alt="Movotlin" title="Movotlin" src="ScreenShots/mainIcon.jpg" width="300">
+    <img alt="Movotlin" title="Movotlin" src="ScreenShots/mainicon.jpg" width="300">
 </p>
 
 
