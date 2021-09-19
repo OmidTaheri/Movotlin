@@ -225,14 +225,14 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
         val ed: SharedPreferences.Editor = save.edit()
 
-        val RecyclerState =
+        val recyclerState =
             swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
 
         saveRecyclerViewStat(
             ed,
             "FAVORITE_RECYCLERVIEW_STATE",
-            RecyclerState as LinearLayoutManager.SavedState
+            recyclerState as LinearLayoutManager.SavedState
         )
 
         ed.commit()
