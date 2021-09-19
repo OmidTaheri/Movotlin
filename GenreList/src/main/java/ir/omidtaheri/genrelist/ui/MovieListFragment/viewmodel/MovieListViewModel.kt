@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import io.reactivex.rxkotlin.subscribeBy
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.interactor.GetMovieListByGenreId
 import ir.omidtaheri.genrelist.entity.MovieUiEntity
 import ir.omidtaheri.genrelist.mapper.MovieEntityUiDomainMapper
@@ -18,7 +18,7 @@ class MovieListViewModel(
     val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel(application) {
+    BaseAndroidViewModel(application) {
 
     private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>>
     val dataLive: LiveData<PagingData<MovieUiEntity>>

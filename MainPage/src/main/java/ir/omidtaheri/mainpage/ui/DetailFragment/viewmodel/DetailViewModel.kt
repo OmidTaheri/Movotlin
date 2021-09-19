@@ -1,7 +1,6 @@
 package ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,11 +11,10 @@ import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
-import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import ir.omidtaheri.domain.interactor.*
 import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.mainpage.entity.*
@@ -39,7 +37,7 @@ class DetailViewModel(
     val schedulers: Schedulers,
     application: Application
 ) :
-    BaseViewModel(application) {
+    BaseAndroidViewModel(application) {
 
 
     val favoriteSubject: PublishSubject<FavoritedMovieUiEntity> = PublishSubject.create()

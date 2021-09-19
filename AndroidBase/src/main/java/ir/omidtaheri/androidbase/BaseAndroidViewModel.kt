@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import ir.omidtaheri.androidbase.singleLiveData.SingleLiveData
 
-open class BaseViewModel(
+open class BaseAndroidViewModel(
     private val mApplication: Application,
     private val state: SavedStateHandle
 ) : AndroidViewModel(mApplication) {

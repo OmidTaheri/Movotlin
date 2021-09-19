@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxkotlin.subscribeBy
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
@@ -21,7 +21,7 @@ class MainViewModel(
     val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel(application) {
+    BaseAndroidViewModel(application) {
 
     private val _poularLiveData: MutableLiveData<MultiMovieUiEntity>
     val poularLiveData: LiveData<MultiMovieUiEntity>

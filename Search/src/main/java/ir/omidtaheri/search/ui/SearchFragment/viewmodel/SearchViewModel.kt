@@ -10,7 +10,7 @@ import androidx.paging.rxjava2.cachedIn
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.interactor.SearchMoviesByQuery
 import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.search.entity.MovieUiEntity
@@ -22,7 +22,7 @@ class SearchViewModel(
     val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
     val schedulers: Schedulers,
     application: Application
-) : BaseViewModel(application) {
+) : BaseAndroidViewModel(application) {
 
     val searchSubject: PublishSubject<String> = PublishSubject.create()
     lateinit var currentDisposable: Disposable

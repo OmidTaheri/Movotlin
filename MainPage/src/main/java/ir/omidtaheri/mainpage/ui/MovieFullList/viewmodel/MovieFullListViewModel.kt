@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import io.reactivex.rxkotlin.subscribeBy
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.interactor.GetPopularMovies
 import ir.omidtaheri.domain.interactor.GetTopRatedMovies
 import ir.omidtaheri.domain.interactor.GetUpcomingMovies
@@ -22,7 +22,7 @@ class MovieFullListViewModel(
     val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel(application) {
+    BaseAndroidViewModel(application) {
 
     private val _poularLiveData: MutableLiveData<PagingData<MovieUiEntity>>
     val poularLiveData: LiveData<PagingData<MovieUiEntity>>

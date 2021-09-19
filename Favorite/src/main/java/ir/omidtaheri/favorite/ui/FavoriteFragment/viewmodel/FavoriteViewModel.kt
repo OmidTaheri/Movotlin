@@ -4,11 +4,10 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxkotlin.subscribeBy
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
-import ir.omidtaheri.domain.interactor.GetFavoriedMovieList
 import ir.omidtaheri.domain.interactor.GetFavoriedMovieListByFlowable
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
@@ -18,7 +17,7 @@ class FavoriteViewModel(
     val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     application: Application
 ) :
-    BaseViewModel(application) {
+    BaseAndroidViewModel(application) {
 
     private val _dataLive: MutableLiveData<List<FavoritedMovieUiEntity>>
     val dataLive: LiveData<List<FavoritedMovieUiEntity>>
