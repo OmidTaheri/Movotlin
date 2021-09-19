@@ -3,6 +3,7 @@ package ir.omidtaheri.mainpage.ui.DetailFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -22,96 +23,74 @@ import ir.omidtaheri.mainpage.mapper.*
 import java.util.concurrent.TimeUnit
 
 class DetailViewModel(
-    val getDetailMovieUseCase: GetMovieDetail,
-    val getMovieImagesById: GetMovieImagesById,
-    val getMovieVideosById: GetMovieVideosById,
-    val getSimilarMovies: GetSimilarMoviesSinglePage,
-    val favorieMovie: FavorieMovie,
-    val unfavoriteMovie: UnfavoriteMovie,
-    val getFavoriedMovieList: GetFavoriedMovieList,
-    val movieDetailEntityUiDomainMapper: MovieDetailEntityUiDomainMapper,
-    val movieImageEntityUiDomainMapper: MovieImageEntityUiDomainMapper,
-    val movieVideoEntityUiDomainMapper: MovieVideoEntityUiDomainMapper,
-    val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
-    val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
-    val schedulers: Schedulers,
-    application: Application
+    private val getDetailMovieUseCase: GetMovieDetail,
+    private val getMovieImagesById: GetMovieImagesById,
+    private val getMovieVideosById: GetMovieVideosById,
+    private val getSimilarMovies: GetSimilarMoviesSinglePage,
+    private val favorieMovie: FavorieMovie,
+    private val unfavoriteMovie: UnfavoriteMovie,
+    private val getFavoriedMovieList: GetFavoriedMovieList,
+    private val movieDetailEntityUiDomainMapper: MovieDetailEntityUiDomainMapper,
+    private val movieImageEntityUiDomainMapper: MovieImageEntityUiDomainMapper,
+    private val movieVideoEntityUiDomainMapper: MovieVideoEntityUiDomainMapper,
+    private val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
+    private val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
+    private val schedulers: Schedulers,
+    private val state: SavedStateHandle,
+    private val mApplication: Application
 ) :
-    BaseAndroidViewModel(application) {
+    BaseAndroidViewModel(mApplication, state) {
 
 
     val favoriteSubject: PublishSubject<FavoritedMovieUiEntity> = PublishSubject.create()
     lateinit var favoriteDisposable: Disposable
 
-    private val _detailLiveData: MutableLiveData<MovieDetailUiEntity>
+    private val _detailLiveData: MutableLiveData<MovieDetailUiEntity> = MutableLiveData()
     val detailLiveData: LiveData<MovieDetailUiEntity>
         get() = _detailLiveData
 
-    private val _imageListLiveData: MutableLiveData<MovieImageUiEntity>
+    private val _imageListLiveData: MutableLiveData<MovieImageUiEntity> = MutableLiveData()
     val imageListLiveData: LiveData<MovieImageUiEntity>
         get() = _imageListLiveData
 
-    private val _videoListLiveData: MutableLiveData<MovieVideoUiEntity>
+    private val _videoListLiveData: MutableLiveData<MovieVideoUiEntity> = MutableLiveData()
     val videoListLiveData: LiveData<MovieVideoUiEntity>
         get() = _videoListLiveData
 
-    private val _similarMoviesLiveData: MutableLiveData<PagingData<MovieUiEntity>>
+    private val _similarMoviesLiveData: MutableLiveData<PagingData<MovieUiEntity>> =
+        MutableLiveData()
     val similarMoviesLiveData: LiveData<PagingData<MovieUiEntity>>
         get() = _similarMoviesLiveData
 
-    private val _isImageLoading: MutableLiveData<Boolean>
+    private val _isImageLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isImageLoading: LiveData<Boolean>
         get() = _isImageLoading
 
-    private val _isVideoLoading: MutableLiveData<Boolean>
+    private val _isVideoLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isVideoLoading: LiveData<Boolean>
         get() = _isVideoLoading
 
-//    private val _isSimilarMovieLoading: MutableLiveData<Boolean>
-//    val isSimilarMovieLoading: LiveData<Boolean>
-//        get() = _isSimilarMovieLoading
-
-    private val _imagesErrorState: MutableLiveData<Boolean>
+    private val _imagesErrorState: MutableLiveData<Boolean> = MutableLiveData()
     val imagesErrorState: LiveData<Boolean>
         get() = _imagesErrorState
 
-    private val _videoErrorState: MutableLiveData<Boolean>
+    private val _videoErrorState: MutableLiveData<Boolean> = MutableLiveData()
     val videoErrorState: LiveData<Boolean>
         get() = _videoErrorState
 
-//    private val _SimilarErrorState: MutableLiveData<Boolean>
-//    val SimilarErrorState: LiveData<Boolean>
-//        get() = _SimilarErrorState
 
-    private val _favoritedLiveData: MutableLiveData<Boolean>
+    private val _favoritedLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val favoritedLiveData: LiveData<Boolean>
         get() = _favoritedLiveData
 
-    init {
-        _imageListLiveData = MutableLiveData()
-        _videoListLiveData = MutableLiveData()
-        _similarMoviesLiveData = MutableLiveData()
-        _favoritedLiveData = MutableLiveData()
-        _detailLiveData = MutableLiveData()
 
-        _videoErrorState = MutableLiveData()
-        _imagesErrorState = MutableLiveData()
-
-        _isVideoLoading = MutableLiveData()
-        _isImageLoading = MutableLiveData()
-    }
-
-
-    fun SetFavoriteMovie(favoriteMovie: FavoritedMovieUiEntity): Single<Long> {
-
+    private fun setFavoriteMovie(favoriteMovie: FavoritedMovieUiEntity): Single<Long> {
         val useCaseParams = favoritedMovieEntityUiDomainMapper.mapFromUiEntity(favoriteMovie)
-
         return favorieMovie.execute(useCaseParams)
-
     }
 
 
-    fun setUnFavoriteMovie(
+    private fun setUnFavoriteMovie(
         favoriteMovie: FavoritedMovieUiEntity
     ): Single<Int> {
         val useCaseParams = favoritedMovieEntityUiDomainMapper.mapFromUiEntity(favoriteMovie)
@@ -126,14 +105,14 @@ class DetailViewModel(
         }
 
         val onErrorHandler: (Throwable) -> Unit = { throwable ->
-            _ErrorToast.value = throwable.message
+            _errorToast.value = throwable.message
         }
 
-        val FavoriteonCompleteHandler: () -> Unit = {
+        val favoriteonCompleteHandler: () -> Unit = {
             _favoritedLiveData.value = true
         }
 
-        val UnfavoriteonCompleteHandler: () -> Unit = {
+        val unfavoriteonCompleteHandler: () -> Unit = {
             _favoritedLiveData.value = false
         }
 
@@ -145,7 +124,7 @@ class DetailViewModel(
             .switchMapSingle {
                 isFavorite = it.isFavorite
                 if (it.isFavorite) {
-                    SetFavoriteMovie(it)
+                    setFavoriteMovie(it)
                 } else {
                     setUnFavoriteMovie(it)
                 }
@@ -153,10 +132,10 @@ class DetailViewModel(
             }
             .observeOn(schedulers.observeOn)
 
-        if (isFavorite) {
-            favoriteDisposable = observable.subscribeBy(onErrorHandler, FavoriteonCompleteHandler)
+        favoriteDisposable = if (isFavorite) {
+            observable.subscribeBy(onErrorHandler, favoriteonCompleteHandler)
         } else {
-            favoriteDisposable = observable.subscribeBy(onErrorHandler, UnfavoriteonCompleteHandler)
+            observable.subscribeBy(onErrorHandler, unfavoriteonCompleteHandler)
         }
 
         addDisposable(favoriteDisposable)
@@ -181,7 +160,6 @@ class DetailViewModel(
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -213,8 +191,8 @@ class DetailViewModel(
 
         val disposable = getSimilarMovies.execute(movieId).cachedIn(viewModelScope).subscribeBy {
 
-            _similarMoviesLiveData.value = it.map {
-                movieEntityUiDomainMapper.mapToUiEntity(it)
+            _similarMoviesLiveData.value = it.map { entity ->
+                movieEntityUiDomainMapper.mapToUiEntity(entity)
             }
         }
 
@@ -222,17 +200,14 @@ class DetailViewModel(
     }
 
     fun getMovieVideos(movieId: Int) {
-        // _isLoading.value = true
         val disposable = getMovieVideosById.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
-                    // _isLoading.value = false
                     _videoListLiveData.value =
                         movieVideoEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -257,17 +232,14 @@ class DetailViewModel(
     }
 
     fun getMovieImages(movieId: Int) {
-        // _isLoading.value = true
         val disposable = getMovieImagesById.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
-                    // _isLoading.value = false
                     _imageListLiveData.value =
                         movieImageEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -292,17 +264,14 @@ class DetailViewModel(
     }
 
     fun getMovieDetail(movieId: Int) {
-        // _isLoading.value = true
         val disposable = getDetailMovieUseCase.execute(movieId).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
-                    // _isLoading.value = false
                     _detailLiveData.value =
                         movieDetailEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -328,12 +297,11 @@ class DetailViewModel(
             when (messageHolder) {
 
                 is MessageHolder.MESSAGE -> {
-                    _ErrorSnackBar.value ="Error.Please Retry"
-                        //messageHolder.message
+                    _errorSnackBar.value = "Error.Please Retry"
                 }
 
-                is MessageHolder.Res -> _ErrorSnackBar.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorSnackBar.value =
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
@@ -344,10 +312,10 @@ class DetailViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorToast.value =
+                is MessageHolder.MESSAGE -> _errorToast.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorToast.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorToast.value =
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
