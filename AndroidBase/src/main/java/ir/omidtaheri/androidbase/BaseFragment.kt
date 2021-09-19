@@ -39,10 +39,10 @@ abstract class BaseFragment : Fragment() {
         setSnackBarErrorLivaDataObserver()
         setToastMessageLiveDataObserver()
         setSnackBarMessageLiveDataObserver()
-        setDataLiveObserver()
+        setLiveDataObserver()
     }
 
-    abstract fun setDataLiveObserver()
+    abstract fun setLiveDataObserver()
 
     abstract fun setSnackBarMessageLiveDataObserver()
 
