@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +19,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpage.R
 import ir.omidtaheri.mainpage.databinding.MainFragmentBinding
@@ -30,30 +31,23 @@ import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
 
-class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
+class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback {
 
+    private var viewBinding: MainFragmentBinding? = null
+    private lateinit var galleryViewerTopRate: GalleryViewer
+    private lateinit var galleryViewerPopular: GalleryViewer
+    private lateinit var galleryViewerUpComing: GalleryViewer
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var adapterTopRate: GalleryViewAdapter
+    private lateinit var adapterPopular: GalleryViewAdapter
+    private lateinit var adapterUpComing: GalleryViewAdapter
+    private var stateTopRatedRecyclerview: Parcelable? = null
+    private var statePopularRecyclerview: Parcelable? = null
+    private var stateUpcomingRecyclerview: Parcelable? = null
 
-    private lateinit var viewModel: MainViewModel
-
-
-    private var _viewbinding: MainFragmentBinding? = null
-
-    private val viewbinding
-        get() = _viewbinding!!
-
-    lateinit var galleryViewerTopRate: GalleryViewer
-    lateinit var galleryViewerPopular: GalleryViewer
-    lateinit var galleryViewerUpComing: GalleryViewer
-    lateinit var toolbar: MaterialToolbar
-
-
-    lateinit var adapterTopRate: GalleryViewAdapter
-    lateinit var adapterPopular: GalleryViewAdapter
-    lateinit var adapterUpComing: GalleryViewAdapter
-
-    var STATE_TopRatedRecyclerview: Parcelable? = null
-    var STATE_PopularRecyclerview: Parcelable? = null
-    var STATE_UpcomingRecyclerview: Parcelable? = null
+    private val viewModel: MainViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,24 +58,24 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
 
 
-        val TOPRATED_ViewSavedState =
+        val topRatedViewSavedState =
             loadRecyclerViewState(saveSharedPreferences, "TOPRATED_RECYCLERVIEW_STATE")
-        val POPULAR_ViewSavedState =
+        val popularViewSavedState =
             loadRecyclerViewState(saveSharedPreferences, "POPULAR_RECYCLERVIEW_STATE")
-        val UPCOMING_ViewSavedState =
+        val upcomingViewSavedState =
             loadRecyclerViewState(saveSharedPreferences, "UPCOMING_RECYCLERVIEW_STATE")
 
 
-        TOPRATED_ViewSavedState?.let {
-            STATE_TopRatedRecyclerview = it
+        topRatedViewSavedState?.let {
+            stateTopRatedRecyclerview = it
         }
 
-        POPULAR_ViewSavedState?.let {
-            STATE_PopularRecyclerview = it
+        popularViewSavedState?.let {
+            statePopularRecyclerview = it
         }
 
-        UPCOMING_ViewSavedState?.let {
-            STATE_UpcomingRecyclerview = it
+        upcomingViewSavedState?.let {
+            stateUpcomingRecyclerview = it
         }
 
         initRecyclerViews()
@@ -151,7 +145,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
             )
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
-            // toLoadingState()
         }
 
         galleryViewerUpComing.apply {
@@ -193,24 +186,23 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         viewModel.getUpComingMovieList()
     }
 
-    override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
-        _viewbinding = MainFragmentBinding.inflate(inflater, container, false)
-        val view = viewbinding.root
-        return view
+    override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
+        viewBinding = MainFragmentBinding.inflate(inflater, container, false)
+        return viewBinding!!.root
     }
 
     override fun bindUiComponent() {
-        galleryViewerTopRate = _viewbinding!!.GalleryViewer1
-        galleryViewerPopular = _viewbinding!!.GalleryViewer2
-        galleryViewerUpComing = _viewbinding!!.GalleryViewer3
-        toolbar = _viewbinding!!.mainToolbar
+        galleryViewerTopRate = viewBinding!!.GalleryViewer1
+        galleryViewerPopular = viewBinding!!.GalleryViewer2
+        galleryViewerUpComing = viewBinding!!.GalleryViewer3
+        toolbar = viewBinding!!.mainToolbar
 
 
         if (getDarkModeStatus(requireContext())) {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
         } else {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
         }
 
@@ -235,7 +227,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
     }
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerMainComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -243,20 +235,17 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
             .inject(this)
     }
 
-    override fun SetViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-    }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
 
         viewModel.poularLiveData.observe(this, Observer {
             adapterPopular.submitData(lifecycle, it)
 
-            STATE_PopularRecyclerview?.let {
+            statePopularRecyclerview?.let {
                 galleryViewerPopular.getRecyclerView().layoutManager?.onRestoreInstanceState(
                     it
                 )
-                STATE_PopularRecyclerview = null
+                statePopularRecyclerview = null
             }
 
         })
@@ -264,12 +253,12 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         viewModel.topRateLiveData.observe(this, Observer {
             adapterTopRate.submitData(lifecycle, it)
 
-            STATE_TopRatedRecyclerview?.let {
+            stateTopRatedRecyclerview?.let {
 
                 galleryViewerTopRate.getRecyclerView().layoutManager?.onRestoreInstanceState(
                     it
                 )
-                STATE_TopRatedRecyclerview = null
+                stateTopRatedRecyclerview = null
             }
 
         })
@@ -277,35 +266,35 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
         viewModel.upComingLiveData.observe(this, Observer {
             adapterUpComing.submitData(lifecycle, it)
 
-            STATE_UpcomingRecyclerview?.let {
+            stateUpcomingRecyclerview?.let {
                 galleryViewerUpComing.getRecyclerView().layoutManager?.onRestoreInstanceState(
                     it
                 )
-                STATE_UpcomingRecyclerview = null
+                stateUpcomingRecyclerview = null
             }
         })
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
@@ -321,7 +310,7 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        Snackbar.make(viewBinding!!.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -331,20 +320,6 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
     override fun showDialog(message: String) {
         TODO("Not yet implemented")
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewbinding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-        ed.clear().apply()
-    }
-
 
     override fun onStop() {
         super.onStop()
@@ -384,6 +359,20 @@ class MainFragment : BaseFragment(), GalleryViewAdapter.Callback {
 
 
         onDestroyGlide()
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("MainFragmentState", MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
     }
 
 
