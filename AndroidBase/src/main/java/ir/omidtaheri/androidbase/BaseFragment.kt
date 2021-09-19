@@ -29,7 +29,6 @@ abstract class BaseFragment<T : ViewModel> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindUiComponent()
         configDaggerComponent()
-        setViewModel()
         setLivaDataObserver()
     }
 
@@ -58,7 +57,6 @@ abstract class BaseFragment<T : ViewModel> : Fragment() {
 
     abstract fun configDaggerComponent()
 
-    abstract fun setViewModel()
 
     abstract fun showLoading(show: Boolean)
 
