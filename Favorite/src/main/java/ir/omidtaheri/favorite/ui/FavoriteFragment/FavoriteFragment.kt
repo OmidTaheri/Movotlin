@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,6 +22,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.favorite.R
 import ir.omidtaheri.favorite.databinding.FavoriteFragmentBinding
@@ -30,14 +32,18 @@ import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
 import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.SwipeRefreshMultiState.SwipeRefreshMultiStatePage
 
-class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
+class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapter.Callback {
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerAdapter: FavoritedMovieAdapter
-    private lateinit var viewModel: FavoriteViewModel
     private var viewBinding: FavoriteFragmentBinding? = null
     private lateinit var swipeRefreshmultiStatePage: SwipeRefreshMultiStatePage
     private var stateFavoritedRecyclerView: Parcelable? = null
+
+
+    private val viewModel: FavoriteViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,9 +129,6 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             .inject(this)
     }
 
-    override fun setViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-    }
 
     override fun setLiveDataObserver() {
 
