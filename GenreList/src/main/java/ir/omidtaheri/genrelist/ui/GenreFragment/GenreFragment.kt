@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +18,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.genrelist.R
 import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
@@ -30,21 +31,17 @@ import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.uibase.switchThemeMode
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
-class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
+class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback {
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var genreListAdapter: GenreListAdapter
-    private lateinit var viewModel: GenreViewModel
+    private var viewBinding: GenreFragmentBinding? = null
+    private lateinit var multiStatePage: MultiStatePage
+    private var stateGenreRecyclerview: Parcelable? = null
 
-    private var _viewbinding: GenreFragmentBinding? = null
-
-    private val viewbinding
-        get() = _viewbinding!!
-
-    lateinit var multiStatePage: MultiStatePage
-
-    var STATE_GenreRecyclerview: Parcelable? = null
-
+    private val viewModel: GenreViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,12 +49,11 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         val saveSharedPreferences: SharedPreferences =
             requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
 
-
-        val GENRE_ViewSavedState =
+        val genreViewSavedState =
             loadRecyclerViewState(saveSharedPreferences, "GENRE_RECYCLERVIEW_STATE")
 
-        GENRE_ViewSavedState?.let {
-            STATE_GenreRecyclerview = it
+        genreViewSavedState?.let {
+            stateGenreRecyclerview = it
         }
 
         initRecyclerViews()
@@ -81,23 +77,22 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         viewModel.getMovieListByGenre()
     }
 
-    override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
-        _viewbinding = GenreFragmentBinding.inflate(inflater, container, false)
-        val view = viewbinding.root
+    override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
+        viewBinding = GenreFragmentBinding.inflate(inflater, container, false)
+        val view = viewBinding!!.root
         return view
     }
 
     override fun bindUiComponent() {
-        multiStatePage = _viewbinding!!.MultiStatePage
-
-        toolbar = _viewbinding!!.mainToolbar
+        multiStatePage = viewBinding!!.MultiStatePage
+        toolbar = viewBinding!!.mainToolbar
 
 
         if (getDarkModeStatus(requireContext())) {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
         } else {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
         }
 
@@ -121,7 +116,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
         }
     }
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerGenreComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -129,22 +124,19 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
             .inject(this)
     }
 
-    override fun SetViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(GenreViewModel::class.java)
-    }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
 
         viewModel.dataLive.observe(this, Observer {
 
             genreListAdapter.addItems(it)
             multiStatePage.toDateState()
 
-            STATE_GenreRecyclerview?.let {
+            stateGenreRecyclerview?.let {
                 multiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
                     it
                 )
-                STATE_GenreRecyclerview = null
+                stateGenreRecyclerview = null
             }
 
 
@@ -162,25 +154,25 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
@@ -196,7 +188,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        Snackbar.make(viewBinding!!.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -209,7 +201,7 @@ class GenreFragment : BaseFragment(), GenreListAdapter.Callback {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _viewbinding = null
+        viewBinding = null
     }
 
     override fun onDestroy() {
