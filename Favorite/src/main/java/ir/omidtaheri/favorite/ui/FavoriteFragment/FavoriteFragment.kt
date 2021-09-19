@@ -84,7 +84,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         viewModel.getFavoritedMovieListByFlowable()
     }
 
-    override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
+    override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
         _viewbinding = FavoriteFragmentBinding.inflate(inflater, container, false)
         val view = viewbinding.root
         return view
@@ -125,7 +125,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
     }
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerFavoriteComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -133,7 +133,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
             .inject(this)
     }
 
-    override fun SetViewModel() {
+    override fun setViewModel() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
     }
 
@@ -183,25 +183,25 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
