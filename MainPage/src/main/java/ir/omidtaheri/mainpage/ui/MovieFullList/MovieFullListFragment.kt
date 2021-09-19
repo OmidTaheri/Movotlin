@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ir.omidtaheri.androidbase.BaseFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpage.databinding.MovieFullListFragmentBinding
 import ir.omidtaheri.mainpage.di.components.DaggerMovieFullListComponent
+import ir.omidtaheri.mainpage.ui.MainFragment.viewmodel.MainViewModel
 import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.FooterLoadStateAdapter
 import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.MovieFullListAdapter
 import ir.omidtaheri.mainpage.ui.MovieFullList.adapters.MovieUiEntityComparator
@@ -23,28 +25,25 @@ import ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel.MovieFullListViewModel
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
-class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
+class MovieFullListFragment : BaseFragment<MovieFullListViewModel>(),
+    MovieFullListAdapter.Callback {
 
     private lateinit var movieListAdapter: MovieFullListAdapter
-    private lateinit var viewModel: MovieFullListViewModel
+    private var viewBinding: MovieFullListFragmentBinding? = null
+    private lateinit var multiStatePage: MultiStatePage
+    private lateinit var args: MovieFullListFragmentArgs
+    private var categoryId: Int = 0
 
-    private var _viewbinding: MovieFullListFragmentBinding? = null
-
-    private val viewbinding
-        get() = _viewbinding!!
-
-    lateinit var multiStatePage: MultiStatePage
-
-    lateinit var args: MovieFullListFragmentArgs
-
-    var CategoryId: Int = 0
+    private val viewModel: MainViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
         args = MovieFullListFragmentArgs.fromBundle(requireArguments())
-        CategoryId = args.categoryId
-        fetchData(CategoryId)
+        categoryId = args.categoryId
+        fetchData(categoryId)
     }
 
     private fun initRecyclerViews() {
@@ -63,7 +62,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
 
                         is LoadState.Error -> {
                             toErrorState(View.OnClickListener {
-                                when (CategoryId) {
+                                when (categoryId) {
                                     1 -> viewModel.getTopRatedMovieList()
                                     2 -> viewModel.getPopularMovieList()
                                     3 -> viewModel.getUpComingMovieList()
@@ -97,17 +96,16 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
         }
     }
 
-    override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
-        _viewbinding = MovieFullListFragmentBinding.inflate(inflater, container, false)
-        val view = viewbinding.root
-        return view
+    override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
+        viewBinding = MovieFullListFragmentBinding.inflate(inflater, container, false)
+        return viewBinding!!.root
     }
 
     override fun bindUiComponent() {
-        multiStatePage = _viewbinding!!.MultiStatePage
+        multiStatePage = viewBinding!!.MultiStatePage
     }
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerMovieFullListComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -115,12 +113,8 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
             .inject(this)
     }
 
-    override fun SetViewModel() {
-        viewModel =
-            ViewModelProvider(this, viewModelFactory).get(MovieFullListViewModel::class.java)
-    }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
 
         viewModel.poularLiveData.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
@@ -136,25 +130,25 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
@@ -170,7 +164,7 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        Snackbar.make(viewBinding!!.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -181,15 +175,16 @@ class MovieFullListFragment : BaseFragment(), MovieFullListAdapter.Callback {
         TODO("Not yet implemented")
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewbinding = null
-    }
-
     override fun onStop() {
         super.onStop()
         onDestroyGlide()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
+    }
+
 
     override fun onItemClick(MovieId: Int) {
         TODO("Not yet implemented")
