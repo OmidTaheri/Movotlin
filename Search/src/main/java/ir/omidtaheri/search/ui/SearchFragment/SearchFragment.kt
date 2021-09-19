@@ -14,8 +14,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import ir.omidtaheri.androidbase.BaseFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.search.R
 import ir.omidtaheri.search.databinding.SearchFragmentBinding
@@ -37,21 +38,18 @@ import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
 
-class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
+class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callback {
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerAdapter: SearchMovieAdapter
-    private lateinit var viewModel: SearchViewModel
+    private var viewBinding: SearchFragmentBinding? = null
+    private lateinit var multiStatePage: MultiStatePage
+    private lateinit var searchbar: TextInputEditText
+    private var stateSearchRecyclerview: Parcelable? = null
 
-    private var _viewbinding: SearchFragmentBinding? = null
-
-    private val viewbinding
-        get() = _viewbinding!!
-
-    lateinit var multiStatePage: MultiStatePage
-    lateinit var searchbar: TextInputEditText
-
-    var STATE_SearchRecyclerview: Parcelable? = null
+    private val viewModel: SearchViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,14 +60,14 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
             requireActivity().getSharedPreferences("SearchFragmentState", Context.MODE_PRIVATE)
 
 
-        val saved_query = saveSharedPreferences.getString("SEARCH_QUERY", "")
+        val savedQuery = saveSharedPreferences.getString("SEARCH_QUERY", "")
 
 
-        val SEARCH_ViewSavedState =
+        val searchViewSavedState =
             loadRecyclerViewState(saveSharedPreferences, "SEARCH_RECYCLERVIEW_STATE")
 
-        SEARCH_ViewSavedState?.let {
-            STATE_SearchRecyclerview = it
+        searchViewSavedState?.let {
+            stateSearchRecyclerview = it
         }
 
 
@@ -78,7 +76,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
 
 
-        saved_query?.let {
+        savedQuery?.let {
             if (!(it.isEmpty())) {
                 searchbar.setText(it)
                 viewModel.initSearch(it)
@@ -131,24 +129,23 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
 
-    override fun InflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
-        _viewbinding = SearchFragmentBinding.inflate(inflater, container, false)
-        val view = viewbinding.root
-        return view
+    override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
+        viewBinding = SearchFragmentBinding.inflate(inflater, container, false)
+        return viewBinding!!.root
     }
 
     override fun bindUiComponent() {
-        multiStatePage = _viewbinding!!.MultiStatePage
-        searchbar = _viewbinding!!.searchbar
+        multiStatePage = viewBinding!!.MultiStatePage
+        searchbar = viewBinding!!.searchbar
 
-        toolbar = _viewbinding!!.mainToolbar
+        toolbar = viewBinding!!.mainToolbar
 
 
         if (getDarkModeStatus(requireContext())) {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
         } else {
-            toolbar.menu.findItem( R.id.change_theme).icon =
+            toolbar.menu.findItem(R.id.change_theme).icon =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
         }
 
@@ -176,14 +173,14 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
         viewModel.setSearchSubjectObserver()
 
-        searchbar.doOnTextChanged { text, start, before, count ->
+        searchbar.doOnTextChanged { text, _, _, _ ->
             viewModel.searchSubject.onNext(text.toString())
         }
 
     }
 
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerSearchComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -191,30 +188,24 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
             .inject(this)
     }
 
-    override fun SetViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
-    }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
 
         viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.submitData(lifecycle, it)
 
-            STATE_SearchRecyclerview?.let {
+            stateSearchRecyclerview?.let {
                 multiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
                     it
                 )
-                STATE_SearchRecyclerview = null
+                stateSearchRecyclerview = null
             }
 
 
             val handler = Handler()
-            val runnable: Runnable = object : Runnable {
-                override fun run() {
-                    if (recyclerAdapter.getItemCount() == 0) {
-                        multiStatePage.toEmptyState()
-                    }
-
+            val runnable: Runnable = Runnable {
+                if (recyclerAdapter.getItemCount() == 0) {
+                    multiStatePage.toEmptyState()
                 }
             }
             handler.postDelayed(runnable, 3000)
@@ -224,25 +215,25 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
@@ -258,7 +249,7 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        Snackbar.make(viewBinding!!.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -270,35 +261,6 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewbinding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("SearchFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-        ed.clear().apply()
-
-    }
-
-
-    override fun onItemClick(movieId: Int) {
-        val i = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("movotlin://detailmovie/" + movieId)
-        )
-
-        val options = ActivityOptions.makeCustomAnimation(
-            requireContext(),
-            R.anim.anim_fade_scale_in,
-            R.anim.anim_fade_scale_out
-        )
-        requireContext().startActivity(i, options.toBundle())
-    }
 
     override fun onStop() {
         super.onStop()
@@ -324,4 +286,35 @@ class SearchFragment : BaseFragment(), SearchMovieAdapter.Callback {
 
         onDestroyGlide()
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("SearchFragmentState", Context.MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
+
+    }
+
+
+    override fun onItemClick(movieId: Int) {
+        val i = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("movotlin://detailmovie/" + movieId)
+        )
+
+        val options = ActivityOptions.makeCustomAnimation(
+            requireContext(),
+            R.anim.anim_fade_scale_in,
+            R.anim.anim_fade_scale_out
+        )
+        requireContext().startActivity(i, options.toBundle())
+    }
+
 }
