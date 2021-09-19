@@ -3,6 +3,7 @@ package ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -13,39 +14,32 @@ import ir.omidtaheri.genrelist.entity.GenreUiEntity
 import ir.omidtaheri.genrelist.mapper.GenreEntityUiDomainMapper
 
 class GenreViewModel(
-    val getGenreList: GetGenreList,
-    val genreEntityUiDomainMapper: GenreEntityUiDomainMapper,
-    application: Application
+    private val getGenreList: GetGenreList,
+    private val genreEntityUiDomainMapper: GenreEntityUiDomainMapper,
+    private val state: SavedStateHandle,
+    private val mApplication: Application
 ) :
-    BaseAndroidViewModel(application) {
+    BaseAndroidViewModel(mApplication, state) {
 
-    private val _dataLive: MutableLiveData<List<GenreUiEntity>>
+    private val _dataLive: MutableLiveData<List<GenreUiEntity>> = MutableLiveData()
     val dataLive: LiveData<List<GenreUiEntity>>
         get() = _dataLive
 
-    private val _genreErrorState: MutableLiveData<Boolean>
+    private val _genreErrorState: MutableLiveData<Boolean> = MutableLiveData()
     val genreErrorState: LiveData<Boolean>
         get() = _genreErrorState
 
-    init {
-        _dataLive = MutableLiveData()
-        _genreErrorState = MutableLiveData()
-    }
-
     fun getMovieListByGenre() {
-        //  _isLoading.value = true
         val disposable = getGenreList.execute(Unit).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    // _isLoading.value = false
                     _dataLive.value = response.data?.map {
                         genreEntityUiDomainMapper.mapToUiEntity(it)
                     }
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -73,10 +67,10 @@ class GenreViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
+                is MessageHolder.MESSAGE -> _errorSnackBar.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorSnackBar.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorSnackBar.value =
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
@@ -87,10 +81,10 @@ class GenreViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorToast.value =
+                is MessageHolder.MESSAGE -> _errorToast.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorToast.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorToast.value =
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
