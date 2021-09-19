@@ -1,10 +1,11 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import io.reactivex.rxkotlin.subscribeBy
-import ir.omidtaheri.androidbase.BaseViewModel
+import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
@@ -13,39 +14,32 @@ import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
 
 class FavoriteViewModel(
-    val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
-    val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
-    private val state: SavedStateHandle
+    private val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
+    private val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
+    private val state: SavedStateHandle,
+    private val mapplication: Application
 ) :
-    BaseViewModel(state) {
+    BaseAndroidViewModel(mapplication, state) {
 
-    private val _dataLive: MutableLiveData<List<FavoritedMovieUiEntity>>
+    private val _dataLive: MutableLiveData<List<FavoritedMovieUiEntity>> = MutableLiveData()
     val dataLive: LiveData<List<FavoritedMovieUiEntity>>
         get() = _dataLive
 
-    private val _favoriteErrorState: MutableLiveData<Boolean>
+    private val _favoriteErrorState: MutableLiveData<Boolean> = MutableLiveData()
     val favoriteErrorState: LiveData<Boolean>
         get() = _favoriteErrorState
 
-    init {
-        _dataLive = MutableLiveData()
-        _favoriteErrorState = MutableLiveData()
-    }
-
     fun getFavoritedMovieListByFlowable() {
-        // _isLoading.value = true
         val disposable = getFavoriedMovieListByFlowable.execute(Unit).subscribeBy { response ->
             when (response) {
 
                 is DataState.SUCCESS -> {
-                    // _isLoading.value = false
                     _dataLive.value = response.data?.map {
                         favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
                     }
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -74,10 +68,10 @@ class FavoriteViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
+                is MessageHolder.MESSAGE -> _errorSnackBar.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorSnackBar.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorSnackBar.value =
+                    mapplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
@@ -88,10 +82,10 @@ class FavoriteViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorToast.value =
+                is MessageHolder.MESSAGE -> _errorToast.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorToast.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorToast.value =
+                    mapplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
