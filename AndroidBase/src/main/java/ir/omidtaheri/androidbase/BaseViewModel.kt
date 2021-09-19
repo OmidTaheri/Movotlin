@@ -9,43 +9,39 @@ import io.reactivex.disposables.Disposable
 import ir.omidtaheri.androidbase.singleLiveData.SingleLiveData
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
-    val ApplicationClass: Application
+    val applicationClass: Application
 
     init {
-        ApplicationClass = application
+        applicationClass = application
     }
 
     protected val _isLoading: MutableLiveData<Boolean>
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    protected val _ErrorSnackBar: SingleLiveData<String>
-    val ErrorSnackBar: LiveData<String>
-        get() = _ErrorSnackBar
+    protected val _errorSnackBar: SingleLiveData<String>
+    val errorSnackBar: LiveData<String>
+        get() = _errorSnackBar
 
-    protected val _ErrorToast: SingleLiveData<String>
-    val ErrorToast: LiveData<String>
-        get() = _ErrorToast
+    protected val _errorToast: SingleLiveData<String>
+    val errorToast: LiveData<String>
+        get() = _errorToast
 
-    protected val _MessageSnackBar: SingleLiveData<String>
-    val MessageSnackBar: LiveData<String>
-        get() = _MessageSnackBar
+    protected val _messageSnackBar: SingleLiveData<String>
+    val messageSnackBar: LiveData<String>
+        get() = _messageSnackBar
 
-    protected val _MessageToast: SingleLiveData<String>
-    val MessageToast: LiveData<String>
-        get() = _MessageToast
+    protected val _messageToast: SingleLiveData<String>
+    val messageToast: LiveData<String>
+        get() = _messageToast
 
-//    protected val _DataLive: MutableLiveData<DataLiveType>
-//    val DataLive: LiveData<DataLiveType>
-//        get() = _DataLive
 
     init {
         _isLoading = MutableLiveData()
-        _ErrorSnackBar = SingleLiveData()
-        _ErrorToast = SingleLiveData()
-        _MessageSnackBar = SingleLiveData()
-        _MessageToast = SingleLiveData()
-        // _DataLive = MutableLiveData()
+        _errorSnackBar = SingleLiveData()
+        _errorToast = SingleLiveData()
+        _messageSnackBar = SingleLiveData()
+        _messageToast = SingleLiveData()
     }
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()

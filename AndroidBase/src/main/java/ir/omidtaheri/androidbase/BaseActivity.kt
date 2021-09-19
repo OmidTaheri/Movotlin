@@ -15,13 +15,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // /Dagger Activity Component
+        // Dagger Activity Component
     }
-
-//    fun getActivityComponent(): ActivityComponent? {
-//        return mActivityComponent
-//    }
 
     @TargetApi(Build.VERSION_CODES.M)
     fun requestPermissionsSafely(
@@ -46,10 +41,6 @@ abstract class BaseActivity : AppCompatActivity() {
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     abstract fun setUp()
