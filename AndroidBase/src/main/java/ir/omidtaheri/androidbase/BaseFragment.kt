@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment<T : ViewModel> : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelAssistedFactory<T>
 
     override fun onCreateView(
         inflater: LayoutInflater,
