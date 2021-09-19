@@ -3,6 +3,7 @@ package ir.omidtaheri.search.ui.SearchFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -18,28 +19,20 @@ import ir.omidtaheri.search.mapper.MovieEntityUiDomainMapper
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel(
-    val searchMoviesByQuery: SearchMoviesByQuery,
-    val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
-    val schedulers: Schedulers,
-    application: Application
-) : BaseAndroidViewModel(application) {
+    private val searchMoviesByQuery: SearchMoviesByQuery,
+    private val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
+    private val schedulers: Schedulers,
+    private val state: SavedStateHandle,
+    private val mApplication: Application
+) : BaseAndroidViewModel(mApplication, state) {
 
     val searchSubject: PublishSubject<String> = PublishSubject.create()
-    lateinit var currentDisposable: Disposable
+    private lateinit var currentDisposable: Disposable
 
 
-    private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>>
+    private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>> = MutableLiveData()
     val dataLive: LiveData<PagingData<MovieUiEntity>>
         get() = _dataLive
-
-//    private val _SearchErrorState: MutableLiveData<Boolean>
-//    val SearchErrorState: LiveData<Boolean>
-//        get() = _SearchErrorState
-
-    init {
-        _dataLive = MutableLiveData()
-        //  _SearchErrorState = MutableLiveData()
-    }
 
 
     fun setSearchSubjectObserver() {
@@ -50,8 +43,7 @@ class SearchViewModel(
         currentDisposable = searchSubject.debounce(1000, TimeUnit.MILLISECONDS)
             .subscribeOn(schedulers.subscribeOn)
             .filter {
-                !it.isEmpty()
-
+                it.isNotEmpty()
             }
             .distinctUntilChanged()
             .switchMap {
@@ -74,8 +66,8 @@ class SearchViewModel(
 
         val disposable = searchMoviesByQuery.execute(query).cachedIn(viewModelScope)
             .subscribeBy {
-                _dataLive.value = it.map {
-                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                _dataLive.value = it.map { entity ->
+                    movieEntityUiDomainMapper.mapToUiEntity(entity)
                 }
             }
 
