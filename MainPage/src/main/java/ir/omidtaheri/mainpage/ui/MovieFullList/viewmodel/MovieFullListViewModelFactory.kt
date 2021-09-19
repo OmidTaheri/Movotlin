@@ -1,8 +1,8 @@
 package ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.SavedStateHandle
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
 import ir.omidtaheri.domain.interactor.GetPopularMovies
 import ir.omidtaheri.domain.interactor.GetTopRatedMovies
 import ir.omidtaheri.domain.interactor.GetUpcomingMovies
@@ -10,19 +10,21 @@ import ir.omidtaheri.mainpage.mapper.MovieEntityUiDomainMapper
 import javax.inject.Inject
 
 class MovieFullListViewModelFactory @Inject constructor(
-    val getPopularMoviesUseCase: GetPopularMovies,
-    val getTopRatedMoviesUseCase: GetTopRatedMovies,
-    val getUpcomingMoviesUseCase: GetUpcomingMovies,
-    val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
-    val application: Application
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    private val getPopularMoviesUseCase: GetPopularMovies,
+    private val getTopRatedMoviesUseCase: GetTopRatedMovies,
+    private val getUpcomingMoviesUseCase: GetUpcomingMovies,
+    private val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
+    private val application: Application
+) : ViewModelAssistedFactory<MovieFullListViewModel> {
+    override fun create(handle: SavedStateHandle): MovieFullListViewModel {
         return MovieFullListViewModel(
             getPopularMoviesUseCase,
             getTopRatedMoviesUseCase,
             getUpcomingMoviesUseCase,
             movieEntityUiDomainMapper,
+            handle,
             application
-        ) as T
+        )
     }
+
 }
