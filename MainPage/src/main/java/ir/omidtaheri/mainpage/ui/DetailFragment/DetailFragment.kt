@@ -354,7 +354,7 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewBinding.root, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
+        Snackbar.make(viewBinding!!.root, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
             .setAction(R.string.retry_action_text) {
                 viewModel.getMovieDetail(movieId)
             }.show()
