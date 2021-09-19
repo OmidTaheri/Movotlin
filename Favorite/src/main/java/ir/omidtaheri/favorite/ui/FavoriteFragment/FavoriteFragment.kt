@@ -35,15 +35,9 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var recyclerAdapter: FavoritedMovieAdapter
     private lateinit var viewModel: FavoriteViewModel
-
-    private var _viewbinding: FavoriteFragmentBinding? = null
-
-    private val viewbinding
-        get() = _viewbinding!!
-
-    lateinit var swipeRefreshmultiStatePage: SwipeRefreshMultiStatePage
-
-    var STATE_FavoriteRecyclerview: Parcelable? = null
+    private var viewBinding: FavoriteFragmentBinding? = null
+    private lateinit var swipeRefreshmultiStatePage: SwipeRefreshMultiStatePage
+    private var stateFavoritedRecyclerView: Parcelable? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,12 +46,11 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         val saveSharedPreferences: SharedPreferences =
             requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
 
-
-        val FAVORIT_ViewSavedState =
+        val favoriteViewSavedState =
             loadRecyclerViewState(saveSharedPreferences, "FAVORITE_RECYCLERVIEW_STATE")
 
-        FAVORIT_ViewSavedState?.let {
-            STATE_FavoriteRecyclerview = it
+        favoriteViewSavedState?.let {
+            stateFavoritedRecyclerView = it
         }
 
         initRecyclerViews()
@@ -85,16 +78,13 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
-        _viewbinding = FavoriteFragmentBinding.inflate(inflater, container, false)
-        val view = viewbinding.root
-        return view
+        viewBinding = FavoriteFragmentBinding.inflate(inflater, container, false)
+        return viewBinding!!.root
     }
 
     override fun bindUiComponent() {
-        swipeRefreshmultiStatePage = _viewbinding!!.swipeRefreshMultiStatePage
-
-        toolbar = _viewbinding!!.mainToolbar
-
+        swipeRefreshmultiStatePage = viewBinding!!.swipeRefreshMultiStatePage
+        toolbar = viewBinding!!.mainToolbar
 
         if (getDarkModeStatus(requireContext())) {
             toolbar.menu.findItem(R.id.change_theme).icon =
@@ -137,14 +127,14 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
         viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
     }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
 
         viewModel.dataLive.observe(this, Observer {
             recyclerAdapter.clear()
-            if (it != null && it.size > 0) {
+
+            if (it != null && it.isNotEmpty()) {
 
                 recyclerAdapter.addItems(it)
-
 
                 swipeRefreshmultiStatePage.apply {
                     configRecyclerView(
@@ -154,11 +144,11 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
                     setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
                 }
 
-                STATE_FavoriteRecyclerview?.let {
+                stateFavoritedRecyclerView?.let {
                     swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
                         it
                     )
-                    STATE_FavoriteRecyclerview = null
+                    stateFavoritedRecyclerView = null
                 }
                 swipeRefreshmultiStatePage.toDateState()
             } else {
@@ -217,7 +207,7 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
     }
 
     override fun showSnackBar(message: String) {
-        Snackbar.make(viewbinding.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
+        Snackbar.make(viewBinding!!.root, message, BaseTransientBottomBar.LENGTH_LONG).show()
     }
 
     override fun showToast(message: String) {
@@ -226,35 +216,6 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
     override fun showDialog(message: String) {
         TODO("Not yet implemented")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewbinding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-        ed.clear().apply()
-
-    }
-
-
-    override fun onItemClick(movieId: Int) {
-        val i = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("movotlin://detailmovie/" + movieId)
-        )
-        val options = ActivityOptions.makeCustomAnimation(
-            requireContext(),
-            R.anim.anim_fade_scale_in,
-            R.anim.anim_fade_scale_out
-        )
-        requireContext().startActivity(i, options.toBundle())
     }
 
     override fun onStop() {
@@ -278,5 +239,34 @@ class FavoriteFragment : BaseFragment(), FavoritedMovieAdapter.Callback {
 
 
         onDestroyGlide()
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewBinding = null
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val save: SharedPreferences =
+            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
+        val ed: SharedPreferences.Editor = save.edit()
+        ed.clear().apply()
+
+    }
+
+    override fun onItemClick(movieId: Int) {
+        val i = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("movotlin://detailmovie/" + movieId)
+        )
+        val options = ActivityOptions.makeCustomAnimation(
+            requireContext(),
+            R.anim.anim_fade_scale_in,
+            R.anim.anim_fade_scale_out
+        )
+        requireContext().startActivity(i, options.toBundle())
     }
 }
