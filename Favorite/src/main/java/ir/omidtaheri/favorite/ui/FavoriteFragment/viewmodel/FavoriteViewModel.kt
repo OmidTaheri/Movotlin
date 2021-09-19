@@ -17,9 +17,9 @@ class FavoriteViewModel(
     private val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
     private val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     private val state: SavedStateHandle,
-    private val mapplication: Application
+    private val mApplication: Application
 ) :
-    BaseAndroidViewModel(mapplication, state) {
+    BaseAndroidViewModel(mApplication, state) {
 
     private val _dataLive: MutableLiveData<List<FavoritedMovieUiEntity>> = MutableLiveData()
     val dataLive: LiveData<List<FavoritedMovieUiEntity>>
