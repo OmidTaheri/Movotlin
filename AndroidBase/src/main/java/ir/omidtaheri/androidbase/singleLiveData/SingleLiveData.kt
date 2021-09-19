@@ -1,6 +1,5 @@
 package ir.omidtaheri.androidbase.singleLiveData
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

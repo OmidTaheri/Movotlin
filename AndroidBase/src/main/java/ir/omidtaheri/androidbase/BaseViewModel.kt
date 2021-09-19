@@ -8,43 +8,30 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import ir.omidtaheri.androidbase.singleLiveData.SingleLiveData
 
-open class BaseViewModel(application: Application) : AndroidViewModel(application) {
-    val applicationClass: Application
+open class BaseViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
-    init {
-        applicationClass = application
-    }
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    protected val _isLoading: MutableLiveData<Boolean>
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    protected val _errorSnackBar: SingleLiveData<String>
+    private val _errorSnackBar: SingleLiveData<String> = SingleLiveData()
     val errorSnackBar: LiveData<String>
         get() = _errorSnackBar
 
-    protected val _errorToast: SingleLiveData<String>
+    private val _errorToast: SingleLiveData<String> = SingleLiveData()
     val errorToast: LiveData<String>
         get() = _errorToast
 
-    protected val _messageSnackBar: SingleLiveData<String>
+    private val _messageSnackBar: SingleLiveData<String> = SingleLiveData()
     val messageSnackBar: LiveData<String>
         get() = _messageSnackBar
 
-    protected val _messageToast: SingleLiveData<String>
+    private val _messageToast: SingleLiveData<String> = SingleLiveData()
     val messageToast: LiveData<String>
         get() = _messageToast
 
-
-    init {
-        _isLoading = MutableLiveData()
-        _errorSnackBar = SingleLiveData()
-        _errorToast = SingleLiveData()
-        _messageSnackBar = SingleLiveData()
-        _messageToast = SingleLiveData()
-    }
-
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun addDisposable(disposable: Disposable) {
 
