@@ -12,25 +12,25 @@ open class BaseViewModel(
     private val state: SavedStateHandle
 ) : ViewModel() {
 
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    protected val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private val _errorSnackBar: SingleLiveData<String> = SingleLiveData()
+    protected val _errorSnackBar: SingleLiveData<String> = SingleLiveData()
     val errorSnackBar: LiveData<String>
         get() = _errorSnackBar
 
-    private val _errorToast: SingleLiveData<String> = SingleLiveData()
+    protected val _errorToast: SingleLiveData<String> = SingleLiveData()
     val errorToast: LiveData<String>
         get() = _errorToast
 
-    private val _messageSnackBar: SingleLiveData<String> = SingleLiveData()
+    protected val _messageSnackBar: SingleLiveData<String> = SingleLiveData()
     val messageSnackBar: LiveData<String>
         get() = _messageSnackBar
 
-    private val _messageToast: SingleLiveData<String> = SingleLiveData()
+    protected val _messageToast: SingleLiveData<String> = SingleLiveData()
     val messageToast: LiveData<String>
         get() = _messageToast
 
