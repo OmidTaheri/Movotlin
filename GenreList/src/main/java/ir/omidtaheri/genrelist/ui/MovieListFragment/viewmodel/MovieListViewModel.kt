@@ -3,6 +3,7 @@ package ir.omidtaheri.genrelist.ui.MovieListFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -14,28 +15,26 @@ import ir.omidtaheri.genrelist.entity.MovieUiEntity
 import ir.omidtaheri.genrelist.mapper.MovieEntityUiDomainMapper
 
 class MovieListViewModel(
-    val getMovieListByGenreId: GetMovieListByGenreId,
-    val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
-    application: Application
+    private val getMovieListByGenreId: GetMovieListByGenreId,
+    private val movieEntityUiDomainMapper: MovieEntityUiDomainMapper,
+    private val state: SavedStateHandle,
+    private val mApplication: Application
 ) :
-    BaseAndroidViewModel(application) {
+    BaseAndroidViewModel(mApplication, state) {
 
-    private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>>
+    private val _dataLive: MutableLiveData<PagingData<MovieUiEntity>> = MutableLiveData()
     val dataLive: LiveData<PagingData<MovieUiEntity>>
         get() = _dataLive
 
-    init {
-        _dataLive = MutableLiveData()
-    }
-
     fun getMovieListByGenre(genreId: Int) {
 
-        val disposable = getMovieListByGenreId.execute(genreId).cachedIn(viewModelScope).subscribeBy {
+        val disposable =
+            getMovieListByGenreId.execute(genreId).cachedIn(viewModelScope).subscribeBy {
 
-            _dataLive.value = it.map {
-                movieEntityUiDomainMapper.mapToUiEntity(it)
+                _dataLive.value = it.map {
+                    movieEntityUiDomainMapper.mapToUiEntity(it)
+                }
             }
-        }
 
         addDisposable(disposable)
     }
