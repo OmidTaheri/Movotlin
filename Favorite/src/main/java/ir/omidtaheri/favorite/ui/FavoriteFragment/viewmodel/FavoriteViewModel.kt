@@ -71,7 +71,7 @@ class FavoriteViewModel(
                 is MessageHolder.MESSAGE -> _errorSnackBar.value =
                     messageHolder.message
                 is MessageHolder.Res -> _errorSnackBar.value =
-                    mapplication.applicationContext.getString(
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
@@ -85,7 +85,7 @@ class FavoriteViewModel(
                 is MessageHolder.MESSAGE -> _errorToast.value =
                     messageHolder.message
                 is MessageHolder.Res -> _errorToast.value =
-                    mapplication.applicationContext.getString(
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
