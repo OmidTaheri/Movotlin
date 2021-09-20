@@ -1,8 +1,8 @@
 package ir.omidtaheri.mainpagetv.ui.DetailFragment.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.SavedStateHandle
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
 import ir.omidtaheri.domain.interactor.GetMovieDetail
 import ir.omidtaheri.domain.interactor.GetMovieImagesById
 import ir.omidtaheri.domain.interactor.GetMovieVideosById
@@ -14,17 +14,17 @@ import ir.omidtaheri.mainpagetv.mapper.MultiMovieEntityUiDomainMapper
 import javax.inject.Inject
 
 class DetailViewModelFactory @Inject constructor(
-    val getDetailMovieUseCase: GetMovieDetail,
-    val getMovieImagesById: GetMovieImagesById,
-    val getMovieVideosById: GetMovieVideosById,
-    val getSimilarMovies: GetSimilarMoviesWithoutPaging,
-    val movieDetailEntityUiDomainMapper: MovieDetailEntityUiDomainMapper,
-    val movieImageEntityUiDomainMapper: MovieImageEntityUiDomainMapper,
-    val movieVideoEntityUiDomainMapper: MovieVideoEntityUiDomainMapper,
-    val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
-    val application: Application
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    private val getDetailMovieUseCase: GetMovieDetail,
+    private val getMovieImagesById: GetMovieImagesById,
+    private val getMovieVideosById: GetMovieVideosById,
+    private val getSimilarMovies: GetSimilarMoviesWithoutPaging,
+    private val movieDetailEntityUiDomainMapper: MovieDetailEntityUiDomainMapper,
+    private val movieImageEntityUiDomainMapper: MovieImageEntityUiDomainMapper,
+    private val movieVideoEntityUiDomainMapper: MovieVideoEntityUiDomainMapper,
+    private val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
+    private val application: Application
+) : ViewModelAssistedFactory<DetailViewModel> {
+    override fun create(handle: SavedStateHandle): DetailViewModel {
         return DetailViewModel(
             getDetailMovieUseCase,
             getMovieImagesById,
@@ -34,7 +34,9 @@ class DetailViewModelFactory @Inject constructor(
             movieImageEntityUiDomainMapper,
             movieVideoEntityUiDomainMapper,
             multiMovieEntityUiDomainMapper,
+            handle,
             application
-        ) as T
+        )
     }
+
 }
