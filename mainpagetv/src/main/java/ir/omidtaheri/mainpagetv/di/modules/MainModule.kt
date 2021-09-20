@@ -1,15 +1,15 @@
 package ir.omidtaheri.mainpagetv.di.modules
 
 import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import ir.omidtaheri.daggercore.di.scopes.FragmentScope
 import ir.omidtaheri.mainpagetv.ui.MainFragment.viewmodel.MainViewModelFactory
 
 @Module
-class MainModule {
+interface MainModule {
 
-    @Provides
-    fun provideMainViewModel(viewmodel: MainViewModelFactory): ViewModelProvider.Factory {
-        return viewmodel
-    }
+    @FragmentScope
+    @Binds
+    fun provideMainViewModel(viewModel: MainViewModelFactory): ViewModelProvider.Factory
 }
