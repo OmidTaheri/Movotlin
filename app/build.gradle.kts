@@ -89,6 +89,10 @@ android {
         setHtmlReport(true)
         setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -105,6 +109,7 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Domain)))
 
     implementation(project(mapOf("path" to BuildModules.DaggerCore)))
+    implementation(project(mapOf("path" to BuildModules.AndroidBase)))
 
     implementation(project(mapOf("path" to BuildModules.MainPage)))
     implementation(project(mapOf("path" to BuildModules.Search)))

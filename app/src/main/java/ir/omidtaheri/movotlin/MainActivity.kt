@@ -3,27 +3,30 @@ package ir.omidtaheri.movotlin
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
+import ir.omidtaheri.androidbase.BaseActivity
 import ir.omidtaheri.mainpage.ui.DetailFragment.DetailFragmentDirections
 import ir.omidtaheri.mainpage.ui.MainFragment.MainFragmentDirections
 import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentDirections
+import ir.omidtaheri.movotlin.databinding.ActivityMainBinding
 import java.util.*
 
-class MainActivity : AppCompatActivity(),
+class MainActivity : BaseActivity(),
     BottomNavigationView.OnNavigationItemReselectedListener,
     BottomNavigationView.OnNavigationItemSelectedListener {
 
+    private var viewBinding: ActivityMainBinding? = null
     private var savedInstance = false
-
-    lateinit var viewPager: ViewPager2
-    lateinit var bottomNavBar: BottomNavigationView
+    private lateinit var viewPager: ViewPager2
+    private lateinit var bottomNavBar: BottomNavigationView
 
     // overall back stack of containers
     private val backStack = Stack<Int>()
@@ -42,12 +45,10 @@ class MainActivity : AppCompatActivity(),
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
-
         savedInstance = false
+
         fragments = listOf(
             BaseNavigationFragment.newInstance(R.layout.content_main_base, R.id.nav_host_main),
             BaseNavigationFragment.newInstance(R.layout.content_search_base, R.id.nav_host_search),
@@ -106,13 +107,12 @@ class MainActivity : AppCompatActivity(),
 
 
 
-        viewPager = findViewById(R.id.pager)
-
+        viewPager = viewBinding!!.pager
         viewPager.adapter = ViewPagerAdapter(this)
-        viewPager.setUserInputEnabled(false)
+        viewPager.isUserInputEnabled = false
         viewPager.offscreenPageLimit = fragments.size
 
-        bottomNavBar = findViewById(R.id.bottom_nav_view)
+        bottomNavBar = viewBinding!!.bottomNavView
         bottomNavBar.setOnNavigationItemSelectedListener(this)
         bottomNavBar.setOnNavigationItemReselectedListener(this)
 
@@ -139,6 +139,12 @@ class MainActivity : AppCompatActivity(),
         if (current != 0)
             setItem(current)
 
+    }
+
+
+    override fun inflateViewBinding(inflater: LayoutInflater): View? {
+        viewBinding = ActivityMainBinding.inflate(inflater)
+        return viewBinding!!.root
     }
 
 
@@ -227,6 +233,30 @@ class MainActivity : AppCompatActivity(),
 
     }
 
+
+    override fun setUp() {
+    }
+
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
+    }
+
+    override fun showStringError(message: String) {
+    }
+
+    override fun showResError(ResId: Int) {
+    }
+
+    override fun showSnackBar(message: String) {
+    }
+
+    override fun showToast(message: String) {
+    }
+
+    override fun showDialog(message: String) {
+    }
 
     override fun onStop() {
         super.onStop()

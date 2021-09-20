@@ -5,18 +5,21 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    private val mActivityComponent: Any = TODO()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Dagger Activity Component
+        setContentView(inflateViewBinding(layoutInflater))
     }
+
+    abstract fun inflateViewBinding(inflater: LayoutInflater): View?
+
 
     @TargetApi(Build.VERSION_CODES.M)
     fun requestPermissionsSafely(
