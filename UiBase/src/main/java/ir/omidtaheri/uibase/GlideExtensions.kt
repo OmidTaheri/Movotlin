@@ -10,7 +10,12 @@ fun ImageView.LoadPoster(posterPath: String, myConetxt: Context) {
 
     val requestOptions = RequestOptions()
     requestOptions.apply {
-        placeholder(R.drawable.ic_baseline_local_movies_24)
+        if (getDarkModeStatus(myConetxt)) {
+            placeholder(R.drawable.ic_baseline_night_local_movies_24)
+        } else {
+            placeholder(R.drawable.ic_baseline_local_movies_24)
+        }
+
     }
 
     GlideApp.with(myConetxt)
@@ -28,7 +33,7 @@ fun ImageView.LoadBackdrop(backdropPath: String, myConetxt: Context) {
 
     GlideApp.with(myConetxt)
         .load(BuildConfig.BACKDROP_URL + backdropPath)
-        .skipMemoryCache(true)
+        .skipMemoryCache(false)
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         .override(180, 180)
         .thumbnail(0.6f)
@@ -42,7 +47,7 @@ fun ImageView.LoadMainBackdrop(backdropPath: String, myConetxt: Context) {
 
     GlideApp.with(myConetxt)
         .load(BuildConfig.BACKDROP_URL + backdropPath)
-        .skipMemoryCache(true)
+        .skipMemoryCache(false)
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         .override(300, 300)
         .thumbnail(0.6f)
@@ -51,9 +56,8 @@ fun ImageView.LoadMainBackdrop(backdropPath: String, myConetxt: Context) {
 }
 
 
-
-fun ImageView.clear(myconetxt: Context) {
-    GlideApp.with(myconetxt)
+fun ImageView.clear(myConetxt: Context) {
+    GlideApp.with(myConetxt)
         .clear(this)
 }
 
