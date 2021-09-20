@@ -3,6 +3,7 @@ package ir.omidtaheri.mainpagetv.ui.MainFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -15,31 +16,26 @@ import ir.omidtaheri.mainpagetv.entity.MultiMovieUiEntity
 import ir.omidtaheri.mainpagetv.mapper.MultiMovieEntityUiDomainMapper
 
 class MainViewModel(
-    val getPopularMoviesUseCase: GetPopularMoviesWithoutPaging,
-    val getTopRatedMoviesUseCase: GetTopRatedMoviesWithoutPaging,
-    val getUpcomingMoviesUseCase: GetUpcomingMoviesWithoutPaging,
-    val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
-    application: Application
+    private val getPopularMoviesUseCase: GetPopularMoviesWithoutPaging,
+    private val getTopRatedMoviesUseCase: GetTopRatedMoviesWithoutPaging,
+    private val getUpcomingMoviesUseCase: GetUpcomingMoviesWithoutPaging,
+    private val multiMovieEntityUiDomainMapper: MultiMovieEntityUiDomainMapper,
+    private val state: SavedStateHandle,
+    private val mApplication: Application
 ) :
-    BaseAndroidViewModel(application) {
+    BaseAndroidViewModel(mApplication, state) {
 
-    private val _poularLiveData: MutableLiveData<MultiMovieUiEntity>
+    private val _poularLiveData: MutableLiveData<MultiMovieUiEntity> = MutableLiveData()
     val poularLiveData: LiveData<MultiMovieUiEntity>
         get() = _poularLiveData
 
-    private val _topRateLiveData: MutableLiveData<MultiMovieUiEntity>
+    private val _topRateLiveData: MutableLiveData<MultiMovieUiEntity> = MutableLiveData()
     val topRateLiveData: LiveData<MultiMovieUiEntity>
         get() = _topRateLiveData
 
-    private val _upComingLiveData: MutableLiveData<MultiMovieUiEntity>
+    private val _upComingLiveData: MutableLiveData<MultiMovieUiEntity> = MutableLiveData()
     val upComingLiveData: LiveData<MultiMovieUiEntity>
         get() = _upComingLiveData
-
-    init {
-        _poularLiveData = MutableLiveData()
-        _topRateLiveData = MutableLiveData()
-        _upComingLiveData = MutableLiveData()
-    }
 
     fun getPopularMovieList() {
 
@@ -51,7 +47,6 @@ class MainViewModel(
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -72,17 +67,14 @@ class MainViewModel(
     }
 
     fun getTopRatedMovieList() {
-        // _isTopRateLoading.value = true
         val disposable = getTopRatedMoviesUseCase.execute(1).subscribeBy { response ->
             when (response) {
                 is DataState.SUCCESS -> {
-
                     _topRateLiveData.value =
                         multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -103,7 +95,6 @@ class MainViewModel(
     }
 
     fun getUpComingMovieList() {
-        // _isUpComingLoading.value = true
         val disposable = getUpcomingMoviesUseCase.execute(1).subscribeBy {
 
                 response ->
@@ -115,7 +106,6 @@ class MainViewModel(
                 }
 
                 is DataState.ERROR -> {
-                    // _isLoading.value = false
                     response.let { errorDataState ->
 
                         when (errorDataState.stateMessage?.uiComponentType) {
@@ -139,10 +129,10 @@ class MainViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorSnackBar.value =
+                is MessageHolder.MESSAGE -> _errorSnackBar.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorSnackBar.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorSnackBar.value =
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
@@ -153,10 +143,10 @@ class MainViewModel(
         errorDataState.stateMessage!!.message.let { messageHolder ->
 
             when (messageHolder) {
-                is MessageHolder.MESSAGE -> _ErrorToast.value =
+                is MessageHolder.MESSAGE -> _errorToast.value =
                     messageHolder.message
-                is MessageHolder.Res -> _ErrorToast.value =
-                    ApplicationClass.getString(
+                is MessageHolder.Res -> _errorToast.value =
+                    mApplication.applicationContext.getString(
                         messageHolder.resId
                     )
             }
