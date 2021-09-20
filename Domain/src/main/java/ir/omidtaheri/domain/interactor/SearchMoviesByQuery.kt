@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class SearchMoviesByQuery @Inject constructor(
     schedulers: Schedulers,
-    val discoverMovieRepository: DiscoverMovieGateWay
+    private val discoverMovieRepository: DiscoverMovieGateWay
 ) :
     ObservablePagingDataUseCase<String, PagingData<MovieDomainEntity>>(schedulers) {
 

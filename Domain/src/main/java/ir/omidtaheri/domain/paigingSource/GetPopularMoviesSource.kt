@@ -8,7 +8,10 @@ import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.base.Schedulers
 
-class GetPopularMoviesSource(val movieRepository: MovieGateWay, val schedulers: Schedulers) :
+class GetPopularMoviesSource(
+    private val movieRepository: MovieGateWay,
+    private val schedulers: Schedulers
+) :
     RxPagingSource<Int, MovieDomainEntity>() {
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {

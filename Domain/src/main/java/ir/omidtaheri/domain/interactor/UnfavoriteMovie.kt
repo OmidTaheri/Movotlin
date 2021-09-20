@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class UnfavoriteMovie @Inject constructor(
     schedulers: Schedulers,
-    val favoriteMovieRepository: FavoriteMovieGateWay
+    private val favoriteMovieRepository: FavoriteMovieGateWay
 ) :
     SingleUseCase<FavoritedMovieDomainEntity, Int>(schedulers) {
 

@@ -10,9 +10,9 @@ import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 
 class GetSimilarMoviesSinglePageSource(
-    val movieId: Int,
-    val discoverMovieRepository: DiscoverMovieGateWay,
-    val schedulers: Schedulers
+    private val movieId: Int,
+    private val discoverMovieRepository: DiscoverMovieGateWay,
+    private val schedulers: Schedulers
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 

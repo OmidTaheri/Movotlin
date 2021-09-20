@@ -9,7 +9,10 @@ import ir.omidtaheri.domain.interactor.base.SingleUseCase
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
 import javax.inject.Inject
 
-class GetSimilarMoviesWithoutPaging @Inject constructor(schedulers: Schedulers, val discoverMovieRepository: DiscoverMovieGateWay) :
+class GetSimilarMoviesWithoutPaging @Inject constructor(
+    schedulers: Schedulers,
+    private val discoverMovieRepository: DiscoverMovieGateWay
+) :
     SingleUseCase<GetSimilarMoviesParams, DataState<MultiMovieDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: GetSimilarMoviesParams): Single<DataState<MultiMovieDomainEntity>> {

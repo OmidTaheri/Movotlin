@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetFavoriedMovieList @Inject constructor(
     schedulers: Schedulers,
-    val favoriteMovieRepository: FavoriteMovieGateWay
+    private val favoriteMovieRepository: FavoriteMovieGateWay
 ) :
     ObservableUseCase<Unit, DataState<List<FavoritedMovieDomainEntity>>>(schedulers) {
 

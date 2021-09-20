@@ -14,14 +14,20 @@ import javax.inject.Inject
 
 class GetSimilarMoviesSinglePage @Inject constructor(
     schedulers: Schedulers,
-    val discoverMovieRepository: DiscoverMovieGateWay
+    private val discoverMovieRepository: DiscoverMovieGateWay
 ) : ObservablePagingDataUseCase<Int, PagingData<MovieDomainEntity>>(schedulers) {
 
     override fun buildSingle(movieId: Int): Observable<PagingData<MovieDomainEntity>> {
 
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetSimilarMoviesSinglePageSource(movieId, discoverMovieRepository,schedulers) }
+            pagingSourceFactory = {
+                GetSimilarMoviesSinglePageSource(
+                    movieId,
+                    discoverMovieRepository,
+                    schedulers
+                )
+            }
         ).observable
     }
 

@@ -9,8 +9,8 @@ import ir.omidtaheri.domain.gateway.MovieGateWay
 import ir.omidtaheri.domain.interactor.base.Schedulers
 
 class GetPopularMoviesSinglePageSource(
-    val movieRepository: MovieGateWay,
-    val schedulers: Schedulers
+    private val movieRepository: MovieGateWay,
+    private val schedulers: Schedulers
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 

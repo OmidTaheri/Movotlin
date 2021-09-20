@@ -8,7 +8,10 @@ import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.base.SingleUseCase
 import javax.inject.Inject
 
-class GetTopRatedMoviesWithoutPaging @Inject constructor(schedulers: Schedulers, val movieRepository: MovieGateWay) :
+class GetTopRatedMoviesWithoutPaging @Inject constructor(
+    schedulers: Schedulers,
+    private val movieRepository: MovieGateWay
+) :
     SingleUseCase<Int, DataState<MultiMovieDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: Int): Single<DataState<MultiMovieDomainEntity>> {

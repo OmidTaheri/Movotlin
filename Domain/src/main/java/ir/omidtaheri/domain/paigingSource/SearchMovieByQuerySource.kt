@@ -10,9 +10,9 @@ import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
 
 class SearchMovieByQuerySource(
-    val query: String,
-    val discoverMovieRepository: DiscoverMovieGateWay,
-    val schedulers: Schedulers
+    private val query: String,
+    private val discoverMovieRepository: DiscoverMovieGateWay,
+    private val schedulers: Schedulers
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 

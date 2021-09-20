@@ -9,9 +9,9 @@ import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 import ir.omidtaheri.domain.interactor.base.Schedulers
 
 class GetMovieListByGenreSource(
-    val genreId: Int,
-    val discoverMovieRepository: DiscoverMovieGateWay,
-    val schedulers: Schedulers
+    private val genreId: Int,
+    private val discoverMovieRepository: DiscoverMovieGateWay,
+    private val schedulers: Schedulers
 ) :
     RxPagingSource<Int, MovieDomainEntity>() {
 

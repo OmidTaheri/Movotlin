@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetFavoriedMovieListByFlowable @Inject constructor(
     schedulers: Schedulers,
-    val favoriteMovieRepository: FavoriteMovieGateWay
+    private val favoriteMovieRepository: FavoriteMovieGateWay
 ) :
     FlowableUseCase<Unit, DataState<List<FavoritedMovieDomainEntity>>>(schedulers) {
 

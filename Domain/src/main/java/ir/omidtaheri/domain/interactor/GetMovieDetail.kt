@@ -8,7 +8,10 @@ import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.base.SingleUseCase
 import javax.inject.Inject
 
-class GetMovieDetail @Inject constructor(schedulers: Schedulers, val discoverMovieRepository: DiscoverMovieGateWay) :
+class GetMovieDetail @Inject constructor(
+    schedulers: Schedulers,
+    private val discoverMovieRepository: DiscoverMovieGateWay
+) :
     SingleUseCase<Int, DataState<MovieDetailDomainEntity>>(schedulers) {
 
     override fun buildSingle(params: Int): Single<DataState<MovieDetailDomainEntity>> {
