@@ -6,17 +6,13 @@ import com.facebook.stetho.Stetho
 import ir.omidtaheri.daggercore.di.ApplicationComponentProvider
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 import ir.omidtaheri.movotlin.di.components.DaggerApplicationComponent
-import ir.omidtaheri.movotlin.di.modules.ApplicationModule
-import ir.omidtaheri.movotlin.di.modules.LocalModule
-import ir.omidtaheri.movotlin.di.modules.RemoteModule
-import ir.omidtaheri.movotlin.di.modules.RepositoryModule
 import ir.omidtaheri.uibase.enableDarkMode
 import ir.omidtaheri.uibase.getDarkModeStatus
 
 
 class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
 
-    lateinit var applicationComponent: ApplicationComponent
+    private lateinit var applicationComponent: ApplicationComponent
 
     private lateinit var myChildFragmentManager0: FragmentManager
     private lateinit var myChildFragmentManager1: FragmentManager
@@ -31,12 +27,8 @@ class ApplicationClass : MultiDexApplication(), ApplicationComponentProvider {
         }
 
         this.applicationComponent =
-            DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .localModule(LocalModule("Movotlin"))
-                .remoteModule(RemoteModule(BuildConfig.BASE_URL, BuildConfig.API_KEY))
-                .repositoryModule(RepositoryModule())
-                .build()
+            DaggerApplicationComponent.factory()
+                .create(this, "Movotlin", BuildConfig.BASE_URL, BuildConfig.API_KEY)
 
         applicationComponent.inject(this)
 
