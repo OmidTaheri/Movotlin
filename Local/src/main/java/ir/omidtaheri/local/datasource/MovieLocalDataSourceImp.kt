@@ -10,8 +10,8 @@ import ir.omidtaheri.local.mapper.MovieEntityDataLocalMapper
 import javax.inject.Inject
 
 class MovieLocalDataSourceImp @Inject constructor(
-    val movieDao: MovieDao,
-    val movieEntityDataLocalMapper: MovieEntityDataLocalMapper
+    private val movieDao: MovieDao,
+    private val movieEntityDataLocalMapper: MovieEntityDataLocalMapper
 ) : MovieLocalDataSourceInterface {
 
     override fun favoriteMovie(movie: FavoritedMovieDataEntity): Single<Long> {
