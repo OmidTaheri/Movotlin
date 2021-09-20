@@ -1,15 +1,16 @@
 package ir.omidtaheri.mainpage.di.modules
 
-import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
+import ir.omidtaheri.daggercore.di.scopes.FragmentScope
+import ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel.MovieFullListViewModel
 import ir.omidtaheri.mainpage.ui.MovieFullList.viewmodel.MovieFullListViewModelFactory
 
 @Module
-class MovieFullListModule {
+interface MovieFullListModule {
 
-    @Provides
-    fun provideMovieFullListViewModel(viewmodel: MovieFullListViewModelFactory): ViewModelProvider.Factory {
-        return viewmodel
-    }
+    @FragmentScope
+    @Binds
+    fun provideMovieFullListViewModel(viewModel: MovieFullListViewModelFactory): ViewModelAssistedFactory<MovieFullListViewModel>
 }
