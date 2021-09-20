@@ -57,7 +57,6 @@ class MovieFullListAdapter(diffCallback: DiffUtil.ItemCallback<MovieUiEntity>,va
 
             binding.apply {
                 movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it,context) }
-                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it,context) }
                 titleMovie.text = movieUiEntity?.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity!!.id)
