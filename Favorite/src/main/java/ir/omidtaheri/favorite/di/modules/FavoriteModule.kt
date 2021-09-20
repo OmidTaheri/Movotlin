@@ -1,15 +1,16 @@
 package ir.omidtaheri.favorite.di.modules
 
-import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
+import ir.omidtaheri.daggercore.di.scopes.FragmentScope
+import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModel
 import ir.omidtaheri.favorite.ui.FavoriteFragment.viewmodel.FavoriteViewModelFactory
 
 @Module
-class FavoriteModule {
+interface FavoriteModule {
 
-    @Provides
-    fun provideFavoriteViewModel(viewmodel: FavoriteViewModelFactory): ViewModelProvider.Factory {
-        return viewmodel
-    }
+    @FragmentScope
+    @Binds
+    fun provideFavoriteViewModel(viewModel: FavoriteViewModelFactory): ViewModelAssistedFactory<FavoriteViewModel>
 }
