@@ -1,15 +1,16 @@
 package ir.omidtaheri.genrelist.di.modules
 
-import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
+import ir.omidtaheri.daggercore.di.scopes.FragmentScope
+import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModel
 import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModelFactory
 
 @Module
-class GenreModule {
+interface GenreModule {
 
-    @Provides
-    fun provideDetailViewModel(viewmodel: GenreViewModelFactory): ViewModelProvider.Factory {
-        return viewmodel
-    }
+    @FragmentScope
+    @Binds
+    fun provideGenreViewModel(viewModel: GenreViewModelFactory): ViewModelAssistedFactory<GenreViewModel>
 }
