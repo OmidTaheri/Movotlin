@@ -2,25 +2,16 @@ package ir.omidtaheri.mainpagetv.ui.MainFragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.SparseArray
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.util.keyIterator
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.HeaderItem
-import androidx.leanback.widget.ImageCardView
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
-import androidx.leanback.widget.OnItemViewClickedListener
-import androidx.leanback.widget.OnItemViewSelectedListener
-import androidx.leanback.widget.Presenter
-import androidx.leanback.widget.Row
-import androidx.leanback.widget.RowPresenter
+import androidx.fragment.app.viewModels
+import androidx.leanback.widget.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import ir.omidtaheri.androidbase.BaseBrowseTvFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpagetv.R
 import ir.omidtaheri.mainpagetv.di.components.DaggerMainComponent
@@ -33,26 +24,22 @@ import ir.omidtaheri.mainpagetv.utils.GlideBackgroundManager
 /**
  * Loads a grid of cards with movies to browse.
  */
-class MainFragmentBrowse : BaseBrowseTvFragment() {
-
-    private lateinit var viewModel: MainViewModel
+class MainFragmentBrowse : BaseBrowseTvFragment<MainViewModel>() {
 
     private lateinit var mBackgroundManager: GlideBackgroundManager
     private lateinit var rowsAdapter: ArrayObjectAdapter
-
     private val TOP_RATED = 1
     private val POPULAR = 2
     private val UPCOMING = 3
-    lateinit var mRows: SparseArray<MovieRow>
+    private lateinit var mRows: SparseArray<MovieRow>
 
-    companion object {
-        private const val TAG = "MainFragment"
+    private val viewModel: MainViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Log.i(TAG, "onCreate")
-        super.onActivityCreated(savedInstanceState)
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         mBackgroundManager = GlideBackgroundManager(requireActivity())
 
         setupUIElements()
@@ -64,7 +51,7 @@ class MainFragmentBrowse : BaseBrowseTvFragment() {
         fetchUpcomingMovies()
     }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
         viewModel.poularLiveData.observe(this, Observer {
 
             val popularMovieRow = mRows.get(POPULAR)
@@ -100,30 +87,30 @@ class MainFragmentBrowse : BaseBrowseTvFragment() {
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerMainComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -131,9 +118,6 @@ class MainFragmentBrowse : BaseBrowseTvFragment() {
             .inject(this)
     }
 
-    override fun SetViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-    }
 
     override fun showSnackBar(message: String) {
         TODO("Not yet implemented")
@@ -235,7 +219,6 @@ class MainFragmentBrowse : BaseBrowseTvFragment() {
         ) {
 
             if (item is MovieUiEntity) {
-                Log.d(TAG, "Item: " + item.toString())
                 val intent = Intent(activity, DetailsActivity::class.java)
 
                 intent.putExtra(DetailsActivity.MOVIEID, item.id)
