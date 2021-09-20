@@ -15,8 +15,8 @@ import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import javax.inject.Inject
 
 class FavoriteMovieRepository @Inject constructor(
-    val movieLocalDataSource: MovieLocalDataSourceInterface,
-    val favoritedMovieEntityDomainDataMapper: FavoritedMovieEntityDomainDataMapper
+    private val movieLocalDataSource: MovieLocalDataSourceInterface,
+    private val favoritedMovieEntityDomainDataMapper: FavoritedMovieEntityDomainDataMapper
 
 ) : FavoriteMovieGateWay {
 
@@ -57,7 +57,6 @@ class FavoriteMovieRepository @Inject constructor(
                 )
             }
     }
-
 
 
     override fun getFavoritedMoviesListByFlowable(): Flowable<DataState<List<FavoritedMovieDomainEntity>>> {

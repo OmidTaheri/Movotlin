@@ -21,11 +21,11 @@ import ir.omidtaheri.domain.interactor.usecaseParam.SearchMovieByQueryParams
 import javax.inject.Inject
 
 class DiscoverMovieRepository @Inject constructor(
-    val movieDetailRemoteDataSource: MovieDetailRemoteDataSourceInterface,
-    val movieDetailEntityMapper: MovieDetailEntityDomainDataMapper,
-    val movieImageEntityDomainDataMapper: MovieImageEntityDomainDataMapper,
-    val movieVideoEntityDomainDataMapper: MovieVideoEntityDomainDataMapper,
-    val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper
+    private val movieDetailRemoteDataSource: MovieDetailRemoteDataSourceInterface,
+    private val movieDetailEntityMapper: MovieDetailEntityDomainDataMapper,
+    private val movieImageEntityDomainDataMapper: MovieImageEntityDomainDataMapper,
+    private val movieVideoEntityDomainDataMapper: MovieVideoEntityDomainDataMapper,
+    private val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper
 ) : DiscoverMovieGateWay {
 
     override fun getMovieDetailById(movieId: Int): Single<DataState<MovieDetailDomainEntity>> {

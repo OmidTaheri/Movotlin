@@ -15,9 +15,9 @@ import ir.omidtaheri.domain.gateway.MovieGateWay
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
-    val movieRemoteDataSource: MovieRemoteDataSourceInterface,
-    val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper,
-    val genreEntityDomainDataMapper: GenreEntityDomainDataMapper
+    private val movieRemoteDataSource: MovieRemoteDataSourceInterface,
+    private val multiMovieEntityDomainDataMapper: MultiMovieEntityDomainDataMapper,
+    private val genreEntityDomainDataMapper: GenreEntityDomainDataMapper
 ) : MovieGateWay {
 
     override fun getTopRatedMovies(page: Int): Single<DataState<MultiMovieDomainEntity>> {

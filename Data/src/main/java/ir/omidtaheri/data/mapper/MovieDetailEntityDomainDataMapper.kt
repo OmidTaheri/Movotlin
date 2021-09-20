@@ -4,7 +4,7 @@ import ir.omidtaheri.data.entity.MovieDetailDataEntity
 import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import javax.inject.Inject
 
-class MovieDetailEntityDomainDataMapper @Inject constructor(val genreEntityDomainDataMapper: GenreEntityDomainDataMapper) :
+class MovieDetailEntityDomainDataMapper @Inject constructor(private val genreEntityDomainDataMapper: GenreEntityDomainDataMapper) :
     DomainDataMapper<MovieDetailDataEntity, MovieDetailDomainEntity> {
     override fun mapFromDataEntity(from: MovieDetailDataEntity): MovieDetailDomainEntity {
 
