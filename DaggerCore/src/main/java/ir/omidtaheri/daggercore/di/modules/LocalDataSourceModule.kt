@@ -1,18 +1,18 @@
 package ir.omidtaheri.daggercore.di.modules
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.local.datasource.MovieLocalDataSourceImp
 import ir.omidtaheri.movotlin.di.modules.LocalModule
+import javax.inject.Singleton
 
-@Module(includes = [ LocalModule::class])
-class LocalDataSourceModule {
+@Module(includes = [LocalModule::class])
+interface LocalDataSourceModule {
 
-    @Provides
-    fun provideMovieLocalDataSource(
+    @Singleton
+    @Binds
+     fun provideMovieLocalDataSource(
         datasource: MovieLocalDataSourceImp
-    ): MovieLocalDataSourceInterface {
-        return datasource
-    }
+    ): MovieLocalDataSourceInterface
 }

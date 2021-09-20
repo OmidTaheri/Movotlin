@@ -11,13 +11,15 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
-class RemoteModule(val baseUrl: String, val apiKey: String) {
+object RemoteModule {
 
+    @Singleton
     @Provides
-    fun provideInterceptors(): ArrayList<Interceptor> {
+    fun provideInterceptors(@Named("apiKey") apiKey: String): ArrayList<Interceptor> {
         val interceptors = arrayListOf<Interceptor>()
         val keyInterceptor = Interceptor { chain ->
 
@@ -39,11 +41,12 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         return interceptors
     }
 
+    @Singleton
     @Provides
-    fun provideRetrofit(interceptors: ArrayList<Interceptor>): Retrofit {
+    fun provideRetrofit(interceptors: ArrayList<Interceptor>, @Named("url") baseUrl: String): Retrofit {
 
         val clientBuilder = OkHttpClient.Builder()
-        if (!interceptors.isEmpty()) {
+        if (interceptors.isNotEmpty()) {
             interceptors.forEach { interceptor ->
                 clientBuilder.addInterceptor(interceptor)
             }
@@ -52,7 +55,7 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
         if (BuildConfig.DEBUG) {
             clientBuilder.addNetworkInterceptor(StethoInterceptor())
         }
-        
+
         return Retrofit.Builder()
             .client(clientBuilder.build())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -61,11 +64,13 @@ class RemoteModule(val baseUrl: String, val apiKey: String) {
             .build()
     }
 
+    @Singleton
     @Provides
     fun provideMovieApi(retrofit: Retrofit): MovieApi {
         return retrofit.create(MovieApi::class.java)
     }
 
+    @Singleton
     @Provides
     fun provideMovieDetailApi(retrofit: Retrofit): MovieDetailApi {
         return retrofit.create(MovieDetailApi::class.java)

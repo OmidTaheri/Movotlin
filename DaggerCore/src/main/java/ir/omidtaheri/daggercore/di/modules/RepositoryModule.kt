@@ -1,29 +1,34 @@
 package ir.omidtaheri.movotlin.di.modules
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import ir.omidtaheri.data.repository.DiscoverMovieRepository
 import ir.omidtaheri.data.repository.FavoriteMovieRepository
 import ir.omidtaheri.data.repository.MovieRepository
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
 import ir.omidtaheri.domain.gateway.MovieGateWay
+import javax.inject.Singleton
 
 @Module
-class RepositoryModule {
+interface RepositoryModule {
 
-    @Provides
+    @Singleton
+    @Binds
     fun provideDiscoverMovieRepository(
         repository: DiscoverMovieRepository
-    ): DiscoverMovieGateWay = repository
+    ): DiscoverMovieGateWay
 
-    @Provides
+
+    @Singleton
+    @Binds
     fun provideMovieRepository(
         repository: MovieRepository
-    ): MovieGateWay = repository
+    ): MovieGateWay
 
-    @Provides
+    @Singleton
+    @Binds
     fun provideFavoriteMovieRepository(
         repository: FavoriteMovieRepository
-    ): FavoriteMovieGateWay = repository
+    ): FavoriteMovieGateWay
 }
