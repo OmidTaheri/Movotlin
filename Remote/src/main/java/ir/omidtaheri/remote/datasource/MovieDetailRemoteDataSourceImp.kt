@@ -14,11 +14,11 @@ import ir.omidtaheri.remote.service.MovieDetailApi
 import javax.inject.Inject
 
 class MovieDetailRemoteDataSourceImp @Inject constructor(
-    val movieDetailApi: MovieDetailApi,
-    val movieDetailResponseToDataEntityMapper: MovieDetailResponseToDataEntityMapper,
-    val movieImagesResponseToDataEntityMapper: MovieImagesResponseToDataEntityMapper,
-    val movieVideosResponseToDataEntityMapper: MovieVideosResponseToDataEntityMapper,
-    val movieResponseToDataEntityMapper: MovieResponseToDataEntityMapper
+    private val movieDetailApi: MovieDetailApi,
+    private val movieDetailResponseToDataEntityMapper: MovieDetailResponseToDataEntityMapper,
+    private val movieImagesResponseToDataEntityMapper: MovieImagesResponseToDataEntityMapper,
+    private val movieVideosResponseToDataEntityMapper: MovieVideosResponseToDataEntityMapper,
+    private val movieResponseToDataEntityMapper: MovieResponseToDataEntityMapper
 ) :
     MovieDetailRemoteDataSourceInterface {
 

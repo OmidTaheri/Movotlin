@@ -10,9 +10,9 @@ import ir.omidtaheri.remote.service.MovieApi
 import javax.inject.Inject
 
 class MovieRemoteDataSourceImp @Inject constructor(
-    val movieApi: MovieApi,
-    val movieResponseDtoMapper: MovieResponseToDataEntityMapper,
-    val genreResponseDtoMapper: GenreResponseToDataEntityMapper
+    private val movieApi: MovieApi,
+    private val movieResponseDtoMapper: MovieResponseToDataEntityMapper,
+    private val genreResponseDtoMapper: GenreResponseToDataEntityMapper
 ) :
     MovieRemoteDataSourceInterface {
 

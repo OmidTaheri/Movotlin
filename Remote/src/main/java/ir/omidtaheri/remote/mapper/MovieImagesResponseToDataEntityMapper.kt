@@ -17,7 +17,7 @@ class MovieImagesResponseToDataEntityMapper @Inject constructor() :
         )
     }
 
-    fun mapFromBackdropsDTO(dtoBackdropsList: List<Backdrop>): List<ir.omidtaheri.data.entity.Backdrop> {
+    private fun mapFromBackdropsDTO(dtoBackdropsList: List<Backdrop>): List<ir.omidtaheri.data.entity.Backdrop> {
 
         return dtoBackdropsList.map {
 
@@ -25,7 +25,7 @@ class MovieImagesResponseToDataEntityMapper @Inject constructor() :
         }
     }
 
-    fun mapFromPosterDTO(dtoPosterList: List<Poster>): List<ir.omidtaheri.data.entity.Poster> {
+    private fun mapFromPosterDTO(dtoPosterList: List<Poster>): List<ir.omidtaheri.data.entity.Poster> {
 
         return dtoPosterList.map {
             ir.omidtaheri.data.entity.Poster(it.aspect_ratio, it.file_path, it.height, it.width)

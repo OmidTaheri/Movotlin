@@ -19,7 +19,7 @@ class MovieResponseToDataEntityMapper @Inject constructor() :
         )
     }
 
-    fun mapFromMultiMovieResultDTO(dtoResultList: List<MultiMovieResult>): List<MovieDataEntity> {
+    private fun mapFromMultiMovieResultDTO(dtoResultList: List<MultiMovieResult>): List<MovieDataEntity> {
 
         return dtoResultList.map {
             MovieDataEntity(
