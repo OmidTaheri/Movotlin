@@ -105,12 +105,6 @@ class FavoritedMovieAdapter(private val context: Context) : RecyclerView.Adapter
 
             binding.apply {
                 favoriteUiEntity.posterPath?.let { movieImageView.LoadPoster(it, context) }
-                    ?: favoriteUiEntity.backdropPath?.let {
-                        movieImageView.LoadBackdrop(
-                            it,
-                            context
-                        )
-                    }
                 titleMovie.text = favoriteUiEntity.title
                 root.setOnClickListener {
                     mCallback.onItemClick(favoriteUiEntity.id)
