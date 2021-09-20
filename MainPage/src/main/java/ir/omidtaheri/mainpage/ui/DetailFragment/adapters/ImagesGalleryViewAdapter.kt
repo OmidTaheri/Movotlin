@@ -10,7 +10,6 @@ import ir.omidtaheri.mainpage.databinding.ImagesViewerItemBinding
 import ir.omidtaheri.mainpage.entity.Backdrop
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.clear
-import kotlinx.android.synthetic.main.movie_viewer_item.view.*
 
 class ImagesGalleryViewAdapter(val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -94,7 +93,7 @@ class ImagesGalleryViewAdapter(val context: Context) : RecyclerView.Adapter<Base
             val movieBackdropEntity = items.get(position)
 
             binding.apply {
-                movieImageView.LoadBackdrop(movieBackdropEntity.filePath,context)
+                movieImageView.LoadBackdrop(movieBackdropEntity.filePath, context)
             }
         }
     }
