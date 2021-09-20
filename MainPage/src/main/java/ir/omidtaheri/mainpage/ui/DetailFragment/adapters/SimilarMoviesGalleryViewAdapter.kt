@@ -20,11 +20,6 @@ class SimilarMoviesGalleryViewAdapter(
 ) :
     PagingDataAdapter<MovieUiEntity, BaseViewHolder>(diffCallback) {
 
-//    var items: MutableList<MovieUiEntity> = mutableListOf()
-//
-//    val VIEW_TYPE_EMPTY = 0
-//    val VIEW_TYPE_NORMAL = 1
-
     lateinit var mCallback: Callback
 
     interface Callback {
@@ -39,19 +34,6 @@ class SimilarMoviesGalleryViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
 
-//        when (viewType) {
-//
-//            VIEW_TYPE_EMPTY -> {
-//                return EmptyViewHolder(
-//                    MovieViewerEmptyStateBinding.inflate(
-//                        LayoutInflater.from(parent.context),
-//                        parent,
-//                        false
-//                    )
-//                )
-//            }
-//
-//            else ->
         return ViewHolder(
             MovieViewerItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -60,54 +42,12 @@ class SimilarMoviesGalleryViewAdapter(
             )
         )
 
-//        }
     }
 
-//    override fun getItemCount(): Int {
-//        return if (items != null && items.size != 0) {
-//            items.size
-//        } else {
-//            1
-//        }
-//    }
-//
-//    override fun getItemViewType(position: Int): Int {
-//        return if (items != null && items.size > 0) {
-//            VIEW_TYPE_NORMAL
-//        } else {
-//            VIEW_TYPE_EMPTY
-//        }
-//
-//    }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
     }
-
-//    //    Helpers
-//    fun addItem(item: MovieUiEntity) {
-//        items.add(item)
-//        notifyItemInserted(items.size - 1)
-//    }
-//
-//    fun addItems(list: List<MovieUiEntity>) {
-//        items.addAll(list)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun remove(item: MovieUiEntity) {
-//        val index = items.indexOf(item)
-//        if (index >= 0) {
-//            items.removeAt(index)
-//            notifyItemRemoved(index)
-//        }
-//    }
-//
-//    fun clear() {
-//        items.clear()
-//        notifyDataSetChanged()
-//    }
-//
 
     inner class ViewHolder(val binding: MovieViewerItemBinding) : BaseViewHolder(binding.root) {
 
@@ -116,7 +56,6 @@ class SimilarMoviesGalleryViewAdapter(
 
             binding.apply {
                 movieUiEntity?.posterPath?.let { movieImageView.LoadPoster(it, context) }
-                    ?: movieUiEntity?.backdropPath?.let { movieImageView.LoadBackdrop(it, context) }
                 titleMovie.text = movieUiEntity!!.title
                 root.setOnClickListener {
                     mCallback.onItemClick(movieUiEntity.id)
@@ -146,7 +85,6 @@ class SimilarMoviesGalleryViewAdapter(
 
 object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {
     override fun areItemsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
-        // Id is unique.
         return oldItem.id == newItem.id
     }
 
