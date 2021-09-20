@@ -1,15 +1,16 @@
 package ir.omidtaheri.search.di.modules
 
-import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
+import ir.omidtaheri.daggercore.di.scopes.FragmentScope
+import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModelFactory
 
 @Module
-class SearchModule {
+interface SearchModule {
 
-    @Provides
-    fun provideSearchViewModelFactory(factory: SearchViewModelFactory): ViewModelProvider.Factory {
-        return factory
-    }
+    @FragmentScope
+    @Binds
+    fun provideSearchViewModelFactory(factory: SearchViewModelFactory): ViewModelAssistedFactory<SearchViewModel>
 }
