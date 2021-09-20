@@ -11,16 +11,13 @@ import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.LoadPoster
 import ir.omidtaheri.uibase.clear
-import kotlinx.android.synthetic.main.favorite_list_item.view.*
 
-class FavoritedMovieAdapter(val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
+class FavoritedMovieAdapter(private val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    var items: MutableList<FavoritedMovieUiEntity> = mutableListOf()
-
-    val VIEW_TYPE_EMPTY = 0
-    val VIEW_TYPE_NORMAL = 1
-
-    lateinit var mCallback: Callback
+    private var items: MutableList<FavoritedMovieUiEntity> = mutableListOf()
+    private val VIEW_TYPE_EMPTY = 0
+    private val VIEW_TYPE_NORMAL = 1
+    private lateinit var mCallback: Callback
 
     interface Callback {
         fun onItemClick(movieId: Int)
@@ -75,7 +72,8 @@ class FavoritedMovieAdapter(val context: Context) : RecyclerView.Adapter<BaseVie
         holder.onBind(position)
     }
 
-    //    Helpers
+    //Helpers
+
     fun addItem(item: FavoritedMovieUiEntity) {
         items.add(item)
         notifyItemInserted(items.size - 1)
@@ -103,11 +101,16 @@ class FavoritedMovieAdapter(val context: Context) : RecyclerView.Adapter<BaseVie
     inner class ViewHolder(val binding: FavoriteListItemBinding) : BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
-            val favoriteUiEntity = items.get(position)
+            val favoriteUiEntity = items[position]
 
             binding.apply {
-                favoriteUiEntity.posterPath?.let { movieImageView.LoadPoster(it,context) }
-                    ?: favoriteUiEntity.backdropPath?.let { movieImageView.LoadBackdrop(it,context) }
+                favoriteUiEntity.posterPath?.let { movieImageView.LoadPoster(it, context) }
+                    ?: favoriteUiEntity.backdropPath?.let {
+                        movieImageView.LoadBackdrop(
+                            it,
+                            context
+                        )
+                    }
                 titleMovie.text = favoriteUiEntity.title
                 root.setOnClickListener {
                     mCallback.onItemClick(favoriteUiEntity.id)
@@ -116,7 +119,7 @@ class FavoritedMovieAdapter(val context: Context) : RecyclerView.Adapter<BaseVie
         }
     }
 
-    inner class EmptyViewHolder(val binding: FavoriteListEmptyStateBinding) :
+    inner class EmptyViewHolder(private val binding: FavoriteListEmptyStateBinding) :
         BaseViewHolder(binding.root) {
 
         override fun onBind(position: Int) {
@@ -129,7 +132,7 @@ class FavoritedMovieAdapter(val context: Context) : RecyclerView.Adapter<BaseVie
 
     override fun onViewRecycled(holder: BaseViewHolder) {
         super.onViewRecycled(holder)
-        if (holder is  ViewHolder) {
+        if (holder is ViewHolder) {
             holder.binding.movieImageView.clear(context)
         }
     }
