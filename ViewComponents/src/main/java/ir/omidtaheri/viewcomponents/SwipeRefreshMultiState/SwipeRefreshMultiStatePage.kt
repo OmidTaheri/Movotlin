@@ -15,19 +15,15 @@ import kotlinx.android.synthetic.main.multi_state_error_state.view.*
 class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
-    private val viewbinding: SwipeRefreshMultiStatePageBinding
-
-    init {
-        viewbinding =
-            SwipeRefreshMultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
-    }
+    private val viewBinding: SwipeRefreshMultiStatePageBinding =
+        SwipeRefreshMultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
 
     private fun swipeRefreshLayoutVisibility(show: Boolean) {
 
         if (show) {
-            viewbinding.swiperefresh.visibility = View.VISIBLE
+            viewBinding.swiperefresh.visibility = View.VISIBLE
         } else {
-            viewbinding.swiperefresh.visibility = View.GONE
+            viewBinding.swiperefresh.visibility = View.GONE
         }
     }
 
@@ -35,43 +31,43 @@ class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
 
         if (show) {
 
-            if (!viewbinding.swiperefresh.isRefreshing) {
-                viewbinding.swiperefresh.isRefreshing = show
+            if (!viewBinding.swiperefresh.isRefreshing) {
+                viewBinding.swiperefresh.isRefreshing = show
             }
 
         } else {
-            viewbinding.swiperefresh.isRefreshing = show
+            viewBinding.swiperefresh.isRefreshing = show
         }
     }
 
     private fun errorLayoutVisibility(show: Boolean) {
 
         if (show) {
-            viewbinding.root.error_layout.visibility = View.VISIBLE
+            viewBinding.root.error_layout.visibility = View.VISIBLE
         } else {
-            viewbinding.root.error_layout.visibility = View.GONE
+            viewBinding.root.error_layout.visibility = View.GONE
         }
     }
 
 
     fun setErrorText(text: String) {
-        viewbinding.root.error_text.text = text
+        viewBinding.root.error_text.text = text
     }
 
     fun setErrorButtonText(text: String) {
-        viewbinding.root.error_btn_retry.text = text
+        viewBinding.root.error_btn_retry.text = text
     }
 
     fun setEmptyText(text: String) {
-        viewbinding.root.messageEmpty.text = text
+        viewBinding.root.messageEmpty.text = text
     }
 
     fun setEmptyImage(resId: Int) {
-        viewbinding.root.imageViewEmpty.setImageResource(resId)
+        viewBinding.root.imageViewEmpty.setImageResource(resId)
     }
 
-    fun ErrorButtonClickListner(listner: OnClickListener) {
-        viewbinding.root.error_btn_retry.setOnClickListener(listner)
+    fun errorButtonClickListner(listner: OnClickListener) {
+        viewBinding.root.error_btn_retry.setOnClickListener(listner)
     }
 
 
@@ -85,7 +81,7 @@ class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
         swipeRefreshLayoutVisibility(false)
         progressBarVisibility(false)
         errorLayoutVisibility(true)
-        ErrorButtonClickListner(listner)
+        errorButtonClickListner(listner)
     }
 
 
@@ -99,19 +95,19 @@ class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
         layoutManager: RecyclerView.LayoutManager
     ) {
-        viewbinding.recyclerView.adapter = adapter
-        viewbinding.recyclerView.layoutManager = layoutManager
+        viewBinding.recyclerView.adapter = adapter
+        viewBinding.recyclerView.layoutManager = layoutManager
     }
 
-    fun getSwipeRefresh() = viewbinding.swiperefresh
+    fun getSwipeRefresh() = viewBinding.swiperefresh
 
-    fun getRecyclerView() = viewbinding.recyclerView
+    fun getRecyclerView() = viewBinding.recyclerView
 
     fun setCustomLayoutAnimation(resId: Int) {
 
         val animation: LayoutAnimationController =
-            AnimationUtils.loadLayoutAnimation(viewbinding.recyclerView.context, resId)
-        getRecyclerView().setLayoutAnimation(animation)
+            AnimationUtils.loadLayoutAnimation(viewBinding.recyclerView.context, resId)
+        getRecyclerView().layoutAnimation = animation
     }
 
 }

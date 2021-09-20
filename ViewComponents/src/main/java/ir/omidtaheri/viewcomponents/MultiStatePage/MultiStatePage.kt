@@ -1,6 +1,5 @@
 package ir.omidtaheri.viewcomponents.MultiStatePage
 
-import android.R
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -16,65 +15,62 @@ import kotlinx.android.synthetic.main.multi_state_error_state.view.*
 
 class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
-    private val viewbinding: MultiStatePageBinding
-
-    init {
-        viewbinding = MultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
-    }
+    private val viewBinding: MultiStatePageBinding =
+        MultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
 
     private fun recyclerViewVisibility(show: Boolean) {
 
         if (show) {
-            viewbinding.recyclerView.visibility = View.VISIBLE
+            viewBinding.recyclerView.visibility = View.VISIBLE
         } else {
-            viewbinding.recyclerView.visibility = View.GONE
+            viewBinding.recyclerView.visibility = View.GONE
         }
     }
 
     private fun progressBarVisibility(show: Boolean) {
 
         if (show) {
-            viewbinding.progressBar.visibility = View.VISIBLE
+            viewBinding.progressBar.visibility = View.VISIBLE
         } else {
-            viewbinding.progressBar.visibility = View.GONE
+            viewBinding.progressBar.visibility = View.GONE
         }
     }
 
     private fun errorLayoutVisibility(show: Boolean) {
 
         if (show) {
-            viewbinding.root.error_layout.visibility = View.VISIBLE
+            viewBinding.root.error_layout.visibility = View.VISIBLE
         } else {
-            viewbinding.root.error_layout.visibility = View.GONE
+            viewBinding.root.error_layout.visibility = View.GONE
         }
     }
 
     private fun emptyLayoutVisibility(show: Boolean) {
         if (show) {
-            viewbinding.root.empty_layout.visibility = View.VISIBLE
+            viewBinding.root.empty_layout.visibility = View.VISIBLE
         } else {
-            viewbinding.root.empty_layout.visibility = View.GONE
+            viewBinding.root.empty_layout.visibility = View.GONE
         }
     }
 
     fun setErrorText(text: String) {
-        viewbinding.root.error_text.text = text
+        viewBinding.root.error_text.text = text
     }
 
     fun setErrorButtonText(text: String) {
-        viewbinding.root.error_btn_retry.text = text
+        viewBinding.root.error_btn_retry.text = text
     }
 
     fun setEmptyText(text: String) {
-        viewbinding.root.messageEmpty.text = text
+        viewBinding.root.messageEmpty.text = text
     }
 
     fun setEmptyImage(resId: Int) {
-        viewbinding.root.imageViewEmpty.setImageResource(resId)
+        viewBinding.root.imageViewEmpty.setImageResource(resId)
     }
 
-    fun ErrorButtonClickListner(listner: OnClickListener) {
-        viewbinding.root.error_btn_retry.setOnClickListener(listner)
+    fun errorButtonClickListner(listner: OnClickListener) {
+        viewBinding.root.error_btn_retry.setOnClickListener(listner)
     }
 
 
@@ -90,7 +86,7 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         progressBarVisibility(false)
         errorLayoutVisibility(true)
         emptyLayoutVisibility(false)
-        ErrorButtonClickListner(listner)
+        errorButtonClickListner(listner)
     }
 
     fun toEmptyState() {
@@ -111,16 +107,16 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
         adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
         layoutManager: RecyclerView.LayoutManager
     ) {
-        viewbinding.recyclerView.adapter = adapter
-        viewbinding.recyclerView.layoutManager = layoutManager
+        viewBinding.recyclerView.adapter = adapter
+        viewBinding.recyclerView.layoutManager = layoutManager
     }
 
-    fun getRecyclerView() = viewbinding.recyclerView
+    fun getRecyclerView() = viewBinding.recyclerView
 
     fun setCustomLayoutAnimation(resId: Int) {
 
         val animation: LayoutAnimationController =
-            AnimationUtils.loadLayoutAnimation(viewbinding.recyclerView.context, resId)
-        getRecyclerView().setLayoutAnimation(animation)
+            AnimationUtils.loadLayoutAnimation(viewBinding.recyclerView.context, resId)
+        getRecyclerView().layoutAnimation = animation
     }
 }
