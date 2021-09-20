@@ -1,5 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ir.omidtaheri.remote">
-
-    /
-</manifest>
+<manifest package="ir.omidtaheri.remote" />
