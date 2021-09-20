@@ -5,23 +5,16 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.leanback.app.DetailsSupportFragmentBackgroundController
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.ClassPresenterSelector
-import androidx.leanback.widget.DetailsOverviewRow
-import androidx.leanback.widget.FullWidthDetailsOverviewRowPresenter
-import androidx.leanback.widget.FullWidthDetailsOverviewSharedElementHelper
-import androidx.leanback.widget.HeaderItem
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
+import androidx.leanback.widget.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import ir.omidtaheri.androidbase.BaseDetailTvFragment
+import ir.omidtaheri.androidbase.viewmodelutils.GenericSavedStateViewModelFactory
 import ir.omidtaheri.daggercore.di.utils.DaggerInjectUtils
 import ir.omidtaheri.mainpagetv.BuildConfig
 import ir.omidtaheri.mainpagetv.R
@@ -38,18 +31,18 @@ import ir.omidtaheri.uibase.GlideApp
  * A wrapper fragment for leanback details screens.
  * It shows a detailed view of video and its metadata plus related videos.
  */
-class DetailsFragment : BaseDetailTvFragment() {
-
-    private lateinit var viewModel: DetailViewModel
+class DetailsFragment : BaseDetailTvFragment<DetailViewModel>() {
 
     private var mSelectedMovieId: Int? = 0
-
     private lateinit var mDetailsBackground: DetailsSupportFragmentBackgroundController
     private lateinit var mPresenterSelector: ClassPresenterSelector
     private lateinit var mRowsAdapter: ArrayObjectAdapter
 
+    private val viewModel: DetailViewModel by viewModels {
+        GenericSavedStateViewModelFactory(viewModelFactory, this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "onCreate DetailsFragment")
         super.onCreate(savedInstanceState)
 
         mSelectedMovieId = activity?.intent?.getIntExtra(DetailsActivity.MOVIEID, 0)
@@ -77,7 +70,7 @@ class DetailsFragment : BaseDetailTvFragment() {
         viewModel.getMovieDetail(mSelectedMovieId!!)
     }
 
-    override fun setDataLiveObserver() {
+    override fun setLiveDataObserver() {
         viewModel.detailLiveData.observe(this, Observer {
             setupDetailsOverviewRow(it)
             setupDetailsOverviewRowPresenter()
@@ -92,30 +85,30 @@ class DetailsFragment : BaseDetailTvFragment() {
     }
 
     override fun setSnackBarMessageLiveDataObserver() {
-        viewModel.MessageSnackBar.observe(this, Observer {
+        viewModel.messageSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastMessageLiveDataObserver() {
-        viewModel.MessageToast.observe(this, Observer {
+        viewModel.messageToast.observe(this, Observer {
             showToast(it)
         })
     }
 
     override fun setSnackBarErrorLivaDataObserver() {
-        viewModel.ErrorSnackBar.observe(this, Observer {
+        viewModel.errorSnackBar.observe(this, Observer {
             showSnackBar(it)
         })
     }
 
     override fun setToastErrorLiveDataObserver() {
-        viewModel.ErrorToast.observe(this, Observer {
+        viewModel.errorToast.observe(this, Observer {
             showToast(it)
         })
     }
 
-    override fun ConfigDaggerComponent() {
+    override fun configDaggerComponent() {
         DaggerDetailComponent
             .builder()
             .applicationComponent(DaggerInjectUtils.provideApplicationComponent(requireContext().applicationContext))
@@ -123,9 +116,6 @@ class DetailsFragment : BaseDetailTvFragment() {
             .inject(this)
     }
 
-    override fun SetViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
-    }
 
     override fun showSnackBar(message: String) {
         TODO("Not yet implemented")
@@ -144,7 +134,7 @@ class DetailsFragment : BaseDetailTvFragment() {
 
         GlideApp.with(requireActivity())
             .asBitmap()
-            .load(BuildConfig.BACKDROP_URL + movieDetailUiEntity?.backdropPath)
+            .load(BuildConfig.BACKDROP_URL + movieDetailUiEntity.backdropPath)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .error(R.drawable.default_background)
@@ -172,7 +162,7 @@ class DetailsFragment : BaseDetailTvFragment() {
         val height = convertDpToPixel(requireContext(), DETAIL_THUMB_HEIGHT)
 
         GlideApp.with(requireActivity())
-            .load(BuildConfig.POSTER_URL + movieDetailUiEntity?.posterPath)
+            .load(BuildConfig.POSTER_URL + movieDetailUiEntity.posterPath)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .error(R.drawable.default_background)
@@ -181,7 +171,6 @@ class DetailsFragment : BaseDetailTvFragment() {
                     resource: Drawable,
                     transition: Transition<in Drawable>?
                 ) {
-                    Log.d(TAG, "details overview card image url ready: " + resource)
                     row.imageDrawable = resource
                     mRowsAdapter.notifyArrayItemRangeChanged(0, mRowsAdapter.size())
                 }
@@ -232,8 +221,6 @@ class DetailsFragment : BaseDetailTvFragment() {
     }
 
     companion object {
-        private const val TAG = "DetailsFragment"
-
         private const val DETAIL_THUMB_WIDTH = 274
         private const val DETAIL_THUMB_HEIGHT = 274
     }
