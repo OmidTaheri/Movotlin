@@ -9,14 +9,13 @@ import android.view.animation.LayoutAnimationController
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.viewcomponents.databinding.MultiStatePageBinding
-import kotlinx.android.synthetic.main.multi_state_empty_state.view.*
-import kotlinx.android.synthetic.main.multi_state_error_state.view.*
+import kotlinx.android.synthetic.main.multi_state_page.view.*
 
 
 class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
     private val viewBinding: MultiStatePageBinding =
-        MultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
+        MultiStatePageBinding.inflate(LayoutInflater.from(context), this)
 
     private fun recyclerViewVisibility(show: Boolean) {
 
@@ -54,23 +53,23 @@ class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout
     }
 
     fun setErrorText(text: String) {
-        viewBinding.root.error_text.text = text
+        viewBinding.errorLayout.errorText.text = text
     }
 
     fun setErrorButtonText(text: String) {
-        viewBinding.root.error_btn_retry.text = text
+        viewBinding.errorLayout.errorText.text = text
     }
 
     fun setEmptyText(text: String) {
-        viewBinding.root.messageEmpty.text = text
+        viewBinding.emptyLayout.messageEmpty.text = text
     }
 
     fun setEmptyImage(resId: Int) {
-        viewBinding.root.imageViewEmpty.setImageResource(resId)
+        viewBinding.emptyLayout.imageViewEmpty.setImageResource(resId)
     }
 
     fun errorButtonClickListner(listner: OnClickListener) {
-        viewBinding.root.error_btn_retry.setOnClickListener(listner)
+        viewBinding.errorLayout.errorBtnRetry.setOnClickListener(listner)
     }
 
 
