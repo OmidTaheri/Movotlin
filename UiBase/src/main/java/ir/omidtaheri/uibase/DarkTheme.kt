@@ -17,6 +17,15 @@ fun getDarkModeStatus(ctx: Context): Boolean {
     return isNightModeEnabled
 }
 
+fun setDarkModeStatus(ctx: Context, isNightModeEnabled: Boolean) {
+    val mPrefs: SharedPreferences =
+        ctx.getSharedPreferences("ApplicationSetting", MODE_PRIVATE)
+    val ed: SharedPreferences.Editor = mPrefs.edit()
+    ed.putBoolean(DARK_MODE, isNightModeEnabled)
+    ed.apply()
+    enableDarkMode(isNightModeEnabled)
+}
+
 fun enableDarkMode(darkMode: Boolean) {
 
     if (darkMode) {
@@ -32,23 +41,8 @@ fun switchThemeMode(ctx: Context) {
     if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         darkMode = true
 
-    if (darkMode) {
-        setDarkModeStatus(ctx, !darkMode)
-    } else {
-        setDarkModeStatus(ctx, !darkMode)
-    }
+    setDarkModeStatus(ctx, !darkMode)
+
 }
-
-
-fun setDarkModeStatus(ctx: Context, isNightModeEnabled: Boolean) {
-    val mPrefs: SharedPreferences =
-        ctx.getSharedPreferences("ApplicationSetting", MODE_PRIVATE)
-    val ed: SharedPreferences.Editor = mPrefs.edit()
-    ed.putBoolean(DARK_MODE, isNightModeEnabled)
-    ed.apply()
-    enableDarkMode(isNightModeEnabled)
-}
-
-
 
 
