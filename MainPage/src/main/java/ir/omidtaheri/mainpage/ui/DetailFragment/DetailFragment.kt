@@ -217,10 +217,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 savedStateMainbackdrop = it1
                 mainBackdrop.LoadMainBackdrop(it1, requireContext())
             }
-                ?: it.posterPath?.let { it1 ->
-                    savedStateMainposter = it1
-                    mainBackdrop.LoadPoster(it1, requireContext())
-                }
 
 
             tagline.visibility = View.GONE
