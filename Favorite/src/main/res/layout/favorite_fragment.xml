@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:fitsSystemWindows="true"
-            app:title="@string/app_name"
-            app:menu="@menu/top_app_bar"/>
+            app:menu="@menu/top_app_bar"
+            app:title="@string/app_name" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -33,22 +33,15 @@
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <ir.omidtaheri.viewcomponents.SwipeRefreshMultiState.SwipeRefreshMultiStatePage
+            android:id="@+id/swipeRefreshMultiStatePage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
+            android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
+            android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas" />
 
-            <ir.omidtaheri.viewcomponents.SwipeRefreshMultiState.SwipeRefreshMultiStatePage
-                android:id="@+id/swipeRefreshMultiStatePage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/material_layout_vertical_spacing_between_content_areas"
-                android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
-                android:layout_marginRight="@dimen/material_layout_vertical_spacing_between_content_areas"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
