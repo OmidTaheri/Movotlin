@@ -16,6 +16,12 @@
         <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
+        <item name="movotlinSearchBarHintColor">@color/searchBarHintColor</item>
+        <item name="movotlinSearchBarTextColor">@color/searchBarTextColor</item>
+        <item name="movotlinStarImageColor">@color/starImageColor</item>
+        <item name="movotlinFavoriteImageColor">@color/favoriteBorderImageColor</item>
+        <item name="movotlinFavoriteBorderImageColor">@color/favoriteImageColor</item>
+
 
         ///typography
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyApp.Headline1</item>
@@ -42,9 +48,9 @@
         </item>
 
         //system bars
-        <item name="android:navigationBarColor" tools:targetApi="21">?attr/colorPrimaryVariant
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/colorPrimaryVariant
         </item>
-        <item name="android:statusBarColor" tools:targetApi="21">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@color/colorPrimaryVariant</item>
     </style>
 
 
@@ -69,7 +75,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_headline_1_light</item>
     </style>
 
@@ -79,7 +85,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_headline_2_light</item>
     </style>
 
@@ -89,7 +95,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_headline_3_regular</item>
     </style>
 
@@ -99,7 +105,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_headline_4_regular</item>
     </style>
 
@@ -109,7 +115,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_headline_5_regular</item>
     </style>
 
@@ -119,7 +125,7 @@
         <item name="fontFamily">@font/crimson_bold</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_headline_6_medium</item>
     </style>
 
@@ -129,7 +135,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_subtitle_1_regular</item>
     </style>
 
@@ -138,7 +144,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_subtitle_2_medium</item>
     </style>
 
@@ -148,7 +154,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_body_1_regular</item>
     </style>
 
@@ -158,7 +164,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_body_2_regular</item>
     </style>
 
@@ -168,7 +174,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_caption_regular</item>
     </style>
 
@@ -178,7 +184,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_button_medium</item>
     </style>
 
@@ -188,7 +194,7 @@
         <item name="fontFamily">@font/crimson_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
         <item name="android:textSize">@dimen/material_english_text_size_overline_regular</item>
     </style>
 
@@ -202,7 +208,7 @@
     </style>
 
     <style name="Widget.MyApp.Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextAppearance">@style/TextAppearance.MyApp.Headline5</item>
+        <item name="titleTextAppearance">?attr/textAppearanceHeadline5</item>
         <item name="titleTextColor">?attr/colorOnPrimary</item>
         <item name="android:background">?attr/colorPrimary</item>
 
@@ -215,9 +221,8 @@
 
     <style name="Widget.MyApp.SearchBar" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxBackgroundColor">?attr/colorOnPrimary</item>
-        <item name="android:textColorHint">@color/searchBarHintColor</item>
+        <item name="android:textColorHint">?attr/movotlinSearchBarHintColor</item>
     </style>
-
 
 
 </resources>

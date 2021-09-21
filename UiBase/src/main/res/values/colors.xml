@@ -22,5 +22,7 @@
     <color name="searchBarHintColor">#99000000</color>
     <color name="searchBarTextColor">#000000</color>
 
-
+    <color name="starImageColor">#F4F009</color>
+    <color name="favoriteBorderImageColor">#FFFFFF</color>
+    <color name="favoriteImageColor">#F44336</color>
 </resources>

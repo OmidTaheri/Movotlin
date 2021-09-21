@@ -36,7 +36,7 @@
                 android:id="@+id/searchbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/material_component_bottom_navigation_height"
-                android:textColor="@color/searchBarTextColor" />
+                android:textColor="?attr/movotlinSearchBarTextColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
