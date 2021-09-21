@@ -9,6 +9,7 @@ import android.view.animation.LayoutAnimationController
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.viewcomponents.databinding.GalleryPageBinding
+import kotlinx.android.synthetic.main.gallery_page.view.*
 import kotlinx.android.synthetic.main.multi_state_error_state.view.*
 
 class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
@@ -44,15 +45,15 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
     }
 
     fun setErrorText(text: String) {
-        viewBinding.root.error_layout.error_text.text = text
+        viewBinding.errorLayout.errorText.text = text
     }
 
     fun setErrorButtonText(text: String) {
-        viewBinding.root.error_layout.error_btn_retry.text = text
+        viewBinding.errorLayout.errorBtnRetry.text = text
     }
 
     fun errorButtonClickListner(listner: OnClickListener) {
-        viewBinding.root.error_layout.error_btn_retry.setOnClickListener(listner)
+        viewBinding.errorLayout.errorBtnRetry.setOnClickListener(listner)
     }
 
 
