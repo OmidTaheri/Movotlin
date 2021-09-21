@@ -9,8 +9,8 @@ object BuildAndroidConfig {
     const val TV_MIN_SDK_VERSION =21
     const val TARGET_SDK_VERSION =29
 
-    const val VERSION_CODE = 3
-    const val VERSION_NAME = "1.2.0"
+    const val VERSION_CODE = 4
+    const val VERSION_NAME = "1.3.0"
 
     const val SUPPORT_LIBRARY_VECTOR_DRAWABLES = true
 
