@@ -9,14 +9,13 @@ import android.view.animation.LayoutAnimationController
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.viewcomponents.databinding.SwipeRefreshMultiStatePageBinding
-import kotlinx.android.synthetic.main.multi_state_empty_state.view.*
-import kotlinx.android.synthetic.main.multi_state_error_state.view.*
+import kotlinx.android.synthetic.main.swipe_refresh_multi_state_page.view.*
 
 class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
     private val viewBinding: SwipeRefreshMultiStatePageBinding =
-        SwipeRefreshMultiStatePageBinding.inflate(LayoutInflater.from(context), this, true)
+        SwipeRefreshMultiStatePageBinding.inflate(LayoutInflater.from(context), this)
 
     private fun swipeRefreshLayoutVisibility(show: Boolean) {
 
@@ -51,23 +50,15 @@ class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
 
 
     fun setErrorText(text: String) {
-        viewBinding.root.error_text.text = text
+        viewBinding.errorLayout.errorText.text = text
     }
 
     fun setErrorButtonText(text: String) {
-        viewBinding.root.error_btn_retry.text = text
-    }
-
-    fun setEmptyText(text: String) {
-        viewBinding.root.messageEmpty.text = text
-    }
-
-    fun setEmptyImage(resId: Int) {
-        viewBinding.root.imageViewEmpty.setImageResource(resId)
+        viewBinding.errorLayout.errorBtnRetry.text = text
     }
 
     fun errorButtonClickListner(listner: OnClickListener) {
-        viewBinding.root.error_btn_retry.setOnClickListener(listner)
+        viewBinding.errorLayout.errorBtnRetry.setOnClickListener(listner)
     }
 
 
