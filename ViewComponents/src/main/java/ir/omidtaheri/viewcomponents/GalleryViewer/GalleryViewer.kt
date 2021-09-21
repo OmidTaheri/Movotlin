@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.multi_state_error_state.view.*
 class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
     private val viewBinding: GalleryPageBinding =
-        GalleryPageBinding.inflate(LayoutInflater.from(context), this, true)
+        GalleryPageBinding.inflate(LayoutInflater.from(context), this)
 
     private fun recyclerViewVisibility(show: Boolean) {
 
@@ -44,15 +44,15 @@ class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(
     }
 
     fun setErrorText(text: String) {
-        viewBinding.root.error_text.text = text
+        viewBinding.root.error_layout.error_text.text = text
     }
 
     fun setErrorButtonText(text: String) {
-        viewBinding.root.error_btn_retry.text = text
+        viewBinding.root.error_layout.error_btn_retry.text = text
     }
 
     fun errorButtonClickListner(listner: OnClickListener) {
-        viewBinding.root.error_btn_retry.setOnClickListener(listner)
+        viewBinding.root.error_layout.error_btn_retry.setOnClickListener(listner)
     }
 
 
