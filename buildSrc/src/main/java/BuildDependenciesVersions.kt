@@ -30,7 +30,7 @@ object BuildDependenciesVersions {
         const val FUTURES = "1.0.0"
         const val ROOM = "2.2.5"
         const val NAVIGATION = "2.4.0-alpha09"
-        const val PAGING = "3.0.0-alpha03"
+        const val PAGING = "3.0.1"
         const val WORKERMANAGER = "2.0.1"
     }
 
