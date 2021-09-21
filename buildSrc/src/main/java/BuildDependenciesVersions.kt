@@ -12,7 +12,7 @@ object BuildDependenciesVersions {
         const val KOTLIN = "1.3.72"
         const val COROUTINES = "1.3.3"
         const val CORE_KTX = "1.3.0"
-        const val FRAGMENT_KTX = "1.2.0-alpha02"
+        const val FRAGMENT_KTX = "1.4.0-alpha09"
         const val LIVEDATA_KTX = "2.2.0"
         const val PLAY_CORE = "1.6.4"
         const val LEAKCANARY = "2.4"
@@ -29,7 +29,7 @@ object BuildDependenciesVersions {
         const val LIFECYCLE = "2.2.0"
         const val FUTURES = "1.0.0"
         const val ROOM = "2.2.5"
-        const val NAVIGATION = "2.3.0"
+        const val NAVIGATION = "2.4.0-alpha09"
         const val PAGING = "3.0.0-alpha03"
         const val WORKERMANAGER = "2.0.1"
     }
@@ -37,8 +37,8 @@ object BuildDependenciesVersions {
 
     object UiDependenciesVersions {
         const val APPCOMPAT = "1.1.0"
-        const val MATERIAL = "1.3.0-alpha01"
-        const val RECYCLE_VIEW = "1.2.0-alpha03"
+        const val MATERIAL = "1.3.0"
+        const val RECYCLE_VIEW = "1.2.0"
         const val CONSTRAINT_LAYOUT = "2.0.0-beta7"
         const val CARDVIEW = "1.0.0"
         const val VIEWPAGER2 = "1.0.0"
