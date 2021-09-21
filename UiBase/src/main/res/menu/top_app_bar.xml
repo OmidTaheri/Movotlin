@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/change_theme"
-        android:icon="@drawable/ic_disable_night"
+        android:icon="@drawable/ic_night_mode_switch"
         android:title="@string/title_change_theme"
         app:showAsAction="ifRoom" />
 

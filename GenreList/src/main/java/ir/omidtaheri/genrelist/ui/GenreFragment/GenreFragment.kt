@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -25,7 +24,6 @@ import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerGenreComponent
 import ir.omidtaheri.genrelist.ui.GenreFragment.adapters.GenreListAdapter
 import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModel
-import ir.omidtaheri.uibase.getDarkModeStatus
 import ir.omidtaheri.uibase.loadRecyclerViewState
 import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.uibase.switchThemeMode
@@ -87,28 +85,10 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
         multiStatePage = viewBinding!!.MultiStatePage
         toolbar = viewBinding!!.mainToolbar
 
-
-        if (getDarkModeStatus(requireContext())) {
-            toolbar.menu.findItem(R.id.change_theme).icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
-        } else {
-            toolbar.menu.findItem(R.id.change_theme).icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
-        }
-
-
         toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.change_theme -> {
                     switchThemeMode(requireContext())
-                    if (getDarkModeStatus(requireContext())) {
-                        menuItem.icon =
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
-                    } else {
-                        menuItem.icon =
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
-                    }
-
                     true
                 }
                 else -> false

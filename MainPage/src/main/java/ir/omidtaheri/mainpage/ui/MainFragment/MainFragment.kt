@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -197,27 +196,10 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
         galleryViewerUpComing = viewBinding!!.GalleryViewer3
         toolbar = viewBinding!!.mainToolbar
 
-
-        if (getDarkModeStatus(requireContext())) {
-            toolbar.menu.findItem(R.id.change_theme).icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
-        } else {
-            toolbar.menu.findItem(R.id.change_theme).icon =
-                ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
-        }
-
-
         toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.change_theme -> {
                     switchThemeMode(requireContext())
-                    if (getDarkModeStatus(requireContext())) {
-                        menuItem.icon =
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_enable_night)
-                    } else {
-                        menuItem.icon =
-                            ContextCompat.getDrawable(requireContext(), R.drawable.ic_disable_night)
-                    }
 
                     true
                 }
