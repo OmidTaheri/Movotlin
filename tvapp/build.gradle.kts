@@ -77,11 +77,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    lintOptions {
-        setCheckDependencies(true)
-        setHtmlReport(true)
-        setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
-    }
+//    lintOptions {
+//        setCheckDependencies(true)
+//        setHtmlReport(true)
+//        setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
+//    }
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
