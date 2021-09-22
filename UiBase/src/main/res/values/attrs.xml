@@ -6,5 +6,6 @@
     <attr name="movotlinStarImageColor" format="color" />
     <attr name="movotlinFavoriteImageColor" format="color" />
     <attr name="movotlinFavoriteBorderImageColor" format="color" />
+    <attr name="movotlinPlaceholderImageColor" format="color" />
 
 </resources>

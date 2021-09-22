@@ -21,6 +21,7 @@
         <item name="movotlinStarImageColor">@color/starImageColor</item>
         <item name="movotlinFavoriteImageColor">@color/favoriteBorderImageColor</item>
         <item name="movotlinFavoriteBorderImageColor">@color/favoriteImageColor</item>
+        <item name="movotlinPlaceholderImageColor">@color/placeholderImageColor</item>
 
 
         ///typography

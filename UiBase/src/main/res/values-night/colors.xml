@@ -25,5 +25,5 @@
     <color name="starImageColor">#F4F009</color>
     <color name="favoriteBorderImageColor">#FFFFFF</color>
     <color name="favoriteImageColor">#F44336</color>
-
+    <color name="placeholderImageColor">#5a0013</color>
 </resources>

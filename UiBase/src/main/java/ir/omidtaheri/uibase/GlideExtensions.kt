@@ -9,7 +9,9 @@ import com.bumptech.glide.request.RequestOptions
 fun ImageView.LoadPoster(posterPath: String, myConetxt: Context) {
 
     val requestOptions = RequestOptions()
-
+    requestOptions.apply {
+        placeholder(R.drawable.ic_baseline_local_movies_24)
+    }
     GlideApp.with(myConetxt)
         .load(BuildConfig.POSTER_URL + posterPath)
         .skipMemoryCache(false)
