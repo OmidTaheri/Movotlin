@@ -1,5 +1,6 @@
 package ir.omidtaheri.domain.paigingSource
 
+import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
@@ -49,4 +50,13 @@ class GetPopularMoviesSinglePageSource(
                 }
             }
     }
+
+    override fun getRefreshKey(state: PagingState<Int, MovieDomainEntity>): Int? {
+        return state.anchorPosition?.let {
+            state.closestPageToPosition(it)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
+        }
+    }
+
+
 }
