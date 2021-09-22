@@ -9,18 +9,17 @@ import extentions.kapt
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
-    kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
     id(BuildPlugins.NAVIGATION_SAFE_ARGS)
 }
 
 android {
-    compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
-    buildToolsVersion(BuildAndroidConfig.BUILD_TOOLS_VERSION)
+    compileSdkVersion = BuildAndroidConfig.COMPILE_SDK_VERSION.toString()
+    buildToolsVersion = BuildAndroidConfig.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion(BuildAndroidConfig.MIN_SDK_VERSION)
-        targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
+        minSdk = BuildAndroidConfig.MIN_SDK_VERSION
+        targetSdk = BuildAndroidConfig.TARGET_SDK_VERSION
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
@@ -29,7 +28,6 @@ android {
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -39,7 +37,6 @@ android {
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
         }
     }

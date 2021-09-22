@@ -10,18 +10,17 @@ import extentions.kapt
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
-    kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
-    compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
-    buildToolsVersion(BuildAndroidConfig.BUILD_TOOLS_VERSION)
+    compileSdkVersion = BuildAndroidConfig.COMPILE_SDK_VERSION.toString()
+    buildToolsVersion = BuildAndroidConfig.BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId = BuildAndroidConfig.TV_APPLICATION_ID
-        minSdkVersion(BuildAndroidConfig.TV_MIN_SDK_VERSION)
-        targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
+        minSdk = BuildAndroidConfig.MIN_SDK_VERSION
+        targetSdk = BuildAndroidConfig.TARGET_SDK_VERSION
         versionCode = BuildAndroidConfig.VERSION_CODE
         versionName = BuildAndroidConfig.VERSION_NAME
         multiDexEnabled = true
@@ -77,11 +76,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-//    lintOptions {
-//        setCheckDependencies(true)
-//        setHtmlReport(true)
-//        setHtmlOutput(file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html"))
-//    }
+
+    lint {
+        isCheckDependencies = true
+        htmlReport = true
+        htmlOutput =
+            file("${project.rootDir}/build/reports/lint/lint_report_${BuildAndroidConfig.VERSION_NAME}.html")
+    }
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()

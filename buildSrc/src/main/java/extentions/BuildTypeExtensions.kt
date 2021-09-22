@@ -1,16 +1,30 @@
 package extentions
 
-import com.android.build.gradle.internal.dsl.BuildType
+import com.android.build.api.dsl.ApplicationBuildType
+import com.android.build.api.dsl.LibraryBuildType
 
 
-fun BuildType.buildConfigStringField(name: String, value: String) {
+fun ApplicationBuildType.buildConfigStringField(name: String, value: String) {
     this.buildConfigField("String", name, "\"$value\"")
 }
 
-fun BuildType.buildConfigIntField(name: String, value: Int) {
+fun ApplicationBuildType.buildConfigIntField(name: String, value: Int) {
     this.buildConfigField("int", name, value.toString())
 }
 
-fun BuildType.buildConfigBooleanField(name: String, value: Boolean) {
+fun ApplicationBuildType.buildConfigBooleanField(name: String, value: Boolean) {
+    this.buildConfigField("boolean", name, value.toString())
+}
+
+
+fun LibraryBuildType.buildConfigStringField(name: String, value: String) {
+    this.buildConfigField("String", name, "\"$value\"")
+}
+
+fun LibraryBuildType.buildConfigIntField(name: String, value: Int) {
+    this.buildConfigField("int", name, value.toString())
+}
+
+fun LibraryBuildType.buildConfigBooleanField(name: String, value: Boolean) {
     this.buildConfigField("boolean", name, value.toString())
 }

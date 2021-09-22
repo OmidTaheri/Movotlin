@@ -1,23 +1,25 @@
-import com.android.build.gradle.internal.dsl.ProductFlavor
+import BuildTypeDebug.versionNameSuffix
+import com.android.build.api.dsl.ApplicationProductFlavor
+import com.android.build.api.dsl.LibraryProductFlavor
 import org.gradle.api.NamedDomainObjectContainer
 
 interface BuildProductFlavor {
     val name: String
 
     fun libraryCreate(
-        namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>
-    ): ProductFlavor
+        namedDomainObjectContainer: NamedDomainObjectContainer<LibraryProductFlavor>
+    ): LibraryProductFlavor
 
     fun appCreate(
-        namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>
-    ): ProductFlavor
+        namedDomainObjectContainer: NamedDomainObjectContainer<ApplicationProductFlavor>
+    ): ApplicationProductFlavor
 }
 
 object FullFlavor : BuildProductFlavor {
 
     override val name = "full"
 
-    override fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor {
+    override fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<LibraryProductFlavor>): LibraryProductFlavor {
 
         return namedDomainObjectContainer.create(name) {
             versionNameSuffix = "-full"
@@ -26,7 +28,7 @@ object FullFlavor : BuildProductFlavor {
 
     }
 
-    override fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor {
+    override fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ApplicationProductFlavor>): ApplicationProductFlavor {
 
         return namedDomainObjectContainer.create(name) {
             applicationIdSuffix = ".full"
@@ -38,12 +40,11 @@ object FullFlavor : BuildProductFlavor {
 }
 
 
-
 object DemoFlavor : BuildProductFlavor {
 
     override val name = "demo"
 
-    override fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor {
+    override fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<LibraryProductFlavor>): LibraryProductFlavor {
 
         return namedDomainObjectContainer.create(name) {
             versionNameSuffix = "-demo"
@@ -52,7 +53,7 @@ object DemoFlavor : BuildProductFlavor {
 
     }
 
-    override fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor {
+    override fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ApplicationProductFlavor>): ApplicationProductFlavor {
 
         return namedDomainObjectContainer.create(name) {
             applicationIdSuffix = ".demo"
@@ -64,12 +65,11 @@ object DemoFlavor : BuildProductFlavor {
 }
 
 
-
 object FullQAFlavor : BuildProductFlavor {
 
     override val name = "QA"
 
-    override fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor {
+    override fun libraryCreate(namedDomainObjectContainer: NamedDomainObjectContainer<LibraryProductFlavor>): LibraryProductFlavor {
 
         return namedDomainObjectContainer.create(name) {
             versionNameSuffix = "-QA"
@@ -78,7 +78,7 @@ object FullQAFlavor : BuildProductFlavor {
 
     }
 
-    override fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ProductFlavor>): ProductFlavor {
+    override fun appCreate(namedDomainObjectContainer: NamedDomainObjectContainer<ApplicationProductFlavor>): ApplicationProductFlavor {
 
         return namedDomainObjectContainer.create(name) {
             applicationIdSuffix = ".QA"

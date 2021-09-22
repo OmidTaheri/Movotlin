@@ -10,17 +10,16 @@ import extentions.kapt
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
-    kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
-    compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
-    buildToolsVersion(BuildAndroidConfig.BUILD_TOOLS_VERSION)
+    compileSdkVersion = BuildAndroidConfig.COMPILE_SDK_VERSION.toString()
+    buildToolsVersion = BuildAndroidConfig.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion(BuildAndroidConfig.MIN_SDK_VERSION)
-        targetSdkVersion(BuildAndroidConfig.TARGET_SDK_VERSION)
+        minSdk = BuildAndroidConfig.MIN_SDK_VERSION
+        targetSdk = BuildAndroidConfig.TARGET_SDK_VERSION
 
         vectorDrawables.useSupportLibrary = BuildAndroidConfig.SUPPORT_LIBRARY_VECTOR_DRAWABLES
         testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
@@ -29,7 +28,6 @@ android {
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
             buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280")
             buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w500")
@@ -41,7 +39,6 @@ android {
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
             buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w1280")
             buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w600")

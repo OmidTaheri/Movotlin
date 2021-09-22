@@ -19,7 +19,7 @@ object BuildTypeDebug : BuildTypes {
     override val debuggable = true
 
     const val applicationIdSuffix = ".debug"
-    const val versionNameSuffix = "-DEBUG"
+    var versionNameSuffix = "-DEBUG"
 
 
 }

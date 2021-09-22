@@ -8,13 +8,12 @@ import extentions.implementation
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY)
     kotlin(BuildPlugins.KOTLIN_ANDROID)
-    kotlin(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
-    compileSdkVersion(BuildAndroidConfig.COMPILE_SDK_VERSION)
-    buildToolsVersion(BuildAndroidConfig.BUILD_TOOLS_VERSION)
+    compileSdkVersion = BuildAndroidConfig.COMPILE_SDK_VERSION.toString()
+    buildToolsVersion = BuildAndroidConfig.BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion(BuildAndroidConfig.MIN_SDK_VERSION)
@@ -27,7 +26,6 @@ android {
     buildTypes {
         getByName(BuildTypes.RELEASE) {
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
-            isDebuggable = BuildTypeRelease.debuggable
             isTestCoverageEnabled = BuildTypeRelease.isTestCoverageEnabled
             buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w500")
             buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w500")
@@ -39,7 +37,6 @@ android {
 
         getByName(BuildTypes.DEBUG) {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
-            isDebuggable = BuildTypeDebug.debuggable
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
             buildConfigStringField("BACKDROP_URL", "http://image.tmdb.org/t/p/w500")
             buildConfigStringField("POSTER_URL", "http://image.tmdb.org/t/p/w500")
