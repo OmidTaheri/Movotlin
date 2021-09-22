@@ -110,7 +110,7 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
             }
             configRecyclerView(
                 adapterTopRate as RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
@@ -141,7 +141,7 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
             }
             configRecyclerView(
                 adapterPopular as RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
@@ -173,7 +173,7 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
 
             configRecyclerView(
                 adapterUpComing as RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }

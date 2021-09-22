@@ -82,7 +82,7 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
 
             configRecyclerView(
                 adapterImages as RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
@@ -116,7 +116,7 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             }
             configRecyclerView(
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
