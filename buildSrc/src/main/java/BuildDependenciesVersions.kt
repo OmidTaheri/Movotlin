@@ -68,7 +68,7 @@ object BuildDependenciesVersions {
 
 
     object GradlePluginsVersions {
-        const val GRADLE_ANDROID_PLUGIN = "7.0.0"
+        const val GRADLE_ANDROID_PLUGIN = "4.0.0"
         const val GRADLE_KOTLIN_PLUGIN = "1.5.31"
         const val SAFEARGS = JetpackDependenciesVersions.NAVIGATION
     }
