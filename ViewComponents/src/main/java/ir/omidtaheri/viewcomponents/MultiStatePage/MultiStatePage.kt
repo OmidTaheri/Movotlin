@@ -12,7 +12,7 @@ import ir.omidtaheri.viewcomponents.databinding.MultiStatePageBinding
 import kotlinx.android.synthetic.main.multi_state_page.view.*
 
 
-class MultiStatePage(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
+class MultiStatePage(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
     private val viewBinding: MultiStatePageBinding =
         MultiStatePageBinding.inflate(LayoutInflater.from(context), this)
