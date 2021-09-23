@@ -2,6 +2,7 @@ package ir.omidtaheri.detailpage.ui.DetailFragment
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,9 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
     private var savedStateMainbackdrop: String? = null
     private var savedStateMainposter: String? = null
     private var movieId: Int = 0
+    private var stateImagesRecyclerview: Parcelable? = null
+    private var stateSimilarMoviesRecyclerview: Parcelable? = null
+    private var isEnableAnimation = true
 
     private val viewModel: DetailViewModel by viewModels {
         GenericSavedStateViewModelFactory(viewModelFactory, this)
@@ -63,6 +67,22 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val recyclerViewsState = viewModel.restoreStateOfRecyclerViews()
+
+        if (recyclerViewsState.size > 0) {
+            isEnableAnimation = false
+
+            recyclerViewsState[0]?.let {
+                stateImagesRecyclerview = it
+            }
+
+            recyclerViewsState[1]?.let {
+                stateSimilarMoviesRecyclerview = it
+            }
+        }
+
+
         initRecyclerViews()
         args = DetailFragmentArgs.fromBundle(requireArguments())
         movieId = args.movieId
@@ -80,7 +100,10 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 adapterImages as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+
+            if (isEnableAnimation)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+
             toLoadingState()
         }
 
@@ -113,7 +136,8 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 adapterSimilarMovies as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+            if (isEnableAnimation)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
     }
 
@@ -179,11 +203,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        onDestroyGlide()
-    }
-
     override fun configDaggerComponent() {
         DaggerDetailComponent
             .builder()
@@ -227,7 +246,9 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             }
 
             rateNumber.text = it.voteAverage.toString()
-            rateNumber.animate().rotation(720F).setDuration(2000).start()
+
+            if (isEnableAnimation)
+                rateNumber.animate().rotation(720F).setDuration(2000).start()
 
             genreGroup.removeAllViews()
             for (index in it.genres) {
@@ -254,6 +275,14 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                     adapterImages.addItem(item)
                 }
                 galleryViewerImages.toDateState()
+
+                stateImagesRecyclerview?.let {
+                    galleryViewerImages.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                        it
+                    )
+                    stateImagesRecyclerview = null
+                }
+
             } else {
                 titleImages.visibility = View.GONE
                 galleryViewerImages.visibility = View.GONE
@@ -262,6 +291,14 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
             adapterSimilarMovies.submitData(lifecycle, it)
+
+            stateSimilarMoviesRecyclerview?.let {
+                galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    it
+                )
+                stateSimilarMoviesRecyclerview = null
+            }
+
 
             val handler = Handler()
             val runnable: Runnable = Runnable {
@@ -341,6 +378,19 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
     }
 
     override fun onDestroyView() {
+
+        val imagesRecyclerState =
+            galleryViewerImages.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        val similarMoviesRecyclerState =
+            galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        viewModel.saveStateOfRecyclerViews(
+            imagesRecyclerState as LinearLayoutManager.SavedState?,
+            similarMoviesRecyclerState as LinearLayoutManager.SavedState?
+        )
+
+        onDestroyGlide()
         super.onDestroyView()
         viewBinding = null
     }

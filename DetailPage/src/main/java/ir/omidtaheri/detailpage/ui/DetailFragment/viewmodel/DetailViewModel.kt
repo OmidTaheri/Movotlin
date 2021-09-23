@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
@@ -54,6 +55,8 @@ class DetailViewModel(
     private val mApplication: Application
 ) :
     BaseAndroidViewModel(mApplication, state) {
+
+    lateinit var recyclerViewsState: MutableList<LinearLayoutManager.SavedState?>
 
     val favoriteSubject: PublishSubject<FavoritedMovieUiEntity> = PublishSubject.create()
     lateinit var favoriteDisposable: Disposable
@@ -324,4 +327,18 @@ class DetailViewModel(
             }
         }
     }
+
+    fun saveStateOfRecyclerViews(vararg layoutManagersState: LinearLayoutManager.SavedState?) {
+        recyclerViewsState = mutableListOf()
+        layoutManagersState.forEach {
+            recyclerViewsState.add(it)
+        }
+    }
+
+    fun restoreStateOfRecyclerViews(): MutableList<LinearLayoutManager.SavedState?> {
+        return if (::recyclerViewsState.isInitialized)
+            recyclerViewsState
+        else mutableListOf()
+    }
+
 }
