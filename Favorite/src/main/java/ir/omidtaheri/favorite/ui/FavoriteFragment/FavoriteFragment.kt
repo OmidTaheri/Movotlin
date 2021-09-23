@@ -43,9 +43,15 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.restoreStateOfRecyclerView()?.let {
-            stateFavoritedRecyclerView = it
+        if (savedInstanceState != null) {
             isEnableAnimation = false
+            stateFavoritedRecyclerView =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("recyclerState")
+        } else {
+            viewModel.restoreStateOfRecyclerView()?.let {
+                stateFavoritedRecyclerView = it
+                isEnableAnimation = false
+            }
         }
 
         initRecyclerViews()
@@ -64,7 +70,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
                 fetchData()
             }
             if (isEnableAnimation)
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
     }
@@ -119,7 +125,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
                     )
 
                     if (isEnableAnimation)
-                    setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+                        setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
                 }
 
                 stateFavoritedRecyclerView?.let {
@@ -196,6 +202,16 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
         TODO("Not yet implemented")
     }
 
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val recyclerState =
+            swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable("recyclerState", recyclerState)
+
+    }
 
     override fun onDestroyView() {
 
