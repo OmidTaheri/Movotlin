@@ -1,7 +1,5 @@
 package ir.omidtaheri.genrelist.ui.GenreFragment
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -24,8 +22,6 @@ import ir.omidtaheri.genrelist.databinding.GenreFragmentBinding
 import ir.omidtaheri.genrelist.di.components.DaggerGenreComponent
 import ir.omidtaheri.genrelist.ui.GenreFragment.adapters.GenreListAdapter
 import ir.omidtaheri.genrelist.ui.GenreFragment.viewmodel.GenreViewModel
-import ir.omidtaheri.uibase.loadRecyclerViewState
-import ir.omidtaheri.uibase.saveRecyclerViewStat
 import ir.omidtaheri.uibase.switchThemeMode
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
 
@@ -36,6 +32,7 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
     private var viewBinding: GenreFragmentBinding? = null
     private lateinit var multiStatePage: MultiStatePage
     private var stateGenreRecyclerview: Parcelable? = null
+    private var isEnableAnimation = true
 
     private val viewModel: GenreViewModel by viewModels {
         GenericSavedStateViewModelFactory(viewModelFactory, this)
@@ -44,14 +41,9 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val saveSharedPreferences: SharedPreferences =
-            requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
-
-        val genreViewSavedState =
-            loadRecyclerViewState(saveSharedPreferences, "GENRE_RECYCLERVIEW_STATE")
-
-        genreViewSavedState?.let {
+        viewModel.restoreStateOfRecyclerView()?.let {
             stateGenreRecyclerview = it
+            isEnableAnimation = false
         }
 
         initRecyclerViews()
@@ -66,6 +58,7 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
                 genreListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             )
+            if (isEnableAnimation)
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
@@ -180,40 +173,16 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
     }
 
     override fun onDestroyView() {
+
+        val genreRecyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        viewModel.saveFragmentState(
+            genreRecyclerState as LinearLayoutManager.SavedState?
+        )
+
         super.onDestroyView()
         viewBinding = null
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-        ed.clear().apply()
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("GenreFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-
-        val genreRatedRecyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
-
-        saveRecyclerViewStat(
-            ed,
-            "GENRE_RECYCLERVIEW_STATE",
-            genreRatedRecyclerState as LinearLayoutManager.SavedState
-        )
-
-        ed.commit()
-
-    }
-
 
     override fun onItemClick(genreId: Int) {
         val action = GenreFragmentDirections.actionGenreFragmentToMovieListFragment(genreId)
