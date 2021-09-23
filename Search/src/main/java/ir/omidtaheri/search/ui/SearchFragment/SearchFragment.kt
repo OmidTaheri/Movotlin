@@ -42,6 +42,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     private lateinit var searchbar: TextInputEditText
     private var stateSearchRecyclerview: Parcelable? = null
     private var isEnableAnimation = true
+    private var savedQuery: String? = null
 
     private val viewModel: SearchViewModel by viewModels {
         GenericSavedStateViewModelFactory(viewModelFactory, this)
@@ -51,12 +52,22 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val savedQuery = viewModel.restoreSearchQuery()
-        viewModel.restoreStateOfRecyclerView()?.let {
-            stateSearchRecyclerview = it
-            isEnableAnimation = false
-        }
 
+        if (savedInstanceState != null) {
+            isEnableAnimation = false
+            stateSearchRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("SearchRecycler")
+            savedQuery =
+                savedInstanceState.getString("SearchQuery")
+
+        } else {
+
+            savedQuery = viewModel.restoreSearchQuery()
+            viewModel.restoreStateOfRecyclerView()?.let {
+                stateSearchRecyclerview = it
+                isEnableAnimation = false
+            }
+        }
 
         initRecyclerViews()
         setViewListners()
@@ -228,6 +239,18 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
 
     override fun showDialog(message: String) {
         TODO("Not yet implemented")
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val searchRecyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable("SearchRecycler", searchRecyclerState)
+        outState.putString("SearchQuery", searchbar.text.toString())
+
     }
 
 
