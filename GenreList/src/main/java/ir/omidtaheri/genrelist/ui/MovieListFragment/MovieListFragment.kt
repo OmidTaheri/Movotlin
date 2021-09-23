@@ -1,9 +1,7 @@
 package ir.omidtaheri.genrelist.ui.MovieListFragment
 
-import android.app.ActivityOptions
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -36,6 +35,8 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
     private lateinit var multiStatePage: MultiStatePage
     private lateinit var args: MovieListFragmentArgs
     private var genreId: Int = 0
+    private var stateMultiStatePage: Parcelable? = null
+    private var isEnableAnimation = true
 
     private val viewModel: MovieListViewModel by viewModels {
         GenericSavedStateViewModelFactory(viewModelFactory, this)
@@ -43,6 +44,13 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.restoreStateOfRecyclerView()?.let {
+            stateMultiStatePage = it
+            isEnableAnimation = false
+        }
+
+
         initRecyclerViews()
         args = MovieListFragmentArgs.fromBundle(requireArguments())
         genreId = args.genreId
@@ -84,7 +92,8 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
                 movieListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down_long_time)
+            if (isEnableAnimation)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down_long_time)
         }
     }
 
@@ -114,6 +123,13 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
     override fun setLiveDataObserver() {
         viewModel.dataLive.observe(this, Observer {
             movieListAdapter.submitData(lifecycle, it)
+
+            stateMultiStatePage?.let {
+                multiStatePage.getRecyclerView().layoutManager?.onRestoreInstanceState(
+                    it
+                )
+                stateMultiStatePage = null
+            }
         })
     }
 
@@ -163,12 +179,17 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
         TODO("Not yet implemented")
     }
 
-    override fun onStop() {
-        super.onStop()
-        onDestroyGlide()
-    }
 
     override fun onDestroyView() {
+
+        val recyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        viewModel.saveFragmentState(
+            recyclerState as LinearLayoutManager.SavedState?
+        )
+
+        onDestroyGlide()
         super.onDestroyView()
         viewBinding = null
     }
