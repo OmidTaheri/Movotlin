@@ -45,11 +45,17 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.restoreStateOfRecyclerView()?.let {
-            stateMultiStatePage = it
+        if (savedInstanceState != null) {
             isEnableAnimation = false
-        }
+            stateMultiStatePage =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("recyclerState")
 
+        } else {
+            viewModel.restoreStateOfRecyclerView()?.let {
+                stateMultiStatePage = it
+                isEnableAnimation = false
+            }
+        }
 
         initRecyclerViews()
         args = MovieListFragmentArgs.fromBundle(requireArguments())
@@ -179,6 +185,14 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
         TODO("Not yet implemented")
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val recyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable("recyclerState", recyclerState)
+    }
 
     override fun onDestroyView() {
 
