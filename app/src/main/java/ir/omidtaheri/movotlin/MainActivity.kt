@@ -13,7 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
 import ir.omidtaheri.androidbase.BaseActivity
-import ir.omidtaheri.mainpage.ui.DetailFragment.DetailFragmentDirections
 import ir.omidtaheri.mainpage.ui.MainFragment.MainFragmentDirections
 import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentDirections
 import ir.omidtaheri.movotlin.databinding.ActivityMainBinding
@@ -193,46 +192,6 @@ class MainActivity : BaseActivity(),
             return fragments[position]
         }
     }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-
-        val movieId = intent?.data?.path?.substring(1)
-
-        movieId?.let {
-
-
-            val navController = fragments.get(0).getNavFragmentController()
-
-            if (navController.currentDestination?.id == R.id.mainFragment) {
-
-                val action =
-                    MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
-                navController.navigate(action)
-
-
-            } else if (navController.currentDestination?.id == R.id.detailFragment) {
-
-                val action =
-                    DetailFragmentDirections.actionDetailFragmentSelf(movieId?.toInt()!!)
-                navController.navigate(action)
-
-
-            } else if (navController.currentDestination?.id == R.id.movieFullListFragment) {
-
-                val action =
-                    MovieFullListFragmentDirections.actionMovieFullListFragmentToDetailFragment(
-                        movieId?.toInt()!!
-                    )
-                navController.navigate(action)
-
-            }
-
-            setItem(0)
-        }
-
-    }
-
 
     override fun setUp() {
     }
