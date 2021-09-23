@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
@@ -25,6 +26,9 @@ class SearchViewModel(
     private val state: SavedStateHandle,
     private val mApplication: Application
 ) : BaseAndroidViewModel(mApplication, state) {
+
+    private var recyclerViewState: LinearLayoutManager.SavedState? = null
+    private var searchQueryState: String? = null
 
     val searchSubject: PublishSubject<String> = PublishSubject.create()
     private lateinit var currentDisposable: Disposable
@@ -75,5 +79,22 @@ class SearchViewModel(
 
     }
 
+
+
+    fun saveFragmentState(
+        layoutManagerState: LinearLayoutManager.SavedState?,
+        searchQuery: String?
+    ) {
+        recyclerViewState = layoutManagerState
+        searchQueryState = searchQuery
+    }
+
+    fun restoreStateOfRecyclerView(): LinearLayoutManager.SavedState? {
+        return recyclerViewState
+    }
+
+    fun restoreSearchQuery(): String? {
+        return searchQueryState
+    }
 
 }

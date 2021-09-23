@@ -1,10 +1,5 @@
 package ir.omidtaheri.search.ui.SearchFragment
 
-import android.app.ActivityOptions
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
@@ -46,6 +41,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     private lateinit var multiStatePage: MultiStatePage
     private lateinit var searchbar: TextInputEditText
     private var stateSearchRecyclerview: Parcelable? = null
+    private var isEnableAnimation = true
 
     private val viewModel: SearchViewModel by viewModels {
         GenericSavedStateViewModelFactory(viewModelFactory, this)
@@ -55,29 +51,18 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val saveSharedPreferences: SharedPreferences =
-            requireActivity().getSharedPreferences("SearchFragmentState", Context.MODE_PRIVATE)
-
-
-        val savedQuery = saveSharedPreferences.getString("SEARCH_QUERY", "")
-
-
-        val searchViewSavedState =
-            loadRecyclerViewState(saveSharedPreferences, "SEARCH_RECYCLERVIEW_STATE")
-
-        searchViewSavedState?.let {
+        val savedQuery = viewModel.restoreSearchQuery()
+        viewModel.restoreStateOfRecyclerView()?.let {
             stateSearchRecyclerview = it
+            isEnableAnimation = false
         }
 
 
         initRecyclerViews()
         setViewListners()
 
-
-
         savedQuery?.let {
-            if (!(it.isEmpty())) {
+            if (it.isNotEmpty()) {
                 searchbar.setText(it)
                 viewModel.initSearch(it)
             }
@@ -123,7 +108,10 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
                 recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                 GridLayoutManager(context, 2)
             )
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+
+            if (isEnableAnimation)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+
             toEmptyState()
         }
     }
@@ -243,44 +231,19 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     }
 
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroyView() {
 
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("SearchFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-
-        val searchRatedRecyclerState =
+        val searchRecyclerState =
             multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        saveRecyclerViewStat(
-            ed,
-            "SEARCH_RECYCLERVIEW_STATE",
-            searchRatedRecyclerState as LinearLayoutManager.SavedState
+        viewModel.saveFragmentState(
+            searchRecyclerState as LinearLayoutManager.SavedState?,
+            searchbar.text.toString()
         )
 
-
-        ed.putString("SEARCH_QUERY", searchbar.text.toString())
-
-        ed.commit()
-
-
         onDestroyGlide()
-    }
-
-
-    override fun onDestroyView() {
         super.onDestroyView()
         viewBinding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("SearchFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-        ed.clear().apply()
-
     }
 
 
