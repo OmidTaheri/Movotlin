@@ -68,20 +68,29 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerViewsState = viewModel.restoreStateOfRecyclerViews()
-
-        if (recyclerViewsState.size > 0) {
+        if (savedInstanceState != null) {
             isEnableAnimation = false
+            stateImagesRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("images")
+            stateSimilarMoviesRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("similarMovies")
 
-            recyclerViewsState[0]?.let {
-                stateImagesRecyclerview = it
-            }
+        } else {
 
-            recyclerViewsState[1]?.let {
-                stateSimilarMoviesRecyclerview = it
+            val recyclerViewsState = viewModel.restoreStateOfRecyclerViews()
+
+            if (recyclerViewsState.size > 0) {
+                isEnableAnimation = false
+
+                recyclerViewsState[0]?.let {
+                    stateImagesRecyclerview = it
+                }
+
+                recyclerViewsState[1]?.let {
+                    stateSimilarMoviesRecyclerview = it
+                }
             }
         }
-
 
         initRecyclerViews()
         args = DetailFragmentArgs.fromBundle(requireArguments())
@@ -375,6 +384,20 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
 
     override fun showDialog(message: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val imagesRecyclerState =
+            galleryViewerImages.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        val similarMoviesRecyclerState =
+            galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable("images", imagesRecyclerState)
+        outState.putParcelable("similarMovies", similarMoviesRecyclerState)
+
     }
 
     override fun onDestroyView() {
