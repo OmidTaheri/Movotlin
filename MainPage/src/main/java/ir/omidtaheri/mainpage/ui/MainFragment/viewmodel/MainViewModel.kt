@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.interactor.GetPopularMoviesSinglePage
@@ -26,6 +27,7 @@ class MainViewModel(
 ) :
     BaseAndroidViewModel(mApplication, state) {
 
+    lateinit var recyclerViewsState: MutableList<LinearLayoutManager.SavedState?>
 
     private val _poularLiveData: MutableLiveData<PagingData<MovieUiEntity>> = MutableLiveData()
     val poularLiveData: LiveData<PagingData<MovieUiEntity>>
@@ -71,5 +73,18 @@ class MainViewModel(
             }
 
         addDisposable(disposable)
+    }
+
+    fun saveStateOfRecyclerViews(vararg layoutManagersState: LinearLayoutManager.SavedState?) {
+        recyclerViewsState = mutableListOf()
+        layoutManagersState.forEach {
+            recyclerViewsState.add(it)
+        }
+    }
+
+    fun restoreStateOfRecyclerViews(): MutableList<LinearLayoutManager.SavedState?> {
+        return if (::recyclerViewsState.isInitialized)
+            recyclerViewsState
+        else mutableListOf()
     }
 }
