@@ -52,22 +52,37 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
 
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerViewsState = viewModel.restoreStateOfRecyclerViews()
+        if (savedInstanceState != null) {
 
-        if (recyclerViewsState.size > 0) {
             isEnableAnimation = false
+            stateTopRatedRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("TopRated")
+            statePopularRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("Popular")
+            stateUpcomingRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("Upcoming")
 
-            recyclerViewsState[0]?.let {
-                stateTopRatedRecyclerview = it
+
+        } else {
+
+            val recyclerViewsState = viewModel.restoreStateOfRecyclerViews()
+
+            if (recyclerViewsState.size > 0) {
+                isEnableAnimation = false
+
+                recyclerViewsState[0]?.let {
+                    stateTopRatedRecyclerview = it
+                }
+
+                recyclerViewsState[1]?.let {
+                    statePopularRecyclerview = it
+                }
+
+                recyclerViewsState[2]?.let {
+                    stateUpcomingRecyclerview = it
+                }
             }
 
-            recyclerViewsState[1]?.let {
-                statePopularRecyclerview = it
-            }
-
-            recyclerViewsState[2]?.let {
-                stateUpcomingRecyclerview = it
-            }
         }
 
         initRecyclerViews()
@@ -138,7 +153,7 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             if (isEnableAnimation)
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
 
         galleryViewerUpComing.apply {
@@ -171,7 +186,7 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             )
             if (isEnableAnimation)
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
     }
 
@@ -299,6 +314,23 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
         TODO("Not yet implemented")
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val topRatedRecyclerState =
+            galleryViewerTopRate.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        val popularRecyclerState =
+            galleryViewerPopular.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+
+        val upcomingRecyclerState =
+            galleryViewerUpComing.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable("TopRated", topRatedRecyclerState)
+        outState.putParcelable("Popular", popularRecyclerState)
+        outState.putParcelable("Upcoming", upcomingRecyclerState)
+    }
 
     override fun onDestroyView() {
 
