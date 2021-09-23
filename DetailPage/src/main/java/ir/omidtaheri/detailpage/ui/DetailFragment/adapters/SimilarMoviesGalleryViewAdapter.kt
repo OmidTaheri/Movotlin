@@ -29,9 +29,7 @@ class SimilarMoviesGalleryViewAdapter(
         mCallback = callback
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-
 
         return ViewHolder(
             MovieViewerItemBinding.inflate(
@@ -40,9 +38,7 @@ class SimilarMoviesGalleryViewAdapter(
                 false
             )
         )
-
     }
-
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         holder.onBind(position)
@@ -79,7 +75,6 @@ class SimilarMoviesGalleryViewAdapter(
             holder.itemView.movieImageView.clear(context)
         }
     }
-
 }
 
 object MovieUiEntityComparator : DiffUtil.ItemCallback<MovieUiEntity>() {

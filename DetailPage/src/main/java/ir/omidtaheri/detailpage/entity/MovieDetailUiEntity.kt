@@ -1,7 +1,5 @@
 package ir.omidtaheri.detailpage.entity
 
-import ir.omidtaheri.detailpage.entity.GenreUiEntity
-
 data class MovieDetailUiEntity(
     val backdropPath: String?,
     val genres: List<GenreUiEntity>,

@@ -7,7 +7,6 @@ import ir.omidtaheri.daggercore.di.scopes.FragmentScope
 import ir.omidtaheri.detailpage.ui.DetailFragment.viewmodel.DetailViewModel
 import ir.omidtaheri.detailpage.ui.DetailFragment.viewmodel.DetailViewModelFactory
 
-
 @Module
 interface DetailModule {
 

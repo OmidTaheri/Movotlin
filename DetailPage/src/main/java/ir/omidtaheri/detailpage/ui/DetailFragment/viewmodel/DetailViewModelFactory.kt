@@ -3,8 +3,18 @@ package ir.omidtaheri.detailpage.ui.DetailFragment.viewmodel
 import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import ir.omidtaheri.androidbase.viewmodelutils.ViewModelAssistedFactory
-import ir.omidtaheri.detailpage.mapper.*
-import ir.omidtaheri.domain.interactor.*
+import ir.omidtaheri.detailpage.mapper.FavoritedMovieEntityUiDomainMapper
+import ir.omidtaheri.detailpage.mapper.MovieDetailEntityUiDomainMapper
+import ir.omidtaheri.detailpage.mapper.MovieEntityUiDomainMapper
+import ir.omidtaheri.detailpage.mapper.MovieImageEntityUiDomainMapper
+import ir.omidtaheri.detailpage.mapper.MovieVideoEntityUiDomainMapper
+import ir.omidtaheri.domain.interactor.FavorieMovie
+import ir.omidtaheri.domain.interactor.GetFavoriedMovieList
+import ir.omidtaheri.domain.interactor.GetMovieDetail
+import ir.omidtaheri.domain.interactor.GetMovieImagesById
+import ir.omidtaheri.domain.interactor.GetMovieVideosById
+import ir.omidtaheri.domain.interactor.GetSimilarMoviesSinglePage
+import ir.omidtaheri.domain.interactor.UnfavoriteMovie
 import ir.omidtaheri.domain.interactor.base.Schedulers
 import javax.inject.Inject
 

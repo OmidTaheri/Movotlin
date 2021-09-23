@@ -1,7 +1,7 @@
 package ir.omidtaheri.detailpage.mapper
 
-import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import ir.omidtaheri.detailpage.entity.MovieDetailUiEntity
+import ir.omidtaheri.domain.entity.MovieDetailDomainEntity
 import javax.inject.Inject
 
 class MovieDetailEntityUiDomainMapper @Inject constructor(val genreEntityUiDomainMapper: GenreEntityUiDomainMapper) :

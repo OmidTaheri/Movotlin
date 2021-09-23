@@ -45,7 +45,7 @@ android {
             isTestCoverageEnabled = BuildTypeDebug.isTestCoverageEnabled
         }
     }
-    
+
     flavorDimensions(BuildProductDimensions.BASEDIMENT)
 
     productFlavors {

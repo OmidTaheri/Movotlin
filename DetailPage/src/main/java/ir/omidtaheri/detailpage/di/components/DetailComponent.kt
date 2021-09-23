@@ -6,7 +6,6 @@ import ir.omidtaheri.detailpage.di.modules.DetailModule
 import ir.omidtaheri.detailpage.ui.DetailFragment.DetailFragment
 import ir.omidtaheri.movotlin.di.components.ApplicationComponent
 
-
 @FragmentScope
 @Component(dependencies = [ApplicationComponent::class], modules = [DetailModule::class])
 interface DetailComponent {

@@ -11,7 +11,6 @@ import ir.omidtaheri.detailpage.entity.Backdrop
 import ir.omidtaheri.uibase.LoadBackdrop
 import ir.omidtaheri.uibase.clear
 
-
 class ImagesGalleryViewAdapter(val context: Context) : RecyclerView.Adapter<BaseViewHolder>() {
 
     var items: MutableList<Backdrop> = mutableListOf()
@@ -115,5 +114,4 @@ class ImagesGalleryViewAdapter(val context: Context) : RecyclerView.Adapter<Base
             holder.binding.movieImageView.clear(context)
         }
     }
-
 }

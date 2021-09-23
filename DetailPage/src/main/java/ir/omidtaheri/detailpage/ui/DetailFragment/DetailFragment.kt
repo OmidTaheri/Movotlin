@@ -35,7 +35,6 @@ import ir.omidtaheri.uibase.LoadMainBackdrop
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
 
-
 class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryViewAdapter.Callback {
 
     private var viewBinding: DetailFragmentBinding? = null
@@ -62,7 +61,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         GenericSavedStateViewModelFactory(viewModelFactory, this)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViews()
@@ -71,7 +69,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         checkFavoriteStatus(movieId)
         fetchData(movieId)
     }
-
 
     private fun initRecyclerViews() {
 
@@ -103,7 +100,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                         is LoadState.Error -> {
                             toErrorState(View.OnClickListener {
                                 viewModel.getSimilarMovies(movieId)
-
                             })
                         }
 
@@ -120,7 +116,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
         }
     }
-
 
     private fun checkFavoriteStatus(movieId: Int) {
         viewModel.checkFavoriteStatus(movieId)
@@ -150,7 +145,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         toolbar = viewBinding!!.mainCollapsing
         titleSimilar = viewBinding!!.titleSimilar
         titleImages = viewBinding!!.titleImages
-
     }
 
     private fun setFabListner(
@@ -182,19 +176,13 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                     isFavorite
                 )
             )
-
-
         }
-
-
     }
-
 
     override fun onStop() {
         super.onStop()
         onDestroyGlide()
     }
-
 
     override fun configDaggerComponent() {
         DaggerDetailComponent
@@ -204,19 +192,16 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             .inject(this)
     }
 
-
     override fun setLiveDataObserver() {
 
         viewModel.detailLiveData.observe(this, Observer {
 
             toolbar.title = it.title
 
-
             it.backdropPath?.let { it1 ->
                 savedStateMainbackdrop = it1
                 mainBackdrop.LoadMainBackdrop(it1, requireContext())
             }
-
 
             tagline.visibility = View.GONE
             it.tagline?.let {
@@ -228,7 +213,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                     tagline.animate().alpha(1F).setDuration(1000).start()
                 }
             }
-
 
             movieOverview.visibility = View.GONE
 
@@ -242,11 +226,8 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 }
             }
 
-
             rateNumber.text = it.voteAverage.toString()
             rateNumber.animate().rotation(720F).setDuration(2000).start()
-
-
 
             genreGroup.removeAllViews()
             for (index in it.genres) {
@@ -277,8 +258,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 titleImages.visibility = View.GONE
                 galleryViewerImages.visibility = View.GONE
             }
-
-
         })
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
@@ -292,7 +271,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 }
             }
             handler.postDelayed(runnable, 5000)
-
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
@@ -310,7 +288,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             } else {
                 favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             }
-
         })
     }
 
