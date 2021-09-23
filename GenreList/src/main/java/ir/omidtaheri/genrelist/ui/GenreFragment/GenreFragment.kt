@@ -41,9 +41,15 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.restoreStateOfRecyclerView()?.let {
-            stateGenreRecyclerview = it
+        if (savedInstanceState != null) {
             isEnableAnimation = false
+            stateGenreRecyclerview =
+                savedInstanceState.getParcelable<LinearLayoutManager.SavedState?>("recyclerState")
+        } else {
+            viewModel.restoreStateOfRecyclerView()?.let {
+                stateGenreRecyclerview = it
+                isEnableAnimation = false
+            }
         }
 
         initRecyclerViews()
@@ -59,7 +65,7 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             )
             if (isEnableAnimation)
-            setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
+                setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
     }
@@ -171,6 +177,17 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
     override fun showDialog(message: String) {
         TODO("Not yet implemented")
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val genreRecyclerState =
+            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+        outState.putParcelable("recyclerState", genreRecyclerState)
+
+    }
+
 
     override fun onDestroyView() {
 
