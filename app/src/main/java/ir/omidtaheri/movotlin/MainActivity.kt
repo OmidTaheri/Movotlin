@@ -54,52 +54,7 @@ class MainActivity : BaseActivity(),
 
 
         savedInstanceState?.let { bundle ->
-
-
             currentPage = bundle.getInt("VIEW_PAGER_POSITION", 0)
-
-            fragments.forEachIndexed { index, it ->
-                when (index) {
-                    0 -> {
-                        it.setHost(
-                            this@MainActivity,
-                            R.layout.content_main_base,
-                            R.id.nav_host_main,
-                            (application as ApplicationClass).getFragManager0()
-                        )
-
-                    }
-                    1 -> {
-                        it.setHost(
-                            this@MainActivity,
-                            R.layout.content_search_base,
-                            R.id.nav_host_search,
-                            (application as ApplicationClass).getFragManager1()
-                        )
-
-                    }
-                    2 -> {
-                        it.setHost(
-                            this@MainActivity, R.layout.content_favorite_base,
-                            R.id.nav_host_favorite,
-                            (application as ApplicationClass).getFragManager2()
-                        )
-
-                    }
-                    3 -> {
-                        it.setHost(
-                            this@MainActivity,
-                            R.layout.content_genre_base,
-                            R.id.nav_host_genre,
-                            (application as ApplicationClass).getFragManager3()
-                        )
-                    }
-
-                }
-
-
-            }
-
         }
 
         viewPager = viewBinding!!.pager
