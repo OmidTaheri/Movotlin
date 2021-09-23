@@ -12,42 +12,22 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_detailFragment"
-            app:destination="@id/detailFragment"
+            app:destination="@id/detail_nav_graph"
             app:enterAnim="@anim/anim_fade_scale_in"
             app:exitAnim="@anim/anim_fade_scale_out"
             app:popEnterAnim="@anim/anim_fade_scale_in"
-            app:popExitAnim="@anim/anim_fade_scale_out"
-            />
+            app:popExitAnim="@anim/anim_fade_scale_out" />
         <action
             android:id="@+id/action_mainFragment_to_movieFullListFragment"
             app:destination="@id/movieFullListFragment"
             app:enterAnim="@anim/anim_fade_scale_in"
             app:exitAnim="@anim/anim_fade_scale_out"
             app:popEnterAnim="@anim/anim_fade_scale_in"
-            app:popExitAnim="@anim/anim_fade_scale_out"/>
+            app:popExitAnim="@anim/anim_fade_scale_out" />
     </fragment>
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="ir.omidtaheri.mainpage.ui.DetailFragment.DetailFragment"
-        android:label="detail_fragment"
-        tools:layout="@layout/detail_fragment">
 
-        <deepLink
-            android:id="@+id/deepLink"
-            app:uri="movotlin://detailmovie/{movieId}" />
-        <argument
-            android:name="movieId"
-            android:defaultValue="0"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_detailFragment_self"
-            app:destination="@id/detailFragment"
-            app:enterAnim="@anim/anim_fade_scale_in"
-            app:exitAnim="@anim/anim_fade_scale_out"
-            app:popEnterAnim="@anim/anim_fade_scale_in"
-            app:popExitAnim="@anim/anim_fade_scale_out"/>
+    <include app:graph="@navigation/detail_nav_graph"></include>
 
-    </fragment>
 
     <fragment
         android:id="@+id/movieFullListFragment"
@@ -59,10 +39,10 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_movieFullListFragment_to_detailFragment"
-            app:destination="@id/detailFragment"
+            app:destination="@id/detail_nav_graph"
             app:enterAnim="@anim/anim_fade_scale_in"
             app:exitAnim="@anim/anim_fade_scale_out"
             app:popEnterAnim="@anim/anim_fade_scale_in"
-            app:popExitAnim="@anim/anim_fade_scale_out"/>
+            app:popExitAnim="@anim/anim_fade_scale_out" />
     </fragment>
 </navigation>
