@@ -11,9 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -243,15 +243,8 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
     }
 
     override fun onItemClick(movieId: Int) {
-        val i = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("movotlin://detailmovie/" + movieId)
-        )
-        val options = ActivityOptions.makeCustomAnimation(
-            requireContext(),
-            R.anim.anim_fade_scale_in,
-            R.anim.anim_fade_scale_out
-        )
-        requireContext().startActivity(i, options.toBundle())
+        val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(movieId)
+        findNavController().navigate(action)
     }
+
 }

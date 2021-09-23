@@ -9,5 +9,22 @@
         android:id="@+id/favoriteFragment"
         android:name="ir.omidtaheri.favorite.ui.FavoriteFragment.FavoriteFragment"
         android:label="favorite_fragment"
-        tools:layout="@layout/favorite_fragment" />
+        tools:layout="@layout/favorite_fragment">
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragment"
+            app:destination="@id/detail_nav_graph"
+            app:enterAnim="@anim/anim_fade_scale_in"
+            app:exitAnim="@anim/anim_fade_scale_out"
+            app:popEnterAnim="@anim/anim_fade_scale_in"
+            app:popExitAnim="@anim/anim_fade_scale_out">
+            <argument
+                android:name="movieId"
+                android:defaultValue="0"
+                app:argType="integer" />
+        </action>
+
+    </fragment>
+
+    <include app:graph="@navigation/detail_nav_graph"></include>
+
 </navigation>

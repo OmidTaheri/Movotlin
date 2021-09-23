@@ -82,6 +82,7 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Domain)))
     implementation(project(mapOf("path" to BuildModules.UiBase)))
     implementation(project(mapOf("path" to BuildModules.ViewComponents)))
+    implementation(project(mapOf("path" to BuildModules.DetailPage)))
 
     implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)

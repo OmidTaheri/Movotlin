@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -284,17 +285,9 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
 
 
     override fun onItemClick(movieId: Int) {
-        val i = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("movotlin://detailmovie/" + movieId)
-        )
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(movieId)
+        findNavController().navigate(action)
 
-        val options = ActivityOptions.makeCustomAnimation(
-            requireContext(),
-            R.anim.anim_fade_scale_in,
-            R.anim.anim_fade_scale_out
-        )
-        requireContext().startActivity(i, options.toBundle())
     }
 
 }
