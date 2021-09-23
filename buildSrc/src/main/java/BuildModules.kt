@@ -16,5 +16,5 @@ object BuildModules {
     const val Search = ":Search"
     const val MainPage = ":MainPage"
     const val tvapp = ":tvapp"
-
+    const val DetailPage = ":DetailPage"
 }
