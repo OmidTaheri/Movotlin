@@ -1,10 +1,5 @@
 package ir.omidtaheri.favorite.ui.FavoriteFragment
 
-import android.app.ActivityOptions
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -38,7 +33,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
     private var viewBinding: FavoriteFragmentBinding? = null
     private lateinit var swipeRefreshmultiStatePage: SwipeRefreshMultiStatePage
     private var stateFavoritedRecyclerView: Parcelable? = null
-
+    private var isEnableAnimation = true
 
     private val viewModel: FavoriteViewModel by viewModels {
         GenericSavedStateViewModelFactory(viewModelFactory, this)
@@ -48,14 +43,9 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val saveSharedPreferences: SharedPreferences =
-            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
-
-        val favoriteViewSavedState =
-            loadRecyclerViewState(saveSharedPreferences, "FAVORITE_RECYCLERVIEW_STATE")
-
-        favoriteViewSavedState?.let {
+        viewModel.restoreStateOfRecyclerView()?.let {
             stateFavoritedRecyclerView = it
+            isEnableAnimation = false
         }
 
         initRecyclerViews()
@@ -73,6 +63,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
             getSwipeRefresh().setOnRefreshListener {
                 fetchData()
             }
+            if (isEnableAnimation)
             setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
             toLoadingState()
         }
@@ -126,6 +117,8 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
                         recyclerAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>,
                         GridLayoutManager(context, 2)
                     )
+
+                    if (isEnableAnimation)
                     setCustomLayoutAnimation(R.anim.layout_animation_fall_down)
                 }
 
@@ -203,44 +196,20 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
         TODO("Not yet implemented")
     }
 
-    override fun onStop() {
-        super.onStop()
 
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
+    override fun onDestroyView() {
 
         val recyclerState =
             swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-
-        saveRecyclerViewStat(
-            ed,
-            "FAVORITE_RECYCLERVIEW_STATE",
-            recyclerState as LinearLayoutManager.SavedState
+        viewModel.saveFragmentState(
+            recyclerState as LinearLayoutManager.SavedState?
         )
-
-        ed.commit()
-
-
         onDestroyGlide()
-    }
-
-
-    override fun onDestroyView() {
         super.onDestroyView()
         viewBinding = null
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val save: SharedPreferences =
-            requireActivity().getSharedPreferences("FavoriteFragmentState", Context.MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-        ed.clear().apply()
-
-    }
 
     override fun onItemClick(movieId: Int) {
         val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(movieId)

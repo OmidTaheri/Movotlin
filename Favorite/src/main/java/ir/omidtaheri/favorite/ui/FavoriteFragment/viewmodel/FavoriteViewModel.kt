@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
@@ -20,6 +21,8 @@ class FavoriteViewModel(
     private val mApplication: Application
 ) :
     BaseAndroidViewModel(mApplication, state) {
+
+    private var recyclerViewState: LinearLayoutManager.SavedState? = null
 
     private val _dataLive: MutableLiveData<List<FavoritedMovieUiEntity>> = MutableLiveData()
     val dataLive: LiveData<List<FavoritedMovieUiEntity>>
@@ -91,4 +94,15 @@ class FavoriteViewModel(
             }
         }
     }
+
+    fun saveFragmentState(
+        layoutManagerState: LinearLayoutManager.SavedState?
+    ) {
+        recyclerViewState = layoutManagerState
+    }
+
+    fun restoreStateOfRecyclerView(): LinearLayoutManager.SavedState? {
+        return recyclerViewState
+    }
+
 }
