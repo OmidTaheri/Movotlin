@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.omidtaheri.viewcomponents.databinding.SwipeRefreshMultiStatePageBinding
 import kotlinx.android.synthetic.main.swipe_refresh_multi_state_page.view.*
 
-class SwipeRefreshMultiStatePage(context: Context?, attrs: AttributeSet?) :
+class SwipeRefreshMultiStatePage(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
     private val viewBinding: SwipeRefreshMultiStatePageBinding =

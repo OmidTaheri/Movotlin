@@ -12,7 +12,7 @@ import ir.omidtaheri.viewcomponents.databinding.GalleryPageBinding
 import kotlinx.android.synthetic.main.gallery_page.view.*
 import kotlinx.android.synthetic.main.multi_state_error_state.view.*
 
-class GalleryViewer(context: Context?, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
+class GalleryViewer(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
     private val viewBinding: GalleryPageBinding =
         GalleryPageBinding.inflate(LayoutInflater.from(context), this)
