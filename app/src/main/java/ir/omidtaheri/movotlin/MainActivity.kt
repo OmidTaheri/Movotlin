@@ -1,7 +1,5 @@
 package ir.omidtaheri.movotlin
 
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,8 +11,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
 import ir.omidtaheri.androidbase.BaseActivity
-import ir.omidtaheri.mainpage.ui.MainFragment.MainFragmentDirections
-import ir.omidtaheri.mainpage.ui.MovieFullList.MovieFullListFragmentDirections
 import ir.omidtaheri.movotlin.databinding.ActivityMainBinding
 import java.util.*
 
@@ -23,9 +19,9 @@ class MainActivity : BaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
     private var viewBinding: ActivityMainBinding? = null
-    private var savedInstance = false
     private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavBar: BottomNavigationView
+    private var currentPage = 0
 
     // overall back stack of containers
     private val backStack = Stack<Int>()
@@ -46,8 +42,6 @@ class MainActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        savedInstance = false
-
         fragments = listOf(
             BaseNavigationFragment.newInstance(R.layout.content_main_base, R.id.nav_host_main),
             BaseNavigationFragment.newInstance(R.layout.content_search_base, R.id.nav_host_search),
@@ -58,7 +52,11 @@ class MainActivity : BaseActivity(),
             BaseNavigationFragment.newInstance(R.layout.content_genre_base, R.id.nav_host_genre)
         )
 
-        if (savedInstanceState != null) {
+
+        savedInstanceState?.let { bundle ->
+
+
+            currentPage = bundle.getInt("VIEW_PAGER_POSITION", 0)
 
             fragments.forEachIndexed { index, it ->
                 when (index) {
@@ -104,8 +102,6 @@ class MainActivity : BaseActivity(),
 
         }
 
-
-
         viewPager = viewBinding!!.pager
         viewPager.adapter = ViewPagerAdapter(this)
         viewPager.isUserInputEnabled = false
@@ -126,17 +122,7 @@ class MainActivity : BaseActivity(),
         )
 
 
-        // initialize backStack with elements
-        if (backStack.empty())
-            setItem(0)
-
-
-        val saveSharedPreferences: SharedPreferences =
-            getSharedPreferences("MainActivityState", MODE_PRIVATE)
-        val current = saveSharedPreferences.getInt("VIEW_PAGER_POSITION", 0)
-
-        if (current != 0)
-            setItem(current)
+        setItem(currentPage)
 
     }
 
@@ -217,31 +203,11 @@ class MainActivity : BaseActivity(),
     override fun showDialog(message: String) {
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        val save: SharedPreferences =
-            getSharedPreferences("MainActivityState", MODE_PRIVATE)
-        val ed: SharedPreferences.Editor = save.edit()
-
-        ed.putInt("VIEW_PAGER_POSITION", viewPager.currentItem)
-
-        ed.commit()
-    }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        savedInstance = true
+        outState.putInt("VIEW_PAGER_POSITION", viewPager.currentItem)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (!savedInstance) {
-            val save: SharedPreferences =
-                getSharedPreferences("MainActivityState", MODE_PRIVATE)
-            val ed: SharedPreferences.Editor = save.edit()
-            ed.clear().apply()
-        }
-    }
+
 }
