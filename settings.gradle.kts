@@ -12,6 +12,7 @@ include(":Data")
 include(":Favorite")
 include(":Search")
 include(":MainPage")
+include(":DetailPage")
 include(":app")
 rootProject.name = "Movotlin"
 rootProject.buildFileName = "build.gradle.kts"

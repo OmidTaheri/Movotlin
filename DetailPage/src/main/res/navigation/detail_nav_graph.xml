@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_nav_graph"
+    app:startDestination="@id/detailFragment">
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="ir.omidtaheri.detailpage.ui.DetailFragment.DetailFragment"
+        android:label="detail_fragment"
+        tools:layout="@layout/detail_fragment">
+
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="movotlin://detailmovie/{movieId}" />
+        <argument
+            android:name="movieId"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailFragment_self"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/anim_fade_scale_in"
+            app:exitAnim="@anim/anim_fade_scale_out"
+            app:popEnterAnim="@anim/anim_fade_scale_in"
+            app:popExitAnim="@anim/anim_fade_scale_out" />
+
+    </fragment>
+
+
+</navigation>
