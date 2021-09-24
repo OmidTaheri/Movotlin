@@ -55,6 +55,14 @@ class MainActivity : BaseActivity(),
 
         savedInstanceState?.let { bundle ->
             currentPage = bundle.getInt("VIEW_PAGER_POSITION", 0)
+            val stackIntArray = bundle.getIntArray("stack")
+            stackIntArray?.let {
+                for (item in stackIntArray.indices.reversed()) {
+                    backStack.push(stackIntArray[item])
+                }
+            }
+
+
         }
 
         viewPager = viewBinding!!.pager
@@ -162,6 +170,12 @@ class MainActivity : BaseActivity(),
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("VIEW_PAGER_POSITION", viewPager.currentItem)
+
+        val stackArrayList = mutableListOf<Int>()
+        while (!backStack.isEmpty()) {
+            stackArrayList.add(backStack.pop())
+        }
+        outState.putIntArray("stack", stackArrayList.toIntArray())
     }
 
 
