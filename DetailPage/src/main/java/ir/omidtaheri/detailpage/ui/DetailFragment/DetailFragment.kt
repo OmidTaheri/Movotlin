@@ -237,8 +237,10 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 if (it.length > 0) {
                     tagline.text = it
                     tagline.visibility = View.VISIBLE
-                    tagline.alpha = 0F
-                    tagline.animate().alpha(1F).setDuration(1000).start()
+                    if (isEnableAnimation) {
+                        tagline.alpha = 0F
+                        tagline.animate().alpha(1F).setDuration(1000).start()
+                    }
                 }
             }
 
@@ -249,8 +251,10 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 if (it.length > 0) {
                     movieOverview.text = it
                     movieOverview.visibility = View.VISIBLE
-                    movieOverview.alpha = 0F
-                    movieOverview.animate().alpha(1F).setDuration(1000).start()
+                    if (isEnableAnimation) {
+                        movieOverview.alpha = 0F
+                        movieOverview.animate().alpha(1F).setDuration(1000).start()
+                    }
                 }
             }
 
@@ -265,9 +269,11 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 chip.text = index.name
                 genreGroup.addView(chip)
             }
-            genreGroup.alpha = 0F
-            genreGroup.animate().alpha(1F).setDuration(1000).start()
 
+            if (isEnableAnimation) {
+                genreGroup.alpha = 0F
+                genreGroup.animate().alpha(1F).setDuration(1000).start()
+            }
             setFabListner(
                 it.backdropPath,
                 it.id,
