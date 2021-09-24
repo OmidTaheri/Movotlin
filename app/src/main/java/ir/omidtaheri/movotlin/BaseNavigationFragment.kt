@@ -31,6 +31,7 @@ class BaseNavigationFragment : Fragment() {
 
 
     fun onBackPressed(): Boolean {
+
         return if (isAdded) {
             requireActivity()
                 .findNavController(_navHostId)

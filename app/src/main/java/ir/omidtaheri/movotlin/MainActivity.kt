@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.advancenavigation.BaseNavigationFragment
 import ir.omidtaheri.androidbase.BaseActivity
 import ir.omidtaheri.movotlin.databinding.ActivityMainBinding
-import java.util.*
+
 
 class MainActivity : BaseActivity(),
     BottomNavigationView.OnNavigationItemReselectedListener,
@@ -42,33 +42,60 @@ class MainActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        fragments = listOf(
-            BaseNavigationFragment.newInstance(R.layout.content_main_base, R.id.nav_host_main),
-            BaseNavigationFragment.newInstance(R.layout.content_search_base, R.id.nav_host_search),
-            BaseNavigationFragment.newInstance(
-                R.layout.content_favorite_base,
-                R.id.nav_host_favorite
-            ),
-            BaseNavigationFragment.newInstance(R.layout.content_genre_base, R.id.nav_host_genre)
-        )
+        if (savedInstanceState != null) {
 
-
-        savedInstanceState?.let { bundle ->
-            currentPage = bundle.getInt("VIEW_PAGER_POSITION", 0)
-            val stackIntArray = bundle.getIntArray("stack")
+            currentPage = savedInstanceState.getInt("VIEW_PAGER_POSITION", 0)
+            val stackIntArray = savedInstanceState.getIntArray("stack")
             stackIntArray?.let {
                 for (item in stackIntArray.indices.reversed()) {
                     backStack.push(stackIntArray[item])
                 }
             }
 
+            val KEY_PREFIX_FRAGMENT = "Movotlin"
+            val keyFrag1 =
+                createKey(KEY_PREFIX_FRAGMENT, 0)
+            val keyFrag2 =
+                createKey(KEY_PREFIX_FRAGMENT, 1)
+            val keyFrag3 =
+                createKey(KEY_PREFIX_FRAGMENT, 2)
+            val keyFrag4 =
+                createKey(KEY_PREFIX_FRAGMENT, 3)
 
+            val fragment1 = supportFragmentManager.getFragment(savedInstanceState, keyFrag1)
+            val fragment2 = supportFragmentManager.getFragment(savedInstanceState, keyFrag2)
+            val fragment3 = supportFragmentManager.getFragment(savedInstanceState, keyFrag3)
+            val fragment4 = supportFragmentManager.getFragment(savedInstanceState, keyFrag4)
+
+            fragments = listOf(
+                fragment1 as BaseNavigationFragment,
+                fragment2 as BaseNavigationFragment,
+                fragment3 as BaseNavigationFragment,
+                fragment4 as BaseNavigationFragment
+            )
+
+
+        } else {
+            fragments = listOf(
+                BaseNavigationFragment.newInstance(R.layout.content_main_base, R.id.nav_host_main),
+                BaseNavigationFragment.newInstance(
+                    R.layout.content_search_base,
+                    R.id.nav_host_search
+                ),
+                BaseNavigationFragment.newInstance(
+                    R.layout.content_favorite_base,
+                    R.id.nav_host_favorite
+                ),
+                BaseNavigationFragment.newInstance(R.layout.content_genre_base, R.id.nav_host_genre)
+            )
         }
+
 
         viewPager = viewBinding!!.pager
         viewPager.adapter = ViewPagerAdapter(this)
         viewPager.isUserInputEnabled = false
         viewPager.offscreenPageLimit = fragments.size
+
 
         bottomNavBar = viewBinding!!.bottomNavView
         bottomNavBar.setOnNavigationItemSelectedListener(this)
@@ -84,9 +111,17 @@ class MainActivity : BaseActivity(),
             }
         )
 
+        if (backStack.isEmpty())
+            setItem(currentPage)
+        else {
+            backStack.pop()
+            setItem(currentPage)
+        }
 
-        setItem(currentPage)
+    }
 
+    private fun createKey(keyPrefixFragment: String, itemId: Long): String {
+        return keyPrefixFragment + itemId
     }
 
 
@@ -118,13 +153,12 @@ class MainActivity : BaseActivity(),
         val fragment = fragments[viewPager.currentItem]
         val hadNestedFragments = fragment.onBackPressed()
         // if no fragments were popped
-
         if (!hadNestedFragments) {
             if (backStack.size > 1) {
                 // remove current position from stack
                 backStack.pop()
                 // set the next item in stack as current
-                viewPager.currentItem = backStack.peek()
+                viewPager.currentItem = backStack.peek()!!
             } else super.onBackPressed()
         }
     }
@@ -140,6 +174,8 @@ class MainActivity : BaseActivity(),
         override fun createFragment(position: Int): Fragment {
             return fragments[position]
         }
+
+
     }
 
     override fun setUp() {
@@ -173,9 +209,25 @@ class MainActivity : BaseActivity(),
 
         val stackArrayList = mutableListOf<Int>()
         while (!backStack.isEmpty()) {
-            stackArrayList.add(backStack.pop())
+            stackArrayList.add(backStack.pop()!!)
         }
         outState.putIntArray("stack", stackArrayList.toIntArray())
+
+        val KEY_PREFIX_FRAGMENT = "Movotlin"
+        val keyFrag1 =
+            createKey(KEY_PREFIX_FRAGMENT, 0)
+        val keyFrag2 =
+            createKey(KEY_PREFIX_FRAGMENT, 1)
+        val keyFrag3 =
+            createKey(KEY_PREFIX_FRAGMENT, 2)
+        val keyFrag4 =
+            createKey(KEY_PREFIX_FRAGMENT, 3)
+
+        supportFragmentManager.putFragment(outState, keyFrag1, fragments[0])
+        supportFragmentManager.putFragment(outState, keyFrag2, fragments[1])
+        supportFragmentManager.putFragment(outState, keyFrag3, fragments[2])
+        supportFragmentManager.putFragment(outState, keyFrag4, fragments[3])
+
     }
 
 
