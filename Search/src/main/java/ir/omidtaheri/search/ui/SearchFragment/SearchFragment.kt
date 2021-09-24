@@ -73,7 +73,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
         setViewListners()
 
         savedQuery?.let {
-            if (it.isNotEmpty()) {
+            if (checkSearchQuery(it)) {
                 searchbar.setText(it)
                 viewModel.initSearch(it)
             }
@@ -155,8 +155,18 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
         viewModel.setSearchSubjectObserver()
 
         searchbar.doOnTextChanged { text, _, _, _ ->
-            viewModel.searchSubject.onNext(text.toString())
+            if (checkSearchQuery(text.toString()))
+                viewModel.searchSubject.onNext(text.toString())
         }
+
+    }
+
+    private fun checkSearchQuery(query: String): Boolean {
+        val pattern = Regex("^(\\s)*\$")
+
+        return query.toString().isNotEmpty() &&
+                query.toString().isNotBlank() &&
+                !pattern.matches(query)
 
     }
 
