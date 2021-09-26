@@ -56,6 +56,25 @@ Movotlin is an application that has been developed using modern Android developm
 * [Themoviedb API](https://developers.themoviedb.org/3/getting-started/introduction)
 
  ![-----------------------------------------------------](ScreenShots/rainbow.png)
+ 
+ ## Build/Running
+- Create local.properties in root folder
+- Get [TMDB API Key](https://developers.themoviedb.org/3/getting-started/introduction) and add to local.properties with "API.KEY" tag
+```
+   API.KEY="<INSERT_YOUR_API_KEY>"
+```
+- Add an empty field for other parameters: 
+```
+    signing.key.alias="<INSERT_YOUR_ALIAS>"
+    signing.key.password="<INSERT_YOUR_PASSWORD>"
+    signing.store.file="<INSERT_YOUR_ADDRESS>"
+    signing.store.password="<INSERT_YOUR_PASSWORD>"
+    signing.tvkey.alias="<INSERT_YOUR_ALIAS>"
+    signing.tvkey.password="<INSERT_YOUR_PASSWORD>"
+    signing.tvstore.file="<INSERT_YOUR_ADDRESS>"
+    signing.tvstore.password="<INSERT_YOUR_PASSWORD>"
+```
+ ![-----------------------------------------------------](ScreenShots/rainbow.png)
 
 [![Show Demo Video](https://img.shields.io/badge/-Show%20Demo%20Video-red)](https://drive.google.com/file/d/1kU1G4afUGPCBxyfi0tZb8FYMaiadgjkI/view?usp=sharing)
 
