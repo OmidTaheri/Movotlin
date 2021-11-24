@@ -19,8 +19,8 @@ jobs:
          echo "signing.store.file=.${{ secrets.SIGN_STORE_FILE }}"              >> ./local.properties
          echo "signing.store.password=${{ secrets.SIGN_STORE_PASS }}"           >> ./local.properties
          echo "API.KEY=${{secrets.API_KEY}}"                                    >> ./local.properties
-         echo "signing.tvkey.alias=${{secrets.SIGN_TV_KEY_ALIAS}}"              >> ./local.properties
-         echo "signing.tvkey.password=${{secrets.SIGN_TV_KEY_PASS}}"            >> ./local.properties
+         echo "signing.tvkey.alias=${{secrets.SIGN_KEY_ALIAS}}"                 >> ./local.properties
+         echo "signing.tvkey.password=${{secrets.SIGN_KEY_PASS}}"               >> ./local.properties
          echo "signing.tvstore.file=.${{secrets.SIGN_STORE_FILE }}"             >> ./local.properties
          echo "signing.tvstore.password=${{secrets.SIGN_STORE_PASS}}"           >> ./local.properties
 
@@ -53,8 +53,8 @@ jobs:
          echo "signing.store.file=.${{ secrets.SIGN_STORE_FILE }}"              >> ./local.properties
          echo "signing.store.password=${{ secrets.SIGN_STORE_PASS }}"           >> ./local.properties
          echo "API.KEY=${{secrets.API_KEY}}"                                    >> ./local.properties
-         echo "signing.tvkey.alias=${{secrets.SIGN_TV_KEY_ALIAS}}"              >> ./local.properties
-         echo "signing.tvkey.password=${{secrets.SIGN_TV_KEY_PASS}}"            >> ./local.properties
+         echo "signing.tvkey.alias=${{secrets.SIGN_KEY_ALIAS}}"              >> ./local.properties
+         echo "signing.tvkey.password=${{secrets.SIGN_KEY_PASS}}"            >> ./local.properties
          echo "signing.tvstore.file=.${{secrets.SIGN_STORE_FILE }}"             >> ./local.properties
          echo "signing.tvstore.password=${{secrets.SIGN_STORE_PASS}}"           >> ./local.properties
          mkdir -p $(dirname ${{ secrets.SIGN_STORE_FILE }}) && touch ${{ secrets.SIGN_STORE_FILE }}
