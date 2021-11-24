@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ir.omidtaheri.androidbase.BaseActivity
@@ -19,6 +19,9 @@ class MainActivity : BaseActivity() {
     private lateinit var bottomNavBar: BottomNavigationView
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    //back stack of root destinations
+    private val backStack = Stack<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,21 +37,45 @@ class MainActivity : BaseActivity() {
         bottomNavBar.setupWithNavController(navController)
 
 
-        // Setup the ActionBar with navController and 4 top level destinations
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.mainFragment,
-                R.id.searchFragment,
-                R.id.favoriteFragment,
-                R.id.favoriteFragment,
-                R.id.genreFragment
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
 
+            if (isRootDestination(destination)) {
+                setItem(destination.id)
+            }
+        }
+
+        bottomNavBar.setOnNavigationItemReselectedListener {
+            navController.popBackStack(it.itemId, false)
+        }
+    }
+
+    private fun isRootDestination(destination: NavDestination?): Boolean {
+        return destination?.id == R.id.mainFragment ||
+                destination?.id == R.id.searchFragment ||
+                destination?.id == R.id.favoriteFragment ||
+                destination?.id == R.id.genreFragment
+    }
+
+    override fun onBackPressed() {
+
+        if (!isRootDestination(navController.currentDestination))
+            navController.navigateUp()
+        else {
+            if (backStack.size > 1) {
+                backStack.pop()
+                if (bottomNavBar.selectedItemId != backStack.peek())
+                    bottomNavBar.selectedItemId = backStack.peek()!!
+            } else super.onBackPressed()
+        }
 
     }
 
+    private fun setItem(menuId: Int) {
+        if (!backStack.isEmpty()) {
+            if (backStack.peek() != menuId)
+                backStack.push(menuId)
+        } else backStack.push(menuId)
+    }
 
     override fun inflateViewBinding(inflater: LayoutInflater): View? {
         viewBinding = ActivityMainBinding.inflate(inflater)
@@ -58,46 +85,6 @@ class MainActivity : BaseActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
     }
-
-
-//    override fun onNewIntent(intent: Intent?) {
-//        super.onNewIntent(intent)
-//
-//        val movieId = intent?.data?.path?.substring(1)
-//
-//        movieId?.let {
-//
-//
-//            val navController = fragments.get(0).getNavFragmentController()
-//
-//            if (navController.currentDestination?.id == R.id.mainFragment) {
-//
-//                val action =
-//                    MainFragmentDirections.actionMainFragmentToDetailFragment(movieId?.toInt()!!)
-//                navController.navigate(action)
-//
-//
-//            } else if (navController.currentDestination?.id == R.id.detailFragment) {
-//
-//                val action =
-//                    DetailFragmentDirections.actionDetailFragmentSelf(movieId?.toInt()!!)
-//                navController.navigate(action)
-//
-//
-//            } else if (navController.currentDestination?.id == R.id.movieFullListFragment) {
-//
-//                val action =
-//                    MovieFullListFragmentDirections.actionMovieFullListFragmentToDetailFragment(
-//                        movieId?.toInt()!!
-//                    )
-//                navController.navigate(action)
-//
-//            }
-//
-//            setItem(0)
-//        }
-//
-//    }
 
 
     override fun setUp() {
