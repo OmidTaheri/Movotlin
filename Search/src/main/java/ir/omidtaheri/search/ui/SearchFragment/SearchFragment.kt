@@ -1,7 +1,6 @@
 package ir.omidtaheri.search.ui.SearchFragment
 
 import android.os.Bundle
-import android.os.Handler
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -75,7 +74,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
         savedQuery?.let {
             if (checkSearchQuery(it)) {
                 searchbar.setText(it)
-                viewModel.initSearch(it)
+                viewModel.searchQuery(it)
             }
         }
     }
@@ -98,7 +97,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
                             toErrorState(View.OnClickListener {
 
                                 val query = searchbar.text.toString()
-                                viewModel.initSearch(query)
+                                viewModel.searchQuery(query)
 
 
                             })
@@ -151,12 +150,11 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     }
 
     private fun setViewListners() {
-
-        viewModel.setSearchSubjectObserver()
+        if (viewModel.dataLive.value == null)
+            viewModel.setSearchSubjectObserver()
 
         searchbar.doOnTextChanged { text, _, _, _ ->
-            if (checkSearchQuery(text.toString()))
-                viewModel.searchSubject.onNext(text.toString())
+            viewModel.searchSubject.onNext(text.toString())
         }
 
     }
@@ -164,8 +162,8 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     private fun checkSearchQuery(query: String): Boolean {
         val pattern = Regex("^(\\s)*\$")
 
-        return query.toString().isNotEmpty() &&
-                query.toString().isNotBlank() &&
+        return query.isNotEmpty() &&
+                query.isNotBlank() &&
                 !pattern.matches(query)
 
     }
@@ -192,14 +190,10 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
                 stateSearchRecyclerview = null
             }
 
-
-            val handler = Handler()
-            val runnable: Runnable = Runnable {
-                if (recyclerAdapter.getItemCount() == 0) {
-                    multiStatePage.toEmptyState()
-                }
+            if (recyclerAdapter.itemCount == 0) {
+                multiStatePage.toEmptyState()
             }
-            handler.postDelayed(runnable, 3000)
+
 
         })
 
@@ -248,7 +242,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     }
 
     override fun showDialog(message: String) {
-        TODO("Not yet implemented")
+
     }
 
 
