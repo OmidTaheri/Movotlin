@@ -40,14 +40,10 @@ class SearchViewModel(
 
 
     fun setSearchSubjectObserver() {
-        if (::currentDisposable.isInitialized) {
-            deleteDisposable(currentDisposable)
-        }
-
         currentDisposable = searchSubject.debounce(1000, TimeUnit.MILLISECONDS)
             .subscribeOn(schedulers.subscribeOn)
             .filter {
-                it.isNotEmpty()
+                it.isNotEmpty() && it.isNotBlank()
             }
             .distinctUntilChanged()
             .switchMap {
@@ -66,9 +62,10 @@ class SearchViewModel(
     }
 
 
-    fun initSearch(query: String) {
-
+    fun searchQuery(query: String) {
         val disposable = searchMoviesByQuery.execute(query).cachedIn(viewModelScope)
+            .subscribeOn(schedulers.subscribeOn)
+            .observeOn(schedulers.observeOn)
             .subscribeBy {
                 _dataLive.value = it.map { entity ->
                     movieEntityUiDomainMapper.mapToUiEntity(entity)
@@ -76,7 +73,6 @@ class SearchViewModel(
             }
 
         addDisposable(disposable)
-
     }
 
 
