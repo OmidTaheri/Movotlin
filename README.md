@@ -83,7 +83,6 @@ Movotlin is an application that has been developed using modern Android developm
 
 [![Latest Release](https://img.shields.io/badge/-Latest%20Release-orange)](#)
 
-- [Download latest apk](https://github.com/OmidTaheri/Movotlin/blob/master/Apks/Movotlin-v1.3.0.apk)
 - Github Release page: [Releases](https://github.com/OmidTaheri/Movotlin/releases)
 
 ![-----------------------------------------------------](ScreenShots/rainbow.png)
