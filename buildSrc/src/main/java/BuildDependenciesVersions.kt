@@ -10,7 +10,7 @@ object BuildDependenciesVersions {
         const val GLIDE = "4.11.0"
         const val DAGGER = "2.25.3"
         const val KOTLIN = "1.3.72"
-        const val COROUTINES = "1.3.3"
+        const val COROUTINES = "1.5.2"
         const val CORE_KTX = "1.3.0"
         const val FRAGMENT_KTX = "1.2.0-alpha02"
         const val LIVEDATA_KTX = "2.2.0"
