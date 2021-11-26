@@ -1,6 +1,5 @@
 package ir.omidtaheri.remote.service
 
-import io.reactivex.Single
 import ir.omidtaheri.remote.entity.response.GenreResponseRemoteEntity
 import ir.omidtaheri.remote.entity.response.MultiMovieResponseRemoteEntity
 import retrofit2.http.GET
@@ -12,20 +11,20 @@ interface MovieApi {
      * Get the list of the top rated movies
      */
     @GET("movie/top_rated")
-    fun getTopRatedMovies(@Query("page") page: Int): Single<MultiMovieResponseRemoteEntity>
+    suspend fun getTopRatedMovies(@Query("page") page: Int): MultiMovieResponseRemoteEntity
 
     /**
      * Get the list of the popular movies
      */
     @GET("movie/popular")
-    fun getPopularMovies(@Query("page") page: Int): Single<MultiMovieResponseRemoteEntity>
+    suspend fun getPopularMovies(@Query("page") page: Int): MultiMovieResponseRemoteEntity
 
     /**
      * Get the list of the upcoming movies
      */
     @GET("movie/upcoming")
-    fun getUpcomingMovies(@Query("page") page: Int): Single<MultiMovieResponseRemoteEntity>
+    suspend fun getUpcomingMovies(@Query("page") page: Int): MultiMovieResponseRemoteEntity
 
     @GET("genre/movie/list")
-    fun getGenreList(): Single<GenreResponseRemoteEntity>
+    suspend fun getGenreList(): GenreResponseRemoteEntity
 }
