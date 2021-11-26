@@ -17,8 +17,8 @@ object JetpackDependencies {
         "androidx.navigation:navigation-ui-ktx:${BuildDependenciesVersions.JetpackDependenciesVersions.NAVIGATION}"
 
 
-    const val LIFECYCLE_EXTENSIONS =
-        "androidx.lifecycle:lifecycle-extensions:${BuildDependenciesVersions.JetpackDependenciesVersions.LIFECYCLE}"
+    const val LIFECYCLE_RUNTIME =
+        "androidx.lifecycle:lifecycle-runtime-ktx:${BuildDependenciesVersions.JetpackDependenciesVersions.LIFECYCLE}"
 
     const val LIFECYCLE_VIEWMODEL =
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${BuildDependenciesVersions.JetpackDependenciesVersions.LIFECYCLE}"
