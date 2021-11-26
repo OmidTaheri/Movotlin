@@ -20,10 +20,6 @@ object Dependencies {
     const val FRAGMENT_KTX =
         "androidx.fragment:fragment-ktx:${BuildDependenciesVersions.DependenciesVersions.FRAGMENT_KTX}"
 
-    const val LIVEDATA_KTX =
-        "androidx.lifecycle:lifecycle-livedata-ktx:${BuildDependenciesVersions.DependenciesVersions.LIVEDATA_KTX}"
-
-
     const val DAGGER =
         "com.google.dagger:dagger:${BuildDependenciesVersions.DependenciesVersions.DAGGER}"
 
