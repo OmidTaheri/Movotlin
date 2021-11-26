@@ -76,8 +76,8 @@ dependencies {
     implementation(JetpackDependencies.ROOM_KTX)
     implementation(JetpackDependencies.ROOM_RX)
 
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
+    implementation(Dependencies.COROUTINES)
+    implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.JavaxInject)
 
     addTestsDependencies()

@@ -1,12 +1,11 @@
 package ir.omidtaheri.local.datasource
 
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
 import ir.omidtaheri.local.dao.MovieDao
 import ir.omidtaheri.local.mapper.MovieEntityDataLocalMapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieLocalDataSourceImp @Inject constructor(
@@ -14,15 +13,15 @@ class MovieLocalDataSourceImp @Inject constructor(
     private val movieEntityDataLocalMapper: MovieEntityDataLocalMapper
 ) : MovieLocalDataSourceInterface {
 
-    override fun favoriteMovie(movie: FavoritedMovieDataEntity): Single<Long> {
+    override suspend fun favoriteMovie(movie: FavoritedMovieDataEntity): Long {
         return movieDao.favoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(movie))
     }
 
-    override fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Single<Int> {
+    override suspend fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Int {
         return movieDao.unFavoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(movie))
     }
 
-    override fun getFavoritedMoviesList(): Observable<List<FavoritedMovieDataEntity>> {
+    override fun getFavoritedMoviesList(): Flow<List<FavoritedMovieDataEntity>> {
         return movieDao.getFavoritedMoviesList().map {
             it.map {
                 movieEntityDataLocalMapper.mapToDataEntity(it)
@@ -30,12 +29,5 @@ class MovieLocalDataSourceImp @Inject constructor(
         }
     }
 
-    override fun getFavoritedMoviesListByFlowable(): Flowable<List<FavoritedMovieDataEntity>> {
-        return movieDao.getFavoritedMoviesListByFlowable().map {
-            it.map {
-                movieEntityDataLocalMapper.mapToDataEntity(it)
-            }
-        }
-    }
 
 }

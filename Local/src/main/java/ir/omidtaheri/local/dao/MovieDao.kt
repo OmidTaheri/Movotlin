@@ -4,23 +4,19 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import ir.omidtaheri.local.entity.MovieLocalEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
 
     @Insert()
-    fun favoriteMovie(movie: MovieLocalEntity): Single<Long>
+    suspend fun favoriteMovie(movie: MovieLocalEntity): Long
 
     @Delete
-    fun unFavoriteMovie(movie: MovieLocalEntity): Single<Int>
+    suspend fun unFavoriteMovie(movie: MovieLocalEntity): Int
 
     @Query("SELECT * FROM movie")
-    fun getFavoritedMoviesList(): Observable<List<MovieLocalEntity>>
+    fun getFavoritedMoviesList(): Flow<List<MovieLocalEntity>>
 
-    @Query("SELECT * FROM movie")
-    fun getFavoritedMoviesListByFlowable(): Flowable<List<MovieLocalEntity>>
 }
