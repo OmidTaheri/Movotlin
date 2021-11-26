@@ -1,27 +1,24 @@
 package ir.omidtaheri.domain.paigingSource
 
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxPagingSource
-import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
-import ir.omidtaheri.domain.interactor.base.Schedulers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class GetUpcomingMoviesSinglePageSource(
-    private val movieRepository: MovieGateWay,
-    private val schedulers: Schedulers
+    private val movieRepository: MovieGateWay
 ) :
-    RxPagingSource<Int, MovieDomainEntity>() {
+    PagingSource<Int, MovieDomainEntity>() {
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDomainEntity> {
 
         val pageNumber: Int = params.key ?: 1
 
         return movieRepository.getUpComingMovies(pageNumber)
-            .subscribeOn(schedulers.subscribeOn)
-            .observeOn(schedulers.observeOn)
             .map {
 
                 when (it) {
@@ -48,7 +45,7 @@ class GetUpcomingMoviesSinglePageSource(
                         }
                     }
                 }
-            }
+            }.single()
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieDomainEntity>): Int? {

@@ -1,19 +1,16 @@
 package ir.omidtaheri.domain.interactor
 
-import io.reactivex.Single
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
-import ir.omidtaheri.domain.interactor.base.Schedulers
-import ir.omidtaheri.domain.interactor.base.SingleUseCase
+import ir.omidtaheri.domain.interactor.base.SuspendUseCase
 import javax.inject.Inject
 
 class UnfavoriteMovie @Inject constructor(
-    schedulers: Schedulers,
     private val favoriteMovieRepository: FavoriteMovieGateWay
 ) :
-    SingleUseCase<FavoritedMovieDomainEntity, Int>(schedulers) {
+    SuspendUseCase<FavoritedMovieDomainEntity, Int>() {
 
-    override fun buildSingle(params: FavoritedMovieDomainEntity): Single<Int> {
+    override suspend fun buildSingle(params: FavoritedMovieDomainEntity): Int {
         return favoriteMovieRepository.unFavoriteMovie(params)
     }
 }

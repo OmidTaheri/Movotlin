@@ -7,29 +7,27 @@ import androidx.paging.rxjava2.observable
 import io.reactivex.Observable
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import ir.omidtaheri.domain.interactor.base.ObservablePagingDataUseCase
-import ir.omidtaheri.domain.interactor.base.Schedulers
+import ir.omidtaheri.domain.interactor.base.FlowPagingDataUseCase
 import ir.omidtaheri.domain.paigingSource.SearchMovieByQuerySource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SearchMoviesByQuery @Inject constructor(
-    schedulers: Schedulers,
     private val discoverMovieRepository: DiscoverMovieGateWay
 ) :
-    ObservablePagingDataUseCase<String, PagingData<MovieDomainEntity>>(schedulers) {
+    FlowPagingDataUseCase<String, PagingData<MovieDomainEntity>>() {
 
-    override fun buildSingle(params: String): Observable<PagingData<MovieDomainEntity>> {
+    override fun buildSingle(params: String): Flow<PagingData<MovieDomainEntity>> {
 
         return Pager(
             config = PagingConfig(PAGE_SIZE),
             pagingSourceFactory = {
                 SearchMovieByQuerySource(
                     params,
-                    discoverMovieRepository,
-                    schedulers
+                    discoverMovieRepository
                 )
             }
-        ).observable
+        ).flow
     }
 
     companion object {

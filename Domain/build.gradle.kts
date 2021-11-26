@@ -66,8 +66,8 @@ dependencies {
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
+    implementation(Dependencies.COROUTINES)
+    implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.JavaxInject)
 
     implementation(JetpackDependencies.PAGING)

@@ -1,20 +1,18 @@
 package ir.omidtaheri.domain.interactor
 
-import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.MovieImageDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import ir.omidtaheri.domain.interactor.base.Schedulers
-import ir.omidtaheri.domain.interactor.base.SingleUseCase
+import ir.omidtaheri.domain.interactor.base.FlowUseCase
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetMovieImagesById @Inject constructor(
-    schedulers: Schedulers,
     private val discoverMovieRepository: DiscoverMovieGateWay
 ) :
-    SingleUseCase<Int, DataState<MovieImageDomainEntity>>(schedulers) {
+    FlowUseCase<Int, DataState<MovieImageDomainEntity>>() {
 
-    override fun buildSingle(params: Int): Single<DataState<MovieImageDomainEntity>> {
+    override fun buildSingle(params: Int): Flow<DataState<MovieImageDomainEntity>> {
         return discoverMovieRepository.getMovieImagesById(params)
     }
 }

@@ -1,58 +1,55 @@
 package ir.omidtaheri.domain.paigingSource
 
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxPagingSource
-import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import ir.omidtaheri.domain.interactor.base.Schedulers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class GetMovieListByGenreSource(
     private val genreId: Int,
-    private val discoverMovieRepository: DiscoverMovieGateWay,
-    private val schedulers: Schedulers
+    private val discoverMovieRepository: DiscoverMovieGateWay
 ) :
-    RxPagingSource<Int, MovieDomainEntity>() {
+    PagingSource<Int, MovieDomainEntity>() {
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
-
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDomainEntity> {
         val pageNumber: Int = params.key ?: 1
 
         val params: Map<String, Int> = mapOf("with_genres" to genreId, "page" to pageNumber)
 
-        return discoverMovieRepository.getMovieListByGenreId(params)
-            .subscribeOn(schedulers.subscribeOn)
-            .observeOn(schedulers.observeOn)
-            .map {
+        return discoverMovieRepository.getMovieListByGenreId(params).map {
 
-                when (it) {
+            when (it) {
 
-                    is DataState.SUCCESS -> {
-                        LoadResult.Page(
-                            it.data!!.results, null,
-                            if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
-                        )
-                    }
+                is DataState.SUCCESS -> {
+                    LoadResult.Page(
+                        it.data!!.results, null,
+                        if (it.data.page != it.data.totalPages) (it.data!!.page) + 1 else null
+                    )
+                }
 
-                    is DataState.ERROR -> {
-                        it.stateMessage?.message.let {
-                            when (it) {
-                                is MessageHolder.MESSAGE ->
-                                    LoadResult.Error<Int, MovieDomainEntity>(
-                                        Throwable(it.message)
-                                    )
-
-                                else -> LoadResult.Error<Int, MovieDomainEntity>(
-                                    Throwable("Error")
+                is DataState.ERROR -> {
+                    it.stateMessage?.message.let {
+                        when (it) {
+                            is MessageHolder.MESSAGE ->
+                                LoadResult.Error<Int, MovieDomainEntity>(
+                                    Throwable(it.message)
                                 )
-                            }
+
+                            else -> LoadResult.Error<Int, MovieDomainEntity>(
+                                Throwable("Error")
+                            )
                         }
                     }
                 }
             }
+        }.single()
     }
+
 
     override fun getRefreshKey(state: PagingState<Int, MovieDomainEntity>): Int? {
         return state.anchorPosition?.let {
@@ -60,4 +57,6 @@ class GetMovieListByGenreSource(
                 ?: state.closestPageToPosition(it)?.nextKey?.minus(1)
         }
     }
+
+
 }

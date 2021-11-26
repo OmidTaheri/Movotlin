@@ -1,20 +1,18 @@
 package ir.omidtaheri.domain.interactor
 
-import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.entity.GenreDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
-import ir.omidtaheri.domain.interactor.base.Schedulers
-import ir.omidtaheri.domain.interactor.base.SingleUseCase
+import ir.omidtaheri.domain.interactor.base.FlowUseCase
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetGenreList @Inject constructor(
-    schedulers: Schedulers,
     private val movieRepository: MovieGateWay
 ) :
-    SingleUseCase<Unit, DataState<List<GenreDomainEntity>>>(schedulers) {
+    FlowUseCase<Unit, DataState<List<GenreDomainEntity>>>() {
 
-    override fun buildSingle(params: Unit): Single<DataState<List<GenreDomainEntity>>> {
+    override fun buildSingle(params: Unit): Flow<DataState<List<GenreDomainEntity>>> {
         return movieRepository.getGenreList()
     }
 }
