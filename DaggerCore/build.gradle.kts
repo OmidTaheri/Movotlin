@@ -75,9 +75,6 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Local)))
     implementation(project(mapOf("path" to BuildModules.Remote)))
 
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
-
     kapt(AnnotationProcessorsDependencies.ROOM)
     implementation(JetpackDependencies.ROOM)
     implementation(JetpackDependencies.ROOM_KTX)
