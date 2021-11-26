@@ -1,6 +1,5 @@
 package ir.omidtaheri.remote.datasource
 
-import io.reactivex.Single
 import ir.omidtaheri.data.datasource.remote.MovieDetailRemoteDataSourceInterface
 import ir.omidtaheri.data.entity.MovieDetailDataEntity
 import ir.omidtaheri.data.entity.MovieImageDataEntity
@@ -11,6 +10,8 @@ import ir.omidtaheri.remote.mapper.MovieImagesResponseToDataEntityMapper
 import ir.omidtaheri.remote.mapper.MovieResponseToDataEntityMapper
 import ir.omidtaheri.remote.mapper.MovieVideosResponseToDataEntityMapper
 import ir.omidtaheri.remote.service.MovieDetailApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MovieDetailRemoteDataSourceImp @Inject constructor(
@@ -22,39 +23,77 @@ class MovieDetailRemoteDataSourceImp @Inject constructor(
 ) :
     MovieDetailRemoteDataSourceInterface {
 
-    override fun getMovieDetailById(movieId: Int): Single<MovieDetailDataEntity> {
-        return movieDetailApi.getMovieDetailById(movieId).map {
-            movieDetailResponseToDataEntityMapper.mapFromDTO(it)
+    override fun getMovieDetailById(movieId: Int): Flow<MovieDetailDataEntity> {
+        return flow {
+            emit(
+                movieDetailResponseToDataEntityMapper.mapFromDTO(
+                    movieDetailApi.getMovieDetailById(
+                        movieId
+                    )
+                )
+            )
         }
     }
 
-    override fun getMovieListByGenreId(params: Map<String, Int>): Single<MultiMovieDataEntity> {
-        return movieDetailApi.getMovieListByGenreId(params).map {
-            movieResponseToDataEntityMapper.mapFromDTO(it)
+    override fun getMovieListByGenreId(params: Map<String, Int>): Flow<MultiMovieDataEntity> {
+        return flow {
+            emit(
+                movieResponseToDataEntityMapper.mapFromDTO(
+                    movieDetailApi.getMovieListByGenreId(
+                        params
+                    )
+                )
+            )
         }
     }
 
-    override fun getMovieImagesById(movieId: Int): Single<MovieImageDataEntity> {
-        return movieDetailApi.getMovieImagesById(movieId).map {
-            movieImagesResponseToDataEntityMapper.mapFromDTO(it)
+    override fun getMovieImagesById(movieId: Int): Flow<MovieImageDataEntity> {
+        return flow {
+            emit(
+                movieImagesResponseToDataEntityMapper.mapFromDTO(
+                    movieDetailApi.getMovieImagesById(
+                        movieId
+                    )
+                )
+            )
         }
     }
 
-    override fun getMovieVideosById(movieId: Int): Single<MovieVideoDataEntity> {
-        return movieDetailApi.getMovieVideosById(movieId).map {
-            movieVideosResponseToDataEntityMapper.mapFromDTO(it)
+    override fun getMovieVideosById(movieId: Int): Flow<MovieVideoDataEntity> {
+        return flow {
+            emit(
+                movieVideosResponseToDataEntityMapper.mapFromDTO(
+                    movieDetailApi.getMovieVideosById(
+                        movieId
+                    )
+                )
+            )
         }
     }
 
-    override fun getSimilarMovieById(movieId: Int, page: Int): Single<MultiMovieDataEntity> {
-        return movieDetailApi.getSimilarMoviesById(movieId, page).map {
-            movieResponseToDataEntityMapper.mapFromDTO(it)
+    override fun getSimilarMovieById(movieId: Int, page: Int): Flow<MultiMovieDataEntity> {
+        return flow {
+            emit(
+                movieResponseToDataEntityMapper.mapFromDTO(
+                    movieDetailApi.getSimilarMoviesById(
+                        movieId,
+                        page
+                    )
+                )
+            )
         }
     }
 
-    override fun searchMovieByQuery(query: String, page: Int): Single<MultiMovieDataEntity> {
-        return movieDetailApi.searchMovieByQuery(query, page).map {
-            movieResponseToDataEntityMapper.mapFromDTO(it)
+    override fun searchMovieByQuery(query: String, page: Int): Flow<MultiMovieDataEntity> {
+        return flow {
+            emit(
+                movieResponseToDataEntityMapper.mapFromDTO(
+                    movieDetailApi.searchMovieByQuery(
+                        query,
+                        page
+                    )
+                )
+            )
         }
     }
 }
