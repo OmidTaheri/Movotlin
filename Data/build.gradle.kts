@@ -65,8 +65,8 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(project(mapOf("path" to BuildModules.Domain)))
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
+    implementation(Dependencies.COROUTINES)
+    implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.JavaxInject)
 
     addTestsDependencies()

@@ -1,13 +1,10 @@
 package ir.omidtaheri.data.datasource.local
 
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import ir.omidtaheri.data.entity.FavoritedMovieDataEntity
+import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalDataSourceInterface {
-    fun favoriteMovie(movie: FavoritedMovieDataEntity): Single<Long>
-    fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Single<Int>
-    fun getFavoritedMoviesList(): Observable<List<FavoritedMovieDataEntity>>
-    fun getFavoritedMoviesListByFlowable(): Flowable<List<FavoritedMovieDataEntity>>
+    suspend fun favoriteMovie(movie: FavoritedMovieDataEntity): Long
+    suspend fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Int
+    fun getFavoritedMoviesList(): Flow<List<FavoritedMovieDataEntity>>
 }
