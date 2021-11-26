@@ -84,7 +84,7 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.ViewComponents)))
     implementation(project(mapOf("path" to BuildModules.DetailPage)))
 
-    implementation(JetpackDependencies.LIFECYCLE_EXTENSIONS)
+    implementation(JetpackDependencies.LIFECYCLE_RUNTIME)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
