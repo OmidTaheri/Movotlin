@@ -87,6 +87,7 @@ dependencies {
 
     implementation(JetpackDependencies.LIFECYCLE_RUNTIME)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
+    implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL_SAVED_STATE)
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
     implementation(JetpackDependencies.PAGING)

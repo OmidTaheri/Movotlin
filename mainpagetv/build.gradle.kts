@@ -84,6 +84,7 @@ dependencies {
 
     implementation(JetpackDependencies.LIFECYCLE_RUNTIME)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
+    implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL_SAVED_STATE)
 
     implementation(UiDependencies.LEANBACK)
 
