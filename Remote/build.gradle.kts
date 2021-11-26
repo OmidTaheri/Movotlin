@@ -72,8 +72,9 @@ dependencies {
     implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
-    implementation(Dependencies.RX_JAVA)
     implementation(Dependencies.JavaxInject)
+    implementation(Dependencies.COROUTINES)
+    implementation(Dependencies.COROUTINES_ANDROID)
 
     addTestsDependencies()
 }
