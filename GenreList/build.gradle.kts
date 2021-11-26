@@ -74,7 +74,6 @@ dependencies {
     implementation(Dependencies.KOTLIN)
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.FRAGMENT_KTX)
-    implementation(Dependencies.LIVEDATA_KTX)
     implementation(UiDependencies.APPCOMPAT)
     implementation(Dependencies.JavaxInject)
 
@@ -88,6 +87,8 @@ dependencies {
     implementation(JetpackDependencies.LIFECYCLE_RUNTIME)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL)
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL_SAVED_STATE)
+    implementation(JetpackDependencies.LIFECYCLE_LIVEDATA)
+
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
     implementation(JetpackDependencies.PAGING)
