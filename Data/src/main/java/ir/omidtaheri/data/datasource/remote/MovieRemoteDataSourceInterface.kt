@@ -1,12 +1,12 @@
 package ir.omidtaheri.data.datasource.remote
 
-import io.reactivex.Single
 import ir.omidtaheri.data.entity.GenreDataEntity
 import ir.omidtaheri.data.entity.MultiMovieDataEntity
+import kotlinx.coroutines.flow.Flow
 
 interface MovieRemoteDataSourceInterface {
-    fun getTopRatedMovies(page: Int): Single<MultiMovieDataEntity>
-    fun getPopularMovies(page: Int): Single<MultiMovieDataEntity>
-    fun getGenreList(): Single<List<GenreDataEntity>>
-    fun getUpComingMovies(page: Int): Single<MultiMovieDataEntity>
+    fun getTopRatedMovies(page: Int): Flow<MultiMovieDataEntity>
+    fun getPopularMovies(page: Int): Flow<MultiMovieDataEntity>
+    fun getGenreList(): Flow<List<GenreDataEntity>>
+    fun getUpComingMovies(page: Int): Flow<MultiMovieDataEntity>
 }

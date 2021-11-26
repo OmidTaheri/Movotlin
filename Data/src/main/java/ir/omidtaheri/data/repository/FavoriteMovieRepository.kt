@@ -1,17 +1,13 @@
 package ir.omidtaheri.data.repository
 
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import ir.omidtaheri.data.datasource.local.MovieLocalDataSourceInterface
 import ir.omidtaheri.data.mapper.FavoritedMovieEntityDomainDataMapper
-import ir.omidtaheri.domain.datastate.DataState
-import ir.omidtaheri.domain.datastate.MessageHolder
-import ir.omidtaheri.domain.datastate.MessageType
-import ir.omidtaheri.domain.datastate.StateMessage
-import ir.omidtaheri.domain.datastate.UiComponentType
+import ir.omidtaheri.domain.datastate.*
 import ir.omidtaheri.domain.entity.FavoritedMovieDomainEntity
 import ir.omidtaheri.domain.gateway.FavoriteMovieGateWay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class FavoriteMovieRepository @Inject constructor(
@@ -20,7 +16,7 @@ class FavoriteMovieRepository @Inject constructor(
 
 ) : FavoriteMovieGateWay {
 
-    override fun favoriteMovie(movie: FavoritedMovieDomainEntity): Single<Long> {
+    override suspend fun favoriteMovie(movie: FavoritedMovieDomainEntity): Long {
         return movieLocalDataSource.favoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
                 movie
@@ -28,7 +24,7 @@ class FavoriteMovieRepository @Inject constructor(
         )
     }
 
-    override fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Single<Int> {
+    override suspend fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Int {
         return movieLocalDataSource.unFavoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
                 movie
@@ -36,18 +32,18 @@ class FavoriteMovieRepository @Inject constructor(
         )
     }
 
-    override fun getFavoritedMovieList(): Observable<DataState<List<FavoritedMovieDomainEntity>>> {
+    override fun getFavoritedMovieList(): Flow<DataState<List<FavoritedMovieDomainEntity>>> {
 
-        return movieLocalDataSource.getFavoritedMoviesList()
-            .map<DataState<List<FavoritedMovieDomainEntity>>> {
+        return movieLocalDataSource.getFavoritedMoviesList().map {
 
-                DataState.SUCCESS(
-                    it.map {
-                        favoritedMovieEntityDomainDataMapper.mapFromDataEntity(it)
-                    },
-                    StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
-                )
-            }.onErrorReturn {
+            DataState.SUCCESS(
+                it.map {
+                    favoritedMovieEntityDomainDataMapper.mapFromDataEntity(it)
+                },
+                StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
+            )
+        }.catch<DataState<List<FavoritedMovieDomainEntity>>> {
+            emit(
                 DataState.ERROR(
                     StateMessage(
                         MessageHolder.MESSAGE(it.message ?: "Error"),
@@ -55,31 +51,8 @@ class FavoriteMovieRepository @Inject constructor(
                         MessageType.ERROR
                     )
                 )
-            }
+            )
+        }
     }
-
-
-    override fun getFavoritedMoviesListByFlowable(): Flowable<DataState<List<FavoritedMovieDomainEntity>>> {
-
-        return movieLocalDataSource.getFavoritedMoviesListByFlowable()
-            .map<DataState<List<FavoritedMovieDomainEntity>>> {
-
-                DataState.SUCCESS(
-                    it.map {
-                        favoritedMovieEntityDomainDataMapper.mapFromDataEntity(it)
-                    },
-                    StateMessage(MessageHolder.NONE, UiComponentType.NONE, MessageType.NONE)
-                )
-            }.onErrorReturn {
-                DataState.ERROR(
-                    StateMessage(
-                        MessageHolder.MESSAGE(it.message ?: "Error"),
-                        UiComponentType.DIALOG,
-                        MessageType.ERROR
-                    )
-                )
-            }
-    }
-
 
 }
