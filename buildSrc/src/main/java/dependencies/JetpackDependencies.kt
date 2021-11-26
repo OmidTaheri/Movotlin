@@ -26,6 +26,8 @@ object JetpackDependencies {
     const val LIFECYCLE_LIVEDATA =
         "androidx.lifecycle:lifecycle-livedata-ktx:${BuildDependenciesVersions.DependenciesVersions.LIVEDATA_KTX}"
 
+    const val LIFECYCLE_VIEWMODEL_SAVED_STATE =
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${BuildDependenciesVersions.JetpackDependenciesVersions.LIFECYCLE}"
 
     const val ROOM =
         "androidx.room:room-runtime:${BuildDependenciesVersions.JetpackDependenciesVersions.ROOM}"
