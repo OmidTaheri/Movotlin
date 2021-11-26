@@ -1,30 +1,27 @@
 package ir.omidtaheri.domain.paigingSource
 
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxPagingSource
-import io.reactivex.Single
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import ir.omidtaheri.domain.interactor.base.Schedulers
 import ir.omidtaheri.domain.interactor.usecaseParam.GetSimilarMoviesParams
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class GetSimilarMoviesSource(
     private val movieId: Int,
-    private val discoverMovieRepository: DiscoverMovieGateWay,
-    private val schedulers: Schedulers
+    private val discoverMovieRepository: DiscoverMovieGateWay
 ) :
-    RxPagingSource<Int, MovieDomainEntity>() {
+    PagingSource<Int, MovieDomainEntity>() {
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, MovieDomainEntity>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieDomainEntity> {
 
         val pageNumber: Int = params.key ?: 1
 
         val params = GetSimilarMoviesParams(movieId, pageNumber)
         return discoverMovieRepository.getSimilarMovieById(params)
-            .subscribeOn(schedulers.subscribeOn)
-            .observeOn(schedulers.observeOn)
             .map {
 
                 when (it) {
@@ -51,7 +48,7 @@ class GetSimilarMoviesSource(
                         }
                     }
                 }
-            }
+            }.single()
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieDomainEntity>): Int? {

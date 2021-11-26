@@ -7,22 +7,21 @@ import androidx.paging.rxjava2.observable
 import io.reactivex.Observable
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.MovieGateWay
-import ir.omidtaheri.domain.interactor.base.ObservablePagingDataUseCase
-import ir.omidtaheri.domain.interactor.base.Schedulers
+import ir.omidtaheri.domain.interactor.base.FlowPagingDataUseCase
 import ir.omidtaheri.domain.paigingSource.GetTopRatedMoviesSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetTopRatedMovies @Inject constructor(
-    schedulers: Schedulers,
     private val movieRepository: MovieGateWay
 ) :
-    ObservablePagingDataUseCase<Unit, PagingData<MovieDomainEntity>>(schedulers) {
+    FlowPagingDataUseCase<Unit, PagingData<MovieDomainEntity>>() {
 
-    override fun buildSingle(params: Unit): Observable<PagingData<MovieDomainEntity>> {
+    override fun buildSingle(params: Unit): Flow<PagingData<MovieDomainEntity>> {
         return Pager(
             config = PagingConfig(PAGE_SIZE),
-            pagingSourceFactory = { GetTopRatedMoviesSource(movieRepository, schedulers) }
-        ).observable
+            pagingSourceFactory = { GetTopRatedMoviesSource(movieRepository) }
+        ).flow
     }
 
     companion object {
