@@ -18,7 +18,6 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
     fun inject(applicationClass: Application)
-    fun schedulers(): ir.omidtaheri.domain.interactor.base.Schedulers
     fun movieGateWayRepo(): MovieGateWay
     fun movieDetailGateWayRepo(): DiscoverMovieGateWay
     fun favoriteMovieGateWayRepo(): FavoriteMovieGateWay
@@ -27,7 +26,7 @@ interface ApplicationComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance  application: Application,
+            @BindsInstance application: Application,
             @BindsInstance @Named("dbName") dbName: String,
             @BindsInstance @Named("url") baseUrl: String,
             @BindsInstance @Named("apiKey") apiKey: String
