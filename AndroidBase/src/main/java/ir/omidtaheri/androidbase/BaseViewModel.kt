@@ -4,15 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import ir.omidtaheri.androidbase.singleLiveData.SingleLiveData
 
 open class BaseViewModel(
     private val state: SavedStateHandle
 ) : ViewModel() {
 
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     protected val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean>
@@ -34,23 +31,4 @@ open class BaseViewModel(
     val messageToast: LiveData<String>
         get() = _messageToast
 
-
-    fun addDisposable(disposable: Disposable) {
-
-        compositeDisposable.add(disposable)
-    }
-
-    fun deleteDisposable(disposable: Disposable) {
-
-        compositeDisposable.delete(disposable)
-    }
-
-
-    private fun clearDisposables() {
-        compositeDisposable.clear()
-    }
-
-    override fun onCleared() {
-        clearDisposables()
-    }
 }

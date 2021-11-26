@@ -76,8 +76,6 @@ dependencies {
     implementation(JetpackDependencies.LIFECYCLE_VIEWMODEL_SAVED_STATE)
 
     implementation(UiDependencies.RECYCLE_VIEW)
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
 
     implementation(UiDependencies.LEANBACK)
 
