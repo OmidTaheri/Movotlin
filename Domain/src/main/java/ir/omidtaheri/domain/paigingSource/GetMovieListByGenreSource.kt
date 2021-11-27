@@ -6,7 +6,6 @@ import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 
