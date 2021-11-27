@@ -69,7 +69,6 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Data)))
 
     implementation(Dependencies.RETROFIT)
-    implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
     implementation(Dependencies.JavaxInject)
