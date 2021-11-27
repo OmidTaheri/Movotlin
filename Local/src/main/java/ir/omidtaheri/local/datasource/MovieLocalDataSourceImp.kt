@@ -17,7 +17,7 @@ class MovieLocalDataSourceImp @Inject constructor(
         return movieDao.favoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(movie))
     }
 
-    override suspend fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Long {
+    override suspend fun unFavoriteMovie(movie: FavoritedMovieDataEntity): Int {
         return movieDao.unFavoriteMovie(movieEntityDataLocalMapper.mapFromDataEntity(movie))
     }
 

@@ -14,7 +14,7 @@ interface MovieDao {
     suspend fun favoriteMovie(movie: MovieLocalEntity): Long
 
     @Delete
-    suspend fun unFavoriteMovie(movie: MovieLocalEntity): Long
+    suspend fun unFavoriteMovie(movie: MovieLocalEntity): Int
 
     @Query("SELECT * FROM movie")
     fun getFavoritedMoviesList(): Flow<List<MovieLocalEntity>>
