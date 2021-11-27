@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavoriteMovieGateWay {
     suspend fun favoriteMovie(movie: FavoritedMovieDomainEntity): Long
-    suspend fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Long
+    suspend fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Int
     fun getFavoritedMovieList(): Flow<DataState<List<FavoritedMovieDomainEntity>>>
 }

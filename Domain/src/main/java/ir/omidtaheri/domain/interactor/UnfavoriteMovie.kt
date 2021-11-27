@@ -8,9 +8,9 @@ import javax.inject.Inject
 class UnfavoriteMovie @Inject constructor(
     private val favoriteMovieRepository: FavoriteMovieGateWay
 ) :
-    SuspendUseCase<FavoritedMovieDomainEntity, Long>() {
+    SuspendUseCase<FavoritedMovieDomainEntity, Int>() {
 
-    override suspend fun buildSingle(params: FavoritedMovieDomainEntity): Long {
+    override suspend fun buildSingle(params: FavoritedMovieDomainEntity): Int {
         return favoriteMovieRepository.unFavoriteMovie(params)
     }
 }
