@@ -155,7 +155,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     }
 
     private fun setViewListeners() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             whenStarted {
                 searchbar.textChangedFlow().collectLatest {
                     showLoading(true)
