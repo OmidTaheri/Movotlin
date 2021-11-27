@@ -6,14 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
-import androidx.paging.rxjava2.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.interactor.GetMovieListByGenreId
 import ir.omidtaheri.genrelist.entity.MovieUiEntity
 import ir.omidtaheri.genrelist.mapper.MovieEntityUiDomainMapper
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MovieListViewModel(
     private val getMovieListByGenreId: GetMovieListByGenreId,
@@ -31,15 +32,15 @@ class MovieListViewModel(
 
     fun getMovieListByGenre(genreId: Int) {
 
-        val disposable =
-            getMovieListByGenreId.execute(genreId).cachedIn(viewModelScope).subscribeBy {
+        viewModelScope.launch {
+            getMovieListByGenreId.execute(genreId).cachedIn(viewModelScope).collectLatest {
 
                 _dataLive.value = it.map {
                     movieEntityUiDomainMapper.mapToUiEntity(it)
                 }
             }
 
-        addDisposable(disposable)
+        }
     }
 
     fun saveFragmentState(

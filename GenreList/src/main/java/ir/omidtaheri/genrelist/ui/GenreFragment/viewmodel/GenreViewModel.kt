@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
@@ -13,6 +13,8 @@ import ir.omidtaheri.domain.datastate.UiComponentType
 import ir.omidtaheri.domain.interactor.GetGenreList
 import ir.omidtaheri.genrelist.entity.GenreUiEntity
 import ir.omidtaheri.genrelist.mapper.GenreEntityUiDomainMapper
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class GenreViewModel(
     private val getGenreList: GetGenreList,
@@ -34,37 +36,39 @@ class GenreViewModel(
         get() = _genreErrorState
 
     fun getMovieListByGenre() {
-        val disposable = getGenreList.execute(Unit).subscribeBy { response ->
-            when (response) {
+        viewModelScope.launch {
+            getGenreList.execute(Unit).collect { response ->
+                when (response) {
 
-                is DataState.SUCCESS -> {
-                    _dataLive.value = response.data?.map {
-                        genreEntityUiDomainMapper.mapToUiEntity(it)
+                    is DataState.SUCCESS -> {
+                        _dataLive.value = response.data?.map {
+                            genreEntityUiDomainMapper.mapToUiEntity(it)
+                        }
                     }
-                }
 
-                is DataState.ERROR -> {
-                    response.let { errorDataState ->
+                    is DataState.ERROR -> {
+                        response.let { errorDataState ->
 
-                        when (errorDataState.stateMessage?.uiComponentType) {
-                            is UiComponentType.SNACKBAR -> {
-                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
-                            }
+                            when (errorDataState.stateMessage?.uiComponentType) {
+                                is UiComponentType.SNACKBAR -> {
+                                    handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.TOAST -> {
-                                handleToastError(errorDataState as DataState.ERROR<Any>)
-                            }
+                                is UiComponentType.TOAST -> {
+                                    handleToastError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.DIALOG -> {
-                                _genreErrorState.value = true
+                                is UiComponentType.DIALOG -> {
+                                    _genreErrorState.value = true
+                                }
                             }
                         }
                     }
                 }
             }
+
         }
 
-        addDisposable(disposable)
     }
 
     private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
