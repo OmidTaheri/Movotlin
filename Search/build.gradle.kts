@@ -91,15 +91,12 @@ dependencies {
     implementation(JetpackDependencies.NAVIGATION_FRAGMENT)
     implementation(JetpackDependencies.NAVIGATION_UI)
     implementation(JetpackDependencies.PAGING)
-    implementation(JetpackDependencies.PAGING_RX)
 
     implementation(UiDependencies.CONSTRAINT_LAYOUT)
     implementation(UiDependencies.RECYCLE_VIEW)
     implementation(UiDependencies.MATERIAL)
 
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
-    implementation(Dependencies.RX_Kotlin)
+
     implementation(Dependencies.COROUTINES)
     implementation(Dependencies.COROUTINES_ANDROID)
 

@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,6 +32,9 @@ import ir.omidtaheri.search.ui.SearchFragment.adapters.SearchMovieAdapter
 import ir.omidtaheri.search.ui.SearchFragment.viewmodel.SearchViewModel
 import ir.omidtaheri.uibase.*
 import ir.omidtaheri.viewcomponents.MultiStatePage.MultiStatePage
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 
 class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callback {
@@ -69,7 +74,7 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
         }
 
         initRecyclerViews()
-        setViewListners()
+        setViewListeners()
 
         savedQuery?.let {
             if (checkSearchQuery(it)) {
@@ -149,15 +154,33 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
         }
     }
 
-    private fun setViewListners() {
-        if (viewModel.dataLive.value == null)
-            viewModel.setSearchSubjectObserver()
-
-        searchbar.doOnTextChanged { text, _, _, _ ->
-            viewModel.searchSubject.onNext(text.toString())
+    private fun setViewListeners() {
+        lifecycleScope.launch {
+            whenStarted {
+                searchbar.textChangedFlow().collectLatest {
+                    showLoading(true)
+                    viewModel.searchQuery(it)
+                }
+            }
         }
 
     }
+
+    fun TextInputEditText.textChangedFlow(): Flow<String> = callbackFlow {
+
+        val textWatcher = doOnTextChanged { text, _, _, _ ->
+            offer(text.toString())
+        }
+
+        awaitClose { removeTextChangedListener(textWatcher) }
+
+    }
+        .debounce(1000)
+        .filter {
+            it.isNotEmpty() && it.isNotBlank()
+        }
+        .distinctUntilChanged()
+
 
     private fun checkSearchQuery(query: String): Boolean {
         val pattern = Regex("^(\\s)*\$")
