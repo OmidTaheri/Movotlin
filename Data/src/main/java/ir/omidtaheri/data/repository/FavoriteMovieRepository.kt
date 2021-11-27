@@ -24,7 +24,7 @@ class FavoriteMovieRepository @Inject constructor(
         )
     }
 
-    override suspend fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Int {
+    override suspend fun unFavoriteMovie(movie: FavoritedMovieDomainEntity): Long {
         return movieLocalDataSource.unFavoriteMovie(
             favoritedMovieEntityDomainDataMapper.mapToDataEntity(
                 movie
