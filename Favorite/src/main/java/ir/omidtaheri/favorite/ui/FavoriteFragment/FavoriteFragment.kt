@@ -76,7 +76,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
     }
 
     private fun fetchData() {
-        viewModel.getFavoritedMovieListByFlowable()
+        viewModel.getFavoritedMovieList()
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): View? {
@@ -151,7 +151,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
 
         viewModel.favoriteErrorState.observe(this, Observer {
             swipeRefreshmultiStatePage.toErrorState(View.OnClickListener {
-                viewModel.getFavoritedMovieListByFlowable()
+                viewModel.getFavoritedMovieList()
             })
         })
     }
