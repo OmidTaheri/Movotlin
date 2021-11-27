@@ -195,7 +195,7 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         voteAverage: Double
     ) {
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             whenStarted {
                 favoriteButton.clicksFlow().collectLatest {
                     val item = FavoritedMovieUiEntity(
@@ -320,7 +320,7 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         })
 
         viewModel.similarMoviesLiveData.observe(this, Observer {
-            adapterSimilarMovies.submitData(lifecycle, it)
+            adapterSimilarMovies.submitData(viewLifecycleOwner.lifecycle, it)
 
             stateSimilarMoviesRecyclerview?.let {
                 galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onRestoreInstanceState(
@@ -333,6 +333,8 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             if (adapterSimilarMovies.itemCount == 0) {
                 titleSimilar.visibility = View.GONE
                 galleryViewerSimilarMovies.visibility = View.GONE
+            }else{
+                galleryViewerSimilarMovies.toDateState()
             }
 
 
