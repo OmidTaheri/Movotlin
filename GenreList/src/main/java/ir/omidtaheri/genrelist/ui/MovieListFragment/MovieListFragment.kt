@@ -188,20 +188,24 @@ class MovieListFragment : BaseFragment<MovieListViewModel>(), MovieListAdapter.C
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val recyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::multiStatePage.isInitialized) {
+            val recyclerState =
+                multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        outState.putParcelable("recyclerState", recyclerState)
+            outState.putParcelable("recyclerState", recyclerState)
+        }
+
     }
 
     override fun onDestroyView() {
+        if (::multiStatePage.isInitialized) {
+            val recyclerState =
+                multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        val recyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
-
-        viewModel.saveFragmentState(
-            recyclerState as LinearLayoutManager.SavedState?
-        )
+            viewModel.saveFragmentState(
+                recyclerState as LinearLayoutManager.SavedState?
+            )
+        }
 
         onDestroyGlide()
         super.onDestroyView()

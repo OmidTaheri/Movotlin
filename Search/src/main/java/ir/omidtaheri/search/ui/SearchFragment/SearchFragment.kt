@@ -272,10 +272,13 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val searchRecyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::multiStatePage.isInitialized) {
+            val searchRecyclerState =
+                multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        outState.putParcelable("SearchRecycler", searchRecyclerState)
+            outState.putParcelable("SearchRecycler", searchRecyclerState)
+        }
+
         outState.putString("SearchQuery", searchbar.text.toString())
 
     }
@@ -283,13 +286,16 @@ class SearchFragment : BaseFragment<SearchViewModel>(), SearchMovieAdapter.Callb
 
     override fun onDestroyView() {
 
-        val searchRecyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::multiStatePage.isInitialized) {
+            val searchRecyclerState =
+                multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        viewModel.saveFragmentState(
-            searchRecyclerState as LinearLayoutManager.SavedState?,
-            searchbar.text.toString()
-        )
+            viewModel.saveFragmentState(
+                searchRecyclerState as LinearLayoutManager.SavedState?,
+                searchbar.text.toString()
+            )
+        }
+
 
         onDestroyGlide()
         super.onDestroyView()

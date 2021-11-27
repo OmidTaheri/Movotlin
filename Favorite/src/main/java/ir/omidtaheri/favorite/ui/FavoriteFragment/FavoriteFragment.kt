@@ -206,21 +206,27 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>(), FavoritedMovieAdapte
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val recyclerState =
-            swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::swipeRefreshmultiStatePage.isInitialized) {
+            val recyclerState =
+                swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        outState.putParcelable("recyclerState", recyclerState)
+            outState.putParcelable("recyclerState", recyclerState)
+        }
+
 
     }
 
     override fun onDestroyView() {
 
-        val recyclerState =
-            swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::swipeRefreshmultiStatePage.isInitialized) {
+            val recyclerState =
+                swipeRefreshmultiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        viewModel.saveFragmentState(
-            recyclerState as LinearLayoutManager.SavedState?
-        )
+            viewModel.saveFragmentState(
+                recyclerState as LinearLayoutManager.SavedState?
+            )
+        }
+
         onDestroyGlide()
         super.onDestroyView()
         viewBinding = null

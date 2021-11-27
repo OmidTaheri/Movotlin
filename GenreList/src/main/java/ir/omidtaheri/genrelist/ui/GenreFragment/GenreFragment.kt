@@ -181,21 +181,26 @@ class GenreFragment : BaseFragment<GenreViewModel>(), GenreListAdapter.Callback 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val genreRecyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::multiStatePage.isInitialized) {
+            val genreRecyclerState =
+                multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        outState.putParcelable("recyclerState", genreRecyclerState)
+            outState.putParcelable("recyclerState", genreRecyclerState)
+        }
+
 
     }
 
 
     override fun onDestroyView() {
 
-        val genreRecyclerState =
-            multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
-        viewModel.saveFragmentState(
-            genreRecyclerState as LinearLayoutManager.SavedState?
-        )
+        if (::multiStatePage.isInitialized) {
+            val genreRecyclerState =
+                multiStatePage.getRecyclerView().layoutManager?.onSaveInstanceState()
+            viewModel.saveFragmentState(
+                genreRecyclerState as LinearLayoutManager.SavedState?
+            )
+        }
 
         super.onDestroyView()
         viewBinding = null
