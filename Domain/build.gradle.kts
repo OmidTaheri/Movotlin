@@ -71,7 +71,6 @@ dependencies {
     implementation(Dependencies.JavaxInject)
 
     implementation(JetpackDependencies.PAGING)
-    implementation(JetpackDependencies.PAGING_RX)
 
     addTestsDependencies()
 }
