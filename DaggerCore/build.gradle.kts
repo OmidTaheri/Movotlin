@@ -78,10 +78,8 @@ dependencies {
     kapt(AnnotationProcessorsDependencies.ROOM)
     implementation(JetpackDependencies.ROOM)
     implementation(JetpackDependencies.ROOM_KTX)
-    implementation(JetpackDependencies.ROOM_RX)
 
     implementation(Dependencies.RETROFIT)
-    implementation(Dependencies.RETROFIT_RX)
     implementation(Dependencies.RETROFIT_CONVERTER)
 
     implementation(DebugDependencies.OKHTTP_STETHO)
