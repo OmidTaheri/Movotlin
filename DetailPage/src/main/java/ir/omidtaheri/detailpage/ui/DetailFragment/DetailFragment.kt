@@ -1,7 +1,6 @@
 package ir.omidtaheri.detailpage.ui.DetailFragment
 
 import android.os.Bundle
-import android.os.Handler
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,12 @@ import ir.omidtaheri.detailpage.ui.DetailFragment.viewmodel.DetailViewModel
 import ir.omidtaheri.uibase.LoadMainBackdrop
 import ir.omidtaheri.uibase.onDestroyGlide
 import ir.omidtaheri.viewcomponents.GalleryViewer.GalleryViewer
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryViewAdapter.Callback {
 
@@ -188,29 +195,37 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
         voteAverage: Double
     ) {
 
-        viewModel.setFavoriteSubjectObserver()
+        lifecycleScope.launch {
+            whenStarted {
+                favoriteButton.clicksFlow().collectLatest {
+                    val item = FavoritedMovieUiEntity(
+                        backdropPath,
+                        id,
+                        posterPath,
+                        title,
+                        voteAverage,
+                        !isFavorite
+                    )
 
-        favoriteButton.setOnClickListener {
-            isFavorite = !isFavorite
-
-            if (isFavorite) {
-                favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
-            } else {
-                favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    if (!isFavorite) {
+                        viewModel.setFavoriteMovie(item)
+                    } else {
+                        viewModel.setUnFavoriteMovie(item)
+                    }
+                }
             }
-
-            viewModel.favoriteSubject.onNext(
-                FavoritedMovieUiEntity(
-                    backdropPath,
-                    id,
-                    posterPath,
-                    title,
-                    voteAverage,
-                    isFavorite
-                )
-            )
         }
+
     }
+
+    fun View.clicksFlow(): Flow<View?> = callbackFlow<View?> {
+
+        val clickListener = View.OnClickListener {
+            offer(it)
+        }
+        setOnClickListener(clickListener)
+        awaitClose { setOnClickListener(null) }
+    }.debounce(1000)
 
     override fun configDaggerComponent() {
         DaggerDetailComponent
@@ -315,14 +330,12 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             }
 
 
-            val handler = Handler()
-            val runnable: Runnable = Runnable {
-                if (adapterSimilarMovies.itemCount == 0) {
-                    titleSimilar.visibility = View.GONE
-                    galleryViewerSimilarMovies.visibility = View.GONE
-                }
+            if (adapterSimilarMovies.itemCount == 0) {
+                titleSimilar.visibility = View.GONE
+                galleryViewerSimilarMovies.visibility = View.GONE
             }
-            handler.postDelayed(runnable, 5000)
+
+
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
