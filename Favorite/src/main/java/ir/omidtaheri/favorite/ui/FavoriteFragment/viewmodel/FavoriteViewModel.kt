@@ -4,18 +4,20 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.rxkotlin.subscribeBy
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
 import ir.omidtaheri.domain.datastate.UiComponentType
-import ir.omidtaheri.domain.interactor.GetFavoriedMovieListByFlowable
+import ir.omidtaheri.domain.interactor.GetFavoriedMovieList
 import ir.omidtaheri.favorite.entity.FavoritedMovieUiEntity
 import ir.omidtaheri.favorite.mapper.FavoritedMovieEntityUiDomainMapper
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class FavoriteViewModel(
-    private val getFavoriedMovieListByFlowable: GetFavoriedMovieListByFlowable,
+    private val getFavoriedMovieList: GetFavoriedMovieList,
     private val favoritedMovieEntityUiDomainMapper: FavoritedMovieEntityUiDomainMapper,
     private val state: SavedStateHandle,
     private val mApplication: Application
@@ -32,38 +34,39 @@ class FavoriteViewModel(
     val favoriteErrorState: LiveData<Boolean>
         get() = _favoriteErrorState
 
-    fun getFavoritedMovieListByFlowable() {
-        val disposable = getFavoriedMovieListByFlowable.execute(Unit).subscribeBy { response ->
-            when (response) {
+    fun getFavoritedMovieList() {
+        viewModelScope.launch {
+            getFavoriedMovieList.execute(Unit).collect { response ->
+                when (response) {
 
-                is DataState.SUCCESS -> {
-                    _dataLive.value = response.data?.map {
-                        favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
+                    is DataState.SUCCESS -> {
+                        _dataLive.value = response.data?.map {
+                            favoritedMovieEntityUiDomainMapper.mapToUiEntity(it)
+                        }
                     }
-                }
 
-                is DataState.ERROR -> {
-                    response.let { errorDataState ->
+                    is DataState.ERROR -> {
+                        response.let { errorDataState ->
 
-                        when (errorDataState.stateMessage?.uiComponentType) {
-                            is UiComponentType.SNACKBAR -> {
-                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
-                            }
+                            when (errorDataState.stateMessage?.uiComponentType) {
+                                is UiComponentType.SNACKBAR -> {
+                                    handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.TOAST -> {
-                                handleToastError(errorDataState as DataState.ERROR<Any>)
-                            }
+                                is UiComponentType.TOAST -> {
+                                    handleToastError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.DIALOG -> {
-                                _favoriteErrorState.value = true
+                                is UiComponentType.DIALOG -> {
+                                    _favoriteErrorState.value = true
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        addDisposable(disposable)
+        }
     }
 
 

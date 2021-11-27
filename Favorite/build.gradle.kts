@@ -96,9 +96,6 @@ dependencies {
     implementation(UiDependencies.MATERIAL)
     implementation(UiDependencies.SWIPE_REFRESH_LAYOUT)
 
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
-    implementation(Dependencies.RX_Kotlin)
     implementation(Dependencies.COROUTINES)
     implementation(Dependencies.COROUTINES_ANDROID)
 
