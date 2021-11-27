@@ -3,8 +3,6 @@ package ir.omidtaheri.domain.interactor
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.rxjava2.observable
-import io.reactivex.Observable
 import ir.omidtaheri.domain.entity.MovieDomainEntity
 import ir.omidtaheri.domain.gateway.DiscoverMovieGateWay
 import ir.omidtaheri.domain.interactor.base.FlowPagingDataUseCase
