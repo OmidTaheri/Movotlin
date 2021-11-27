@@ -329,15 +329,6 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
                 stateSimilarMoviesRecyclerview = null
             }
 
-
-            if (adapterSimilarMovies.itemCount == 0) {
-                titleSimilar.visibility = View.GONE
-                galleryViewerSimilarMovies.visibility = View.GONE
-            } else {
-                galleryViewerSimilarMovies.toDateState()
-            }
-
-
         })
 
         viewModel.imagesErrorState.observe(this, Observer {
