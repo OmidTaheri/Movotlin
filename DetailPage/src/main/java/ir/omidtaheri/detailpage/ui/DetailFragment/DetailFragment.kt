@@ -333,7 +333,7 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
             if (adapterSimilarMovies.itemCount == 0) {
                 titleSimilar.visibility = View.GONE
                 galleryViewerSimilarMovies.visibility = View.GONE
-            }else{
+            } else {
                 galleryViewerSimilarMovies.toDateState()
             }
 
@@ -410,29 +410,36 @@ class DetailFragment : BaseFragment<DetailViewModel>(), SimilarMoviesGalleryView
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val imagesRecyclerState =
-            galleryViewerImages.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::galleryViewerImages.isInitialized) {
+            val imagesRecyclerState =
+                galleryViewerImages.getRecyclerView().layoutManager?.onSaveInstanceState()
+            outState.putParcelable("images", imagesRecyclerState)
+        }
 
-        val similarMoviesRecyclerState =
-            galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onSaveInstanceState()
-
-        outState.putParcelable("images", imagesRecyclerState)
-        outState.putParcelable("similarMovies", similarMoviesRecyclerState)
-
+        if (::galleryViewerSimilarMovies.isInitialized) {
+            val similarMoviesRecyclerState =
+                galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onSaveInstanceState()
+            outState.putParcelable("similarMovies", similarMoviesRecyclerState)
+        }
     }
 
     override fun onDestroyView() {
 
-        val imagesRecyclerState =
-            galleryViewerImages.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::galleryViewerSimilarMovies.isInitialized &&
+            ::galleryViewerImages.isInitialized) {
 
-        val similarMoviesRecyclerState =
-            galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onSaveInstanceState()
+            val imagesRecyclerState =
+                galleryViewerImages.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        viewModel.saveStateOfRecyclerViews(
-            imagesRecyclerState as LinearLayoutManager.SavedState?,
-            similarMoviesRecyclerState as LinearLayoutManager.SavedState?
-        )
+            val similarMoviesRecyclerState =
+                galleryViewerSimilarMovies.getRecyclerView().layoutManager?.onSaveInstanceState()
+
+            viewModel.saveStateOfRecyclerViews(
+                imagesRecyclerState as LinearLayoutManager.SavedState?,
+                similarMoviesRecyclerState as LinearLayoutManager.SavedState?
+            )
+        }
+
 
         onDestroyGlide()
         super.onDestroyView()

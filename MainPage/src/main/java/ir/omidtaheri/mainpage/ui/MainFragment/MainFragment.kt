@@ -317,39 +317,51 @@ class MainFragment : BaseFragment<MainViewModel>(), GalleryViewAdapter.Callback 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        val topRatedRecyclerState =
-            galleryViewerTopRate.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::galleryViewerTopRate.isInitialized) {
+            val topRatedRecyclerState =
+                galleryViewerTopRate.getRecyclerView().layoutManager?.onSaveInstanceState()
+            outState.putParcelable("TopRated", topRatedRecyclerState)
+        }
 
-        val popularRecyclerState =
-            galleryViewerPopular.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::galleryViewerPopular.isInitialized) {
+            val popularRecyclerState =
+                galleryViewerPopular.getRecyclerView().layoutManager?.onSaveInstanceState()
+            outState.putParcelable("Popular", popularRecyclerState)
+        }
+
+        if (::galleryViewerUpComing.isInitialized) {
+            val upcomingRecyclerState =
+                galleryViewerUpComing.getRecyclerView().layoutManager?.onSaveInstanceState()
+            outState.putParcelable("Upcoming", upcomingRecyclerState)
+        }
 
 
-        val upcomingRecyclerState =
-            galleryViewerUpComing.getRecyclerView().layoutManager?.onSaveInstanceState()
-
-        outState.putParcelable("TopRated", topRatedRecyclerState)
-        outState.putParcelable("Popular", popularRecyclerState)
-        outState.putParcelable("Upcoming", upcomingRecyclerState)
     }
 
     override fun onDestroyView() {
 
-        val topRatedRecyclerState =
-            galleryViewerTopRate.getRecyclerView().layoutManager?.onSaveInstanceState()
+        if (::galleryViewerTopRate.isInitialized &&
+            ::galleryViewerPopular.isInitialized &&
+            ::galleryViewerUpComing.isInitialized
+        ) {
+            val topRatedRecyclerState =
+                galleryViewerTopRate.getRecyclerView().layoutManager?.onSaveInstanceState()
 
-        val popularRecyclerState =
-            galleryViewerPopular.getRecyclerView().layoutManager?.onSaveInstanceState()
+            val popularRecyclerState =
+                galleryViewerPopular.getRecyclerView().layoutManager?.onSaveInstanceState()
 
 
-        val upcomingRecyclerState =
-            galleryViewerUpComing.getRecyclerView().layoutManager?.onSaveInstanceState()
+            val upcomingRecyclerState =
+                galleryViewerUpComing.getRecyclerView().layoutManager?.onSaveInstanceState()
 
 
-        viewModel.saveStateOfRecyclerViews(
-            topRatedRecyclerState as LinearLayoutManager.SavedState?,
-            popularRecyclerState as LinearLayoutManager.SavedState?,
-            upcomingRecyclerState as LinearLayoutManager.SavedState?
-        )
+            viewModel.saveStateOfRecyclerViews(
+                topRatedRecyclerState as LinearLayoutManager.SavedState?,
+                popularRecyclerState as LinearLayoutManager.SavedState?,
+                upcomingRecyclerState as LinearLayoutManager.SavedState?
+            )
+        }
+
 
         onDestroyGlide()
         super.onDestroyView()
