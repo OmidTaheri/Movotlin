@@ -30,7 +30,9 @@
             android:layout_height="wrap_content"
             android:hint="Search"
             android:maxLines="1"
-            app:counterMaxLength="10">
+            app:counterMaxLength="10"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchbar"
