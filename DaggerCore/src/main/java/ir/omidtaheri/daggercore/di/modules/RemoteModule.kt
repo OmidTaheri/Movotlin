@@ -9,7 +9,6 @@ import ir.omidtaheri.remote.service.MovieDetailApi
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
@@ -43,7 +42,10 @@ object RemoteModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(interceptors: ArrayList<Interceptor>, @Named("url") baseUrl: String): Retrofit {
+    fun provideRetrofit(
+        interceptors: ArrayList<Interceptor>,
+        @Named("url") baseUrl: String
+    ): Retrofit {
 
         val clientBuilder = OkHttpClient.Builder()
         if (interceptors.isNotEmpty()) {
@@ -58,7 +60,6 @@ object RemoteModule {
 
         return Retrofit.Builder()
             .client(clientBuilder.build())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(baseUrl)
             .build()
