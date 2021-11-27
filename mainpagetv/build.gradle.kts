@@ -93,10 +93,8 @@ dependencies {
     implementation(project(mapOf("path" to BuildModules.Domain)))
     implementation(project(mapOf("path" to BuildModules.UiBase)))
 
-    implementation(Dependencies.RX_ANDROID)
-    implementation(Dependencies.RX_JAVA)
-    implementation(Dependencies.RX_Kotlin)
-
+    implementation(Dependencies.COROUTINES)
+    implementation(Dependencies.COROUTINES_ANDROID)
     implementation(UiDependencies.GLIDE)
     kapt(AnnotationProcessorsDependencies.GLIDE_COMPILER)
 

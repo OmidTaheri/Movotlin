@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import io.reactivex.rxkotlin.subscribeBy
+import androidx.lifecycle.viewModelScope
 import ir.omidtaheri.androidbase.BaseAndroidViewModel
 import ir.omidtaheri.domain.datastate.DataState
 import ir.omidtaheri.domain.datastate.MessageHolder
@@ -14,6 +14,8 @@ import ir.omidtaheri.domain.interactor.GetTopRatedMoviesWithoutPaging
 import ir.omidtaheri.domain.interactor.GetUpcomingMoviesWithoutPaging
 import ir.omidtaheri.mainpagetv.entity.MultiMovieUiEntity
 import ir.omidtaheri.mainpagetv.mapper.MultiMovieEntityUiDomainMapper
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesWithoutPaging,
@@ -39,90 +41,95 @@ class MainViewModel(
 
     fun getPopularMovieList() {
 
-        val disposable = getPopularMoviesUseCase.execute(1).subscribe { response ->
-            when (response) {
-                is DataState.SUCCESS -> {
-                    _poularLiveData.value =
-                        multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
-                }
+        viewModelScope.launch {
+            getPopularMoviesUseCase.execute(1).collectLatest { response ->
+                when (response) {
+                    is DataState.SUCCESS -> {
+                        _poularLiveData.value =
+                            multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                    }
 
-                is DataState.ERROR -> {
-                    response.let { errorDataState ->
+                    is DataState.ERROR -> {
+                        response.let { errorDataState ->
 
-                        when (errorDataState.stateMessage?.uiComponentType) {
-                            is UiComponentType.SNACKBAR -> {
-                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
-                            }
+                            when (errorDataState.stateMessage?.uiComponentType) {
+                                is UiComponentType.SNACKBAR -> {
+                                    handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.TOAST -> {
-                                handleToastError(errorDataState as DataState.ERROR<Any>)
+                                is UiComponentType.TOAST -> {
+                                    handleToastError(errorDataState as DataState.ERROR<Any>)
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        addDisposable(disposable)
+        }
     }
 
+
     fun getTopRatedMovieList() {
-        val disposable = getTopRatedMoviesUseCase.execute(1).subscribeBy { response ->
-            when (response) {
-                is DataState.SUCCESS -> {
-                    _topRateLiveData.value =
-                        multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
-                }
+        viewModelScope.launch {
+            getTopRatedMoviesUseCase.execute(1).collectLatest { response ->
+                when (response) {
+                    is DataState.SUCCESS -> {
+                        _topRateLiveData.value =
+                            multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                    }
 
-                is DataState.ERROR -> {
-                    response.let { errorDataState ->
+                    is DataState.ERROR -> {
+                        response.let { errorDataState ->
 
-                        when (errorDataState.stateMessage?.uiComponentType) {
-                            is UiComponentType.SNACKBAR -> {
-                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
-                            }
+                            when (errorDataState.stateMessage?.uiComponentType) {
+                                is UiComponentType.SNACKBAR -> {
+                                    handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.TOAST -> {
-                                handleToastError(errorDataState as DataState.ERROR<Any>)
+                                is UiComponentType.TOAST -> {
+                                    handleToastError(errorDataState as DataState.ERROR<Any>)
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        addDisposable(disposable)
+        }
     }
 
     fun getUpComingMovieList() {
-        val disposable = getUpcomingMoviesUseCase.execute(1).subscribeBy {
+        viewModelScope.launch {
+            getUpcomingMoviesUseCase.execute(1).collectLatest {
 
-                response ->
-            when (response) {
-                is DataState.SUCCESS -> {
+                    response ->
+                when (response) {
+                    is DataState.SUCCESS -> {
 
-                    _upComingLiveData.value
-                    multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
-                }
+                        _upComingLiveData.value
+                        multiMovieEntityUiDomainMapper.mapToUiEntity(response.data!!)
+                    }
 
-                is DataState.ERROR -> {
-                    response.let { errorDataState ->
+                    is DataState.ERROR -> {
+                        response.let { errorDataState ->
 
-                        when (errorDataState.stateMessage?.uiComponentType) {
-                            is UiComponentType.SNACKBAR -> {
-                                handleSnackBarError(errorDataState as DataState.ERROR<Any>)
-                            }
+                            when (errorDataState.stateMessage?.uiComponentType) {
+                                is UiComponentType.SNACKBAR -> {
+                                    handleSnackBarError(errorDataState as DataState.ERROR<Any>)
+                                }
 
-                            is UiComponentType.TOAST -> {
-                                handleToastError(errorDataState as DataState.ERROR<Any>)
+                                is UiComponentType.TOAST -> {
+                                    handleToastError(errorDataState as DataState.ERROR<Any>)
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        addDisposable(disposable)
+
+        }
     }
 
     private fun handleSnackBarError(errorDataState: DataState.ERROR<Any>) {
