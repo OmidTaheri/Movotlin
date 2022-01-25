@@ -52,7 +52,7 @@ Movotlin is an application that has been developed using modern Android developm
 * Retrofit- Network Requests
 * Dagger- Dependency Injection
 * Flow + Coroutine
-* Kotlin DSL
+* Kotlin Script– Build files 
 * [Themoviedb API](https://developers.themoviedb.org/3/getting-started/introduction)
 
  ![-----------------------------------------------------](ScreenShots/rainbow.png)
