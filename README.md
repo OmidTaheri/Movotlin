@@ -42,7 +42,7 @@ Movotlin is an application that has been developed using modern Android developm
   ![-----------------------------------------------------](ScreenShots/rainbow.png)
   
 ### `Tools & Dependencies`
-* Clean Ahitecture(MVVM)
+* Clean Architecture(MVVM)
 * Single Activity
 * Google Material Design
 * Jetpack Paging Library
